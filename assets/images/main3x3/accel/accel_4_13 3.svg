@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>accel_4_13</title>
+    <g id="accel_4_13" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="oll">
+            <rect id="background" fill="#000000" x="0" y="0" width="100" height="100"></rect>
+            <g id="vertical" transform="translate(50.000000, 50.000000) rotate(90.000000) translate(-50.000000, -50.000000) translate(14.000000, 5.000000)" fill="#696969">
+                <rect id="L3" x="50" y="86" width="22" height="4"></rect>
+                <rect id="L2" x="25" y="86" width="22" height="4"></rect>
+                <rect id="L1" x="0" y="86" width="22" height="4"></rect>
+                <rect id="R3" x="50" y="0" width="22" height="4"></rect>
+                <rect id="R2" x="25" y="0" width="22" height="4"></rect>
+                <rect id="R1" x="0" y="0" width="22" height="4"></rect>
+            </g>
+            <g id="horizontal" transform="translate(14.000000, 5.000000)">
+                <rect id="B3" fill="#FFDB11" x="50" y="86" width="22" height="4"></rect>
+                <rect id="B2" fill="#696969" x="25" y="86" width="22" height="4"></rect>
+                <rect id="B1" fill="#FFDB11" x="0" y="86" width="22" height="4"></rect>
+                <rect id="T3" fill="#FFDB11" x="50" y="0" width="22" height="4"></rect>
+                <rect id="T2" fill="#696969" x="25" y="0" width="22" height="4"></rect>
+                <rect id="T1" fill="#FFDB11" x="0" y="0" width="22" height="4"></rect>
+            </g>
+            <g id="front" transform="translate(14.000000, 14.000000)">
+                <rect id="f9" fill="#025AC1" x="50" y="50" width="22" height="22"></rect>
+                <rect id="f8" fill="#FFDB11" x="25" y="50" width="22" height="22"></rect>
+                <rect id="f7" fill="#009A0E" x="0" y="50" width="22" height="22"></rect>
+                <rect id="f6" fill="#FFDB11" x="50" y="25" width="22" height="22"></rect>
+                <rect id="f5" fill="#FFDB11" x="25" y="25" width="22" height="22"></rect>
+                <rect id="f4" fill="#FFDB11" x="0" y="25" width="22" height="22"></rect>
+                <rect id="f3" fill="#025AC1" x="50" y="0" width="22" height="22"></rect>
+                <rect id="f2" fill="#FFDB11" x="25" y="0" width="22" height="22"></rect>
+                <rect id="f1" fill="#009A0E" x="0" y="0" width="22" height="22"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="77px" height="100px" viewBox="0 0 77 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>container_1</title>
+    <g id="container" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="container_1" transform="translate(0.000000, 0.000000)" fill-rule="nonzero">
+            <path d="M4.95,12.9 L34.71,0.62 C35.6577669,0.270336429 36.6516595,0.0614505128 37.66,0 C38.36,0 39.4,0.2 40.78,0.62 L72.5,11.93 C73.7281347,12.9446247 74.7732674,14.1622551 75.59,15.53 C76.3220261,16.8772192 76.7967847,18.3489709 76.99,19.87 L72.5,72.07 C72.31,73.09 71.97,74.07 71.46,75.01 C70.9053842,76.0234888 70.2268404,76.9640447 69.44,77.81 L43.92,98.78 C42.399874,99.5708663 40.7135146,99.9890286 39,100.000052 C37.3593922,100.005434 35.7459314,99.5813836 34.32,98.77 L6.13,78.17 C5.62130151,77.6656346 5.21991484,77.0635545 4.95,76.4 C4.5892816,75.560674 4.33076062,74.6810312 4.18,73.78 L1,21.04 C0.940073798,19.4930701 1.27020105,17.9559151 1.96,16.57 C2.67,15.11 3.66,13.89 4.94,12.9 L4.95,12.9 Z" id="Path" fill="#000000"></path>
+            <polygon id="Path" fill="#FFFFFF" points="6.53 14.53 37.73 1.45 71.33 14.53 40.64 31.41"></polygon>
+            <polygon id="Path" fill="#009A0E" points="4.2 21.8 19 55.26 34.6 37.42"></polygon>
+            <polygon id="Path" fill="#009A0E" points="3.04 30.52 5.33 70.12 15.43 58.5"></polygon>
+            <polygon id="Path" fill="#009A0E" points="21.67 60.71 37.74 43.31 36.61 93.08"></polygon>
+            <polygon id="Path" fill="#009A0E" points="17.95 65 8 75.18 30.39 92.39"></polygon>
+            <polygon id="Path" fill="#D0021B" points="46.13 36.71 75.46 20.64 60.17 54.98"></polygon>
+            <polygon id="Path" fill="#D0021B" points="44.02 43.31 56.91 59.48 42.64 92.72"></polygon>
+            <polygon id="Path" fill="#D0021B" points="61.06 63.66 49.34 91.08 69.02 74.34"></polygon>
+            <polygon id="Path" fill="#D0021B" points="74.18 32.85 63.61 58.16 71.06 69.01"></polygon>
+        </g>
+    </g>
+</svg>

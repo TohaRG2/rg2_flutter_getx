@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="90px" height="100px" viewBox="0 0 90 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>keyhole_1_2</title>
+    <g id="keyhole" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="keyhole_1_2" fill-rule="nonzero">
+            <path d="M45.86,0.4 L89.76,58.04 C90.07,58.44 90.09,58.98 89.71,59.34 L45.74,99.71 C45.34,100.08 44.68,100.08 44.27,99.71 L0.3,59.33 C-0.05,59.01 -0.11,58.5 0.18,58.11 L44.14,0.43 C44.54,-0.13 45.44,-0.15 45.86,0.41 L45.86,0.4 Z" id="Path" fill="#000000"></path>
+            <polygon id="Path" fill="#696969" points="59.1 21.6 46.3 4.81 46.3 27.94 59.1 21.62"></polygon>
+            <polygon id="Path" fill="#E31E24" points="60.27 51.63 46.31 33.7 46.31 61.87 60.27 51.63"></polygon>
+            <polygon id="Path" fill="#696969" points="60.59 47.93 59.64 23.83 46.91 30.36"></polygon>
+            <polygon id="Path" fill="#E31E24" points="74.64 42 62.32 25.82 63.26 49.57"></polygon>
+            <polygon id="Path" fill="#696969" points="60.59 83.1 46.31 67.6 46.31 96.2"></polygon>
+            <polygon id="Path" fill="#696969" points="61.03 79.87 46.86 64.52 60.77 54.32 61.03 79.87"></polygon>
+            <polygon id="Path" fill="#E31E24" points="75.49 69.41 63.38 55.33 63.63 80.3"></polygon>
+            <polygon id="Path" fill="#696969" points="75.82 65.95 63.91 52.1 75.21 44.58"></polygon>
+            <polygon id="Path" fill="#696969" points="87.28 58.58 77.85 46.21 78.45 66.7 87.28 58.58"></polygon>
+            <polygon id="Path" fill="#696969" points="30.9 21.6 43.7 4.8 43.7 27.93 30.9 21.61"></polygon>
+            <polygon id="Path" fill="#0062AC" points="29.74 51.63 43.7 33.7 43.7 61.87"></polygon>
+            <polygon id="Path" fill="#696969" points="29.42 47.93 30.37 23.83 43.1 30.36 29.42 47.93"></polygon>
+            <polygon id="Path" fill="#0062AC" points="15.37 42 27.69 25.82 26.75 49.57"></polygon>
+            <polygon id="Path" fill="#696969" points="29.42 83.1 43.7 67.6 43.7 96.2"></polygon>
+            <polygon id="Path" fill="#696969" points="28.98 79.87 43.15 64.52 29.24 54.32"></polygon>
+            <polygon id="Path" fill="#0062AC" points="14.52 69.41 26.63 55.33 26.38 80.3"></polygon>
+            <polygon id="Path" fill="#696969" points="14.19 65.95 26.1 52.1 14.8 44.58 14.18 65.95"></polygon>
+            <polygon id="Path" fill="#696969" points="2.73 58.58 12.16 46.21 11.56 66.7 2.73 58.58"></polygon>
+        </g>
+    </g>
+</svg>

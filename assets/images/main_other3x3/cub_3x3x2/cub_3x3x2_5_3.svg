@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>cub_3x3x2_5_3</title>
+    <g id="Cub_3x3x2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="cub_3x3x2_5_3" fill-rule="nonzero">
+            <polygon id="Path" fill="#000000" points="0 0 100 0 100 100 0 100"></polygon>
+            <polygon id="Path" fill="#F8E71C" points="64 64 86 64 86 86 64 86"></polygon>
+            <polygon id="Path" fill="#F8E71C" points="39 64 61 64 61 86 39 86"></polygon>
+            <polygon id="Path" fill="#F8E71C" points="14 64 36 64 36 86 14 86"></polygon>
+            <polygon id="Path" fill="#F8E71C" points="64 39 86 39 86 61 64 61"></polygon>
+            <polygon id="Path" fill="#F8E71C" points="39 39 61 39 61 61 39 61"></polygon>
+            <polygon id="Path" fill="#F8E71C" points="14 39 36 39 36 61 14 61"></polygon>
+            <polygon id="Path" fill="#F8E71C" points="64 14 86 14 86 36 64 36"></polygon>
+            <polygon id="Path" fill="#F8E71C" points="39 14 61 14 61 36 39 36"></polygon>
+            <polygon id="Path" fill="#F8E71C" points="14 14 36 14 36 36 14 36"></polygon>
+            <polygon id="Path" fill="#0062AC" points="64 91 86 91 86 95 64 95"></polygon>
+            <polygon id="Path" fill="#0062AC" points="39 91 61 91 61 95 39 95"></polygon>
+            <polygon id="Path" fill="#0062AC" points="14 91 36 91 36 95 14 95"></polygon>
+            <polygon id="Path" fill="#E31E24" points="95 64 95 86 91 86 91 64"></polygon>
+            <polygon id="Path" fill="#EF7F1A" points="95 39 95 61 91 61 91 39"></polygon>
+            <polygon id="Path" fill="#E31E24" points="95 14 95 36 91 36 91 14"></polygon>
+            <polygon id="Path" fill="#EF7F1A" points="9 64 9 86 5 86 5 64"></polygon>
+            <polygon id="Path" fill="#009846" points="9 39 9 61 5 61 5 39"></polygon>
+            <polygon id="Path" fill="#EF7F1A" points="9 14 9 36 5 36 5 14"></polygon>
+            <polygon id="Path" fill="#009846" points="64 5 86 5 86 9 64 9"></polygon>
+            <polygon id="Path" fill="#E31E24" points="39 5 61 5 61 9 39 9"></polygon>
+            <polygon id="Path" fill="#009846" points="14 5 36 5 36 9 14 9"></polygon>
+            <path d="M75,46.6 L72.33,37 C72.18,36.47 72.5,35.92 73.03,35.77 C73.56,35.62 74.11,35.93 74.26,36.47 L77.97,49.72 C78.18,50.47 77.49,51.16 76.74,50.95 L63.48,47.24 C62.95,47.09 62.64,46.54 62.78,46.01 C62.94,45.48 63.48,45.16 64.02,45.31 L73.6,48 L67.82,42.21 L50.77,25.17 C50.38,24.77 50.38,24.14 50.77,23.75 C51.17,23.36 51.8,23.36 52.19,23.75 L69.23,40.8 L75.02,46.58 L75,46.6 Z" id="Path" fill="#E31E24"></path>
+            <path d="M43.6,27 L34,29.67 C33.47,29.82 32.92,29.5 32.77,28.97 C32.62,28.44 32.93,27.89 33.47,27.74 L46.72,24.03 C47.47,23.82 48.16,24.51 47.95,25.26 L44.24,38.52 C44.09,39.05 43.54,39.36 43.01,39.22 C42.48,39.06 42.16,38.52 42.31,37.98 L45,28.4 L39.21,34.18 L22.17,51.23 C21.77,51.62 21.14,51.62 20.75,51.23 C20.36,50.83 20.36,50.2 20.75,49.81 L37.8,32.77 L43.58,26.98 L43.6,27 Z" id="Path" fill="#E31E24"></path>
+            <path d="M28.82,54.5 L37.49,59.38 C37.97,59.65 38.14,60.26 37.87,60.74 C37.6,61.22 36.99,61.39 36.51,61.12 L24.51,54.37 C23.83,53.99 23.83,53.01 24.51,52.63 L36.51,45.88 C36.99,45.61 37.61,45.78 37.87,46.26 C38.14,46.74 37.97,47.36 37.49,47.62 L28.82,52.5 L75.75,52.5 C76.3,52.5 76.75,52.95 76.75,53.5 C76.75,54.05 76.3,54.5 75.75,54.5 L28.82,54.5 L28.82,54.5 Z" id="Path" fill="#E31E24"></path>
+        </g>
+    </g>
+</svg>
