@@ -56,6 +56,14 @@ class YouTubeView extends StatelessWidget {
                         _youTubeController.addListener(() {
                           if (_youTubeController.value.playerState != _playerState) {
                             _playerState = _youTubeController.value.playerState;
+                            if ((_playerState == PlayerState.playing) || (_playerState == PlayerState.cued)) {
+                              _youTubeController.setPlaybackRate(_controller.getPlaybackRate());
+                              if (_controller.getPlaybackRate() < 0.75) {
+                                _youTubeController.mute();
+                              } else {
+                                _youTubeController.unMute();
+                              }
+                            }
                             _controller.setPlayerState(_playerState.index);
                           }
                           //print("${_youTubeController.value.position.inSeconds}");
@@ -73,6 +81,7 @@ class YouTubeView extends StatelessWidget {
                     child: Text("0.25x"),
                     onPressed: () {
                       _youTubeController.setPlaybackRate(0.25);
+                      _controller.setPlaybackRate(0.25);
                       _youTubeController.mute();
                     },
                   ),
@@ -82,6 +91,7 @@ class YouTubeView extends StatelessWidget {
                     child: Text("0.5x"),
                     onPressed: () {
                       _youTubeController.setPlaybackRate(0.5);
+                      _controller.setPlaybackRate(0.5);
                       _youTubeController.mute();
                     },
                   ),
@@ -91,6 +101,7 @@ class YouTubeView extends StatelessWidget {
                     child: Text("0.75x"),
                     onPressed: () {
                       _youTubeController.setPlaybackRate(0.75);
+                      _controller.setPlaybackRate(0.75);
                       _youTubeController.unMute();
                     },
                   ),
@@ -100,6 +111,7 @@ class YouTubeView extends StatelessWidget {
                     child: Text("1x"),
                     onPressed: () {
                       _youTubeController.setPlaybackRate(1.0);
+                      _controller.setPlaybackRate(1.0);
                       _youTubeController.unMute();
                     },
                   ),
@@ -109,6 +121,7 @@ class YouTubeView extends StatelessWidget {
                     child: Text("1.5x"),
                     onPressed: () {
                       _youTubeController.setPlaybackRate(1.5);
+                      _controller.setPlaybackRate(1.5);
                       _youTubeController.unMute();
                     },
                   ),

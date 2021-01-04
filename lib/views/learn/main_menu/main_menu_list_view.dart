@@ -11,6 +11,7 @@ class MenuList extends StatelessWidget {
   final _learnController = Get.find<LearnController>();
   final _settingsController = Get.find<SettingsController>();
 
+  /// Создаем ListView для указанного номера страницы
   MenuList(this.pageNumber);
 
   @override
@@ -38,6 +39,7 @@ class MenuList extends StatelessWidget {
     return Obx(() {
       var position = 0;
       var align = 0.0;
+
       var asd = ScrollablePositionedList.builder(
         itemCount: _learnController.pages[pageNumber].currentList.length,
         itemBuilder: (_, index) {

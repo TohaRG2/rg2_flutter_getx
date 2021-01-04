@@ -17,4 +17,13 @@ class MyYouTubeController extends GetxController {
 
   int getPlayerState() => _playerState.value;
 
+  final _playbackRate = (1.0).obs;
+
+  setPlaybackRate(double value) {
+    _playbackRate.value = value;
+  }
+
+  double getPlaybackRate() => _playbackRate.value;
+
+
 }
