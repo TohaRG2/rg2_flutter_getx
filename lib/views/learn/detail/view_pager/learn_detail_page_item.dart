@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rg2_flutter_getx/controllers/settingsController.dart';
+import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/learn/detail/view_pager/my_html_view.dart';
 import 'package:get/get.dart';

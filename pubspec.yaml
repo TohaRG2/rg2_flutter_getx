@@ -32,11 +32,11 @@ dependencies:
   css_colors: ^1.0.2
   # Plugins for rendering the <video> tag.
   video_player: ^1.0.1
-  chewie: ^0.12.0
+  chewie: ^0.12.1+1
   # Plugin for rendering the <iframe> tag.
   webview_flutter: ^1.0.7
   # Plugins for rendering the <audio> tag.
-  # chewie_audio: ^1.0.0+1
+  chewie_audio: ^1.1.1
 
   # Открываем ссылки во внешних программах (браузерах, почте и т.д.)
   url_launcher: ^5.7.10

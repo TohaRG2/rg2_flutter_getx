@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/learn_controller.dart';
-import 'package:rg2_flutter_getx/controllers/settingsController.dart';
+import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
 import 'package:rg2_flutter_getx/views/info/infoScreen.dart';
 import 'package:rg2_flutter_getx/views/learn/learn_menu_screen.dart';
 import 'package:rg2_flutter_getx/views/settings/settings_screen.dart';

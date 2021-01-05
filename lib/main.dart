@@ -9,7 +9,7 @@ import 'controllers/db_controller.dart';
 import 'controllers/info_controller.dart';
 import 'controllers/learn_controller.dart';
 import 'controllers/repository.dart';
-import 'controllers/settingsController.dart';
+import 'controllers/settings_controller.dart';
 import 'database/main_database.dart';
 import 'views/bottomNavBar.dart';
 import 'views/youtube_player/youtube_view.dart';

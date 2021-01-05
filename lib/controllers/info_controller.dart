@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 import 'package:rg2_flutter_getx/controllers/repository.dart';
-import 'package:rg2_flutter_getx/controllers/settingsController.dart';
+import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
 
 class InfoController extends GetxController {
   Repository _repo = Get.find();
