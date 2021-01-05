@@ -74,7 +74,7 @@ class Repository extends GetxController {
     return await _positionsDao.getAllItems();
   }
 
-  Future<int> updatePhasePosition(String phase, int position) async {
+  Future<int> updatePhasePosition(String phase, double position) async {
     var item = PhasePositionItem(phase, position);
     return await _positionsDao.insertOrReplace(item);
   }

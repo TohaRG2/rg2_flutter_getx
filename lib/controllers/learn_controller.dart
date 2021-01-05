@@ -12,7 +12,7 @@ class LearnController extends GetxController {
   SettingsController _settings = Get.find();
 
   int curPageNumber = 2;
-  int curPositionInList = 0;
+  double curPositionInList = 0.0;
 
   var backFrom = Map<String, String>(); //map для получения предыдущей фазы, по ее названию
 
@@ -24,7 +24,7 @@ class LearnController extends GetxController {
   }
 
   RxList<PageProperties> pages = List<PageProperties>().obs;
-  Map<String, int> phasesPositions = Map();
+  Map<String, double> phasesPositions = Map();
 
   Future<void> loadPages() async {
     await _loadBackPhases();
@@ -139,9 +139,9 @@ class LearnController extends GetxController {
     print("Change phase to $phase");
     saveListPositionForPhase(pages[curPageNumber].currentPhase);
 
-    var list = await _getMenuItemsListFor(phase, curPageNumber);
-
     pages[curPageNumber].currentPhase = phase;
+    print("pages[curPageNumber].currentPhase - updated");
+    var list = await _getMenuItemsListFor(phase, curPageNumber);
     pages[curPageNumber].currentList.assignAll(list);
     _repo.updateCubeType(pages[curPageNumber]);
   }
@@ -274,14 +274,14 @@ class LearnController extends GetxController {
     updateItemInPages(item);
   }
 
-  int getPositionForPage(int pageNumber) {
+  double getPositionForPage(int pageNumber) {
     var curPhase = pages[pageNumber].currentPhase;
-    var position = phasesPositions[curPhase] ?? 0;
-    print("position for $curPhase - $position, curPage = $curPageNumber, curPos = $curPositionInList");
+    var position = phasesPositions[curPhase] ?? 0.0;
+    print("position for $curPhase - $position, page - $pageNumber, curPage = $curPageNumber, curPos = $curPositionInList");
     if (pageNumber != curPageNumber) {
       saveListPositionForPhase(pages[curPageNumber].currentPhase);
     }
-    print("curlist - ${pages[pageNumber].currentList.length}");
+    curPositionInList = position;
     return position;
   }
 

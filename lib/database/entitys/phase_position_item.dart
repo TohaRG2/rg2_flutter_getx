@@ -9,7 +9,7 @@ import 'package:floor/floor.dart';
 class PhasePositionItem{
   @PrimaryKey(autoGenerate: false)
   String phase;
-  int position;
+  double position;
 
   PhasePositionItem(this.phase, this.position);
 }

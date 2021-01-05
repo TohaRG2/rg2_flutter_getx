@@ -92,7 +92,7 @@ class _$MainDatabase extends MainDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `basic_moves` (`id` INTEGER, `eType` TEXT, `move` TEXT, `icon` TEXT, `toast` TEXT, PRIMARY KEY (`id`, `eType`))');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `phasePositions` (`phase` TEXT, `position` INTEGER, PRIMARY KEY (`phase`))');
+            'CREATE TABLE IF NOT EXISTS `phasePositions` (`phase` TEXT, `position` REAL, PRIMARY KEY (`phase`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -599,8 +599,8 @@ class _$PhasePositionDao extends PhasePositionDao {
   @override
   Future<List<PhasePositionItem>> getAllItems() async {
     return _queryAdapter.queryList('select * from phasePositions',
-        mapper: (Map<String, dynamic> row) =>
-            PhasePositionItem(row['phase'] as String, row['position'] as int));
+        mapper: (Map<String, dynamic> row) => PhasePositionItem(
+            row['phase'] as String, row['position'] as double));
   }
 
   @override
