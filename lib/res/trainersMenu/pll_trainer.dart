@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
 
+import '../string_values.dart';
+
 final pllTrainer = TrainerMenuItem(
+    id: R.trainers_pll,
     title: pll_trainer_title,
     icon: pll_trainer_icon,
     helpItem: pll_trainer_help

@@ -11,39 +11,38 @@ class LearnDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            drawer: Drawer(
-              child: Obx(() {
-                var items = _controller.currentItems;
-                var intPosition = (_controller.curPageNumber > 2) ? _controller.curPageNumber - 2 : 0;
-                // высчитаем смещение в пикселях для заданной позиции
-                var offset = intPosition.toDouble() * 88;
-                var _scrollController = ScrollController(initialScrollOffset: offset);
-                print("Offset $intPosition - $offset");
-                return ListView(
-                  controller: _scrollController,
-                  children: items.map((listItem) =>
-                    DrawerMenuItem(
-                          item: listItem,
-                          onItemSelected: (selectedItem) {
-                            print("DrawerPressed on ${selectedItem.title}");
-                            _controller.changeCurrentPageByItem(selectedItem);
-                            Get.back();
-                          },
-                        )
-                  ).toList(),
-                );
-              }),
-            ),
-            drawerEnableOpenDragGesture: false,
-            body: Stack(
-              alignment: Alignment.topLeft,
-              fit: StackFit.expand,
-              children: [
-                LearnDetailViewPager(),
-                BottomNavBar(),
-              ],
-            )));
+    return Scaffold(
+        drawer: Drawer(
+          child: Obx(() {
+            var items = _controller.currentItems;
+            var intPosition = (_controller.curPageNumber > 2) ? _controller.curPageNumber - 2 : 0;
+            // высчитаем смещение в пикселях для заданной позиции
+            var offset = intPosition.toDouble() * 88;
+            var _scrollController = ScrollController(initialScrollOffset: offset);
+            print("Offset $intPosition - $offset");
+            return ListView(
+              controller: _scrollController,
+              children: items.map((listItem) =>
+                DrawerMenuItem(
+                      item: listItem,
+                      onItemSelected: (selectedItem) {
+                        print("DrawerPressed on ${selectedItem.title}");
+                        _controller.changeCurrentPageByItem(selectedItem);
+                        Get.back();
+                      },
+                    )
+              ).toList(),
+            );
+          }),
+        ),
+        drawerEnableOpenDragGesture: false,
+        body: Stack(
+          alignment: Alignment.topLeft,
+          fit: StackFit.expand,
+          children: [
+            LearnDetailViewPager(),
+            BottomNavBar(),
+          ],
+        ));
   }
 }

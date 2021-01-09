@@ -51,4 +51,18 @@ class UrlHelper {
       throw 'Could not launch $url';
     }
   }
+
+  static getNormalHtmlTextFromDescription(String description, String assetPath){
+    var htmlText = description;
+    htmlText = htmlText.replaceAll('<img src=', '<img apath="$assetPath" src=');
+    int n = 0;
+    while (htmlText.indexOf('<p style="text-align:center">', n) != -1) {
+      n = htmlText.indexOf('<p style="text-align:center">', n);
+      htmlText = htmlText.replaceFirst("</p>","</h5>",n);
+      n = htmlText.indexOf("/h5",n);
+    }
+    htmlText = htmlText.replaceAll('<p style="text-align:center">','<h5>');
+    return htmlText;
+  }
+
 }

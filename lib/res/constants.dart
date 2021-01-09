@@ -12,4 +12,10 @@ class Const {
   static const CURRENT_PAGE_NUMBER = 'currentPageNumber';
   static const CURRENT_INFO_PAGE_NUMBER = 'currentInfoPageNumber';
   static const FAVOURITES = 'FAVOURITES';
+
+  static const IS_EDGE_ENABLED = 'isEdgeEnabled';
+  static const IS_CORNER_ENABLED = 'isCornerEnabled';
+  static const SCRAMBLE_LENGTH = 'scrambleLength';
+  static const CURRENT_SCRAMBLE = 'currentScramble';
+  static const CURRENT_DECISION = 'currentDecision';
 }

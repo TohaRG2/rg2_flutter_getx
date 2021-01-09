@@ -17,6 +17,4 @@ class TrainersController extends GetxController {
 
   get trainerItems => _trainerItems;
 
-
-
 }

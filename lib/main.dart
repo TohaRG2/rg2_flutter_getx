@@ -4,6 +4,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:rg2_flutter_getx/controllers/azbuka_dialog_controller.dart';
 import 'package:rg2_flutter_getx/controllers/learn_detail_controller.dart';
 import 'package:rg2_flutter_getx/controllers/trainers_controller.dart';
+import 'package:rg2_flutter_getx/controllers/trainers_scramble_gen_controller.dart';
 import 'package:rg2_flutter_getx/controllers/youtube_controller.dart';
 import 'package:rg2_flutter_getx/views/dialogs/favourites/favourite_dialog.dart';
 import 'controllers/db_controller.dart';
@@ -99,5 +100,6 @@ class RG2App extends StatelessWidget {
     Get.put(MyYouTubeController());
     Get.put(AzbukaDialogController());
     Get.put(TrainersController());
+    Get.put(ScrambleGenController());
   }
 }

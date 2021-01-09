@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rg2_flutter_getx/controllers/learn_detail_controller.dart';
 import 'package:rg2_flutter_getx/views/dialogs/azbuka/azbuka_dialog.dart';
-import 'buttons_container.dart';
 import 'package:get/get.dart';
+import 'package:rg2_flutter_getx/views/shared/bottom_nav_bar_painter.dart';
 
-import '../../../shared/bottom_nav_bar_painter.dart';
+import 'buttons_container.dart';
+
 
 class BottomNavBar extends StatelessWidget {
   final LearnDetailController _controller = Get.find();
@@ -36,7 +37,8 @@ class BottomNavBar extends StatelessWidget {
                   child: Icon(Icons.repeat),
                   elevation: 0.1,
                   onPressed: () {
-                    Get.dialog(AzbukaDialog(_controller.obsPhase.value));
+                    print("FAB pressed");
+                    //Get.dialog(AzbukaDialog(_controller.obsPhase.value));
                   }),
             ),
             // Кнопки на подложке

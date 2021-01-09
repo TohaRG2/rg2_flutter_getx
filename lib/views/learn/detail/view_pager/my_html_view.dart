@@ -20,7 +20,7 @@ class MyHtmlView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LearnDetailController _controller = Get.find();
-    var htmlText = _getNormalHtmlTextFromDescription(
+    var htmlText = UrlHelper.getNormalHtmlTextFromDescription(
         _controller.currentItems[_curPageNumber].description,
         _controller.getAssetPath()
     );
@@ -39,19 +39,6 @@ class MyHtmlView extends StatelessWidget {
         UrlHelper.onUrlTap(url);
       },
     );
-  }
-
-  String _getNormalHtmlTextFromDescription(String description, String assetPath){
-    var htmlText = description;
-    htmlText = htmlText.replaceAll('<img src=', '<img apath="$assetPath" src=');
-    int n = 0;
-    while (htmlText.indexOf('<p style="text-align:center">', n) != -1) {
-      n = htmlText.indexOf('<p style="text-align:center">', n);
-      htmlText = htmlText.replaceFirst("</p>","</h5>",n);
-      n = htmlText.indexOf("/h5",n);
-    }
-    htmlText = htmlText.replaceAll('<p style="text-align:center">','<h5>');
-    return htmlText;
   }
 
 }

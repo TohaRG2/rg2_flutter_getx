@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 class TrainerMenuItem {
 
+  String id;
   String title;
   String icon;
   String helpItem;
 
-  TrainerMenuItem({this.title, this.icon, this.helpItem});
+  TrainerMenuItem({this.id, this.title, this.icon, this.helpItem});
 
 
   ///

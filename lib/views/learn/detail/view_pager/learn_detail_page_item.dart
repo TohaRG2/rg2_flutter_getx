@@ -27,53 +27,56 @@ class LearnDetailPage extends StatelessWidget {
     bool showYouTubeVideo =
         (_controller.currentItems[_curPageNumber].url != "") &&
             (_settingsController.internetUsage.value != 3);
-    return SafeArea(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Header(curPageNumber: _curPageNumber),
-                        Divider(color: Theme.of(context).primaryColor,),
-                        Visibility(
-                            visible: (_controller.currentItems[_curPageNumber].comment == "") ? false : true,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(R.commentPager,
-                                  style: TextStyle(
-                                      fontSize: 16
-                                  ),
-                                ),
-                                Text(_controller.currentItems[_curPageNumber].comment,
-                                  style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 16
-                                  ),
-                                ),
-                                Divider(color: Theme.of(context).primaryColor,)
-                              ],
-                            )
-                        ),
-                        MyHtmlView(curPageNumber: _curPageNumber),
-                        Visibility(
-                          //visible: false,
-                          visible: (showYouTubeVideo) ? true : false,
-                          child: YoutubePlayer(
-                            controller: _youTubeController,
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Header(curPageNumber: _curPageNumber),
+                  Divider(color: Theme.of(context).primaryColor,),
+                  Visibility(
+                      visible: (_controller.currentItems[_curPageNumber].comment == "") ? false : true,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(R.commentPager,
+                            style: TextStyle(
+                                fontSize: 16
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 150,)
+                          Text(_controller.currentItems[_curPageNumber].comment,
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 16
+                            ),
+                          ),
+                          Divider(color: Theme.of(context).primaryColor,)
+                        ],
+                      )
+                  ),
+                  MyHtmlView(curPageNumber: _curPageNumber),
+                  Visibility(
+                    //visible: false,
+                    visible: (showYouTubeVideo) ? true : false,
+                    child: YoutubePlayer(
+                      controller: _youTubeController,
+                      //уберем кнопку перехода на полный экран
+                      bottomActions: [
+                        CurrentPosition(),
+                        ProgressBar(isExpanded: true),
                       ],
                     ),
                   ),
-                ),
+                  SizedBox(height: 150,)
+                ],
               ),
-            ],
+            ),
           ),
-        );
+        ),
+      ],
+    );
   }
 }

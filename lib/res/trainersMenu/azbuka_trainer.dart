@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
+import 'package:rg2_flutter_getx/res/string_values.dart';
 
 final azbukaTrainer = TrainerMenuItem(
+    id: R.trainers_azbuka,
     title: azbuka_trainer_title,
     icon: azbuka_trainer_icon,
     helpItem: azbuka_trainer_help

@@ -44,4 +44,12 @@ class R {
   static const infoThanksTitle = "Спасибо";
   static const infoAdviceTitle = "Советы";
   static const infoAdviceComment = "* Щелкните по изображению, чтобы увидеть другие полезные советы по работе с программой";
+
+
+  static const trainers_azbuka = "AZBUKA";
+  static const trainers_scramble_gen = "SCRAMBLE_GEN";
+  static const trainers_pll = "PLL";
+  static const trainers_oll = "OLL";
+  static const trainers_timer = "TIMER";
+
 }
