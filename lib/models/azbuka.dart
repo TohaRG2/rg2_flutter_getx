@@ -1,7 +1,7 @@
 import 'package:get_storage/get_storage.dart';
 import '../res/constants.dart';
 
-class Azbuk {
+class Azbuka {
   var sp = GetStorage();
   List<String> _currentAzbuka = List();
   List<String> _customAzbuka = List();
@@ -9,13 +9,13 @@ class Azbuk {
   /// Делаем класс синглетным, чтобы из любого места шло обращение к одному экземпляру
 
   // публичный Коснтруктор
-  factory Azbuk() {
+  factory Azbuka() {
     return _instance;
   }
 
-  static final Azbuk _instance = Azbuk._privateConstructor();
+  static final Azbuka _instance = Azbuka._privateConstructor();
 
-  Azbuk._privateConstructor() {
+  Azbuka._privateConstructor() {
     _loadCurrentAzbuka();
     _loadCurrentAzbuka();
   }

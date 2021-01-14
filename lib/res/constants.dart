@@ -18,6 +18,7 @@ class Const {
   static const SCRAMBLE_LENGTH = 'scrambleLength';
   static const CURRENT_SCRAMBLE = 'currentScramble';
   static const CURRENT_DECISION = 'currentDecision';
+  static const SHOW_DECISION = 'showDecision';
 
   static const CURRENT_AZBUKA = 'currentAzbuka';
   static const CUSTOM_AZBUKA = 'customAzbuka';

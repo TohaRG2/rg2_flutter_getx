@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:meta/meta.dart';
+import 'package:rg2_flutter_getx/models/azbuka.dart';
+import 'package:rg2_flutter_getx/models/scramble_gen/blind_cube_support_arrays.dart';
+import 'package:rg2_flutter_getx/models/scramble_gen/blind_cube.dart';
+import 'package:rg2_flutter_getx/models/cube.dart';
+import 'package:rg2_flutter_getx/models/scramble_gen/scramble_decision_condition.dart';
 import 'package:rg2_flutter_getx/res/constants.dart';
 
 class ScrambleGenController extends GetxController {
@@ -15,6 +20,10 @@ class ScrambleGenController extends GetxController {
     _isCornerEnabled.value = GetStorage().read(Const.IS_CORNER_ENABLED) ?? true;
     _scrambleLength.value = GetStorage().read(Const.SCRAMBLE_LENGTH) ?? 14;
     _currentScramble.value = GetStorage().read(Const.CURRENT_SCRAMBLE) ?? "R F L B U2 L B' R F' D B R L F D R' D L";
+    cube.executeScramble(currentScramble);
+    blindCube = BlindCube(cube: cube);
+    _conditions = blindCube.getDecisionForScramble(currentScramble, Azbuka().currentAzbuka);
+    currentDecision = showDecision ? _conditions.decision : _conditions.decisionLength;
     super.onInit();
   }
 
@@ -46,11 +55,23 @@ class ScrambleGenController extends GetxController {
     GetStorage().write(Const.CURRENT_SCRAMBLE, value);
   }
 
+  final _showDecision = true.obs;
+  bool get showDecision => _showDecision.value;
+  set showDecision(bool value) {
+    currentDecision = value ? _conditions.decision : _conditions.decisionLength;
+    _showDecision.value = value;
+    GetStorage().write(Const.SHOW_DECISION, value);
+  }
+
+  ScrambleDecisionCondition _conditions;
   final _currentDecision = "(А Ш Ч М) Эк (У Г Ш Р)".obs;
   String get currentDecision => _currentDecision.value;
   set currentDecision(String value) {
     _currentDecision.value = value;
   }
+
+  Cube cube = Cube();
+  BlindCube blindCube;
 
   /// Методы
 
@@ -64,6 +85,14 @@ class ScrambleGenController extends GetxController {
 
   void resetScrambleLength() {
     scrambleLength = 14;
+  }
+
+  void generateNewScramble() {
+    var azbuka = Azbuka().currentAzbuka;
+
+    _conditions = blindCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength, azbuka: azbuka);
+    currentScramble = _conditions.scramble;
+    currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionLength;
   }
 
 

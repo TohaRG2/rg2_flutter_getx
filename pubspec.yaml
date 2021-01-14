@@ -47,12 +47,11 @@ dependencies:
   # YouTube Plugin
   youtube_player_flutter: ^7.0.0+7
 
-  #scrollable_positioned_list чтобы открывать список с определенной позиции
-  #https://pub.dev/packages/scrollable_positioned_list#-readme-tab-
-  #scrollable_positioned_list: ^0.1.8
-
   #Слайдер для картинок списка советов по работе с программой
   carousel_slider: ^2.3.1
+
+  # Добавляем словарь с сортировкой по ключу (для решения блайндов)
+  sortedmap: ^0.4.2+1
 
   cupertino_icons: ^1.0.0
 
@@ -61,7 +60,7 @@ dev_dependencies:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация
   floor_generator: ^0.18.0
-  build_runner: ^1.10.11
+  build_runner: ^1.10.12
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
