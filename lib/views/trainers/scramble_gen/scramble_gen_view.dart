@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/trainers_scramble_gen_controller.dart';
 import 'package:rg2_flutter_getx/models/scramble_gen/blind_cube_support_arrays.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/input_scramble_dialog.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/show_scramble_text.dart';
 
 
 class ScrambleGenView extends StatelessWidget {
@@ -188,30 +190,6 @@ class ScrambleLengthSelection extends StatelessWidget {
                 _controller.resetScrambleLength();
             }
           },
-        ),
-      ],
-    );
-  }
-}
-
-class ShowScrambleText extends StatelessWidget {
-  final String scramble;
-
-  ShowScrambleText({Key key, @required this.scramble}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-            padding: const EdgeInsets.all(8.0),
-            child: Text("Скрамбл:")),
-        Container(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            scramble,
-            style: TextStyle(color: Theme.of(context).accentColor, fontWeight: FontWeight.w600),
-          ),
         ),
       ],
     );

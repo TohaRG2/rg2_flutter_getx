@@ -52,4 +52,7 @@ class R {
   static const trainers_oll = "OLL";
   static const trainers_timer = "TIMER";
 
+  static const scramble_gen_show_scramble = "Скрамбл:";
+  static const scramble_gen_input_scramble = "Введите скрамбл:";
+
 }
