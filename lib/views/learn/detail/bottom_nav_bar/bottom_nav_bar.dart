@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 
 import '../../../shared/bottom_nav_bar_painter.dart';
 
+///
+/// Диалог отображения азбуки вращений, не путать с азбукой блайндов
+///
 class BottomNavBar extends StatelessWidget {
   final LearnDetailController _controller = Get.find();
 
