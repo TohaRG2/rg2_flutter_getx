@@ -52,7 +52,15 @@ class R {
   static const trainers_oll = "OLL";
   static const trainers_timer = "TIMER";
 
+
+  static const scramble_gen_edge_buffer  = "Без переплавки буфера ребер";
+  static const scramble_gen_corner_buffer  = "Без переплавки буфера углов";
+  static const scramble_gen_scramble_length  = "Длина скрамбла";
   static const scramble_gen_show_scramble = "Скрамбл:";
   static const scramble_gen_input_scramble = "Введите скрамбл:";
+  static const scramble_gen_blind_decision  = "Решение для сборки вслепую:";
+  static const scramble_gen_bottom_back  = "Назад";
+  static const scramble_gen_bottom_generate  = "Генерировать";
+  static const scramble_gen_bottom_settings  = "Настройки";
 
 }
