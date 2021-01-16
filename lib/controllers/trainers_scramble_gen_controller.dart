@@ -23,7 +23,7 @@ class ScrambleGenController extends GetxController {
     cube.executeScramble(currentScramble);
     blindCube = BlindCube(cube: cube);
     _conditions = blindCube.getDecisionForScramble(currentScramble, Azbuka().currentAzbuka);
-    currentDecision = showDecision ? _conditions.decision : _conditions.decisionLength;
+    currentDecision = showDecision ? _conditions.decision : _conditions.decisionInfo;
     super.onInit();
   }
 
@@ -52,13 +52,20 @@ class ScrambleGenController extends GetxController {
   String get currentScramble => _currentScramble.value;
   set currentScramble(String value) {
     _currentScramble.value = value;
+    _inputScramble.value = value;
     GetStorage().write(Const.CURRENT_SCRAMBLE, value);
+  }
+
+  final _inputScramble = "".obs;
+  String get inputScramble => _inputScramble.value;
+  set inputScramble(String value) {
+    _inputScramble.value = value;
   }
 
   final _showDecision = true.obs;
   bool get showDecision => _showDecision.value;
   set showDecision(bool value) {
-    currentDecision = value ? _conditions.decision : _conditions.decisionLength;
+    currentDecision = value ? _conditions.decision : _conditions.decisionInfo;
     _showDecision.value = value;
     GetStorage().write(Const.SHOW_DECISION, value);
   }
@@ -92,9 +99,60 @@ class ScrambleGenController extends GetxController {
 
     _conditions = blindCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength, azbuka: azbuka);
     currentScramble = _conditions.scramble;
-    currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionLength;
+    currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
   }
 
+  updateInputScrambleText() {
+    inputScramble = currentScramble;
+  }
 
+  updateCurrentScrambleFromInput() {
+    var azbuka = Azbuka().currentAzbuka;
+
+    currentScramble = inputScramble;
+    cube.executeScrambleWithReset(currentScramble);
+    _conditions = blindCube.getDecisionForScramble(currentScramble, azbuka);
+    currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
+  }
+
+  inputLetter(String letter) {
+    switch(letter) {
+      case "W":
+        inputModifier(letter.toLowerCase());
+        break;
+      case "2":
+        inputModifier(letter);
+        break;
+      case "'":
+        inputModifier(letter);
+        break;
+      case "DEL":
+        inputBackSpace();
+        break;
+
+      default:
+        print("Default value $letter");
+        inputScramble += " $letter";
+    }
+
+  }
+
+  inputModifier(String modifier) {
+    print("input modifier $modifier");
+    inputScramble = inputScramble.trim();
+    var lastSymbol = inputScramble[inputScramble.length - 1];
+    if (lastSymbol != "" && lastSymbol != "'" && lastSymbol != "2") {
+      inputScramble += modifier;
+    }
+  }
+
+  inputBackSpace() {
+    inputScramble = inputScramble.trim();
+    var len = inputScramble.length;
+    if (len > 1) {
+      inputScramble = inputScramble.substring(0, len - 1);
+    }
+    inputScramble = inputScramble.trim();
+  }
 }
 

@@ -24,7 +24,7 @@ class ScrambleGenView extends StatelessWidget {
           title: Text(
             title,
             style:
-                TextStyle(color: Theme.of(context).textTheme.headline5.color),
+            TextStyle(color: Theme.of(context).textTheme.headline5.color),
           ),
           backgroundColor: backgroundColor,
         ),
@@ -48,10 +48,10 @@ class ScrambleGenView extends StatelessWidget {
                   children: tableRows.map((row) =>
                       TableRow(
                         children: row.map((tableItem) =>
-                          Container(
-                            height: cellHeight,
-                            color: cubeColor[tableItem.color],
-                          )).toList(),
+                            Container(
+                              height: cellHeight,
+                              color: cubeColor[tableItem.color],
+                            )).toList(),
                       )).toList(),
                 ),
                 ShowBlindDecision(blindDecision: blindDecision, controller: _controller, showDecision: showDecision,),
@@ -60,7 +60,7 @@ class ScrambleGenView extends StatelessWidget {
           );
         }),
         bottomNavigationBar:
-            BottomMenuBar(bottomNavBarItem: _bottomNavBarItems));
+        BottomMenuBar(bottomNavBarItem: _bottomNavBarItems));
   }
 
 
@@ -138,18 +138,17 @@ class ShowBlindDecision extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Container(
+            padding: const EdgeInsets.only(top: 10.0 ),
+            child: Text("Решение для сборки вслепую:")),
         CheckboxListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-            title: Text("Решение для блайнда"),
+            contentPadding: const EdgeInsets.all(0.0),
+            title: Text(blindDecision),
             controlAffinity: ListTileControlAffinity.leading,
             value: showDecision,
             onChanged: (value) {
               _controller.showDecision = value;
             }),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text(blindDecision),
-        )
       ],
     );
   }
@@ -217,17 +216,17 @@ class BottomMenuBar extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
       onTap: (tappedItemIndex) {
         switch (tappedItemIndex) {
-          // Нажата кнопка "Назад"
+        // Нажата кнопка "Назад"
           case 0:
             Get.back();
             break;
-          // Нажата кнопка "Генерировать"
+        // Нажата кнопка "Генерировать"
           case 1:
             _controller.generateNewScramble();
             break;
-          // Нажата кнопка "Настройки"
+        // Нажата кнопка "Настройки"
           case 2:
-            //_controller.isEdgeEnabled = false;
+          //_controller.isEdgeEnabled = false;
             break;
           default:
             print("WARNING!!! selected bottom item - $tappedItemIndex");

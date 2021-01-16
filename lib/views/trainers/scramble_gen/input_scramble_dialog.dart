@@ -8,8 +8,102 @@ class InputScrambleDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Container(
-        child: Text(_controller.currentScramble),
+      () {
+        return Container(
+          child: Column(
+            children: [
+              Container(
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+                  child: Text(_controller.inputScramble,
+                    maxLines: 3,
+                    style: Theme.of(context).textTheme.headline4.copyWith(color: Theme.of(context).accentColor),
+                  )
+              ),
+              Row( children: [
+                  OneButton(controller: _controller, letter: "L"),
+                  OneButton(controller: _controller, letter: "R"),
+                  OneButton(controller: _controller, letter: "'"),
+                ]),
+              Row( children: [
+                  OneButton(controller: _controller, letter: "D"),
+                  OneButton(controller: _controller, letter: "U"),
+                  OneButton(controller: _controller, letter: "2"),
+                ]),
+              Row( children: [
+                  OneButton(controller: _controller, letter: "B"),
+                  OneButton(controller: _controller, letter: "F"),
+                  OneButton(controller: _controller, letter: "W"),
+                ]),
+              Row( children: [
+                OneButton(controller: _controller, letter: "x"),
+                OneButton(controller: _controller, letter: "y"),
+                OneButton(controller: _controller, letter: "z"),
+              ]),
+              Center(
+                child: Row( children: [
+                    Expanded(child: DoubleButton(controller: _controller, letter: "DEL")),
+                  ]),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class OneButton extends StatelessWidget {
+  const OneButton({
+    Key key,
+    @required ScrambleGenController controller,
+    @required this.letter,
+  }) : _controller = controller, super(key: key);
+
+  final ScrambleGenController _controller;
+  final String letter;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      child: RaisedButton(
+        color: Theme.of(context).primaryColor,
+        onPressed: () {
+          _controller.inputLetter(letter);
+        },
+        child: Text(letter),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+    );
+  }
+}
+
+class DoubleButton extends StatelessWidget {
+  const DoubleButton({
+    Key key,
+    @required ScrambleGenController controller,
+    @required this.letter,
+  }) : _controller = controller, super(key: key);
+
+  final ScrambleGenController _controller;
+  final String letter;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+        child: MaterialButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)
+            ),
+            minWidth: 200,
+            color: Theme.of(context).primaryColor,
+            onPressed: () {
+              _controller.inputLetter(letter);
+            },
+            child: Text(letter)
+        ),
       ),
     );
   }

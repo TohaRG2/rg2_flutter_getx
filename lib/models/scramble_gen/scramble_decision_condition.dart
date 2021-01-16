@@ -5,15 +5,17 @@ class ScrambleDecisionCondition {
   bool isEdgeMelted;
   bool isCornerMelted;
 
-  String get decisionLength {
-    return decision.trim().split(" ").length.toString();
+  String get decisionInfo {
+    var decisionLen = decision.trim().split(" ").length;
+    var decisionInfo = "Длина = $decisionLen, углы = $isCornerMelted, ребра = $isEdgeMelted";
+    return decisionInfo;
   }
 
   ScrambleDecisionCondition({this.scramble, this.decision, this.isEdgeMelted, this.isCornerMelted});
 
   @override
   String toString() {
-    return "Проверка Scramble $scramble, Переплавка буфера ребер - $isEdgeMelted , Переплавка буфера углов - $isCornerMelted, Решение - $decision";
+    return "Проверка Scramble $scramble, Переплавка буфера ребер - $isEdgeMelted , Переплавка буфера углов - $isCornerMelted, Решение - $decision (${decision.trim().split(" ").length})";
   }
 
 }
