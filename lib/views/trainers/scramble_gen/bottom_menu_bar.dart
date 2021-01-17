@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/trainers_scramble_gen_controller.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/settings_view.dart';
 
 class BottomMenuBar extends StatelessWidget {
   BottomMenuBar({
@@ -25,6 +26,7 @@ class BottomMenuBar extends StatelessWidget {
         switch (tappedItemIndex) {
         // Нажата кнопка "Назад"
           case 0:
+            print("back pressed");
             Get.back();
             break;
         // Нажата кнопка "Генерировать"
@@ -33,7 +35,7 @@ class BottomMenuBar extends StatelessWidget {
             break;
         // Нажата кнопка "Настройки"
           case 2:
-          //_controller.isEdgeEnabled = false;
+            Get.to(ScrambleGenSettingsView(), transition: Transition.rightToLeft);
             break;
           default:
             print("WARNING!!! selected bottom item - $tappedItemIndex");

@@ -62,5 +62,6 @@ class R {
   static const scramble_gen_bottom_back  = "Назад";
   static const scramble_gen_bottom_generate  = "Генерировать";
   static const scramble_gen_bottom_settings  = "Настройки";
+  static const scramble_gen_azbuka_select  = "Выбор азбуки";
 
 }

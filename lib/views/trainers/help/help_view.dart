@@ -3,6 +3,7 @@ import 'package:rg2_flutter_getx/flutter_html/flutter_html.dart';
 import 'package:rg2_flutter_getx/flutter_html/style.dart';
 import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
 import 'package:rg2_flutter_getx/views/shared/url_helper.dart';
+import 'package:rg2_flutter_getx/views/trainers/help/bottom_bar_with_back_button.dart';
 
 import 'bottom_nav_bar.dart';
 
@@ -23,14 +24,8 @@ class HelpView extends StatelessWidget {
               ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
-        body: Stack(
-          alignment: Alignment.topLeft,
-          fit: StackFit.expand,
-          children: [
-            _htmlView(context),
-            BottomNavBar(),
-          ],
-        )
+        body: _htmlView(context),
+        bottomNavigationBar: BottomBarWithBackButton(),
     );
   }
 
@@ -50,6 +45,9 @@ class HelpView extends StatelessWidget {
                 "h5": Style(
                     textAlign: TextAlign.center,
                     fontSize: FontSize.large
+                ),
+                "b": Style(
+                  color: Theme.of(context).accentColor,
                 ),
               },
               onLinkTap: (url) {

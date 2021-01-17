@@ -21,5 +21,7 @@ class Const {
   static const SHOW_DECISION = 'showDecision';
 
   static const CURRENT_AZBUKA = 'currentAzbuka';
+  static const CURRENT_AZBUKA_COLORS = 'currentAzbukaColors';
   static const CUSTOM_AZBUKA = 'customAzbuka';
+  static const CUSTOM_AZBUKA_COLORS = 'customAzbukaColors';
 }

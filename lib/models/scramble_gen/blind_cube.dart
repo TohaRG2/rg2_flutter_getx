@@ -37,7 +37,7 @@ class BlindCube {
       if (isCornerMelted && checkCorner) {result = false;}
     } while (!result);
     // Перемешиваем кубик по скрамблу, иначе полуим собранный куб
-    cube.executeScrambleWithReset(scramble);
+    //cube.executeScrambleWithReset(scramble);
     return condition;
   }
 
@@ -46,7 +46,7 @@ class BlindCube {
     cube.backupCube();
     cube.executeScrambleWithReset(scramble);
     var conditions = _getDecision(azbuka);
-    cube.restoreFromBackup();
+    //cube.restoreFromBackup();
     return conditions;
   }
 
@@ -73,7 +73,7 @@ class BlindCube {
 
     // Проверяем нужен ли экватор, и выполняем его если надо
     var solveSize = decision.split(" ").length;
-    if (solveSize % 2 != 0) {
+    if (solveSize % 2 != 0 && decision != "()") {
       decision += " Эк";
       _equator();
     }

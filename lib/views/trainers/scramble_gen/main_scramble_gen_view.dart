@@ -44,29 +44,32 @@ class ScrambleGenView extends StatelessWidget {
           var showDecision = _controller.showDecision;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: padding),
-            child: Column(
-              children: [
-                MeltingCheckBoxes(isEdgeEnabled: isEdgeEnabled, isCornerEnabled: isCornerEnabled, controller: _controller),
-                ScrambleLengthSelection(scrambleLength: scrambleLength, controller: _controller),
-                ShowScrambleText(scramble: scramble),
-                Table(
-                  border: TableBorder.all(width: 3.0, color: backgroundColor),
-                  children: tableRows.map((row) =>
-                      TableRow(
-                        children: row.map((tableItem) =>
-                            Container(
-                              height: cellHeight,
-                              color: cubeColor[tableItem.color],
-                            )).toList(),
-                      )).toList(),
-                ),
-                ShowBlindDecision(blindDecision: blindDecision, controller: _controller, showDecision: showDecision,),
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  MeltingCheckBoxes(isEdgeEnabled: isEdgeEnabled, isCornerEnabled: isCornerEnabled, controller: _controller),
+                  ScrambleLengthSelection(scrambleLength: scrambleLength, controller: _controller),
+                  ShowScrambleText(scramble: scramble),
+                  Table(
+                    border: TableBorder.all(width: 3.0, color: backgroundColor),
+                    children: tableRows.map((row) =>
+                        TableRow(
+                          children: row.map((tableItem) =>
+                              Container(
+                                height: cellHeight,
+                                color: cubeColor[tableItem.colorNumber],
+                              )).toList(),
+                        )).toList(),
+                  ),
+                  ShowBlindDecision(blindDecision: blindDecision, controller: _controller, showDecision: showDecision,),
+                ],
+              ),
             ),
           );
         }),
         bottomNavigationBar:
-        BottomMenuBar(bottomNavBarItem: _bottomNavBarItems));
+        BottomMenuBar(bottomNavBarItem: _bottomNavBarItems)
+    );
   }
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [

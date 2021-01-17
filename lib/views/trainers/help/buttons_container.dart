@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/settings_view.dart';
 
+//TODO Проверить, нужен ли этот класс? Удалить?
 class ButtonsContainer extends StatelessWidget {
   const ButtonsContainer({
     Key key,
@@ -40,8 +42,7 @@ class ButtonsContainer extends StatelessWidget {
             ),
             splashColor: Colors.white,
             onPressed: () {
-              print("back_pressed");
-              Get.back();
+              Get.to(ScrambleGenSettingsView(), transition: Transition.rightToLeft);
             },
           )
           //SettingsButton(),

@@ -55,7 +55,7 @@ class TrainerViewMenuItem extends StatelessWidget {
                 GestureDetector(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(item.getIcHelpPath(), width: 35, color: _primaryColor),
+                    child: Image.asset(item.getIcHelpPath(), width: 30, color: _primaryColor),
                   ),
                   onTap: () {
                     onHelpSelected(item);
@@ -64,7 +64,7 @@ class TrainerViewMenuItem extends StatelessWidget {
                 GestureDetector(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(item.getIcSettingsPath(), width: 35, color: _primaryColor),
+                    child: Image.asset(item.getIcSettingsPath(), width: 30, color: _primaryColor),
                   ),
                   onTap: (){
                     onSettingsSelected(item);

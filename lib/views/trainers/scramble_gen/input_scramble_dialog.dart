@@ -35,9 +35,9 @@ class InputScrambleDialog extends StatelessWidget {
                   OneButton(controller: _controller, letter: "W"),
                 ]),
               Row( children: [
-                OneButton(controller: _controller, letter: "x"),
-                OneButton(controller: _controller, letter: "y"),
-                OneButton(controller: _controller, letter: "z"),
+                OneButton(controller: _controller, letter: "M"),
+                OneButton(controller: _controller, letter: "S"),
+                OneButton(controller: _controller, letter: "E"),
               ]),
               Center(
                 child: Row( children: [
@@ -64,15 +64,17 @@ class OneButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-      child: RaisedButton(
-        color: Theme.of(context).primaryColor,
-        onPressed: () {
-          _controller.inputLetter(letter);
-        },
-        child: Text(letter),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+        child: RaisedButton(
+          color: Theme.of(context).primaryColor,
+          onPressed: () {
+            _controller.inputLetter(letter);
+          },
+          child: Text(letter),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
       ),
     );
   }

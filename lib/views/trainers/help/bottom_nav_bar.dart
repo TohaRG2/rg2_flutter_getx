@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:rg2_flutter_getx/controllers/learn_detail_controller.dart';
+import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
 import 'package:rg2_flutter_getx/views/dialogs/azbuka/azbuka_dialog.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/views/shared/bottom_nav_bar_painter.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/main_scramble_gen_view.dart';
 
 import 'buttons_container.dart';
 
-
+//TODO Проверить, нужен ли этот класс? Удалить?
 class BottomNavBar extends StatelessWidget {
-  final LearnDetailController _controller = Get.find();
+  final TrainerMenuItem item;
+
+  BottomNavBar({this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +41,7 @@ class BottomNavBar extends StatelessWidget {
                   child: Icon(Icons.repeat),
                   elevation: 0.1,
                   onPressed: () {
-                    print("FAB pressed");
-                    //Get.dialog(AzbukaDialog(_controller.obsPhase.value));
+                    Get.to(ScrambleGenView(title: item.title), transition: Transition.downToUp);
                   }),
             ),
             // Кнопки на подложке

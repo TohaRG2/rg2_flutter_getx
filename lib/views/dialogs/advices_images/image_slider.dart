@@ -11,13 +11,22 @@ class ComplicatedImageDemo extends StatelessWidget {
     final listItems = Advices.advicesList.map((item) =>
         Container(child: Container(margin: EdgeInsets.all(5.0),
           child: ClipRRect(borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              child: Column(children: <Widget>[
-                Expanded(child: Center(child: Text(
-                  '${item.adviceText}', textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline5,
-                ),),),
-                Image.asset(item.adviceImagePath, fit: BoxFit.cover),
-              ],)),),)).toList();
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Center(
+                      child: Text(
+                        '${item.adviceText}',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                    ),
+                  ),
+                  Image.asset(item.adviceImagePath, fit: BoxFit.cover),
+                ],
+              )),
+              ),
+            )).toList();
     return Container(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -25,7 +34,7 @@ class ComplicatedImageDemo extends StatelessWidget {
         CarouselSlider(
           options: CarouselOptions(
             autoPlay: false,
-            aspectRatio: 0.75,
+            aspectRatio: 0.8,
             enlargeCenterPage: true,
             onPageChanged: (index, reason) {
               _position.value = index;

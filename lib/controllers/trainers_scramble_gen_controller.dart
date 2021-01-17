@@ -22,7 +22,8 @@ class ScrambleGenController extends GetxController {
     _currentScramble.value = GetStorage().read(Const.CURRENT_SCRAMBLE) ?? "R F L B U2 L B' R F' D B R L F D R' D L";
     cube.executeScramble(currentScramble);
     blindCube = BlindCube(cube: cube);
-    _conditions = blindCube.getDecisionForScramble(currentScramble, Azbuka().currentAzbuka);
+    currentAzbuka = Azbuka().currentAzbuka;
+    _conditions = blindCube.getDecisionForScramble(currentScramble, currentAzbuka);
     currentDecision = showDecision ? _conditions.decision : _conditions.decisionInfo;
     super.onInit();
   }
@@ -78,7 +79,16 @@ class ScrambleGenController extends GetxController {
   }
 
   Cube cube = Cube();
+  Cube settingsCube = Cube();
   BlindCube blindCube;
+
+  // создаем observable азбуку, чтобы обновлять ее на экране, при ее изменении
+  RxList<String> _currentAzbuka = List<String>().obs;
+  List<String> get currentAzbuka => _currentAzbuka;
+  set currentAzbuka (List<String> value) {
+    _currentAzbuka.assignAll(value);
+    Azbuka().currentAzbuka = value;
+  }
 
   /// Методы
 
@@ -95,9 +105,7 @@ class ScrambleGenController extends GetxController {
   }
 
   void generateNewScramble() {
-    var azbuka = Azbuka().currentAzbuka;
-
-    _conditions = blindCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength, azbuka: azbuka);
+    _conditions = blindCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength, azbuka: currentAzbuka);
     currentScramble = _conditions.scramble;
     currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
   }
@@ -107,11 +115,9 @@ class ScrambleGenController extends GetxController {
   }
 
   updateCurrentScrambleFromInput() {
-    var azbuka = Azbuka().currentAzbuka;
-
     currentScramble = inputScramble;
     cube.executeScrambleWithReset(currentScramble);
-    _conditions = blindCube.getDecisionForScramble(currentScramble, azbuka);
+    _conditions = blindCube.getDecisionForScramble(currentScramble, currentAzbuka);
     currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
   }
 
@@ -149,10 +155,11 @@ class ScrambleGenController extends GetxController {
   inputBackSpace() {
     inputScramble = inputScramble.trim();
     var len = inputScramble.length;
-    if (len > 1) {
+    if (len > 0) {
       inputScramble = inputScramble.substring(0, len - 1);
     }
     inputScramble = inputScramble.trim();
   }
+
 }
 

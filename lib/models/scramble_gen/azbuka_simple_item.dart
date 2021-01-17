@@ -1,8 +1,8 @@
 import 'dart:core';
 
 class AzbukaSimpleItem{
-  int color;
+  int colorNumber;
   String letter;
 
-  AzbukaSimpleItem({this.color, this.letter});
+  AzbukaSimpleItem({this.colorNumber, this.letter});
 }

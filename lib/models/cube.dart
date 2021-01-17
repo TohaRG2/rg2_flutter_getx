@@ -16,39 +16,61 @@ class Cube {
   /// Бэкап кубика
   List<int> _backup = List();
 
-  /// Конструктор, при создании экземпляра обнуляем кубик
+  /// Цвета сторон кубика
+  List<int> _colorsSide = [0,1,2,3,4,5,6,7];
+
+  /// Азбука для кубика
+  List<AzbukaSimpleItem> coloredAzbuka = List();
+
+  /// Конструкторы
   Cube() {
     resetCube();
+  }
+
+  Cube.colored(List<int> list) {
+    _setColorsSide(list);
+    resetCube();
+  }
+
+
+  /// Устанавливаем цвета в кубике в зависимости от переданного параметра
+  _setColorsSide(List<int> list) {
+    if (list.length < 9) {
+      list.asMap().forEach((index, value) {
+        _colorsSide[index] = value;
+      });
+    }
   }
 
   /// Обнуляем кубик (возвращаем в исходное состояние)
   void resetCube() {
     print ("resetCube");
     for(int i=0; i < _cube.length; i++){
-      _cube[i] = i ~/ 9;
+      _cube[i] = _colorsSide[i ~/ 9];
     }
   }
 
   /// Представляем кубик в виде таблицы из 108 элементов (9 строк по 12 элементов)
-  List<AzbukaSimpleItem> asTable() {
+  List<AzbukaSimpleItem> asTable({ List<String> azbuka }) {
+    var letterList = (azbuka != null) ? azbuka.toList() : List.filled(54, " ");
     // заполняем табличку прозрачными пустыми элементами
-    var _table = List.generate(108, (_) => AzbukaSimpleItem(color: 7, letter: ""));
+    var table = List.generate(108, (_) => AzbukaSimpleItem(colorNumber: 7, letter: ""));
     // ставим на свои места значения ячеек кубика
     for(int i=0; i < 9; i++) {
-      _table[(i ~/3) * 12 + 3 + i % 3] = AzbukaSimpleItem(color: _cube[i], letter: " ");
-      _table[(i ~/3 + 3) * 12 + i % 3] = AzbukaSimpleItem(color: _cube[i + 9], letter: " ");
-      _table[(i ~/3 + 3) * 12 + 3 + i % 3] = AzbukaSimpleItem(color: _cube[i + 18], letter: " ");
-      _table[(i ~/3 + 3) * 12 + 6 + i % 3] = AzbukaSimpleItem(color: _cube[i + 27], letter: " ");
-      _table[(i ~/3 + 3) * 12 + 9 + i % 3] = AzbukaSimpleItem(color: _cube[i + 36], letter: " ");
-      _table[(i ~/3 + 6) * 12 + 3 + i % 3] = AzbukaSimpleItem(color: _cube[i + 45], letter: " ");
+      table[(i ~/3) * 12 + 3 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i], letter: letterList[i]);
+      table[(i ~/3 + 3) * 12 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i + 9], letter: letterList[i + 9]);
+      table[(i ~/3 + 3) * 12 + 3 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i + 18], letter: letterList[i + 18]);
+      table[(i ~/3 + 3) * 12 + 6 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i + 27], letter: letterList[i + 27]);
+      table[(i ~/3 + 3) * 12 + 9 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i + 36], letter: letterList[i + 36]);
+      table[(i ~/3 + 6) * 12 + 3 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i + 45], letter: letterList[i + 45]);
     }
-    return _table;
+    return table;
   }
 
   /// Представляем кубик в виде 9 строк по 12 элементов
-  List<List<AzbukaSimpleItem>> asTableRows() {
+  List<List<AzbukaSimpleItem>> asTableRows({ List<String> azbuka }) {
     List<List<AzbukaSimpleItem>> result = List();
-    var table = asTable();
+    var table = asTable(azbuka: azbuka);
     for(int i=0; i < 9; i++) {
       var row = table.getRange(i * 12, (i + 1) * 12).toList();
       result.add(row);
@@ -109,7 +131,7 @@ class Cube {
       if (i % 12 == 0) {
         result += "\n";
       }
-      result += table[i].color.toString();
+      result += table[i].colorNumber.toString();
     }
     result = result.replaceAll("7", " ");
     return result;
