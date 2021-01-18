@@ -2,7 +2,7 @@ import 'package:sortedmap/sortedmap.dart';
 
 class PairForMelting {
   bool allComplete;
-  var elementsNotOnPlace = SortedMap(Ordering.byKey());
+  List<int> elementsNotOnPlace;
 
   PairForMelting({this.allComplete, this.elementsNotOnPlace});
 }

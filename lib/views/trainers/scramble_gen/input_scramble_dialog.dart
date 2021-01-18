@@ -39,6 +39,11 @@ class InputScrambleDialog extends StatelessWidget {
                 OneButton(controller: _controller, letter: "S"),
                 OneButton(controller: _controller, letter: "E"),
               ]),
+              Row( children: [
+                OneButton(controller: _controller, letter: "x"),
+                OneButton(controller: _controller, letter: "y"),
+                OneButton(controller: _controller, letter: "z"),
+              ]),
               Center(
                 child: Row( children: [
                     Expanded(child: DoubleButton(controller: _controller, letter: "DEL")),

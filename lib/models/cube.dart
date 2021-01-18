@@ -131,7 +131,7 @@ class Cube {
       if (i % 12 == 0) {
         result += "\n";
       }
-      result += table[i].colorNumber.toString();
+      result += "${table[i].colorNumber} ";
     }
     result = result.replaceAll("7", " ");
     return result;

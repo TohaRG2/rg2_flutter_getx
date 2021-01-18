@@ -1,8 +1,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:rg2_flutter_getx/models/scramble_gen/pair_for_melting_2.dart';
-import 'package:rg2_flutter_getx/models/scramble_gen/scramble_decision_condition.dart';
 import 'package:rg2_flutter_getx/models/scramble_gen/pair_for_melting.dart';
+import 'package:rg2_flutter_getx/models/scramble_gen/scramble_decision_condition.dart';
 import 'blind_cube_support_arrays.dart';
 import '../cube.dart';
 import 'package:sortedmap/sortedmap.dart';
@@ -13,7 +12,7 @@ class BlindCube {
 
   BlindCube({this.cube});
   
-  // номера элементов центров
+  /// номера центральных элементов кубика (см.диаграмму в конце этого класса)
   List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
   
   /// Возвращаем подходящий под условия переплавки скрамбл и перемешиваем по нему кубик
@@ -41,7 +40,7 @@ class BlindCube {
       if (isCornerMelted && checkCorner) {result = false;}
     } while (!result);
     // Перемешиваем кубик по скрамблу, иначе полуим собранный куб
-    //cube.executeScrambleWithReset(scramble);
+    cube.executeScrambleWithReset(scramble);
     return condition;
   }
 
@@ -50,7 +49,7 @@ class BlindCube {
     cube.backupCube();
     cube.executeScrambleWithReset(scramble);
     var conditions = _getDecision(azbuka);
-    //cube.restoreFromBackup();
+    cube.restoreFromBackup();
     return conditions;
   }
 
@@ -96,7 +95,7 @@ class BlindCube {
         isCornerMelted = true;
       }
       // ставим на место угол из буфера и сохраняем результаты выполнения одной "буквы"
-      decision = _cornerBufferSolve(mainCorner[sumColor], decision, azbuka);
+      decision = _cornerBufferSolve(getCornerPosition(sumColor), decision, azbuka);
     // выполняем пока все углы не будут на своих местах
     } while (!_isAllCornersOnItsPlace().allComplete);
 
@@ -156,43 +155,29 @@ class BlindCube {
     return solv;
   }
 
-  String _meltingEdge(String solv, SortedMap<int, int> edgesListNotOnPlace, List<String> azbuka) {
-    var positionOfElement = 0;
+  String _meltingEdge(String solv, List<int> edgesListNotOnPlace, List<String> azbuka) {
+    var positionToMelting = 0;
     // цикл поиска свободной корзины
     var j = 0;
-    while (positionOfElement == 0) {
+    while (positionToMelting == 0) {
       var i = 0;
       do {
-        if (edgePriority[j] == edgesListNotOnPlace[i]) {
-          positionOfElement = edgePriority[j];
+        // Если ребро не на месте и нашлось в приоритетах, то выбираем его
+        if (edgesListNotOnPlace[i] == edgePriority[j]) {
+          positionToMelting = edgePriority[j];
         } //ищем ребра на своем месте по приоритету edgePriority
         i++;
-      } while (edgesListNotOnPlace[i] != null);
+      } while (i < edgesListNotOnPlace.length);
       j++;
     }
     //переплавляем буфер (рекурсия)
-    return _edgeBufferSolve(positionOfElement, solv, azbuka);
+    return _edgeBufferSolve(positionToMelting, solv, azbuka);
   }
 
   /// Проверяем все ли грани на своих местах
   PairForMelting _isAllEdgesOnItsPlace() {
     //предположим что все на местах
     var result = true;
-    //Обнуляем список ребер стоящих на местах
-    //TODO Проверить на сколько сдесь необходим SortedMap, может достаточного простого List? Тогда и j вообще не нужна
-    // SortedMap<int,int> edgesListNotOnPlace = SortedMap(Ordering.byKey());
-    // var j = 0;
-    // for (int i = 0; i <= 52; i++) {
-    //   var secColor = dopEdge[i];
-    //   if (secColor != null) {
-    //     var firstColor = _getColorOfElement(i,secColor);
-    //     if (mainEdge[firstColor] != i) {
-    //       edgesListNotOnPlace.addAll({ j : i });
-    //       j++;
-    //       result = false;
-    //     }
-    //   }
-    // }
 
     List<int> edgesListNotOnPlace = List();
     dopEdge.forEach((mainPosition, slavePosition) {
@@ -204,16 +189,14 @@ class BlindCube {
         if (cube.asList[position] == slaveColor) { defaultColor += (index + 1); }
       });
       var itemPosition = mainEdge[defaultColor];
-      if (mainPosition != itemPosition) {
-        //занчит элемент не на месте
+      if (itemPosition != mainPosition) {
+        //значит элемент не на месте, сбрасываем флаг и добавляем его в список
         result = false;
-        edges.add(mainPosition);
+        edgesListNotOnPlace.add(mainPosition);
       }
     });
 
-    //print("newList = $edges");
-    
-    return PairForMelting2(allComplete: result, elementsNotOnPlace: edgesListNotOnPlace);
+    return PairForMelting(allComplete: result, elementsNotOnPlace: edgesListNotOnPlace);
   }
 
   /// Получаем позицию ребра, в зависимости от его цвета
@@ -286,7 +269,7 @@ class BlindCube {
   }
 
   /// Переплавка буфера углов
-  String _meltingCorner(String solv, SortedMap<int,int> cornersListNotOnPlace, List<String> azbuka) {
+  String _meltingCorner(String solv, List<int> cornersListNotOnPlace, List<String> azbuka) {
     var positionOfElement = 0;
     // цикл поиска свободной корзины
     var j = 0;
@@ -297,7 +280,7 @@ class BlindCube {
           positionOfElement = cornerPriority[j];
         } //ищем ребра на своем месте по приоритету cornerPriority
         i++;
-      } while (cornersListNotOnPlace[i] != null);
+      } while (i < cornersListNotOnPlace.length);
       j++;
     }
     //переплавляем буфер (рекурсия)
@@ -309,23 +292,42 @@ class BlindCube {
     //предположим что все на местах
     var result = true;
     //Обнуляем список углов стоящих на своих местах
-    SortedMap<int, int> cornersListNotOnPlace = SortedMap(Ordering.byKey());
-    var j = 0;
-    //Будем проверять все элементы кубика
-    for (int i = 0; i <= 52; i++) {
-      //Проверяем данный элемент угол или ребро
-      var secColor = dopCorner[i];
-      if (secColor != null) {
-        var fColor = _getColorOfElement(i,secColor);
-        if (mainCorner[fColor] != i) {
-          cornersListNotOnPlace.addAll({ j : i });
-          j++;
-          result = false;
-        }
+    List<int> cornersListNotOnPlace = List();
+    dopCorner.forEach((mainPosition, slavePosition) {
+      var mainColor = cube.asList[mainPosition];
+      var slaveColor = cube.asList[slavePosition];
+      var defaultColor = 0;
+      _centersPositions.asMap().forEach((index, position) {
+        if (cube.asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
+        if (cube.asList[position] == slaveColor) { defaultColor += (index + 1); }
+      });
+      var itemPosition = mainCorner[defaultColor];
+      if (itemPosition != mainPosition) {
+        //значит элемент не на месте
+        result = false;
+        cornersListNotOnPlace.add(mainPosition);
       }
-    }
+    });
+
     return PairForMelting(allComplete: result, elementsNotOnPlace: cornersListNotOnPlace);
   }
+
+  /// Получаем позицию угла, в зависимости от его цвета
+  /// цвет в данном случае двухзначное число
+  int getCornerPosition(int color) {
+    //определить по цветам центров значение цвета для дефолтного кубика
+    var mainColor = (color ~/ 10) - 1;
+    var slaveColor = (color % 10) - 1;
+    var defaultColor = 0;
+    // перебираем центральные элементы кубика и сравниваем их цвет с цветом ребра, получаем цвет в дефолтном кубике (белый верх, зеленый фронт)
+    _centersPositions.asMap().forEach((index, position) {
+      if (cube.asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
+      if (cube.asList[position] == slaveColor) { defaultColor += (index + 1); }
+    });
+    // возвращаем номер элемента, по таблице для дефолтного кубика
+    return mainCorner[defaultColor];
+  }
+
 
   ///получаем цвет переданных ячеек куба (двузначное число, первая и вторая цифры которого соответствую искомым цветам)
   int _getColorOfElement(int firstElement, int secondElement) {
