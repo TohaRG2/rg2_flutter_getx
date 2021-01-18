@@ -14,6 +14,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
     final Size size = context.mediaQuery.size;
     const padding = 8.0;
     var cellHeight = (size.width - padding * 2) / 12;
+    _controller.cube.resetCube();
     return Obx(() {
       var azbuka = _controller.currentAzbuka;
       var tableRows = _controller.cube.asTableRows(azbuka: azbuka);

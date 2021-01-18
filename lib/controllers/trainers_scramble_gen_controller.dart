@@ -72,7 +72,7 @@ class ScrambleGenController extends GetxController {
   }
 
   ScrambleDecisionCondition _conditions;
-  final _currentDecision = "(А Ш Ч М) Эк (У Г Ш Р)".obs;
+  final _currentDecision = "()()".obs;
   String get currentDecision => _currentDecision.value;
   set currentDecision(String value) {
     _currentDecision.value = value;
