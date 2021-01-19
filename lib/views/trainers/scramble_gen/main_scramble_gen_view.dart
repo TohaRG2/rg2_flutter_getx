@@ -13,17 +13,17 @@ import 'show_blind_decision.dart';
 
 
 class ScrambleGenView extends StatelessWidget {
-  final String title;
   final ScrambleGenController _controller = Get.find();
+  final String title;
 
   ScrambleGenView({this.title});
 
   @override
   Widget build(BuildContext context) {
     final Color backgroundColor = Theme.of(context).scaffoldBackgroundColor;
-    final Size size = context.mediaQuery.size;
     const padding = 8.0;
-    var cellHeight = (size.width - padding * 2) / 12;
+    var cellHeight = (Get.width - padding * 2) / 12;
+    print("ScrambleGenView");
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,

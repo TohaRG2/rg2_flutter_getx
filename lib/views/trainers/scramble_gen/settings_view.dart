@@ -16,7 +16,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
     var cellHeight = (size.width - padding * 2) / 12;
     _controller.cube.resetCube();
     return Obx(() {
-      var azbuka = _controller.currentAzbuka;
+      var azbuka = _controller.coloredAzbuka;
       var tableRows = _controller.cube.asTableRows(azbuka: azbuka);
       return Scaffold(
           appBar: AppBar(
@@ -38,35 +38,48 @@ class ScrambleGenSettingsView extends StatelessWidget {
                   children: tableRows.map((row) =>
                       TableRow(
                         children: row.map((tableItem) =>
-                            Container(
-                              height: cellHeight,
-                              color: cubeColor[tableItem.colorNumber],
-                              child: Center(
-                                  child: Text(tableItem.letter, style: TextStyle(color: Colors.black),)
+                            GestureDetector(
+                              child: Container(
+                                height: cellHeight,
+                                color: cubeColor[tableItem.colorNumber],
+                                child: Center(
+                                    child: Text(tableItem.letter, style: TextStyle(color: Colors.black),)
+                                ),
                               ),
+                              onTap: () {
+                                if (tableItem.letter != "" && tableItem.letter != "-") {
+                                  print("Нажата какая-то буква");
+                                }
+                              },
                             )).toList(),
                       )).toList(),
                 ),
                 Row(
                   children: [
                     Expanded(
-                      child: RaisedButton(
-                        color: Theme.of(context).primaryColor,
-                        onPressed: () {
-                          _controller.loadMyAzbuka();
-                        },
-                        child: Text(R.scrambleGenSettingsLoadMyAzbuka),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: RaisedButton(
+                          color: Theme.of(context).primaryColor,
+                          onPressed: () {
+                            _controller.loadMyAzbuka();
+                          },
+                          child: Text(R.scrambleGenSettingsLoadMyAzbuka),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
                       ),
                     ),
                     Expanded(
-                      child: RaisedButton(
-                        color: Theme.of(context).primaryColor,
-                        onPressed: () {
-                          _controller.loadMaximAzbuka();
-                        },
-                        child: Text(R.scrambleGenSettingsLoadMaximAzbuka),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      child: Container(
+                        padding: EdgeInsets.all(8.0),
+                        child: RaisedButton(
+                          color: Theme.of(context).primaryColor,
+                          onPressed: () {
+                            _controller.loadMaximAzbuka();
+                          },
+                          child: Text(R.scrambleGenSettingsLoadMaximAzbuka),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
                       ),
                     ),
                   ],

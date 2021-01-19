@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:rg2_flutter_getx/models/scramble_gen/azbuka_simple_item.dart';
 import 'package:rg2_flutter_getx/models/scramble_gen/pair_for_melting.dart';
 import 'package:rg2_flutter_getx/models/scramble_gen/scramble_decision_condition.dart';
 import 'blind_cube_support_arrays.dart';
@@ -9,14 +10,22 @@ import 'package:sortedmap/sortedmap.dart';
 class BlindCube {
   /// Представление кубика в виде непрерывного списка из 54 элементов (6 граней * 9 наклеек на каждой)
   final Cube cube;
+  /// Азбука из 54 элементов для блайнда
+  List<String> azbuka = List.filled(54, " ");
 
-  BlindCube({this.cube});
+  BlindCube({this.cube, this.azbuka});
   
   /// номера центральных элементов кубика (см.диаграмму в конце этого класса)
   static const List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
-  
+
+  List<AzbukaSimpleItem> get coloredAzbuka {
+    var colors = cube.asList;
+    List<AzbukaSimpleItem> result = List();
+    return colors.asMap().forEach((index, value) { });
+  }
+
   /// Возвращаем подходящий под условия переплавки скрамбл и перемешиваем по нему кубик
-  ScrambleDecisionCondition generateScrambleWithParam({bool checkEdge, bool checkCorner, int lenScramble, List<String> azbuka}) {
+  ScrambleDecisionCondition generateScrambleWithParam({bool checkEdge, bool checkCorner, int lenScramble}) {
     //print("Ищем скрамбл подходящий по параметрам переплавок буфера и длине");
     ScrambleDecisionCondition condition;
     var scramble = "";
@@ -45,7 +54,7 @@ class BlindCube {
   }
 
   ///Получаем решение для блайнда для заданного скрамбла и азбуки
-  ScrambleDecisionCondition getDecisionForScramble(String scramble, List<String> azbuka) {
+  ScrambleDecisionCondition getDecisionForScramble(String scramble) {
     cube.backupCube();
     cube.executeScrambleWithReset(scramble);
     var conditions = _getDecision(azbuka);

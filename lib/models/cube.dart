@@ -11,13 +11,13 @@ class Cube {
 
   /// Представление кубика в виде непрерывного списка из 54 элементов (6 граней * 9 наклеек на каждой)
   List<int> _cube = List.filled(54, 0);
-  get asList => _cube;
+  List<int> get asList => _cube;
 
   /// Бэкап кубика
   List<int> _backup = List();
 
-  /// Цвета сторон кубика
-  List<int> _colorsSide = [0,1,2,3,4,5,6,7];
+  /// Цвета сторон кубика + 2 цвета (обычно черный и прозрачный)
+  List<int> _defaultColorsSide = [0,1,2,3,4,5,6,7];
 
   /// номера центральных элементов кубика (см.диаграмму в конце этого класса)
   static const List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
@@ -43,7 +43,7 @@ class Cube {
   _setColorsSide(List<int> list) {
     if (list.length < 9) {
       list.asMap().forEach((index, value) {
-        _colorsSide[index] = value;
+        _defaultColorsSide[index] = value;
       });
     }
   }
@@ -52,7 +52,7 @@ class Cube {
   void resetCube() {
     print ("resetCube");
     for(int i=0; i < _cube.length; i++){
-      _cube[i] = _colorsSide[i ~/ 9];
+      _cube[i] = _defaultColorsSide[i ~/ 9];
     }
   }
 
@@ -245,8 +245,11 @@ class Cube {
     }
   }
 
-  _updateColors() {
-    взять цвета из currentColors и обновить ими _colorsSide
+  /// берем цвета из currentColors и обновляем их в _colorsSide, чтобы кубик сбрасывался уже к новому начальному состоянию
+  updateDefaultColorsToCurrent() {
+    currentColors.asMap().forEach((index, value) {
+      _defaultColorsSide[index] = value;
+    });
   }
 
   ///

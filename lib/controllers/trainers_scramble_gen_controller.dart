@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:meta/meta.dart';
 import 'package:rg2_flutter_getx/models/azbuka.dart';
+import 'package:rg2_flutter_getx/models/scramble_gen/azbuka_simple_item.dart';
 import 'package:rg2_flutter_getx/models/scramble_gen/blind_cube_support_arrays.dart';
 import 'package:rg2_flutter_getx/models/scramble_gen/blind_cube.dart';
 import 'package:rg2_flutter_getx/models/cube.dart';
@@ -20,10 +21,9 @@ class ScrambleGenController extends GetxController {
     _isCornerEnabled.value = GetStorage().read(Const.IS_CORNER_ENABLED) ?? true;
     _scrambleLength.value = GetStorage().read(Const.SCRAMBLE_LENGTH) ?? 14;
     _currentScramble.value = GetStorage().read(Const.CURRENT_SCRAMBLE) ?? "R F L B U2 L B' R F' D B R L F D R' D L";
-    cube.executeScramble(currentScramble);
-    blindCube = BlindCube(cube: cube);
-    currentAzbuka = Azbuka().currentAzbuka;
-    _conditions = blindCube.getDecisionForScramble(currentScramble, currentAzbuka);
+    cube.executeScrambleWithReset(currentScramble);
+    blindCube = BlindCube(cube: cube, azbuka: Azbuka().currentAzbuka);
+    _conditions = blindCube.getDecisionForScramble(currentScramble);
     currentDecision = showDecision ? _conditions.decision : _conditions.decisionInfo;
     super.onInit();
   }
@@ -79,15 +79,18 @@ class ScrambleGenController extends GetxController {
   }
 
   Cube cube = Cube();
+  Cube settingsCube = Cube();
   BlindCube blindCube;
 
   // создаем observable азбуку, чтобы обновлять ее на экране, при ее изменении
-  RxList<String> _currentAzbuka = List<String>().obs;
-  List<String> get currentAzbuka => _currentAzbuka;
-  set currentAzbuka (List<String> value) {
-    _currentAzbuka.assignAll(value);
-    Azbuka().currentAzbuka = value;
+  RxList<AzbukaSimpleItem> _coloredAzbuka = List<AzbukaSimpleItem>().obs;
+  List<AzbukaSimpleItem> get coloredAzbuka => _coloredAzbuka;
+  set coloredAzbuka (List<AzbukaSimpleItem> value) {
+    _coloredAzbuka.assignAll(value);
+    Azbuka().currentAzbuka = value.map((v) => v.letter).toList();
   }
+
+
 
   /// Методы
 
@@ -104,7 +107,7 @@ class ScrambleGenController extends GetxController {
   }
 
   void generateNewScramble() {
-    _conditions = blindCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength, azbuka: currentAzbuka);
+    _conditions = blindCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength);
     currentScramble = _conditions.scramble;
     currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
   }
@@ -116,7 +119,7 @@ class ScrambleGenController extends GetxController {
   updateCurrentScrambleFromInput() {
     currentScramble = inputScramble;
     cube.executeScrambleWithReset(currentScramble);
-    _conditions = blindCube.getDecisionForScramble(currentScramble, currentAzbuka);
+    _conditions = blindCube.getDecisionForScramble(currentScramble);
     currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
   }
 
@@ -161,11 +164,13 @@ class ScrambleGenController extends GetxController {
   }
 
   loadMyAzbuka() {
-    cube.executeScramble("z");
+    cube.executeScramble("z'");
+    currentAzbuka = Azbuka().currentAzbuka;
   }
 
   loadMaximAzbuka() {
-    cube.executeScramble("z'");
+    cube.executeScramble("z");
+    currentAzbuka = Azbuka().currentAzbuka;
   }
 }
 
