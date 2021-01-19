@@ -69,7 +69,6 @@ class BlindCube {
         isEdgeMelted = true;
       }
       // ставим на место ребро из буфера и сохраняем результаты выполнения одной "буквы"
-      print("MainEdge = ${mainEdge[sumColor]}, new = ${getEdgePosition(sumColor)}");
       decision = _edgeBufferSolve(getEdgePosition(sumColor), decision, azbuka);
       // выполняем пока все ребра не будут на своих местах
     } while (!_isAllEdgesOnItsPlace().allComplete);
