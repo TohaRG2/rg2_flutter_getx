@@ -16,9 +16,11 @@ class TrainersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(R.trainersTitle,
-              style: TextStyle(
-                  color: Theme.of(context).textTheme.headline5.color)),
+          title: Center(
+            child: Text(R.trainersTitle,
+                style: TextStyle(
+                    color: Theme.of(context).textTheme.headline5.color)),
+          ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
         body: Obx(() {

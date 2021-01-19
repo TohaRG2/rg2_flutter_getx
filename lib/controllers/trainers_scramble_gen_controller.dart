@@ -79,7 +79,6 @@ class ScrambleGenController extends GetxController {
   }
 
   Cube cube = Cube();
-  Cube settingsCube = Cube();
   BlindCube blindCube;
 
   // создаем observable азбуку, чтобы обновлять ее на экране, при ее изменении
@@ -161,5 +160,12 @@ class ScrambleGenController extends GetxController {
     inputScramble = inputScramble.trim();
   }
 
+  loadMyAzbuka() {
+    cube.executeScramble("z");
+  }
+
+  loadMaximAzbuka() {
+    cube.executeScramble("z'");
+  }
 }
 

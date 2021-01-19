@@ -19,8 +19,14 @@ class Cube {
   /// Цвета сторон кубика
   List<int> _colorsSide = [0,1,2,3,4,5,6,7];
 
-  /// Азбука для кубика
-  List<AzbukaSimpleItem> coloredAzbuka = List();
+  /// номера центральных элементов кубика (см.диаграмму в конце этого класса)
+  static const List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
+
+  /// Список из 6-ти текущих цветов в кубике (его центров)
+  List<int> get currentColors => _centersPositions.map((pos) => asList[pos]).toList();
+
+  ///TODO Азбука для кубика (пока не используется) - логичнее использовать в BlindCube
+  //List<AzbukaSimpleItem> coloredAzbuka = List();
 
   /// Конструкторы
   Cube() {
@@ -139,8 +145,8 @@ class Cube {
 
   /// Применяем скрамбл к текущему положению кубика
   executeScramble(String scramble) {
-    var scrm = _normalizeScramble(scramble);
-    List<String> list = scrm.split(" ");
+    var normalizedScramble = _normalizeScramble(scramble);
+    List<String> list = normalizedScramble.split(" ");
     list.forEach((element) {
       switch(element) {
         case "R"  :  _moveR();   break;
@@ -170,34 +176,34 @@ class Cube {
         case "S"  :  _moveS();   break;
         case "S1" :  _moveSb();  break;
         case "S2" :  _moveS2();  break;
-        case "Rw" :  _moveRw();  break;
-        case "Rw1":  _moveRwb(); break;
-        case "Rw2":  _moveRw2(); break;
-        case "Rw21": _moveRw2(); break;
-        case "Uw" :  _moveUw();  break;
-        case "Uw1":  _moveUwb(); break;
-        case "Uw2":  _moveUw2(); break;
-        case "Dw" :  _moveDw();  break;
-        case "Dw1":  _moveDwb(); break;
-        case "Dw2":  _moveDw2(); break;
-        case "Lw" :  _moveLw();  break;
-        case "Lw1":  _moveLwb(); break;
-        case "Lw2":  _moveLw2(); break;
-        case "Fw" :  _moveFw();  break;
-        case "Fw1":  _moveFwb(); break;
-        case "Fw2":  _moveFw2(); break;
-        case "Bw" :  _moveBw();  break;
-        case "Bw1":  _moveBwb(); break;
-        case "Bw2":  _moveBw2(); break;
-        case "z"  :  _moveZ();   break;
-        case "z1" :  _moveZb();  break;
-        case "z2" :  _moveZ2();  break;
-        case "x"  :  _moveX();   break;
-        case "x1" :  _moveXb();  break;
-        case "x2" :  _moveX2();  break;
-        case "y"  :  _moveY();   break;
-        case "y1" :  _moveYb();  break;
-        case "y2" :  _moveY2();  break;
+        case "RW" :  _moveRw();  break;
+        case "RW1":  _moveRwb(); break;
+        case "RW2":  _moveRw2(); break;
+        case "RW21": _moveRw2(); break;
+        case "UW" :  _moveUw();  break;
+        case "UW1":  _moveUwb(); break;
+        case "UW2":  _moveUw2(); break;
+        case "DW" :  _moveDw();  break;
+        case "DW1":  _moveDwb(); break;
+        case "DW2":  _moveDw2(); break;
+        case "LW" :  _moveLw();  break;
+        case "LW1":  _moveLwb(); break;
+        case "LW2":  _moveLw2(); break;
+        case "FW" :  _moveFw();  break;
+        case "FW1":  _moveFwb(); break;
+        case "FW2":  _moveFw2(); break;
+        case "BW" :  _moveBw();  break;
+        case "BW1":  _moveBwb(); break;
+        case "BW2":  _moveBw2(); break;
+        case "Z"  :  _moveZ();   break;
+        case "Z1" :  _moveZb();  break;
+        case "Z2" :  _moveZ2();  break;
+        case "X"  :  _moveX();   break;
+        case "X1" :  _moveXb();  break;
+        case "X2" :  _moveX2();  break;
+        case "Y"  :  _moveY();   break;
+        case "Y1" :  _moveYb();  break;
+        case "Y2" :  _moveY2();  break;
       }
     });
   }
@@ -219,7 +225,10 @@ class Cube {
     scramble = scramble.replaceAll("b", "Bw");
     scramble = scramble.replaceAll("(", "");
     scramble = scramble.replaceAll(")", "");
-    return scramble.replaceAll("21", "2");
+    scramble = scramble.replaceAll("[", "");
+    scramble = scramble.replaceAll("]", "");
+    scramble = scramble.replaceAll("  ", " ");
+    return scramble.replaceAll("21", "2").toUpperCase();
   }
 
   /// Сохраняем в backup копию текущего кубика
@@ -235,7 +244,11 @@ class Cube {
       resetCube();
     }
   }
-  
+
+  _updateColors() {
+    взять цвета из currentColors и обновить ими _colorsSide
+  }
+
   ///
   /// Элементарные ходы
   ///
@@ -516,7 +529,6 @@ class Cube {
   }
 
   _moveE() {
-    //'Меняем фронт
     _changeElements(48, 34);
     _changeElements(49, 31);
     _changeElements(50, 28);
@@ -529,7 +541,6 @@ class Cube {
   }
 
   _moveEb() {
-    //'Меняем фронт
     _changeElements(48, 10);
     _changeElements(49, 13);
     _changeElements(50, 16);
@@ -547,7 +558,6 @@ class Cube {
   }
 
   _moveM() {
-    //'Меняем фронт
     _changeElements(19, 46);
     _changeElements(22, 49);
     _changeElements(25, 52);
@@ -560,7 +570,6 @@ class Cube {
   }
 
   _moveMb() {
-    //'Меняем фронт
     _changeElements(19, 1);
     _changeElements(22, 4);
     _changeElements(25, 7);
@@ -578,7 +587,6 @@ class Cube {
   }
 
   _moveS() {
-    //'Меняем фронт
     _changeElements(21, 30);
     _changeElements(22, 31);
     _changeElements(23, 32);
@@ -591,7 +599,6 @@ class Cube {
   }
 
   _moveSb() {
-    //'Меняем фронт
     _changeElements(21, 12);
     _changeElements(22, 13);
     _changeElements(23, 14);

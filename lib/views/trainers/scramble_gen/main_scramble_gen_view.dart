@@ -27,10 +27,11 @@ class ScrambleGenView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text(
-            title,
-            style:
-            TextStyle(color: Theme.of(context).textTheme.headline5.color),
+          title: Center(
+            child: Text( title,
+              style:
+              TextStyle(color: Theme.of(context).textTheme.headline5.color),
+            ),
           ),
           backgroundColor: backgroundColor,
         ),

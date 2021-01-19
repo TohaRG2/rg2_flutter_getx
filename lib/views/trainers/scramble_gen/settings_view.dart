@@ -21,28 +21,57 @@ class ScrambleGenSettingsView extends StatelessWidget {
       return Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            title: Text(
-              R.scramble_gen_azbuka_select,
-              style:
-              TextStyle(color: Theme.of(context).textTheme.headline5.color),
+            title: Center(
+              child: Text(
+                R.scramble_gen_azbuka_select,
+                style: TextStyle(color: Theme.of(context).textTheme.headline5.color),
+              ),
             ),
             backgroundColor: backgroundColor,
           ),
           body: Container(
             padding: const EdgeInsets.symmetric(horizontal: padding),
-            child: Table(
-              border: TableBorder.all(width: 3.0, color: backgroundColor),
-              children: tableRows.map((row) =>
-                  TableRow(
-                    children: row.map((tableItem) =>
-                        Container(
-                          height: cellHeight,
-                          color: cubeColor[tableItem.colorNumber],
-                          child: Center(
-                              child: Text(tableItem.letter, style: TextStyle(color: Colors.black),)
-                          ),
-                        )).toList(),
-                  )).toList(),
+            child: Column(
+              children: [
+                Table(
+                  border: TableBorder.all(width: 3.0, color: backgroundColor),
+                  children: tableRows.map((row) =>
+                      TableRow(
+                        children: row.map((tableItem) =>
+                            Container(
+                              height: cellHeight,
+                              color: cubeColor[tableItem.colorNumber],
+                              child: Center(
+                                  child: Text(tableItem.letter, style: TextStyle(color: Colors.black),)
+                              ),
+                            )).toList(),
+                      )).toList(),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: RaisedButton(
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () {
+                          _controller.loadMyAzbuka();
+                        },
+                        child: Text(R.scrambleGenSettingsLoadMyAzbuka),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                    Expanded(
+                      child: RaisedButton(
+                        color: Theme.of(context).primaryColor,
+                        onPressed: () {
+                          _controller.loadMaximAzbuka();
+                        },
+                        child: Text(R.scrambleGenSettingsLoadMaximAzbuka),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           bottomNavigationBar: BottomBarWithBackButton()

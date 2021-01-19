@@ -63,5 +63,8 @@ class R {
   static const scramble_gen_bottom_generate  = "Генерировать";
   static const scramble_gen_bottom_settings  = "Настройки";
   static const scramble_gen_azbuka_select  = "Выбор азбуки";
-
+  static const scrambleGenSettingsLoadMyAzbuka = "Азбука Антона";
+  static const scrambleGenSettingsLoadMaximAzbuka = "Азбука Максима";
+  static const scrambleGenSettingsSaveCustomAzbuka = "Сохранить текущую азбуку";
+  static const scrambleGenSettingsLoadCustomAzbuka = "Загрузить сохраненную азбуку";
 }

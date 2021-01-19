@@ -13,7 +13,7 @@ class BlindCube {
   BlindCube({this.cube});
   
   /// номера центральных элементов кубика (см.диаграмму в конце этого класса)
-  List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
+  static const List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
   
   /// Возвращаем подходящий под условия переплавки скрамбл и перемешиваем по нему кубик
   ScrambleDecisionCondition generateScrambleWithParam({bool checkEdge, bool checkCorner, int lenScramble, List<String> azbuka}) {
