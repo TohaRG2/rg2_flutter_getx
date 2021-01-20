@@ -16,7 +16,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
     var cellHeight = (size.width - padding * 2) / 12;
     _controller.cube.resetCube();
     return Obx(() {
-      var azbuka = _controller.coloredAzbuka;
+      var azbuka = _controller.coloredAzbuka.map((v) => v.letter).toList(growable: false);
       var tableRows = _controller.cube.asTableRows(azbuka: azbuka);
       return Scaffold(
           appBar: AppBar(

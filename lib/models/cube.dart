@@ -84,7 +84,7 @@ class Cube {
     return result;
   }
 
-  /// Генерируем скрамбл заданной длины
+  /// Генерируем случайный скрамбл заданной длины
   String generateScramble(int length) {
     print("Генерируем новый скрамбл длинны $length");
     var random = Random();

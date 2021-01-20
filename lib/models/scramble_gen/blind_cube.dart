@@ -18,10 +18,14 @@ class BlindCube {
   /// номера центральных элементов кубика (см.диаграмму в конце этого класса)
   static const List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
 
+  /// берем два массива: цвета кубика и азбуку и делаем из них один
   List<AzbukaSimpleItem> get coloredAzbuka {
     var colors = cube.asList;
     List<AzbukaSimpleItem> result = List();
-    return colors.asMap().forEach((index, value) { });
+    colors.asMap().forEach((index, color) {
+      result.add(AzbukaSimpleItem(colorNumber: color, letter: azbuka[index]));
+    });
+    return result;
   }
 
   /// Возвращаем подходящий под условия переплавки скрамбл и перемешиваем по нему кубик
