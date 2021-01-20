@@ -7,21 +7,26 @@ import 'blind_cube_support_arrays.dart';
 import '../cube.dart';
 import 'package:sortedmap/sortedmap.dart';
 
-class BlindCube {
+class BlindCube extends Cube {
   /// Представление кубика в виде непрерывного списка из 54 элементов (6 граней * 9 наклеек на каждой)
-  final Cube cube;
+  //final Cube cube;
   /// Азбука из 54 элементов для блайнда
   List<String> azbuka = List.filled(54, " ");
 
-  BlindCube({this.cube, this.azbuka});
+  BlindCube({this.azbuka}) : super();
+
+  BlindCube.colored(List<int> colors, this.azbuka) {
+    setCurrentColors(colors);
+    resetCube();
+  }
   
   /// номера центральных элементов кубика (см.диаграмму в конце этого класса)
   static const List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
 
   /// берем два массива: цвета кубика и азбуку и делаем из них один
   List<AzbukaSimpleItem> get coloredAzbuka {
-    var colors = cube.asList;
-    List<AzbukaSimpleItem> result = List();
+    var result = List<AzbukaSimpleItem>();
+    var colors = asList;
     colors.asMap().forEach((index, color) {
       result.add(AzbukaSimpleItem(colorNumber: color, letter: azbuka[index]));
     });
@@ -37,10 +42,10 @@ class BlindCube {
     do {
       result = true;
       //сгенерируем скрамбл длинны указанной в поле ScrambleLength
-      scramble = cube.generateScramble(lenScramble);
+      scramble = generateScramble(lenScramble);
       //scramble = "B' L U2 D F' U' L F'";   //для него решение для моей азбуки (ТНПРКИХЦЧДО)Эк(БГФЖВЗМ)
       //разбираем кубик по скрамблу
-      cube.executeScrambleWithReset(scramble);
+      executeScrambleWithReset(scramble);
       // получаем решение кубика (solve, isEdgeMelted, isCornerMelted)
       condition = _getDecision(azbuka);
       var isEdgeMelted = condition.isEdgeMelted;
@@ -53,16 +58,16 @@ class BlindCube {
       if (isCornerMelted && checkCorner) {result = false;}
     } while (!result);
     // Перемешиваем кубик по скрамблу, иначе полуим собранный куб
-    cube.executeScrambleWithReset(scramble);
+    executeScrambleWithReset(scramble);
     return condition;
   }
 
   ///Получаем решение для блайнда для заданного скрамбла и азбуки
   ScrambleDecisionCondition getDecisionForScramble(String scramble) {
-    cube.backupCube();
-    cube.executeScrambleWithReset(scramble);
+    backupCube();
+    executeScrambleWithReset(scramble);
     var conditions = _getDecision(azbuka);
-    cube.restoreFromBackup();
+    restoreFromBackup();
     return conditions;
   }
 
@@ -82,7 +87,7 @@ class BlindCube {
         isEdgeMelted = true;
       }
       // ставим на место ребро из буфера и сохраняем результаты выполнения одной "буквы"
-      decision = _edgeBufferSolve(getEdgePosition(sumColor), decision, azbuka);
+      decision = _edgeBufferSolve(_getEdgePosition(sumColor), decision, azbuka);
       // выполняем пока все ребра не будут на своих местах
     } while (!_isAllEdgesOnItsPlace().allComplete);
 
@@ -107,7 +112,7 @@ class BlindCube {
         isCornerMelted = true;
       }
       // ставим на место угол из буфера и сохраняем результаты выполнения одной "буквы"
-      decision = _cornerBufferSolve(getCornerPosition(sumColor), decision, azbuka);
+      decision = _cornerBufferSolve(_getCornerPosition(sumColor), decision, azbuka);
     // выполняем пока все углы не будут на своих местах
     } while (!_isAllCornersOnItsPlace().allComplete);
 
@@ -193,12 +198,12 @@ class BlindCube {
 
     List<int> edgesListNotOnPlace = List();
     dopEdge.forEach((mainPosition, slavePosition) {
-      var mainColor = cube.asList[mainPosition];
-      var slaveColor = cube.asList[slavePosition];
+      var mainColor = asList[mainPosition];
+      var slaveColor = asList[slavePosition];
       var defaultColor = 0;
       _centersPositions.asMap().forEach((index, position) {
-        if (cube.asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
-        if (cube.asList[position] == slaveColor) { defaultColor += (index + 1); }
+        if (asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
+        if (asList[position] == slaveColor) { defaultColor += (index + 1); }
       });
       var itemPosition = mainEdge[defaultColor];
       if (itemPosition != mainPosition) {
@@ -213,15 +218,15 @@ class BlindCube {
 
   /// Получаем позицию ребра, в зависимости от его цвета
   /// цвет в данном случае двухзначное число
-  int getEdgePosition(int color) {
+  int _getEdgePosition(int color) {
     //определить по цветам центров значение цвета для дефолтного кубика
     var mainColor = (color ~/ 10) - 1;
     var slaveColor = (color % 10) - 1;
     var defaultColor = 0;
     // перебираем центральные элементы кубика и сравниваем их цвет с цветом ребра, получаем цвет в дефолтном кубике (белый верх, зеленый фронт)
     _centersPositions.asMap().forEach((index, position) {
-      if (cube.asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
-      if (cube.asList[position] == slaveColor) { defaultColor += (index + 1); }
+      if (asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
+      if (asList[position] == slaveColor) { defaultColor += (index + 1); }
     });
     // возвращаем номер элемента, по таблице для дефолтного кубика
     return mainEdge[defaultColor];
@@ -306,12 +311,12 @@ class BlindCube {
     //Обнуляем список углов стоящих на своих местах
     List<int> cornersListNotOnPlace = List();
     dopCorner.forEach((mainPosition, slavePosition) {
-      var mainColor = cube.asList[mainPosition];
-      var slaveColor = cube.asList[slavePosition];
+      var mainColor = asList[mainPosition];
+      var slaveColor = asList[slavePosition];
       var defaultColor = 0;
       _centersPositions.asMap().forEach((index, position) {
-        if (cube.asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
-        if (cube.asList[position] == slaveColor) { defaultColor += (index + 1); }
+        if (asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
+        if (asList[position] == slaveColor) { defaultColor += (index + 1); }
       });
       var itemPosition = mainCorner[defaultColor];
       if (itemPosition != mainPosition) {
@@ -326,15 +331,15 @@ class BlindCube {
 
   /// Получаем позицию угла, в зависимости от его цвета
   /// цвет в данном случае двухзначное число
-  int getCornerPosition(int color) {
+  int _getCornerPosition(int color) {
     //определить по цветам центров значение цвета для дефолтного кубика
     var mainColor = (color ~/ 10) - 1;
     var slaveColor = (color % 10) - 1;
     var defaultColor = 0;
     // перебираем центральные элементы кубика и сравниваем их цвет с цветом ребра, получаем цвет в дефолтном кубике (белый верх, зеленый фронт)
     _centersPositions.asMap().forEach((index, position) {
-      if (cube.asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
-      if (cube.asList[position] == slaveColor) { defaultColor += (index + 1); }
+      if (asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
+      if (asList[position] == slaveColor) { defaultColor += (index + 1); }
     });
     // возвращаем номер элемента, по таблице для дефолтного кубика
     return mainCorner[defaultColor];
@@ -343,34 +348,34 @@ class BlindCube {
 
   ///получаем цвет переданных ячеек куба (двузначное число, первая и вторая цифры которого соответствую искомым цветам)
   int _getColorOfElement(int firstElement, int secondElement) {
-   return (cube.asList[firstElement] + 1) * 10 + cube.asList[secondElement] + 1;
+   return (asList[firstElement] + 1) * 10 + asList[secondElement] + 1;
   }
 
   /// Алгоритм "Запад"
   _west() {
-    cube.executeScramble("R U R' U' R' F R2 U' R' U' R U R' F'");
+    executeScramble("R U R' U' R' F R2 U' R' U' R U R' F'");
   }
 
   /// Алгоритм "Юг"
   _south() {
-    cube.executeScramble("R U R' F' R U R' U' R' F R2 U' R' U'");
+    executeScramble("R U R' F' R U R' U' R' F R2 U' R' U'");
   }
 
   /// Алгоритм "Экватор"
   _equator() {
-    cube.executeScramble("R U R' F' R U2 R' U2 R' F R U R U2 R' U'");
+    executeScramble("R U R' F' R U2 R' U2 R' F R U R U2 R' U'");
   }
 
   /// Алгоритм "Австралия"
   _australia() {
-    cube.executeScramble("F R U' R' U' R U R' F' R U R' U' R' F R F'");
+    executeScramble("F R U' R' U' R U R' F' R U R' U' R' F R F'");
   }
 
   //белосинее ребро
   _blind19() {
-    cube.executeScramble("M2 D' L2");
+    executeScramble("M2 D' L2");
     _west();
-    cube.executeScramble("L2 D M2");
+    executeScramble("L2 D M2");
   }
 
   //белозеленое
@@ -385,144 +390,144 @@ class BlindCube {
 
   //зеленобелое
   _blind46() {
-    cube.executeScramble("M D' L2");
+    executeScramble("M D' L2");
     _west();
-    cube.executeScramble("L2 D M'");
+    executeScramble("L2 D M'");
   }
 
   //зеленокрасное
   _blind50() {
-    cube.executeScramble("Dw2 L");
+    executeScramble("Dw2 L");
     _west();
-    cube.executeScramble("L' Dw2");
+    executeScramble("L' Dw2");
   }
 
   //зеленожелтое
   _blind52() {
-    cube.executeScramble("M'");
+    executeScramble("M'");
     _south();
-    cube.executeScramble("M");
+    executeScramble("M");
   }
 
   //зеленооранжевое
   _blind48() {
-    cube.executeScramble("L'");
+    executeScramble("L'");
     _west();
-    cube.executeScramble("L");
+    executeScramble("L");
   }
 
   //синебелое
   _blind7() {
-    cube.executeScramble("M");
+    executeScramble("M");
     _south();
-    cube.executeScramble("M'");
+    executeScramble("M'");
   }
 
   //синекрасное
   _blind5() {
-    cube.executeScramble("Dw2 L'");
+    executeScramble("Dw2 L'");
     _west();
-    cube.executeScramble("L Dw2");
+    executeScramble("L Dw2");
   }
 
   //синежелтое
   _blind1() {
-    cube.executeScramble("D2 M'");
+    executeScramble("D2 M'");
     _south();
-    cube.executeScramble("M D2");
+    executeScramble("M D2");
   }
 
   //синеоранжевое
   _blind3() {
-    cube.executeScramble("L");
+    executeScramble("L");
     _west();
-    cube.executeScramble("L'");
+    executeScramble("L'");
   }
 
   //оранжевобелое
   _blind14() {
-    cube.executeScramble("L2 D M'");
+    executeScramble("L2 D M'");
     _south();
-    cube.executeScramble("M D' L2");
+    executeScramble("M D' L2");
   }
 
   //оранжевозеленое
   _blind16() {
-    cube.executeScramble("Dw' L");
+    executeScramble("Dw' L");
     _west();
-    cube.executeScramble("L' Dw");
+    executeScramble("L' Dw");
   }
 
   //оранжевожелтое
   _blind12() {
-    cube.executeScramble("D M'");
+    executeScramble("D M'");
     _south();
-    cube.executeScramble("M D'");
+    executeScramble("M D'");
   }
 
   //оранжевосинее
   _blind10() {
-    cube.executeScramble("Dw L'");
+    executeScramble("Dw L'");
     _west();
-    cube.executeScramble("L Dw'");
+    executeScramble("L Dw'");
   }
 
   //краснозеленое
   _blind34() {
-    cube.executeScramble("Dw' L'");
+    executeScramble("Dw' L'");
     _west();
-    cube.executeScramble("L Dw");
+    executeScramble("L Dw");
   }
 
   //красножелтое
   _blind32() {
-    cube.executeScramble("D' M'");
+    executeScramble("D' M'");
     _south();
-    cube.executeScramble("M D");
+    executeScramble("M D");
   }
 
   //красносинее
   _blind28() {
-    cube.executeScramble("Dw L");
+    executeScramble("Dw L");
     _west();
-    cube.executeScramble("L' Dw'");
+    executeScramble("L' Dw'");
   }
 
   //желтосинее
   _blind37() {
-    cube.executeScramble("D L2");
+    executeScramble("D L2");
     _west();
-    cube.executeScramble("L2 D'");
+    executeScramble("L2 D'");
   }
 
   //желтокрасное
   _blind39() {
-    cube.executeScramble("D2 L2");
+    executeScramble("D2 L2");
     _west();
-    cube.executeScramble("L2 D2");
+    executeScramble("L2 D2");
   }
 
   //желтозеленое
   _blind43() {
-    cube.executeScramble("D' L2");
+    executeScramble("D' L2");
     _west();
-    cube.executeScramble("L2 D");
+    executeScramble("L2 D");
   }
 
   //желтооранжевое
   _blind41() {
-    cube.executeScramble("L2");
+    executeScramble("L2");
     _west();
-    cube.executeScramble("L2");
+    executeScramble("L2");
   }
 
 //--------------------------------------------------------------------------------------------------
 
   //белосинекрасный угол
   _blind20() {
-    cube.executeScramble("R D' F'");
+    executeScramble("R D' F'");
     _australia();
-    cube.executeScramble("F D R'");
+    executeScramble("F D R'");
   }
 
   //белокраснозеленый угол
@@ -532,135 +537,135 @@ class BlindCube {
 
   //белозеленооранжевый угол
   _blind24() {
-    cube.executeScramble("F' D R");
+    executeScramble("F' D R");
     _australia();
-    cube.executeScramble("R' D' F");
+    executeScramble("R' D' F");
   }
 
   //зеленооранжевобелый
   _blind45() {
-    cube.executeScramble("F' D F'");
+    executeScramble("F' D F'");
     _australia();
-    cube.executeScramble("F D' F");
+    executeScramble("F D' F");
   }
 
   //зеленобелосиний
   _blind47() {
-    cube.executeScramble("F R");
+    executeScramble("F R");
     _australia();
-    cube.executeScramble("R' F'");
+    executeScramble("R' F'");
   }
 
   //зеленокрасножелтый
   _blind53() {
-    cube.executeScramble("R");
+    executeScramble("R");
     _australia();
-    cube.executeScramble("R'");
+    executeScramble("R'");
   }
 
   //зеленожелтооранжевый
   _blind51() {
-    cube.executeScramble("D F'");
+    executeScramble("D F'");
     _australia();
-    cube.executeScramble("F D'");
+    executeScramble("F D'");
   }
 
   //синекраснобелый
   _blind8() {
-    cube.executeScramble("R'");
+    executeScramble("R'");
     _australia();
-    cube.executeScramble("R");
+    executeScramble("R");
   }
 
   //синежелтокрасный
   _blind2() {
-    cube.executeScramble("D' F'");
+    executeScramble("D' F'");
     _australia();
-    cube.executeScramble("F D");
+    executeScramble("F D");
   }
 
   //синеоранжевожелтый
   _blind0() {
-    cube.executeScramble("D2 R");
+    executeScramble("D2 R");
     _australia();
-    cube.executeScramble("R' D2");
+    executeScramble("R' D2");
   }
 
   //оранжевобелозеленый
   _blind17() {
-    cube.executeScramble("F");
+    executeScramble("F");
     _australia();
-    cube.executeScramble("F'");
+    executeScramble("F'");
   }
 
   //оранжевозеленожелтый
   _blind15() {
-    cube.executeScramble("D R");
+    executeScramble("D R");
     _australia();
-    cube.executeScramble("R' D'");
+    executeScramble("R' D'");
   }
 
   //оранжевожелтосиний
   _blind9() {
-    cube.executeScramble("D2 F'");
+    executeScramble("D2 F'");
     _australia();
-    cube.executeScramble("F D2");
+    executeScramble("F D2");
   }
 
   //краснобелосиний
   _blind27() {
-    cube.executeScramble("R2 F'");
+    executeScramble("R2 F'");
     _australia();
-    cube.executeScramble("F R2");
+    executeScramble("F R2");
   }
 
   //краснозеленобелый
   _blind33() {
-    cube.executeScramble("R' F'");
+    executeScramble("R' F'");
     _australia();
-    cube.executeScramble("F R");
+    executeScramble("F R");
   }
 
   //красножелтозеленый
   _blind35() {
-    cube.executeScramble("F'");
+    executeScramble("F'");
     _australia();
-    cube.executeScramble("F");
+    executeScramble("F");
   }
 
   //красносинежелтый
   _blind29() {
-    cube.executeScramble("R F'");
+    executeScramble("R F'");
     _australia();
-    cube.executeScramble("F R'");
+    executeScramble("F R'");
   }
 
   //желтосинеоранжевый
   _blind38() {
-    cube.executeScramble("D' R2");
+    executeScramble("D' R2");
     _australia();
-    cube.executeScramble("R2 D");
+    executeScramble("R2 D");
   }
 
   //желтокрасносиний
   _blind36() {
-    cube.executeScramble("R2");
+    executeScramble("R2");
     _australia();
-    cube.executeScramble("R2");
+    executeScramble("R2");
   }
 
   //желтозеленокрасный
   _blind42() {
-    cube.executeScramble("D R2");
+    executeScramble("D R2");
     _australia();
-    cube.executeScramble("R2 D'");
+    executeScramble("R2 D'");
   }
 
   //желтооранжевозеленый
   _blind44() {
-    cube.executeScramble("D2 R2");
+    executeScramble("D2 R2");
     _australia();
-    cube.executeScramble("R2 D2");
+    executeScramble("R2 D2");
   }
 
 ///       Расположение элементов в кубике

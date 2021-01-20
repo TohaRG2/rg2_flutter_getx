@@ -21,12 +21,17 @@ class ScrambleGenController extends GetxController {
     _isCornerEnabled.value = GetStorage().read(Const.IS_CORNER_ENABLED) ?? true;
     _scrambleLength.value = GetStorage().read(Const.SCRAMBLE_LENGTH) ?? 14;
     _currentScramble.value = GetStorage().read(Const.CURRENT_SCRAMBLE) ?? "R F L B U2 L B' R F' D B R L F D R' D L";
-    cube.executeScrambleWithReset(currentScramble);
-    blindCube = BlindCube(cube: cube, azbuka: Azbuka().currentAzbuka);
-    _conditions = blindCube.getDecisionForScramble(currentScramble);
+    mainCube = BlindCube(azbuka: Azbuka().currentAzbuka);
+    mainCube.executeScrambleWithReset(currentScramble);
+    settingsCube = BlindCube(azbuka: Azbuka().currentAzbuka);
+    _conditions = mainCube.getDecisionForScramble(currentScramble);
     currentDecision = showDecision ? _conditions.decision : _conditions.decisionInfo;
+    settingsColoredAzbuka = settingsCube.coloredAzbuka;
     super.onInit();
   }
+
+  BlindCube settingsCube;
+  BlindCube mainCube;
 
   final _isEdgeEnabled = true.obs;
   bool get isEdgeEnabled => _isEdgeEnabled.value;
@@ -78,18 +83,20 @@ class ScrambleGenController extends GetxController {
     _currentDecision.value = value;
   }
 
-  Cube cube = Cube();
-  Cube settingsCube = Cube();
-  BlindCube blindCube;
-
-  // создаем observable азбуку, чтобы обновлять ее на экране, при ее изменении
-  RxList<AzbukaSimpleItem> _coloredAzbuka = List<AzbukaSimpleItem>().obs;
-  List<AzbukaSimpleItem> get coloredAzbuka => _coloredAzbuka;
-  set coloredAzbuka (List<AzbukaSimpleItem> value) {
-    _coloredAzbuka.assignAll(value);
+  // создаем observable азбуку, чтобы обновлять куб на экране, при изменении цветов или букв
+  RxList<AzbukaSimpleItem> _settingsColoredAzbuka = List<AzbukaSimpleItem>().obs;
+  List<AzbukaSimpleItem> get settingsColoredAzbuka => _settingsColoredAzbuka;
+  set settingsColoredAzbuka (List<AzbukaSimpleItem> value) {
+    _settingsColoredAzbuka.assignAll(value);
     Azbuka().currentAzbuka = value.map((v) => v.letter).toList();
   }
 
+  // создаем observable азбуку, чтобы обновлять куб на экране, при изменении цветов или букв
+  RxList<AzbukaSimpleItem> _mainColoredAzbuka = List<AzbukaSimpleItem>().obs;
+  List<AzbukaSimpleItem> get mainColoredAzbuka => _mainColoredAzbuka;
+  set mainColoredAzbuka (List<AzbukaSimpleItem> value) {
+    _mainColoredAzbuka.assignAll(value);
+  }
 
 
   /// Методы
@@ -107,23 +114,23 @@ class ScrambleGenController extends GetxController {
   }
 
   void generateNewScramble() {
-    _conditions = blindCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength);
+    _conditions = mainCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength);
     currentScramble = _conditions.scramble;
     currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
   }
 
-  updateInputScrambleText() {
+  void updateInputScrambleText() {
     inputScramble = currentScramble;
   }
 
-  updateCurrentScrambleFromInput() {
+  void updateCurrentScrambleFromInput() {
     currentScramble = inputScramble;
-    cube.executeScrambleWithReset(currentScramble);
-    _conditions = blindCube.getDecisionForScramble(currentScramble);
+    mainCube.executeScrambleWithReset(currentScramble);
+    _conditions = mainCube.getDecisionForScramble(currentScramble);
     currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
   }
 
-  inputLetter(String letter) {
+  void inputLetter(String letter) {
     switch(letter) {
       case "W":
         inputModifier(letter.toLowerCase());
@@ -145,7 +152,7 @@ class ScrambleGenController extends GetxController {
 
   }
 
-  inputModifier(String modifier) {
+  void inputModifier(String modifier) {
     print("input modifier $modifier");
     inputScramble = inputScramble.trim();
     var lastSymbol = inputScramble[inputScramble.length - 1];
@@ -154,7 +161,7 @@ class ScrambleGenController extends GetxController {
     }
   }
 
-  inputBackSpace() {
+  void inputBackSpace() {
     inputScramble = inputScramble.trim();
     var len = inputScramble.length;
     if (len > 0) {
@@ -163,14 +170,22 @@ class ScrambleGenController extends GetxController {
     inputScramble = inputScramble.trim();
   }
 
-  loadMyAzbuka() {
-    cube.executeScramble("z'");
-    currentAzbuka = Azbuka().currentAzbuka;
+  void loadMyAzbuka() {
+    settingsCube.executeScramble("z'");
+    settingsColoredAzbuka = settingsCube.coloredAzbuka;
+    mainColoredAzbuka = settingsCube.coloredAzbuka.toList();
+    mainCube.setCurrentColors(settingsCube.currentColors);
+    settingsCube.setCurrentColors(settingsCube.currentColors);
+    mainCube.executeScrambleWithReset(currentScramble);
   }
 
-  loadMaximAzbuka() {
-    cube.executeScramble("z");
-    currentAzbuka = Azbuka().currentAzbuka;
+  void loadMaximAzbuka() {
+    settingsCube.executeScramble("z");
+    settingsColoredAzbuka = settingsCube.coloredAzbuka;
+    mainColoredAzbuka = settingsCube.coloredAzbuka.toList();
+    mainCube.setCurrentColors(settingsCube.currentColors);
+    settingsCube.setCurrentColors(settingsCube.currentColors);
+    mainCube.executeScrambleWithReset(currentScramble);
   }
 }
 

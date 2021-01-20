@@ -36,7 +36,10 @@ class ScrambleGenView extends StatelessWidget {
           backgroundColor: backgroundColor,
         ),
         body: Obx( () {
-          var tableRows = _controller.cube.asTableRows();
+          print("Update scrambleGen Obx View");
+          var coloredAzbuka = _controller.mainColoredAzbuka;
+          print("$coloredAzbuka");
+          var tableRows = _controller.mainCube.asTableRows();
           var scrambleLength = _controller.scrambleLength.toString();
           var scramble = _controller.currentScramble;
           var blindDecision = _controller.currentDecision;

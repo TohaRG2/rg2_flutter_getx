@@ -16,7 +16,9 @@ class Cube {
   /// Бэкап кубика
   List<int> _backup = List();
 
-  /// Цвета сторон кубика + 2 цвета (обычно черный и прозрачный)
+  /// Цвета сторон кубика
+  /// 0 - синий, 1 - оранжевый, 2 - белый, 3 - красный, 4 - желтый, 5 - зеленый
+  /// + 2 цвета (обычно интерпретируются как 6 - черный и 7 - прозрачный)
   List<int> _defaultColorsSide = [0,1,2,3,4,5,6,7];
 
   /// номера центральных элементов кубика (см.диаграмму в конце этого класса)
@@ -25,22 +27,19 @@ class Cube {
   /// Список из 6-ти текущих цветов в кубике (его центров)
   List<int> get currentColors => _centersPositions.map((pos) => asList[pos]).toList();
 
-  ///TODO Азбука для кубика (пока не используется) - логичнее использовать в BlindCube
-  //List<AzbukaSimpleItem> coloredAzbuka = List();
-
   /// Конструкторы
   Cube() {
     resetCube();
   }
 
-  Cube.colored(List<int> list) {
-    _setColorsSide(list);
-    resetCube();
-  }
+  // Cube.colored(List<int> colors) {
+  //   _setColorsSide(colors);
+  //   resetCube();
+  // }
 
 
   /// Устанавливаем цвета в кубике в зависимости от переданного параметра
-  _setColorsSide(List<int> list) {
+  setCurrentColors(List<int> list) {
     if (list.length < 9) {
       list.asMap().forEach((index, value) {
         _defaultColorsSide[index] = value;
