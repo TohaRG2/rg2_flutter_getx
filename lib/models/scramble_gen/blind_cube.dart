@@ -8,15 +8,14 @@ import '../cube.dart';
 import 'package:sortedmap/sortedmap.dart';
 
 class BlindCube extends Cube {
-  /// Представление кубика в виде непрерывного списка из 54 элементов (6 граней * 9 наклеек на каждой)
-  //final Cube cube;
+
   /// Азбука из 54 элементов для блайнда
   List<String> azbuka = List.filled(54, " ");
 
   BlindCube({this.azbuka}) : super();
 
   BlindCube.colored(List<int> colors, this.azbuka) {
-    setCurrentColors(colors);
+    setDefaultColors(colors);
     resetCube();
   }
   
@@ -24,11 +23,11 @@ class BlindCube extends Cube {
   static const List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
 
   /// берем два массива: цвета кубика и азбуку и делаем из них один
-  List<AzbukaSimpleItem> get coloredAzbuka {
+  List<AzbukaSimpleItem> getColoredAzbuka({bool withLetters = true}) {
     var result = List<AzbukaSimpleItem>();
     var colors = asList;
     colors.asMap().forEach((index, color) {
-      result.add(AzbukaSimpleItem(colorNumber: color, letter: azbuka[index]));
+      result.add(AzbukaSimpleItem(colorNumber: color, letter: (withLetters) ? azbuka[index] : " "));
     });
     return result;
   }
@@ -40,22 +39,22 @@ class BlindCube extends Cube {
     var scramble = "";
     var result = true;
     do {
-      result = true;
       //сгенерируем скрамбл длинны указанной в поле ScrambleLength
       scramble = generateScramble(lenScramble);
       //scramble = "B' L U2 D F' U' L F'";   //для него решение для моей азбуки (ТНПРКИХЦЧДО)Эк(БГФЖВЗМ)
       //разбираем кубик по скрамблу
       executeScrambleWithReset(scramble);
-      // получаем решение кубика (solve, isEdgeMelted, isCornerMelted)
-      condition = _getDecision(azbuka);
+      // получаем решение кубика (scramble, decision, isEdgeMelted, isCornerMelted)
+      condition = _getDecision(forScramble: scramble);
       var isEdgeMelted = condition.isEdgeMelted;
       var isCornerMelted = condition.isCornerMelted;
 
-      condition.scramble = scramble;
-      print(condition);
-
+      // считаем, что скрамбл соответствует условиям
+      result = true;
+      // проверяем были ли переплавки
       if (isEdgeMelted && checkEdge) {result = false;}
       if (isCornerMelted && checkCorner) {result = false;}
+    //выходим из цикла, если скрамбл соответствует условиям
     } while (!result);
     // Перемешиваем кубик по скрамблу, иначе полуим собранный куб
     executeScrambleWithReset(scramble);
@@ -66,14 +65,15 @@ class BlindCube extends Cube {
   ScrambleDecisionCondition getDecisionForScramble(String scramble) {
     backupCube();
     executeScrambleWithReset(scramble);
-    var conditions = _getDecision(azbuka);
+    var conditions = _getDecision();
     restoreFromBackup();
     return conditions;
   }
 
   /// Решаем текущее состояние кубика и возвращаем решение блайнда + были ли переплавки буферов
-  /// String solve; bool edgeBuffer; bool cornerBuffer; 
-  ScrambleDecisionCondition _getDecision(List<String> azbuka) {
+  /// String solve; bool edgeBuffer; bool cornerBuffer;
+  /// можно передать в качестве параметра скрамбл, тогда он будет в решении, иначе скрамбл в решении = ""
+  ScrambleDecisionCondition _getDecision({String forScramble = ""}) {
     var decision = "(";
     var isEdgeMelted = false;
     var isCornerMelted = false;
@@ -87,7 +87,7 @@ class BlindCube extends Cube {
         isEdgeMelted = true;
       }
       // ставим на место ребро из буфера и сохраняем результаты выполнения одной "буквы"
-      decision = _edgeBufferSolve(_getEdgePosition(sumColor), decision, azbuka);
+      decision = _edgeBufferSolve(_getEdgePosition(sumColor), decision);
       // выполняем пока все ребра не будут на своих местах
     } while (!_isAllEdgesOnItsPlace().allComplete);
 
@@ -112,20 +112,20 @@ class BlindCube extends Cube {
         isCornerMelted = true;
       }
       // ставим на место угол из буфера и сохраняем результаты выполнения одной "буквы"
-      decision = _cornerBufferSolve(_getCornerPosition(sumColor), decision, azbuka);
+      decision = _cornerBufferSolve(_getCornerPosition(sumColor), decision);
     // выполняем пока все углы не будут на своих местах
     } while (!_isAllCornersOnItsPlace().allComplete);
 
     decision = decision.trim();
     decision += ")";
 
-    return ScrambleDecisionCondition(decision: decision, isEdgeMelted: isEdgeMelted, isCornerMelted: isCornerMelted);
+    return ScrambleDecisionCondition(scramble: forScramble, decision: decision, isEdgeMelted: isEdgeMelted, isCornerMelted: isCornerMelted);
   }
 
 
   /// Установка на свое место элемента цвета elementPosition находящегося в буфере ребер
   /// Возвращает SolveCube = куб после выполнения установки и решение solve + текущий ход
-  String _edgeBufferSolve(int elementPosition, String solve, List<String> azbuka) {
+  String _edgeBufferSolve(int elementPosition, String solve) {
     var solv = solve;
 
     if (!((elementPosition == 23) || (elementPosition == 30))) { //проверяем, не буфер ли?, если нет, то добоавляем букву к решению
@@ -146,7 +146,7 @@ class BlindCube extends Cube {
         var pair4Melting = _isAllEdgesOnItsPlace();
         if (!pair4Melting.allComplete) {
           //переплавляем буфер (рекурсия)
-          solv = _meltingEdge(solv, pair4Melting.elementsNotOnPlace, azbuka);
+          solv = _meltingEdge(solv, pair4Melting.elementsNotOnPlace);
         }
         break;
       case 25 : _blind25(); break;
@@ -155,7 +155,7 @@ class BlindCube extends Cube {
         var pair4Melting = _isAllEdgesOnItsPlace();
         if (!pair4Melting.allComplete) {
           //переплавляем буфер (рекурсия)
-          solv = _meltingEdge(solv, pair4Melting.elementsNotOnPlace, azbuka);
+          solv = _meltingEdge(solv, pair4Melting.elementsNotOnPlace);
         }
         break;
       case 32 : _blind32(); break;
@@ -172,7 +172,7 @@ class BlindCube extends Cube {
     return solv;
   }
 
-  String _meltingEdge(String solv, List<int> edgesListNotOnPlace, List<String> azbuka) {
+  String _meltingEdge(String solv, List<int> edgesListNotOnPlace) {
     var positionToMelting = 0;
     // цикл поиска свободной корзины
     var j = 0;
@@ -188,7 +188,7 @@ class BlindCube extends Cube {
       j++;
     }
     //переплавляем буфер (рекурсия)
-    return _edgeBufferSolve(positionToMelting, solv, azbuka);
+    return _edgeBufferSolve(positionToMelting, solv);
   }
 
   /// Проверяем все ли грани на своих местах
@@ -235,7 +235,7 @@ class BlindCube extends Cube {
   
   /// Установка на свое место элемента цвета elementPosition находящегося в буфере углов
   /// Возвращает SolveCube = куб после выполнения установки и решение solve + текущий ход
-  String _cornerBufferSolve(int elementPosition, String solve, List<String> azbuka) {
+  String _cornerBufferSolve(int elementPosition, String solve) {
     var solv = solve;
     //если с не равно 18,11 или 6, то буфер не на месте и добавляем букву к решению
     if (!(elementPosition == 18 || elementPosition == 11 || elementPosition == 6)) {
@@ -247,7 +247,7 @@ class BlindCube extends Cube {
       case 6 :
         var pair4Melting = _isAllCornersOnItsPlace();
         if (!pair4Melting.allComplete) {
-          solv = _meltingCorner(solv, pair4Melting.elementsNotOnPlace, azbuka);
+          solv = _meltingCorner(solv, pair4Melting.elementsNotOnPlace);
         }
         break;
       case 8 : _blind8(); break;
@@ -255,7 +255,7 @@ class BlindCube extends Cube {
       case 11 :
         var pair4Melting = _isAllCornersOnItsPlace();
         if (!pair4Melting.allComplete) {
-          solv = _meltingCorner(solv, pair4Melting.elementsNotOnPlace, azbuka);
+          solv = _meltingCorner(solv, pair4Melting.elementsNotOnPlace);
         }
         break;
       case 15 : _blind15(); break;
@@ -263,7 +263,7 @@ class BlindCube extends Cube {
       case 18 :
         var pair4Melting = _isAllCornersOnItsPlace();
         if (!pair4Melting.allComplete) {
-          solv = _meltingCorner(solv, pair4Melting.elementsNotOnPlace, azbuka);
+          solv = _meltingCorner(solv, pair4Melting.elementsNotOnPlace);
         }
         break;
       case 20 : _blind20(); break;
@@ -286,7 +286,7 @@ class BlindCube extends Cube {
   }
 
   /// Переплавка буфера углов
-  String _meltingCorner(String solv, List<int> cornersListNotOnPlace, List<String> azbuka) {
+  String _meltingCorner(String solv, List<int> cornersListNotOnPlace) {
     var positionOfElement = 0;
     // цикл поиска свободной корзины
     var j = 0;
@@ -301,7 +301,7 @@ class BlindCube extends Cube {
       j++;
     }
     //переплавляем буфер (рекурсия)
-    return _cornerBufferSolve(positionOfElement, solv, azbuka);
+    return _cornerBufferSolve(positionOfElement, solv);
   }
 
   ///проверяем все ли углы на своих местах, т.к. буфер оказался на своем месте

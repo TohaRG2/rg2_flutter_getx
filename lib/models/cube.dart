@@ -39,13 +39,21 @@ class Cube {
 
 
   /// Устанавливаем цвета в кубике в зависимости от переданного параметра
-  setCurrentColors(List<int> list) {
+  setDefaultColors(List<int> list) {
     if (list.length < 9) {
-      list.asMap().forEach((index, value) {
-        _defaultColorsSide[index] = value;
+      list.asMap().forEach((index, colorNum) {
+        _defaultColorsSide[index] = colorNum;
       });
     }
   }
+
+  /// Устанавливаем цвета в кубике по цветам текущих центров
+  setDefaultColorsByCurrent() {
+    currentColors.asMap().forEach((index, colorNum) {
+        _defaultColorsSide[index] = colorNum;
+    });
+  }
+
 
   /// Обнуляем кубик (возвращаем в исходное состояние)
   void resetCube() {
@@ -53,34 +61,6 @@ class Cube {
     for(int i=0; i < _cube.length; i++){
       _cube[i] = _defaultColorsSide[i ~/ 9];
     }
-  }
-
-  /// Представляем кубик в виде таблицы из 108 элементов (9 строк по 12 элементов)
-  List<AzbukaSimpleItem> asTable({ List<String> azbuka }) {
-    var letterList = (azbuka != null) ? azbuka.toList() : List.filled(54, " ");
-    // заполняем табличку прозрачными пустыми элементами
-    var table = List.generate(108, (_) => AzbukaSimpleItem(colorNumber: 7, letter: ""));
-    // ставим на свои места значения ячеек кубика
-    for(int i=0; i < 9; i++) {
-      table[(i ~/3) * 12 + 3 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i], letter: letterList[i]);
-      table[(i ~/3 + 3) * 12 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i + 9], letter: letterList[i + 9]);
-      table[(i ~/3 + 3) * 12 + 3 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i + 18], letter: letterList[i + 18]);
-      table[(i ~/3 + 3) * 12 + 6 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i + 27], letter: letterList[i + 27]);
-      table[(i ~/3 + 3) * 12 + 9 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i + 36], letter: letterList[i + 36]);
-      table[(i ~/3 + 6) * 12 + 3 + i % 3] = AzbukaSimpleItem(colorNumber: _cube[i + 45], letter: letterList[i + 45]);
-    }
-    return table;
-  }
-
-  /// Представляем кубик в виде 9 строк по 12 элементов
-  List<List<AzbukaSimpleItem>> asTableRows({ List<String> azbuka }) {
-    List<List<AzbukaSimpleItem>> result = List();
-    var table = asTable(azbuka: azbuka);
-    for(int i=0; i < 9; i++) {
-      var row = table.getRange(i * 12, (i + 1) * 12).toList();
-      result.add(row);
-    }
-    return result;
   }
 
   /// Генерируем случайный скрамбл заданной длины
@@ -103,20 +83,14 @@ class Cube {
         if ((curRandom ~/ 2 != prevRandom ~/ 2) || (curRandom != prevPrevRandom)) {
           i++;
           scramble += "${map[curRandom]}";
-          // выбираем ход будет по часовой, против часовой или двойной
-          switch (random.nextInt(3)) {
-          // если по часовой
-            case 0:
-              scramble += " "; //просто пробел
-              break;
-          // против часовой стрелки
-            case 1:
-              scramble += "' "; //добавляем ' с пробелом
-              break;
-          // двойное вращение
-            case 2:
-              scramble += "2 "; //добавляем 2 с пробелом
-              break;
+          // выбираем модификатор, т.е. ход будет обычный, против часовой или двойной
+          var modifier = random.nextInt(3);
+          if (modifier == 0) {
+            scramble += " "; //просто пробел
+          } else if (modifier == 1) {
+            scramble += "' "; //добавляем ' с пробелом
+          } else if (modifier == 2) {
+            scramble += "2 "; //добавляем 2 с пробелом
           }
           prevPrevRandom = prevRandom;
           prevRandom = curRandom;
@@ -127,7 +101,7 @@ class Cube {
     return scramble.trim();
   }
 
-  /// Переопределяем метод, чтобы вывести кубик (в виде таблицы) в консоль
+  /// Переопределяем метод, чтобы вывести кубик (цвета) в виде таблицы в текстовом виде, для вывода в консоль
   @override
   String toString() {
     var result = "";
@@ -136,10 +110,26 @@ class Cube {
       if (i % 12 == 0) {
         result += "\n";
       }
-      result += "${table[i].colorNumber} ";
+      result += "${table[i]} ";
     }
     result = result.replaceAll("7", " ");
     return result;
+  }
+
+  /// Представляем кубик в виде таблицы из 108 элементов (9 строк по 12 элементов) в пустых ячейках 7
+  List<int> asTable() {
+    // заполняем табличку прозрачными пустыми элементами
+    List<int> table = List.generate(108, (_) => 7);
+    // ставим на свои места значения ячеек кубика
+    for(int i=0; i < 9; i++) {
+      table[(i ~/3) * 12 + 3 + i % 3] = _cube[i];
+      table[(i ~/3 + 3) * 12 + i % 3] = _cube[i + 9];
+      table[(i ~/3 + 3) * 12 + 3 + i % 3] = _cube[i + 18];
+      table[(i ~/3 + 3) * 12 + 6 + i % 3] = _cube[i + 27];
+      table[(i ~/3 + 3) * 12 + 9 + i % 3] = _cube[i + 36];
+      table[(i ~/3 + 6) * 12 + 3 + i % 3] = _cube[i + 45];
+    }
+    return table;
   }
 
   /// Применяем скрамбл к текущему положению кубика

@@ -11,7 +11,7 @@ class ScrambleDecisionCondition {
     return decisionInfo;
   }
 
-  ScrambleDecisionCondition({this.scramble, this.decision, this.isEdgeMelted, this.isCornerMelted});
+  ScrambleDecisionCondition({this.scramble = "", this.decision, this.isEdgeMelted, this.isCornerMelted});
 
   @override
   String toString() {

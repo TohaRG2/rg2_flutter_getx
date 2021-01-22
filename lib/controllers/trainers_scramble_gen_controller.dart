@@ -26,7 +26,9 @@ class ScrambleGenController extends GetxController {
     settingsCube = BlindCube(azbuka: Azbuka().currentAzbuka);
     _conditions = mainCube.getDecisionForScramble(currentScramble);
     currentDecision = showDecision ? _conditions.decision : _conditions.decisionInfo;
-    settingsColoredAzbuka = settingsCube.coloredAzbuka;
+
+    settingsColoredAzbuka = settingsCube.getColoredAzbuka();
+    mainColoredAzbuka = mainCube.getColoredAzbuka(withLetters: false);
     super.onInit();
   }
 
@@ -117,6 +119,7 @@ class ScrambleGenController extends GetxController {
     _conditions = mainCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength);
     currentScramble = _conditions.scramble;
     currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
+    mainColoredAzbuka = mainCube.getColoredAzbuka(withLetters: false);
   }
 
   void updateInputScrambleText() {
@@ -128,6 +131,7 @@ class ScrambleGenController extends GetxController {
     mainCube.executeScrambleWithReset(currentScramble);
     _conditions = mainCube.getDecisionForScramble(currentScramble);
     currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
+    mainColoredAzbuka = mainCube.getColoredAzbuka(withLetters: false);
   }
 
   void inputLetter(String letter) {
@@ -170,22 +174,54 @@ class ScrambleGenController extends GetxController {
     inputScramble = inputScramble.trim();
   }
 
+  /// Представляем кубик в виде 9 строк по 12 элементов из списка элементов куба в 54 элемента
+  List<List<AzbukaSimpleItem>> asTableRows(List<AzbukaSimpleItem> cube) {
+    List<List<AzbukaSimpleItem>> result = List();
+
+    // заполняем табличку из 108 элементов прозрачными (7), пустыми ("") элементами
+    var table = List.generate(108, (_) => AzbukaSimpleItem(colorNumber: 7, letter: ""));
+    // ставим на свои места значения ячеек кубика
+    if (cube.length == 54) {
+      for (int i = 0; i < 9; i++) {
+        table[(i ~/ 3) * 12 + 3 + i % 3] = cube[i];
+        table[(i ~/ 3 + 3) * 12 + i % 3] = cube[i + 9];
+        table[(i ~/ 3 + 3) * 12 + 3 + i % 3] = cube[i + 18];
+        table[(i ~/ 3 + 3) * 12 + 6 + i % 3] = cube[i + 27];
+        table[(i ~/ 3 + 3) * 12 + 9 + i % 3] = cube[i + 36];
+        table[(i ~/ 3 + 6) * 12 + 3 + i % 3] = cube[i + 45];;
+      }
+    }
+    // разобьем table на строки по 12 элементов (9 строк)
+    var i = 0;
+    while (i < table.length) {
+      var row = table.getRange(i , (i + 12)).toList();
+      result.add(row);
+      i += 12;
+    }
+    return result;
+  }
+
+
   void loadMyAzbuka() {
     settingsCube.executeScramble("z'");
-    settingsColoredAzbuka = settingsCube.coloredAzbuka;
-    mainColoredAzbuka = settingsCube.coloredAzbuka.toList();
-    mainCube.setCurrentColors(settingsCube.currentColors);
-    settingsCube.setCurrentColors(settingsCube.currentColors);
-    mainCube.executeScrambleWithReset(currentScramble);
+
+    //TODO сделать сохранение азбуки + переопредление сторон кубика одним методом
+    {
+      settingsColoredAzbuka = settingsCube.getColoredAzbuka();
+      mainColoredAzbuka = settingsCube.getColoredAzbuka(withLetters: false);
+      mainCube.setDefaultColors(settingsCube.currentColors);
+      settingsCube.setDefaultColorsByCurrent();
+      mainCube.executeScrambleWithReset(currentScramble);
+    }
   }
 
   void loadMaximAzbuka() {
     settingsCube.executeScramble("z");
-    settingsColoredAzbuka = settingsCube.coloredAzbuka;
-    mainColoredAzbuka = settingsCube.coloredAzbuka.toList();
-    mainCube.setCurrentColors(settingsCube.currentColors);
-    settingsCube.setCurrentColors(settingsCube.currentColors);
+    settingsColoredAzbuka = settingsCube.getColoredAzbuka();
+    mainCube.setDefaultColors(settingsCube.currentColors);
+    settingsCube.setDefaultColorsByCurrent();
     mainCube.executeScrambleWithReset(currentScramble);
+    mainColoredAzbuka = mainCube.getColoredAzbuka(withLetters: false);
   }
 }
 
