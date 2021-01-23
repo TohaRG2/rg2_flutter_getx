@@ -1,8 +1,13 @@
 import 'dart:core';
 
-class AzbukaSimpleItem{
+class ColoredAzbukaItem{
   int colorNumber;
   String letter;
 
-  AzbukaSimpleItem({this.colorNumber, this.letter});
+  ColoredAzbukaItem({this.colorNumber, this.letter});
+
+  @override
+  String toString() {
+    return "($colorNumber, $letter)";
+  }
 }

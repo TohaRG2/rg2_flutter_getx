@@ -14,7 +14,7 @@ class BlindCube extends Cube {
 
   BlindCube({this.azbuka}) : super();
 
-  BlindCube.colored(List<int> colors, this.azbuka) {
+  BlindCube.colored({List<int> colors, this.azbuka}) {
     setDefaultColors(colors);
     resetCube();
   }
@@ -23,13 +23,25 @@ class BlindCube extends Cube {
   static const List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
 
   /// берем два массива: цвета кубика и азбуку и делаем из них один
-  List<AzbukaSimpleItem> getColoredAzbuka({bool withLetters = true}) {
-    var result = List<AzbukaSimpleItem>();
+  List<ColoredAzbukaItem> getColoredAzbuka() {
+    var result = List<ColoredAzbukaItem>();
     var colors = asList;
     colors.asMap().forEach((index, color) {
-      result.add(AzbukaSimpleItem(colorNumber: color, letter: (withLetters) ? azbuka[index] : " "));
+      result.add(ColoredAzbukaItem(colorNumber: color, letter: azbuka[index]));
     });
     return result;
+  }
+
+  /// на входе - цветная азбука
+  /// устанавливаем цвета граней и азбуку по входу и сбрасываем куб
+  resetByColoredAzbuka(List<ColoredAzbukaItem> coloredAzbuka) {
+    coloredAzbuka.asMap().forEach((index, simpleItem) {
+      azbuka[index] = simpleItem.letter;  
+    });
+    print(azbuka);
+    List<int> colors =  _centersPositions.map((pos) => coloredAzbuka[pos].colorNumber).toList();
+    setDefaultColors(colors);
+    resetCube();
   }
 
   /// Возвращаем подходящий под условия переплавки скрамбл и перемешиваем по нему кубик

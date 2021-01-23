@@ -21,14 +21,15 @@ class ScrambleGenController extends GetxController {
     _isCornerEnabled.value = GetStorage().read(Const.IS_CORNER_ENABLED) ?? true;
     _scrambleLength.value = GetStorage().read(Const.SCRAMBLE_LENGTH) ?? 14;
     _currentScramble.value = GetStorage().read(Const.CURRENT_SCRAMBLE) ?? "R F L B U2 L B' R F' D B R L F D R' D L";
-    mainCube = BlindCube(azbuka: Azbuka().currentAzbuka);
+
+    mainCube = BlindCube.colored(colors: Azbuka().currentColorsSide, azbuka: Azbuka().currentAzbuka);
     mainCube.executeScrambleWithReset(currentScramble);
-    settingsCube = BlindCube(azbuka: Azbuka().currentAzbuka);
     _conditions = mainCube.getDecisionForScramble(currentScramble);
     currentDecision = showDecision ? _conditions.decision : _conditions.decisionInfo;
+    mainColoredAzbuka = mainCube.getColoredAzbuka();
 
+    settingsCube = BlindCube.colored(colors: Azbuka().currentColorsSide, azbuka: Azbuka().currentAzbuka);
     settingsColoredAzbuka = settingsCube.getColoredAzbuka();
-    mainColoredAzbuka = mainCube.getColoredAzbuka(withLetters: false);
     super.onInit();
   }
 
@@ -86,17 +87,17 @@ class ScrambleGenController extends GetxController {
   }
 
   // создаем observable азбуку, чтобы обновлять куб на экране, при изменении цветов или букв
-  RxList<AzbukaSimpleItem> _settingsColoredAzbuka = List<AzbukaSimpleItem>().obs;
-  List<AzbukaSimpleItem> get settingsColoredAzbuka => _settingsColoredAzbuka;
-  set settingsColoredAzbuka (List<AzbukaSimpleItem> value) {
-    _settingsColoredAzbuka.assignAll(value);
-    Azbuka().currentAzbuka = value.map((v) => v.letter).toList();
+  RxList<ColoredAzbukaItem> _settingsColoredAzbuka = List<ColoredAzbukaItem>().obs;
+  List<ColoredAzbukaItem> get settingsColoredAzbuka => _settingsColoredAzbuka;
+  set settingsColoredAzbuka (List<ColoredAzbukaItem> coloredAzbuka) {
+    _settingsColoredAzbuka.assignAll(coloredAzbuka);
+    Azbuka().setCurrentColoredAzbuka(coloredAzbuka);
   }
 
   // создаем observable азбуку, чтобы обновлять куб на экране, при изменении цветов или букв
-  RxList<AzbukaSimpleItem> _mainColoredAzbuka = List<AzbukaSimpleItem>().obs;
-  List<AzbukaSimpleItem> get mainColoredAzbuka => _mainColoredAzbuka;
-  set mainColoredAzbuka (List<AzbukaSimpleItem> value) {
+  RxList<ColoredAzbukaItem> _mainColoredAzbuka = List<ColoredAzbukaItem>().obs;
+  List<ColoredAzbukaItem> get mainColoredAzbuka => _mainColoredAzbuka;
+  set mainColoredAzbuka (List<ColoredAzbukaItem> value) {
     _mainColoredAzbuka.assignAll(value);
   }
 
@@ -119,7 +120,7 @@ class ScrambleGenController extends GetxController {
     _conditions = mainCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength);
     currentScramble = _conditions.scramble;
     currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
-    mainColoredAzbuka = mainCube.getColoredAzbuka(withLetters: false);
+    mainColoredAzbuka = mainCube.getColoredAzbuka();
   }
 
   void updateInputScrambleText() {
@@ -131,7 +132,7 @@ class ScrambleGenController extends GetxController {
     mainCube.executeScrambleWithReset(currentScramble);
     _conditions = mainCube.getDecisionForScramble(currentScramble);
     currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
-    mainColoredAzbuka = mainCube.getColoredAzbuka(withLetters: false);
+    mainColoredAzbuka = mainCube.getColoredAzbuka();
   }
 
   void inputLetter(String letter) {
@@ -175,11 +176,11 @@ class ScrambleGenController extends GetxController {
   }
 
   /// Представляем кубик в виде 9 строк по 12 элементов из списка элементов куба в 54 элемента
-  List<List<AzbukaSimpleItem>> asTableRows(List<AzbukaSimpleItem> cube) {
-    List<List<AzbukaSimpleItem>> result = List();
+  List<List<ColoredAzbukaItem>> asTableRows(List<ColoredAzbukaItem> cube) {
+    List<List<ColoredAzbukaItem>> result = List();
 
     // заполняем табличку из 108 элементов прозрачными (7), пустыми ("") элементами
-    var table = List.generate(108, (_) => AzbukaSimpleItem(colorNumber: 7, letter: ""));
+    var table = List.generate(108, (_) => ColoredAzbukaItem(colorNumber: 7, letter: ""));
     // ставим на свои места значения ячеек кубика
     if (cube.length == 54) {
       for (int i = 0; i < 9; i++) {
@@ -201,27 +202,61 @@ class ScrambleGenController extends GetxController {
     return result;
   }
 
+  void saveCurrentAzbukaSettings() {
+    settingsColoredAzbuka = settingsCube.getColoredAzbuka();
+    settingsCube.setDefaultColorsByCurrent();
+    mainCube.setDefaultColors(settingsCube.currentColors);
+    mainCube.executeScrambleWithReset(currentScramble);
+    mainColoredAzbuka = mainCube.getColoredAzbuka();
+  }
+
 
   void loadMyAzbuka() {
-    settingsCube.executeScramble("z'");
-
-    //TODO сделать сохранение азбуки + переопредление сторон кубика одним методом
-    {
-      settingsColoredAzbuka = settingsCube.getColoredAzbuka();
-      mainColoredAzbuka = settingsCube.getColoredAzbuka(withLetters: false);
-      mainCube.setDefaultColors(settingsCube.currentColors);
-      settingsCube.setDefaultColorsByCurrent();
-      mainCube.executeScrambleWithReset(currentScramble);
-    }
+    var coloredAzbuka = Azbuka().getMyColoredAzbuka();
+    settingsCube.resetByColoredAzbuka(coloredAzbuka);
+    saveCurrentAzbukaSettings();
   }
 
   void loadMaximAzbuka() {
-    settingsCube.executeScramble("z");
-    settingsColoredAzbuka = settingsCube.getColoredAzbuka();
-    mainCube.setDefaultColors(settingsCube.currentColors);
-    settingsCube.setDefaultColorsByCurrent();
-    mainCube.executeScrambleWithReset(currentScramble);
-    mainColoredAzbuka = mainCube.getColoredAzbuka(withLetters: false);
+    var coloredAzbuka = Azbuka().getMaximColoredAzbuka();
+    settingsCube.resetByColoredAzbuka(coloredAzbuka);
+    saveCurrentAzbukaSettings();
   }
+  
+  void loadCustomAzbuka() {
+    var coloredAzbuka = Azbuka().loadCustomColoredAzbuka();
+    settingsCube.resetByColoredAzbuka(coloredAzbuka);
+    saveCurrentAzbukaSettings();
+  }
+
+  void saveCustomAzbuka() {
+    var coloredAzbuka = settingsCube.getColoredAzbuka();
+    Azbuka().setCurrentColoredAzbuka(coloredAzbuka);
+    Azbuka().saveCustomColoredAzbuka();
+  }
+
+  void leftArrowButtonPressed() {
+    settingsCube.executeScramble("z'");
+    saveCurrentAzbukaSettings();
+  }
+
+  void rightArrowButtonPressed() {
+    settingsCube.executeScramble("z");
+    saveCurrentAzbukaSettings();
+  }
+
+  void antiClockWiseArrowButtonPressed() {
+    settingsCube.executeScramble("y'");
+    saveCurrentAzbukaSettings();
+  }
+
+  void clockWiseArrowButtonPressed() {
+    print("y");
+    settingsCube.executeScramble("y");
+    saveCurrentAzbukaSettings();
+  }
+
+
+
 }
 

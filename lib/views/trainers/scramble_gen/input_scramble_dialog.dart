@@ -13,7 +13,7 @@ class InputScrambleDialog extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+                  padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
                   child: Text(_controller.inputScramble,
                     maxLines: 3,
                     style: Theme.of(context).textTheme.headline4.copyWith(color: Theme.of(context).accentColor),
@@ -71,7 +71,7 @@ class OneButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
         child: RaisedButton(
           color: Theme.of(context).primaryColor,
           onPressed: () {

@@ -1,8 +1,6 @@
 import 'dart:core';
 import 'dart:math';
 
-import 'package:rg2_flutter_getx/models/scramble_gen/azbuka_simple_item.dart';
-
 ///
 /// Сущность для представления кубика
 ///
