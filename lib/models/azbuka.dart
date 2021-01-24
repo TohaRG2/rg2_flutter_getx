@@ -21,10 +21,11 @@ class Azbuka {
     _currentColorsSide = _loadColors(Const.CURRENT_AZBUKA_COLORS);
   }
 
+  /// Возвращаем список из 54 элементов (номер, цвет, буква)
   List<ColoredAzbukaItem> get currentColoredAzbuka {
     List<ColoredAzbukaItem> coloredAzbuka = List();
     currentAzbuka.asMap().forEach((index, value) {
-      coloredAzbuka.add(ColoredAzbukaItem(colorNumber: _currentColorsSide[index ~/ 9], letter: value));
+      coloredAzbuka.add(ColoredAzbukaItem(index: index, colorNumber: _currentColorsSide[index ~/ 9], letter: value));
     });
     return coloredAzbuka;
   }

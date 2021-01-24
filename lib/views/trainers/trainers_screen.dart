@@ -40,17 +40,17 @@ class TrainersScreen extends StatelessWidget {
 
   _onItemSelected (TrainerMenuItem item) {
     switch(item.id) {
-      case R.trainers_scramble_gen:
+      case R.trainersScrambleGen:
         print("Start Scramble Generator");
         Get.to(ScrambleGenView(title: item.title), transition: Transition.fadeIn);
         break;
-      case R.trainers_timer:
+      case R.trainersTimer:
         print("Start Timer");
         break;
-      case R.trainers_pll:
+      case R.trainersPll:
         print("Start PLL trainer");
         break;
-      case R.trainers_azbuka:
+      case R.trainersAzbuka:
         print("Start AZBUKA trainer");
         break;
       default:
@@ -65,16 +65,16 @@ class TrainersScreen extends StatelessWidget {
 
   _onSettingsSelected (TrainerMenuItem item) {
     switch(item.id) {
-      case R.trainers_scramble_gen:
+      case R.trainersScrambleGen:
         Get.to(ScrambleGenSettingsView(), transition: Transition.rightToLeft);
         break;
-      case R.trainers_timer:
+      case R.trainersTimer:
         print("Settings Timer");
         break;
-      case R.trainers_pll:
+      case R.trainersPll:
         print("Settings PLL trainer");
         break;
-      case R.trainers_azbuka:
+      case R.trainersAzbuka:
         print("Settings AZBUKA trainer");
         break;
       default:

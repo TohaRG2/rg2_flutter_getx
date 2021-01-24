@@ -12,4 +12,9 @@ class PhasePositionItem{
   double position;
 
   PhasePositionItem(this.phase, this.position);
+
+  @override
+  String toString() {
+    return "($phase: $position)";
+  }
 }

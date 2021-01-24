@@ -27,7 +27,7 @@ class BlindCube extends Cube {
     var result = List<ColoredAzbukaItem>();
     var colors = asList;
     colors.asMap().forEach((index, color) {
-      result.add(ColoredAzbukaItem(colorNumber: color, letter: azbuka[index]));
+      result.add(ColoredAzbukaItem(index: index, colorNumber: color, letter: azbuka[index]));
     });
     return result;
   }

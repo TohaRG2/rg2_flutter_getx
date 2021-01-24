@@ -17,7 +17,7 @@ class ScrambleLengthSelection extends StatelessWidget {
     final List<bool> _selections = List.generate(3, (index) => false);
     return Row(
       children: [
-        Expanded(child: Center(child: Text(R.scramble_gen_scramble_length))),
+        Expanded(child: Center(child: Text(R.scrambleGenScrambleLength))),
         ToggleButtons(
           children: [
             Icon(Icons.chevron_left_rounded),

@@ -17,7 +17,7 @@ class ShowScrambleText extends StatelessWidget {
         children: [
           Container(
               padding: const EdgeInsets.only(top: 10.0),
-              child: Text(R.scramble_gen_show_scramble)),
+              child: Text(R.scrambleGenShowScramble)),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
             child: Text( scramble,
@@ -29,7 +29,7 @@ class ShowScrambleText extends StatelessWidget {
       onTap: () {
         _controller.updateInputScrambleText();
         Get.defaultDialog(
-            title: R.scramble_gen_input_scramble,
+            title: R.scrambleGenInputScramble,
             barrierDismissible: false,
             content: InputScrambleDialog(),
             buttonColor: Theme.of(context).secondaryHeaderColor,

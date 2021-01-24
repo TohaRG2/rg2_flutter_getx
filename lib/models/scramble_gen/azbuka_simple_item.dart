@@ -1,13 +1,14 @@
 import 'dart:core';
 
 class ColoredAzbukaItem{
+  int index;
   int colorNumber;
   String letter;
 
-  ColoredAzbukaItem({this.colorNumber, this.letter});
+  ColoredAzbukaItem({this.index, this.colorNumber, this.letter});
 
   @override
   String toString() {
-    return "($colorNumber, $letter)";
+    return "($index, $colorNumber, $letter)";
   }
 }

@@ -67,7 +67,7 @@ class LearnController extends GetxController {
     list.forEach((element) {
       phasesPositions[element.phase] = element.position;
     });
-    print("PhasesPositions = $phasesPositions, list = $list");
+    print("PhasesPositionsFromBase $list");
   }
 
   // Меняем статус избранного для элемента

@@ -5,4 +5,9 @@ class AdviceItem {
   String adviceText;
 
   AdviceItem({this.adviceImagePath, this.adviceText});
+
+  @override
+  String toString() {
+    return "($adviceText, $adviceImagePath)";
+  }
 }

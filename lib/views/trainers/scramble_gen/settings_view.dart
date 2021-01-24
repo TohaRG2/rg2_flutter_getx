@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/trainers_scramble_gen_controller.dart';
+import 'package:rg2_flutter_getx/models/scramble_gen/azbuka_simple_item.dart';
 import 'package:rg2_flutter_getx/models/scramble_gen/blind_cube_support_arrays.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/trainers/help/bottom_bar_with_back_button.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/input_letter_dialog.dart';
 
 class ScrambleGenSettingsView extends StatelessWidget {
   final ScrambleGenController _controller = Get.find();
@@ -21,7 +23,8 @@ class ScrambleGenSettingsView extends StatelessWidget {
     final Size size = context.mediaQuery.size;
     const padding = 8.0;
     var cellHeight = (size.width - padding * 2) / 12;
-    _controller.settingsCube.resetCube();
+    var arrowColor = Theme.of(context).textTheme.headline6.color;
+    var border = 2.0;
     return Obx(() {
       var cubeAsTable = _controller.settingsColoredAzbuka;
       var tableRows = _controller.asTableRows(cubeAsTable);
@@ -30,7 +33,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
             automaticallyImplyLeading: false,
             title: Center(
               child: Text(
-                R.scramble_gen_azbuka_select,
+                R.scrambleGenAzbukaSelect,
                 style: TextStyle(color: Theme.of(context).textTheme.headline5.color),
               ),
             ),
@@ -46,21 +49,26 @@ class ScrambleGenSettingsView extends StatelessWidget {
                   child: Stack(
                     children: [
                       Table(
-                      border: TableBorder.all(width: 3.0, color: backgroundColor),
+                      //border: TableBorder.all(width: 3.0, color: backgroundColor),
                       children: tableRows.map((row) =>
                           TableRow(
                             children: row.map((tableItem) =>
                                 GestureDetector(
                                   child: Container(
-                                    height: cellHeight,
-                                    color: getColorByNumber(tableItem.colorNumber),
-                                    child: Center(
-                                        child: Text(tableItem.letter, style: TextStyle(color: Colors.black),)
+                                    padding: EdgeInsets.all(border),
+                                    color: (tableItem.colorNumber != 7) ? Colors.black87 : cubeColor[tableItem.colorNumber],
+                                    child: Container(
+                                      height: cellHeight - (border * 2),
+                                      color: cubeColor[tableItem.colorNumber],
+                                      child: Center(
+                                          child: Text(tableItem.letter, style: TextStyle(color: Colors.black, fontSize: 15, fontWeight: FontWeight.bold),)
+                                      ),
                                     ),
                                   ),
                                   onTap: () {
                                     if (tableItem.letter != "" && tableItem.letter != "-") {
-                                      print("Нажата какая-то буква");
+                                      //print("Нажата буква ${tableItem.letter} ${tableItem.index} ");
+                                      showSelectLetterDialog(context, tableItem);
                                     }
                                   },
                                 )).toList(),
@@ -70,7 +78,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           top: cellHeight / 2,
                           left: cellHeight / 2,
                           child: IconButton(
-                            color: Theme.of(context).primaryColor,
+                            color: arrowColor,
                             iconSize: cellHeight * 1.5,
                             icon: Icon(Icons.arrow_back_rounded),
                             onPressed: () {
@@ -82,7 +90,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           top: cellHeight / 2,
                           left: cellHeight * 6.5,
                           child: IconButton(
-                            color: Theme.of(context).primaryColor,
+                            color: arrowColor,
                             iconSize: cellHeight * 1.5,
                             icon: Icon(Icons.arrow_forward_rounded),
                             onPressed: () {
@@ -94,7 +102,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           top: cellHeight * 6.5,
                           left: cellHeight / 2,
                           child: IconButton(
-                            color: Theme.of(context).primaryColor,
+                            color: arrowColor,
                             iconSize: cellHeight * 1.5,
                             icon: Icon(Icons.subdirectory_arrow_right_rounded),
                             onPressed: () {
@@ -106,7 +114,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           top: cellHeight * 6.5,
                           left: cellHeight * 6.5,
                           child: IconButton(
-                            color: Theme.of(context).primaryColor,
+                            color: arrowColor,
                             iconSize: cellHeight * 1.5,
                             icon: Icon(Icons.subdirectory_arrow_left_rounded),
                             onPressed: () {
@@ -129,7 +137,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(R.scrambleGenSettingsLoadMyAzbuka, textAlign: TextAlign.center,),
+                            child: Text(R.scrambleGenSettingsLoadMyAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
                           ),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
@@ -145,7 +153,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(R.scrambleGenSettingsLoadMaximAzbuka, textAlign: TextAlign.center,),
+                            child: Text(R.scrambleGenSettingsLoadMaximAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
                           ),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
@@ -165,7 +173,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(R.scrambleGenSettingsLoadCustomAzbuka, textAlign: TextAlign.center,),
+                            child: Text(R.scrambleGenSettingsLoadCustomAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
                           ),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
@@ -181,7 +189,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(R.scrambleGenSettingsSaveCustomAzbuka, textAlign: TextAlign.center,),
+                            child: Text(R.scrambleGenSettingsSaveCustomAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
                           ),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
@@ -195,6 +203,25 @@ class ScrambleGenSettingsView extends StatelessWidget {
           bottomNavigationBar: BottomBarWithBackButton()
       );
     });
+  }
+
+  void showSelectLetterDialog(BuildContext context, ColoredAzbukaItem item) {
+    _controller.selectedLetter = item.letter;
+    _controller.storedLetter = item.letter;
+    Get.defaultDialog(
+        title: R.scrambleGenSettingsSelectLetter,
+        barrierDismissible: false,
+        content: InputLetterDialog(),
+        buttonColor: Theme.of(context).secondaryHeaderColor,
+        textCancel: R.buttonCancelText,
+        cancelTextColor: Theme.of(context).primaryColor,
+        textConfirm: R.buttonOkText,
+        confirmTextColor: Theme.of(context).accentColor,
+        onConfirm: () => {
+          //TODO реализовать сохранение буквы из selectedLetter по item.index в азбуку
+          Get.back()
+        }
+    );
   }
 
 

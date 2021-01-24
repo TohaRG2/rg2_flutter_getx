@@ -32,4 +32,9 @@ class TrainerMenuItem {
   ///
   String getIcSettingsPath() => "assets/images/trainers/ic_settings.png";
 
+  @override
+  String toString() {
+    return "($id, $title, $icon)";
+  }
+
 }

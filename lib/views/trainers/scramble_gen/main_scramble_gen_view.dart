@@ -23,6 +23,7 @@ class ScrambleGenView extends StatelessWidget {
     final Color backgroundColor = Theme.of(context).scaffoldBackgroundColor;
     const padding = 8.0;
     var cellHeight = (Get.width - padding * 2) / 12;
+    var border = 2.0;
     print("ScrambleGenView");
     return Scaffold(
         appBar: AppBar(
@@ -36,7 +37,7 @@ class ScrambleGenView extends StatelessWidget {
           backgroundColor: backgroundColor,
         ),
         body: Obx( () {
-          print("Update scrambleGen Obx View");
+          //print("Update scrambleGen Obx View");
           var coloredAzbuka = _controller.mainColoredAzbuka;
           var tableRows = _controller.asTableRows(coloredAzbuka);
           var scrambleLength = _controller.scrambleLength.toString();
@@ -54,13 +55,17 @@ class ScrambleGenView extends StatelessWidget {
                   ScrambleLengthSelection(scrambleLength: scrambleLength, controller: _controller),
                   ShowScrambleText(scramble: scramble),
                   Table(
-                    border: TableBorder.all(width: 3.0, color: backgroundColor),
+                    //border: TableBorder.all(width: 0.0, color: backgroundColor),
                     children: tableRows.map((row) =>
                         TableRow(
                           children: row.map((tableItem) =>
                               Container(
-                                height: cellHeight,
-                                color: cubeColor[tableItem.colorNumber],
+                                padding: EdgeInsets.all(border),
+                                color: (tableItem.colorNumber != 7) ? Colors.black87 : cubeColor[tableItem.colorNumber],
+                                child: Container(
+                                  height: cellHeight - (border * 2),
+                                  color: cubeColor[tableItem.colorNumber],
+                                ),
                               )).toList(),
                         )).toList(),
                   ),
@@ -78,15 +83,15 @@ class ScrambleGenView extends StatelessWidget {
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(
       icon: Icon(Icons.arrow_back),
-      label: R.scramble_gen_bottom_back,
+      label: R.scrambleGenBottomBack,
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.autorenew_rounded),
-      label: R.scramble_gen_bottom_generate,
+      label: R.scrambleGenBottomGenerate,
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.settings),
-      label: R.scramble_gen_bottom_settings,
+      label: R.scrambleGenBottomSettings,
     )
   ];
 }

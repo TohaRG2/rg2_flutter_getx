@@ -71,6 +71,22 @@ class ScrambleGenController extends GetxController {
     _inputScramble.value = value;
   }
 
+  final _selectedLetter = "".obs;
+  String get selectedLetter => _selectedLetter.value;
+  set selectedLetter(String value) {
+    _selectedLetter.value = value;
+  }
+
+  String _editedLetter = "";
+  String get storedLetter => _editedLetter;
+  set storedLetter(String letter) {
+    if (letter.length > 0) {
+      _editedLetter = letter[0];
+    } else {
+      _editedLetter = "A";
+    }
+  }
+
   final _showDecision = true.obs;
   bool get showDecision => _showDecision.value;
   set showDecision(bool value) {
@@ -129,10 +145,7 @@ class ScrambleGenController extends GetxController {
 
   void updateCurrentScrambleFromInput() {
     currentScramble = inputScramble;
-    mainCube.executeScrambleWithReset(currentScramble);
-    _conditions = mainCube.getDecisionForScramble(currentScramble);
-    currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
-    mainColoredAzbuka = mainCube.getColoredAzbuka();
+    updateMainCubePresentation();
   }
 
   void inputLetter(String letter) {
@@ -179,8 +192,8 @@ class ScrambleGenController extends GetxController {
   List<List<ColoredAzbukaItem>> asTableRows(List<ColoredAzbukaItem> cube) {
     List<List<ColoredAzbukaItem>> result = List();
 
-    // заполняем табличку из 108 элементов прозрачными (7), пустыми ("") элементами
-    var table = List.generate(108, (_) => ColoredAzbukaItem(colorNumber: 7, letter: ""));
+    // заполняем табличку из 108 элементов прозрачными (7), пустыми ("") элементами с индексом 100
+    var table = List.generate(108, (_) => ColoredAzbukaItem(index: 100, colorNumber: 7, letter: ""));
     // ставим на свои места значения ячеек кубика
     if (cube.length == 54) {
       for (int i = 0; i < 9; i++) {
@@ -189,7 +202,7 @@ class ScrambleGenController extends GetxController {
         table[(i ~/ 3 + 3) * 12 + 3 + i % 3] = cube[i + 18];
         table[(i ~/ 3 + 3) * 12 + 6 + i % 3] = cube[i + 27];
         table[(i ~/ 3 + 3) * 12 + 9 + i % 3] = cube[i + 36];
-        table[(i ~/ 3 + 6) * 12 + 3 + i % 3] = cube[i + 45];;
+        table[(i ~/ 3 + 6) * 12 + 3 + i % 3] = cube[i + 45];
       }
     }
     // разобьем table на строки по 12 элементов (9 строк)
@@ -206,8 +219,14 @@ class ScrambleGenController extends GetxController {
     settingsColoredAzbuka = settingsCube.getColoredAzbuka();
     settingsCube.setDefaultColorsByCurrent();
     mainCube.setDefaultColors(settingsCube.currentColors);
+    updateMainCubePresentation();
+  }
+
+  void updateMainCubePresentation() {
     mainCube.executeScrambleWithReset(currentScramble);
     mainColoredAzbuka = mainCube.getColoredAzbuka();
+    _conditions = mainCube.getDecisionForScramble(currentScramble);
+    currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
   }
 
 
@@ -251,12 +270,40 @@ class ScrambleGenController extends GetxController {
   }
 
   void clockWiseArrowButtonPressed() {
-    print("y");
     settingsCube.executeScramble("y");
     saveCurrentAzbukaSettings();
   }
 
+  void selectLetterMinus() {
+    var ch = selectedLetter.runes.single;
+    switch(selectedLetter) {
+      case "Ж": ch = "Ё".runes.single; break;
+      case "Ё": ch = "Е".runes.single; break;
+      case "А": ch = "Z".runes.single; break;
+      case "A": ch = "9".runes.single; break;
+      case "0": ch = "Я".runes.single; break;
+      default: ch--;
+    }
+    selectedLetter = String.fromCharCode(ch);
 
+  }
+
+  void selectLetterPlus() {
+    var ch = selectedLetter.runes.single;
+    switch(selectedLetter) {
+      case "Я": ch = "0".runes.single; break;
+      case "9": ch = "A".runes.single; break;
+      case "Z": ch = "А".runes.single; break;
+      case "Е": ch = "Ё".runes.single; break;
+      case "Ё": ch = "Ж".runes.single; break;
+      default: ch++;
+    }
+    selectedLetter = String.fromCharCode(ch);
+  }
+
+  void selectLetterReset() {
+    selectedLetter = storedLetter;
+  }
 
 }
 

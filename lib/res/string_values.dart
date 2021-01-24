@@ -46,25 +46,26 @@ class R {
   static const infoAdviceComment = "* Щелкните по изображению, чтобы увидеть другие полезные советы по работе с программой";
 
 
-  static const trainers_azbuka = "AZBUKA";
-  static const trainers_scramble_gen = "SCRAMBLE_GEN";
-  static const trainers_pll = "PLL";
-  static const trainers_oll = "OLL";
-  static const trainers_timer = "TIMER";
+  static const trainersAzbuka = "AZBUKA";
+  static const trainersScrambleGen = "SCRAMBLE_GEN";
+  static const trainersPll = "PLL";
+  static const trainersOll = "OLL";
+  static const trainersTimer = "TIMER";
 
 
-  static const scramble_gen_edge_buffer  = "Без переплавки буфера ребер";
-  static const scramble_gen_corner_buffer  = "Без переплавки буфера углов";
-  static const scramble_gen_scramble_length  = "Длина скрамбла";
-  static const scramble_gen_show_scramble = "Скрамбл:";
-  static const scramble_gen_input_scramble = "Введите скрамбл:";
-  static const scramble_gen_blind_decision  = "Решение для сборки вслепую:";
-  static const scramble_gen_bottom_back  = "Назад";
-  static const scramble_gen_bottom_generate  = "Генерировать";
-  static const scramble_gen_bottom_settings  = "Настройки";
-  static const scramble_gen_azbuka_select  = "Выбор азбуки";
+  static const scrambleGenEdgeBuffer  = "Без переплавки буфера ребер";
+  static const scrambleGenCornerBuffer  = "Без переплавки буфера углов";
+  static const scrambleGenScrambleLength  = "Длина скрамбла";
+  static const scrambleGenShowScramble = "Скрамбл:";
+  static const scrambleGenInputScramble = "Введите скрамбл:";
+  static const scrambleGenBlindDecision  = "Решение для сборки вслепую:";
+  static const scrambleGenBottomBack  = "Назад";
+  static const scrambleGenBottomGenerate  = "Генерировать";
+  static const scrambleGenBottomSettings  = "Настройки";
+  static const scrambleGenAzbukaSelect  = "Выбор азбуки";
   static const scrambleGenSettingsLoadMyAzbuka = "Азбука Антона";
   static const scrambleGenSettingsLoadMaximAzbuka = "Азбука Максима";
   static const scrambleGenSettingsSaveCustomAzbuka = "Сохранить текущую азбуку";
   static const scrambleGenSettingsLoadCustomAzbuka = "Загрузить сохраненную азбуку";
+  static const scrambleGenSettingsSelectLetter = "Выберите букву";
 }
