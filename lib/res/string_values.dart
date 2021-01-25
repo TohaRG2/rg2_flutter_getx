@@ -48,9 +48,12 @@ class R {
 
   static const trainersAzbuka = "AZBUKA";
   static const trainersScrambleGen = "SCRAMBLE_GEN";
+  static const trainersScrambleGenTitle = "Генератор скрамблов";
   static const trainersPll = "PLL";
+  static const trainersPllTitle = "Тренировка PLL";
   static const trainersOll = "OLL";
   static const trainersTimer = "TIMER";
+  static const trainersTimerTitle = "Таймер";
 
 
   static const scrambleGenEdgeBuffer  = "Без переплавки буфера ребер";
@@ -68,4 +71,7 @@ class R {
   static const scrambleGenSettingsSaveCustomAzbuka = "Сохранить текущую азбуку";
   static const scrambleGenSettingsLoadCustomAzbuka = "Загрузить сохраненную азбуку";
   static const scrambleGenSettingsSelectLetter = "Выберите букву";
+
+
+
 }

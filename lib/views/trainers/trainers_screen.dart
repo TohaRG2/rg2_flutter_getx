@@ -8,6 +8,7 @@ import 'package:rg2_flutter_getx/views/trainers/trainer_view_menu_item.dart';
 
 import 'help/help_view.dart';
 import 'scramble_gen/settings_view.dart';
+import 'timer/main_timer_view.dart';
 
 class TrainersScreen extends StatelessWidget {
   final TrainersController _controller = Get.find();
@@ -46,6 +47,7 @@ class TrainersScreen extends StatelessWidget {
         break;
       case R.trainersTimer:
         print("Start Timer");
+        Get.to(TimerView(), transition: Transition.fadeIn);
         break;
       case R.trainersPll:
         print("Start PLL trainer");
@@ -59,7 +61,7 @@ class TrainersScreen extends StatelessWidget {
   }
 
   _onHelpSelected (TrainerMenuItem item) {
-    print("Pressed on ${item.title} - help");
+    //print("Pressed on ${item.title} - help");
     Get.to(HelpView(item: item), transition: Transition.fadeIn);
   }
 
