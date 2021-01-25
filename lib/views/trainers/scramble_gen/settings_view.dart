@@ -218,7 +218,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
         textConfirm: R.buttonOkText,
         confirmTextColor: Theme.of(context).accentColor,
         onConfirm: () => {
-          //TODO реализовать сохранение буквы из selectedLetter по item.index в азбуку
+          _controller.confirmLetterSelection(item.index),
           Get.back()
         }
     );

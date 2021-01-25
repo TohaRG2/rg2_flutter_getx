@@ -148,6 +148,8 @@ class ScrambleGenController extends GetxController {
     updateMainCubePresentation();
   }
 
+
+  /// Нажатие на кнопку в диалоге ввода скрамбла
   void inputLetter(String letter) {
     switch(letter) {
       case "W":
@@ -170,6 +172,7 @@ class ScrambleGenController extends GetxController {
 
   }
 
+  /// Нажатие на модификатор хода в диалоге ввода скрамбла (' 2 w)
   void inputModifier(String modifier) {
     print("input modifier $modifier");
     inputScramble = inputScramble.trim();
@@ -179,6 +182,7 @@ class ScrambleGenController extends GetxController {
     }
   }
 
+  /// Нажатие на кнопку DEL в диалоге ввода скрамбла
   void inputBackSpace() {
     inputScramble = inputScramble.trim();
     var len = inputScramble.length;
@@ -303,6 +307,13 @@ class ScrambleGenController extends GetxController {
 
   void selectLetterReset() {
     selectedLetter = storedLetter;
+  }
+
+  /// Сохраняем букву в азбуку кубика, а потом по новой азбуке обновляем отображение
+  /// в настройках и решение для основного кубика
+  void confirmLetterSelection(int index) {
+    settingsCube.updateLetterInAzbuka(index, selectedLetter);
+    saveCurrentAzbukaSettings();
   }
 
 }

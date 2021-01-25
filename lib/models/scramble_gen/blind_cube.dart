@@ -44,6 +44,10 @@ class BlindCube extends Cube {
     resetCube();
   }
 
+  void updateLetterInAzbuka(int index, String letter) {
+    azbuka[index] = letter;
+  }
+
   /// Возвращаем подходящий под условия переплавки скрамбл и перемешиваем по нему кубик
   ScrambleDecisionCondition generateScrambleWithParam({bool checkEdge, bool checkCorner, int lenScramble}) {
     //print("Ищем скрамбл подходящий по параметрам переплавок буфера и длине");

@@ -38,7 +38,7 @@ class Azbuka {
     }
   }
 
-  get currentAzbuka => (_currentAzbuka.isNotEmpty) ? _currentAzbuka : myAzbuka;
+  List<String> get currentAzbuka => (_currentAzbuka.isNotEmpty) ? _currentAzbuka : myAzbuka;
   set currentAzbuka(List<String> list) {
     if (list.isNotEmpty) {
       _currentAzbuka = list.toList();   //копируем по значению, а не по ссылке
