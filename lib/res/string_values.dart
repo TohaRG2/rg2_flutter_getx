@@ -72,6 +72,8 @@ class R {
   static const scrambleGenSettingsLoadCustomAzbuka = "Загрузить сохраненную азбуку";
   static const scrambleGenSettingsSelectLetter = "Выберите букву";
 
-
+  static const timerBottomBack = "Назад";
+  static const timerBottomResults = "Результаты";
+  static const timerBottomSettings = "Настройки";
 
 }

@@ -13,6 +13,7 @@ import 'controllers/info_controller.dart';
 import 'controllers/learn_controller.dart';
 import 'controllers/repository.dart';
 import 'controllers/settings_controller.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_controller.dart';
 import 'database/main_database.dart';
 import 'views/bottomNavBar.dart';
 import 'views/youtube_player/youtube_view.dart';
@@ -102,5 +103,6 @@ class RG2App extends StatelessWidget {
     Get.put(AzbukaDialogController());
     Get.put(TrainersController());
     Get.put(ScrambleGenController());
+    Get.put(TimerController());
   }
 }
