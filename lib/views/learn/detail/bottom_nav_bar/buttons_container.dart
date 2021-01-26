@@ -7,17 +7,16 @@ import 'favourite_button.dart';
 class ButtonsContainer extends StatelessWidget {
   const ButtonsContainer({
     Key key,
-    @required this.size,
+    @required this.width,
     @required this.iconColor,
   }) : super(key: key);
 
-  final Size size;
+  final double width;
   final Color iconColor;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: size.width,
       height: 80,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -43,7 +42,7 @@ class ButtonsContainer extends StatelessWidget {
                 Scaffold.of(context).openDrawer();
               }),
           Container(
-            width: size.width * 0.20,
+            width: width * 0.20,
           ),
           EditButton(),
           FavouriteButton(),

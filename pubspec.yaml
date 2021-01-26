@@ -75,6 +75,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/trainers/timer/
     - assets/images/trainers/
     - assets/images/main_other3x3/ghost/
     - assets/images/main3x3/g2f/

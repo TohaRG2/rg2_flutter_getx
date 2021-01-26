@@ -14,20 +14,20 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = context.mediaQuery.size;
+    final width = Get.width;
     final iconColor = Theme.of(context).scaffoldBackgroundColor;
     return Positioned(
       bottom: 0,
       left: 0,
       child: Container(
-        width: size.width,
+        width: width,
         height: 70,
         child: Stack(
           overflow: Overflow.visible,
           children: [
             // Подложка
             CustomPaint(
-              size: Size(size.width, 70),
+              size: Size(width, 70),
               painter: BottomNavBarPainter(Theme.of(context).primaryColor),
             ),
             // FAB
@@ -43,7 +43,7 @@ class BottomNavBar extends StatelessWidget {
                   }),
             ),
             // Кнопки на подложке
-            ButtonsContainer(size: size, iconColor: iconColor)
+            ButtonsContainer(width: width, iconColor: iconColor)
           ],
         ),
       ),
