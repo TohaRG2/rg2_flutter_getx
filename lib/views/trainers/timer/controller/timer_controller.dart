@@ -51,6 +51,24 @@ class TimerController extends GetxController {
     _bottomBarHeight.value = value;
   }
 
+  final _leftPadColor = 0.obs;
+  int get leftPadColor => _leftPadColor.value;
+  set leftPadColor(int value) {
+    _leftPadColor.value = value;
+  }
+
+  final _rightPadColor = 0.obs;
+  int get rightPadColor => _rightPadColor.value;
+  set rightPadColor(int value) {
+    _rightPadColor.value = value;
+  }
+
+  final _currentTime = "0:00.00".obs;
+  String get currentTime => _currentTime.value;
+  set currentTime(String value) {
+    _currentTime.value = value;
+  }
+
   /// Methods
 
   onRightPanelTouch() {
@@ -85,4 +103,25 @@ class TimerController extends GetxController {
     scramble = _genController.currentScramble;
   }
 
+
+
+}
+
+/// Состояния таймера
+enum TimerState {
+  stopped,
+
+  onePadPressedToStart,
+
+  twoPadPressedToStart,
+
+  ready,
+
+  running,
+
+  pause,
+
+  onePadPressedToStop,
+
+  waitForReset,
 }
