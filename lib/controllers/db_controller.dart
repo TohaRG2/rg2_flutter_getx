@@ -147,7 +147,7 @@ class DBController extends GetxController {
     await _initPhase(Clover());
     await _initPhase(Cll());
     await _initPhase(Coll());
-    await _initPhase(Container());
+    await _initPhase(ContainerCube());
     await _initPhase(Cuboid2x2x3());
     await _initPhase(Cuboid3x3x2());
     await _initPhase(Cylinder());

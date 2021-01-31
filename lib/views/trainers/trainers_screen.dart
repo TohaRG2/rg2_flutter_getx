@@ -4,6 +4,7 @@ import 'package:rg2_flutter_getx/controllers/trainers_controller.dart';
 import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/main_scramble_gen_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/timer_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/trainer_view_menu_item.dart';
 
 import 'help/help_view.dart';

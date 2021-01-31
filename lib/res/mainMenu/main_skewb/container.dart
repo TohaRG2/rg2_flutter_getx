@@ -1,7 +1,7 @@
 
 import 'package:rg2_flutter_getx/models/phases.dart';
 
-class Container implements Phase {
+class ContainerCube implements Phase {
   @override
   int count = container_title.length;
 

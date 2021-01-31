@@ -139,6 +139,11 @@ class ScrambleGenController extends GetxController {
     mainColoredAzbuka = mainCube.getColoredAzbuka();
   }
 
+  String getNewScramble() {
+    generateNewScramble();
+    return currentScramble;
+  }
+
   void updateInputScrambleText() {
     inputScramble = currentScramble;
   }
