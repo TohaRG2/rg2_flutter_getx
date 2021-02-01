@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 import 'package:rg2_flutter_getx/controllers/trainers_scramble_gen_controller.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/model/timer.dart';
 
 class TimerController extends GetxController {
   ScrambleGenController _genController = Get.find();
@@ -63,31 +65,39 @@ class TimerController extends GetxController {
     _rightPadColor.value = value;
   }
 
-  final _currentTime = "0:00.00".obs;
+  final _currentTime = "00:00.00".obs;
   String get currentTime => _currentTime.value;
   set currentTime(String value) {
     _currentTime.value = value;
   }
 
+  Timer timer = Timer();
+
   /// Methods
-
-  onRightPanelTouch() {
-    print("Нажали на правую плашку");
-    showBottomBar = true;
-  }
-
-  onRightPanelTouchCancel() {
-    print("Отпустили правую плашку");
-  }
 
   onLeftPanelTouch() {
     print("Нажали на левую плашку");
-    showBottomBar = false;
+    timer.stop();
+    leftPadColor = 1;
   }
 
   onLeftPanelTouchCancel() {
     print("Отпустили левую плашку");
+    leftPadColor = 0;
   }
+
+  onRightPanelTouch() {
+    print("Нажали на правую плашку");
+    currentTime = timer.getStringTime();
+    rightPadColor = 1;
+  }
+
+  onRightPanelTouchCancel() {
+    print("Отпустили правую плашку");
+    rightPadColor = 0;
+  }
+
+
 
   trySetBottomBarHeight(double newValue) {
     if (bottomBarHeight == 0) {
@@ -107,21 +117,15 @@ class TimerController extends GetxController {
 
 }
 
-/// Состояния таймера
-enum TimerState {
+/// Состояния контроллера таймера
+enum TimerControllerState {
   stopped,
-
   onePadPressedToStart,
-
   twoPadPressedToStart,
-
   ready,
-
   running,
-
   pause,
-
   onePadPressedToStop,
-
   waitForReset,
 }
+

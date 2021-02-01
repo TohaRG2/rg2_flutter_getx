@@ -49,7 +49,9 @@ class TimerView extends StatelessWidget {
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
-                      twoMainPad(),           // Выводим две основные плашки для правой и левой руки
+                      // Выводим две основные плашки для правой и левой руки
+                      twoMainPad(),
+                      // Перекрываем однорукой плашкой, если выбран такой режим
                       Visibility(
                         visible: _controller.isOneHanded,
                         child: Container(
@@ -60,6 +62,7 @@ class TimerView extends StatelessWidget {
                           ),
                         ),
                       ),
+                      // Выводим время с лампочками и иконки с руками (в них реагируем на нажатия)
                       Column(
                         children: [
                           Container(
@@ -72,7 +75,7 @@ class TimerView extends StatelessWidget {
                               child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    Icon(Icons.circle, color: Colors.red,),
+                                    Icon(Icons.circle, color: circleColors[_controller.leftPadColor],),
                                     Container(
                                         color: _timeWindowsColor,
                                         height: 50,
@@ -83,7 +86,7 @@ class TimerView extends StatelessWidget {
                                           ),
                                         )
                                     ),
-                                    Icon(Icons.circle, color: Colors.red,),
+                                    Icon(Icons.circle, color: circleColors[_controller.rightPadColor],),
                                   ]
                               ),
                             ),
@@ -93,11 +96,35 @@ class TimerView extends StatelessWidget {
                               width: double.infinity,
                               height: double.infinity,
                               child: Container(
+                                // Делим экран на две части для срабатывания нажатий
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    Image.asset("assets/images/trainers/timer/left_hand.png", width: 80,),
-                                    Image.asset("assets/images/trainers/timer/right_hand.png", width: 80,)
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTapDown: (_) {
+                                          _controller.onLeftPanelTouch();
+                                        },
+                                        onTapUp: (_) {
+                                          _controller.onLeftPanelTouchCancel();
+                                        },
+                                        child: Container(
+                                          height: double.infinity,
+                                          color: Colors.transparent,
+                                          child: Center(child: Image.asset("assets/images/trainers/timer/left_hand.png", width: 80,))),
+                                      )),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTapDown: (_) {
+                                          _controller.onRightPanelTouch();
+                                        },
+                                        onTapUp: (_) {
+                                          _controller.onRightPanelTouchCancel();
+                                        },
+                                        child: Container(
+                                          height: double.infinity,
+                                          color: Colors.transparent,
+                                          child: Center(child: Image.asset("assets/images/trainers/timer/right_hand.png", width: 80,))),
+                                      ))
                                   ],
                                 ),
                               ),
@@ -122,9 +149,11 @@ class TimerView extends StatelessWidget {
       children: [
         Expanded(
           child: GestureDetector(
-            onTap: () {
-              _controller.showBottomBar = false;
-              _controller.showTopBar = false;
+            onTapDown: (_) {
+              _controller.onLeftPanelTouch();
+            },
+            onTapUp: (_) {
+              _controller.onLeftPanelTouchCancel();
             },
             child: Container(
               color: _borderColor,
@@ -136,9 +165,11 @@ class TimerView extends StatelessWidget {
         ),
         Expanded(
           child: GestureDetector(
-            onTap: () {
-              _controller.showBottomBar = true;
-              _controller.showTopBar = true;
+            onTapDown: (_) {
+              _controller.onRightPanelTouch();
+            },
+            onTapUp: (_) {
+              _controller.onRightPanelTouchCancel();
             },
             child: Container(
               color: _borderColor,
@@ -207,4 +238,11 @@ class TimerView extends StatelessWidget {
       label: R.timerBottomSettings,
     )
   ];
+
+  /// Цвета для кружков
+  Map<int, Color> circleColors = {
+    0 : Colors.red,
+    1 : Colors.yellow,
+    2 : Colors.green
+  };
 }
