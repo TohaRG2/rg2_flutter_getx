@@ -39,6 +39,7 @@ class TimerView extends StatelessWidget {
     final _width = Get.width;
     _controller.trySetBottomBarHeight(Get.mediaQuery.padding.bottom + _defBottomBarHeight);
     _controller.updateScrambleFromGenerator();
+    _controller.stopTimer();
     return Obx(() {
       //print("bottomHeight - ${_controller.bottomBarHeight}");
       return Stack(

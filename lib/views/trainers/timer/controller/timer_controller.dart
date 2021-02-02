@@ -97,34 +97,35 @@ class TimerController extends GetxController {
   /// Обработчики нажатий на панельки таймера
 
   onLeftPanelTouch() {
-    _isLeftPadPressed = true;
-    updateIndicatorState();
+    updateIndicatorState(leftPadPressed: true, rightPadPressed: null);
     switch (_state) {
-      case TimerControllerState.stopped: leftIndicatorState = firstPadPressedToStart(); break;
+      case TimerControllerState.stopped: firstPadPressedToStart(); break;
       case TimerControllerState.onePadPressedToStart: secondPadPressedToStart(); break;
-      case TimerControllerState.running: leftIndicatorState = firstPadPressedToStop(); break;
+      case TimerControllerState.running: firstPadPressedToStop(); break;
       case TimerControllerState.onePadPressedToStop: secondPadPressedToStop(); break;
       case TimerControllerState.running: stopTimer(); break;
       default:
-        print("Ahtung!! onLeftPanelTouch in $_state state. Таймер будет переведен в стояние stopped");
-        _state = TimerControllerState.stopped;
+        print("Info! onLeftPanelTouch in $_state state.");
         break;
     }
   }
 
   onLeftPanelTouchCancel() {
-    _isLeftPadPressed = false;
-    updateIndicatorState();
-    leftIndicatorState = 0;
+    updateIndicatorState(leftPadPressed: false, rightPadPressed: null);
+    switch (_state) {
+      case TimerControllerState.onePadPressedToStart: onePadPressingCancel(); break;
+      default:
+        print("Info! onLeftPanelTouchCancel in $_state state.");
+        break;
+    }
   }
 
   onRightPanelTouch() {
-    _isRightPadPressed = true;
-    updateIndicatorState();
+    updateIndicatorState(leftPadPressed: null, rightPadPressed: true);
     switch (_state) {
-      case TimerControllerState.stopped: rightIndicatorState = firstPadPressedToStart(); break;
+      case TimerControllerState.stopped: firstPadPressedToStart(); break;
       case TimerControllerState.onePadPressedToStart: secondPadPressedToStart(); break;
-      case TimerControllerState.running: rightIndicatorState = firstPadPressedToStop(); break;
+      case TimerControllerState.running: firstPadPressedToStop(); break;
       case TimerControllerState.onePadPressedToStop: secondPadPressedToStop(); break;
       default:
         print("Info! onLeftPanelTouch in $_state state.");
@@ -133,23 +134,24 @@ class TimerController extends GetxController {
   }
 
   onRightPanelTouchCancel() {
-    _isRightPadPressed = false;
-    updateIndicatorState();
+    updateIndicatorState(leftPadPressed: null, rightPadPressed: false);
     switch (_state) {
-      case TimerControllerState.twoPadPressedToStart: rightIndicatorState = backToOnlySinglePadPressed(); break;
+      case TimerControllerState.twoPadPressedToStart: backToOnlyOnePadPressed(); break;
       case TimerControllerState.ready: startTimer(); break;
+      default:
+        print("Info! onRightPanelTouchCancel in $_state state.");
+        break;
     }
   }
 
 
-  int firstPadPressedToStart() {
+  firstPadPressedToStart() {
     _state = TimerControllerState.onePadPressedToStart;
-    return 1;
   }
 
   secondPadPressedToStart() {
     _state = TimerControllerState.twoPadPressedToStart;
-    leftIndicatorState = 1; rightIndicatorState = 1;
+    //leftIndicatorState = 1; rightIndicatorState = 1;
     _secondBarPressingTime = DateTime.now();
     tryChangeStateToReady();
   }
@@ -160,7 +162,7 @@ class TimerController extends GetxController {
     await Future.delayed(_delay, () {});
     //Если за время ожидания _secondBarPressingTime не менялся (+ задержка будет не больше чем текущее время),
     // то переводим в статус READY, а кружки в зеленый
-    if (!_secondBarPressingTime.add(_delay).isAfter(DateTime.now())) {
+    if (!_secondBarPressingTime.add(_delay).isAfter(DateTime.now()) && _state == TimerControllerState.twoPadPressedToStart) {
       changeStateToReady();
     }
   }
@@ -170,18 +172,20 @@ class TimerController extends GetxController {
     _state = TimerControllerState.ready;
   }
 
-  int firstPadPressedToStop() {
+  firstPadPressedToStop() {
     _state = TimerControllerState.onePadPressedToStop;
-    return 1;
   }
 
   secondPadPressedToStop() {
     _state = TimerControllerState.waitForReset;
   }
 
-  backToOnlySinglePadPressed() {
+  onePadPressingCancel() {
+    _state = TimerControllerState.stopped;
+  }
+  
+  backToOnlyOnePadPressed() {
     _state = TimerControllerState.onePadPressedToStart;
-    return 0;
   }
 
 
@@ -191,11 +195,14 @@ class TimerController extends GetxController {
   }
 
   stopTimer() {
-    _state = TimerControllerState.waitForReset;
+    _state = TimerControllerState.stopped;
     _timer.stop();
+    updateIndicatorState(leftPadPressed: false, rightPadPressed: false);
   }
 
-  updateIndicatorState(bool leftPadPressed, bool rightPadPressed) {
+  updateIndicatorState({bool leftPadPressed, bool rightPadPressed}) {
+    _isLeftPadPressed = leftPadPressed ?? _isLeftPadPressed;
+    _isRightPadPressed = rightPadPressed ?? _isRightPadPressed;
     print("updateIndicatorState: лев.- $_isLeftPadPressed пр.- $_isRightPadPressed");
     if (isOneHanded) {
       leftIndicatorState = _isLeftPadPressed || _isRightPadPressed ? 1 : 0;
