@@ -1,8 +1,11 @@
-/// Таймер имеет три состояния STOP, PAUSE и PLAY
+/// Таймер имеет три состояния STOP, PAUSE и PLAY, возвращает занчение в getStringTime()
+/// если он в STOP - возвращает "00:00.00"
+/// если в PAUSE - возвращает время сохраненное при пстановке на паузу в _pausedDuration
+/// если в PLAY - возвращает разницу между временем старта и текущим
 
 class Timer {
   //
-  TimerState state = TimerState.STOP;
+  TimerState _state = TimerState.STOP;
 
   // время в которое стартовал таймер
   DateTime _startingTime = DateTime.now();
@@ -11,47 +14,51 @@ class Timer {
   Duration _pausedDuration = Duration.zero;
 
   get isRunning {
-    return state == TimerState.PLAY ? true : false;
+    return _state == TimerState.PLAY ? true : false;
   }
 
   /// Методы
 
   // Стартуем с обнулением времени из STOP или PAUSE
   void start() {
-    if (state != TimerState.PLAY) {
+    if (_state != TimerState.PLAY) {
       _startingTime = DateTime.now();
-      state = TimerState.PLAY;
+      _state = TimerState.PLAY;
     }
   }
 
   // Из любого состояния переводим в STOP и обнуляем таймер паузы
   void stop() {
-    state = TimerState.STOP;
+    _state = TimerState.STOP;
     _pausedDuration = Duration.zero;
   }
 
   // Из STOP нельзя поставить на паузу, только из PLAY
   void pause() {
-    if (state == TimerState.PLAY) {
+    if (_state == TimerState.PLAY) {
       DateTime now = DateTime.now();
       _pausedDuration = now.difference(_startingTime);
-      state = TimerState.PAUSE;
+      _state = TimerState.PAUSE;
     }
   }
 
   // Если в PAUSE, то продолжаем, иначе стартуем с обнулением времени
   void resume() {
-    if (state == TimerState.PAUSE) {
+    if (_state == TimerState.PAUSE) {
       _startingTime = DateTime.now().subtract(_pausedDuration);
-      state = TimerState.PLAY;
-    } else if (state == TimerState.STOP) {
+      _state = TimerState.PLAY;
+    } else if (_state == TimerState.STOP) {
       start();
     }
   }
 
   // Разница между текущим и сохраненным временем
-  Duration getTime() {
-    return DateTime.now().difference(_startingTime);
+  Duration getDuration() {
+    switch (_state) {
+      case TimerState.STOP: return Duration.zero; break;
+      case TimerState.PAUSE: return _pausedDuration; break;
+      default: return DateTime.now().difference(_startingTime); break;
+    }
   }
 
 
@@ -63,9 +70,7 @@ class Timer {
       return "0$n";
     }
 
-    if (state == TimerState.STOP) return "00:00.00";
-
-    var dur = isRunning ? getTime() : _pausedDuration;
+    var dur = getDuration();
 
     String twoDigitMinutes = twoDigits(dur.inMinutes.remainder(Duration.minutesPerHour) as int);
     String twoDigitSeconds = twoDigits(dur.inSeconds.remainder(Duration.secondsPerMinute) as int);

@@ -53,16 +53,16 @@ class TimerController extends GetxController {
     _bottomBarHeight.value = value;
   }
 
-  final _leftPadColor = 0.obs;
-  int get leftPadColor => _leftPadColor.value;
-  set leftPadColor(int value) {
-    _leftPadColor.value = value;
+  final _leftIndicatorState = 0.obs;
+  int get leftIndicatorState => _leftIndicatorState.value;
+  set leftIndicatorState(int value) {
+    _leftIndicatorState.value = value;
   }
 
-  final _rightPadColor = 0.obs;
-  int get rightPadColor => _rightPadColor.value;
-  set rightPadColor(int value) {
-    _rightPadColor.value = value;
+  final _rightIndicatorState = 0.obs;
+  int get rightIndicatorState => _rightIndicatorState.value;
+  set rightIndicatorState(int value) {
+    _rightIndicatorState.value = value;
   }
 
   final _currentTime = "00:00.00".obs;
@@ -71,33 +71,14 @@ class TimerController extends GetxController {
     _currentTime.value = value;
   }
 
-  Timer timer = Timer();
+  Timer _timer = Timer();
+  TimerControllerState _state = TimerControllerState.stopped;
+  Duration _delay = Duration(milliseconds: 500);
+  DateTime _secondBarPressingTime = DateTime.now();
+  var _isLeftPadPressed = false;
+  var _isRightPadPressed = false;
 
   /// Methods
-
-  onLeftPanelTouch() {
-    print("Нажали на левую плашку");
-    timer.stop();
-    leftPadColor = 1;
-  }
-
-  onLeftPanelTouchCancel() {
-    print("Отпустили левую плашку");
-    leftPadColor = 0;
-  }
-
-  onRightPanelTouch() {
-    print("Нажали на правую плашку");
-    currentTime = timer.getStringTime();
-    rightPadColor = 1;
-  }
-
-  onRightPanelTouchCancel() {
-    print("Отпустили правую плашку");
-    rightPadColor = 0;
-  }
-
-
 
   trySetBottomBarHeight(double newValue) {
     if (bottomBarHeight == 0) {
@@ -113,7 +94,117 @@ class TimerController extends GetxController {
     scramble = _genController.currentScramble;
   }
 
+  /// Обработчики нажатий на панельки таймера
 
+  onLeftPanelTouch() {
+    _isLeftPadPressed = true;
+    updateIndicatorState();
+    switch (_state) {
+      case TimerControllerState.stopped: leftIndicatorState = firstPadPressedToStart(); break;
+      case TimerControllerState.onePadPressedToStart: secondPadPressedToStart(); break;
+      case TimerControllerState.running: leftIndicatorState = firstPadPressedToStop(); break;
+      case TimerControllerState.onePadPressedToStop: secondPadPressedToStop(); break;
+      case TimerControllerState.running: stopTimer(); break;
+      default:
+        print("Ahtung!! onLeftPanelTouch in $_state state. Таймер будет переведен в стояние stopped");
+        _state = TimerControllerState.stopped;
+        break;
+    }
+  }
+
+  onLeftPanelTouchCancel() {
+    _isLeftPadPressed = false;
+    updateIndicatorState();
+    leftIndicatorState = 0;
+  }
+
+  onRightPanelTouch() {
+    _isRightPadPressed = true;
+    updateIndicatorState();
+    switch (_state) {
+      case TimerControllerState.stopped: rightIndicatorState = firstPadPressedToStart(); break;
+      case TimerControllerState.onePadPressedToStart: secondPadPressedToStart(); break;
+      case TimerControllerState.running: rightIndicatorState = firstPadPressedToStop(); break;
+      case TimerControllerState.onePadPressedToStop: secondPadPressedToStop(); break;
+      default:
+        print("Info! onLeftPanelTouch in $_state state.");
+        break;
+    }
+  }
+
+  onRightPanelTouchCancel() {
+    _isRightPadPressed = false;
+    updateIndicatorState();
+    switch (_state) {
+      case TimerControllerState.twoPadPressedToStart: rightIndicatorState = backToOnlySinglePadPressed(); break;
+      case TimerControllerState.ready: startTimer(); break;
+    }
+  }
+
+
+  int firstPadPressedToStart() {
+    _state = TimerControllerState.onePadPressedToStart;
+    return 1;
+  }
+
+  secondPadPressedToStart() {
+    _state = TimerControllerState.twoPadPressedToStart;
+    leftIndicatorState = 1; rightIndicatorState = 1;
+    _secondBarPressingTime = DateTime.now();
+    tryChangeStateToReady();
+  }
+
+  tryChangeStateToReady() async{
+    //Если старт с задержкой, то ждем иначе уменьшаем resetPressedTime, чтобы сразу перевести в READY
+    //TODO добавить проверку на старт с задержкой
+    await Future.delayed(_delay, () {});
+    //Если за время ожидания _secondBarPressingTime не менялся (+ задержка будет не больше чем текущее время),
+    // то переводим в статус READY, а кружки в зеленый
+    if (!_secondBarPressingTime.add(_delay).isAfter(DateTime.now())) {
+      changeStateToReady();
+    }
+  }
+
+  changeStateToReady() {
+    leftIndicatorState = 2; rightIndicatorState = 2;
+    _state = TimerControllerState.ready;
+  }
+
+  int firstPadPressedToStop() {
+    _state = TimerControllerState.onePadPressedToStop;
+    return 1;
+  }
+
+  secondPadPressedToStop() {
+    _state = TimerControllerState.waitForReset;
+  }
+
+  backToOnlySinglePadPressed() {
+    _state = TimerControllerState.onePadPressedToStart;
+    return 0;
+  }
+
+
+  startTimer() {
+    _state = TimerControllerState.running;
+    _timer.start();
+  }
+
+  stopTimer() {
+    _state = TimerControllerState.waitForReset;
+    _timer.stop();
+  }
+
+  updateIndicatorState(bool leftPadPressed, bool rightPadPressed) {
+    print("updateIndicatorState: лев.- $_isLeftPadPressed пр.- $_isRightPadPressed");
+    if (isOneHanded) {
+      leftIndicatorState = _isLeftPadPressed || _isRightPadPressed ? 1 : 0;
+      rightIndicatorState = _isLeftPadPressed || _isRightPadPressed ? 1 : 0;
+    } else {
+      leftIndicatorState = _isLeftPadPressed ? 1 : 0;
+      rightIndicatorState = _isRightPadPressed ? 1 : 0;
+    }
+  }
 
 }
 
