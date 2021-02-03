@@ -61,20 +61,23 @@ class Timer {
     }
   }
 
-  getPausedStringTime() {
-
+  String getPausedStringTime() {
+    return _convertDurationToString(_pausedDuration);
   }
 
 
-  // Выводим разницу в формате MM:SS.mm
   String getStringTime() {
+    var dur = getDuration();
+    return _convertDurationToString(dur);
+  }
+
+  // Выводим разницу в формате MM:SS.mm
+  String _convertDurationToString(Duration dur) {
     // функция добавляющая 0 перед однозначным числом
     String twoDigits(int n) {
       if (n >= 10) return "$n";
       return "0$n";
     }
-
-    var dur = getDuration();
 
     String twoDigitMinutes = twoDigits(dur.inMinutes.remainder(Duration.minutesPerHour) as int);
     String twoDigitSeconds = twoDigits(dur.inSeconds.remainder(Duration.secondsPerMinute) as int);
