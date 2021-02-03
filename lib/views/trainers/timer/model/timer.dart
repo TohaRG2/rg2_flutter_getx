@@ -29,8 +29,8 @@ class Timer {
 
   // Из любого состояния переводим в STOP и обнуляем таймер паузы
   void stop() {
+    pause();
     _state = TimerState.STOP;
-    _pausedDuration = Duration.zero;
   }
 
   // Из STOP нельзя поставить на паузу, только из PLAY
@@ -59,6 +59,10 @@ class Timer {
       case TimerState.PAUSE: return _pausedDuration; break;
       default: return DateTime.now().difference(_startingTime); break;
     }
+  }
+
+  getPausedStringTime() {
+
   }
 
 

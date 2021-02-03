@@ -177,7 +177,7 @@ class TimerController extends GetxController {
   }
 
   secondPadPressedToStop() {
-    _state = TimerControllerState.waitForReset;
+    _state = TimerControllerState.stopped;
   }
 
   onePadPressingCancel() {
@@ -210,6 +210,14 @@ class TimerController extends GetxController {
     } else {
       leftIndicatorState = _isLeftPadPressed ? 1 : 0;
       rightIndicatorState = _isRightPadPressed ? 1 : 0;
+    }
+  }
+
+  showTimerTime() async {
+    while (_state == TimerControllerState.running) {
+      // обновляем с задержкой 16 мс, т.е. примерно 60 раз в секунду
+      await Future.delayed(Duration(milliseconds: 16), () {});
+      currentTime = _timer.getStringTime();
     }
   }
 
