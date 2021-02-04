@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/settings_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/settings_scramble_gen_view.dart';
 
 //TODO Проверить, нужен ли этот класс? Удалить?
 class ButtonsContainer extends StatelessWidget {

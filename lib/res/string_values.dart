@@ -75,5 +75,6 @@ class R {
   static const timerBottomBack = "Назад";
   static const timerBottomResults = "Результаты";
   static const timerBottomSettings = "Настройки";
+  static const timerSettingsTitle = "Настройки";
 
 }

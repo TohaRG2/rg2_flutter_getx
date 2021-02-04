@@ -1,4 +1,4 @@
-import 'package:rg2_flutter_getx/models/moves.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/moves.dart';
 
 class Basic4x4 implements Moves {
   @override

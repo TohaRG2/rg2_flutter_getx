@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:meta/meta.dart';
-import 'package:rg2_flutter_getx/models/azbuka.dart';
-import 'package:rg2_flutter_getx/models/scramble_gen/azbuka_simple_item.dart';
-import 'package:rg2_flutter_getx/models/scramble_gen/blind_cube_support_arrays.dart';
-import 'package:rg2_flutter_getx/models/scramble_gen/blind_cube.dart';
-import 'package:rg2_flutter_getx/models/cube.dart';
-import 'package:rg2_flutter_getx/models/scramble_gen/scramble_decision_condition.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/azbuka.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/blind_cube_support_arrays.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/blind_cube.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/cube.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/scramble_decision_condition.dart';
 import 'package:rg2_flutter_getx/res/constants.dart';
 
 class ScrambleGenController extends GetxController {

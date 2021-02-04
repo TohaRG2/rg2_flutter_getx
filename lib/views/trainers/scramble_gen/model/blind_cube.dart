@@ -1,10 +1,10 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:rg2_flutter_getx/models/scramble_gen/azbuka_simple_item.dart';
-import 'package:rg2_flutter_getx/models/scramble_gen/pair_for_melting.dart';
-import 'package:rg2_flutter_getx/models/scramble_gen/scramble_decision_condition.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/pair_for_melting.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/scramble_decision_condition.dart';
 import 'blind_cube_support_arrays.dart';
-import '../cube.dart';
+import 'cube.dart';
 import 'package:sortedmap/sortedmap.dart';
 
 class BlindCube extends Cube {

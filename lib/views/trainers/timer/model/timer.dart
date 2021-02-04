@@ -10,8 +10,8 @@ class Timer {
   // время в которое стартовал таймер
   DateTime _startingTime = DateTime.now();
 
-  // время для сохранения, пока таймер на паузе
-  Duration _pausedDuration = Duration.zero;
+  // время для сохранения, пока таймер на паузе или остановлен
+  Duration _savedDuration = Duration.zero;
 
   get isRunning {
     return _state == TimerState.PLAY ? true : false;
@@ -37,7 +37,7 @@ class Timer {
   void pause() {
     if (_state == TimerState.PLAY) {
       DateTime now = DateTime.now();
-      _pausedDuration = now.difference(_startingTime);
+      _savedDuration = now.difference(_startingTime);
       _state = TimerState.PAUSE;
     }
   }
@@ -45,7 +45,7 @@ class Timer {
   // Если в PAUSE, то продолжаем, иначе стартуем с обнулением времени
   void resume() {
     if (_state == TimerState.PAUSE) {
-      _startingTime = DateTime.now().subtract(_pausedDuration);
+      _startingTime = DateTime.now().subtract(_savedDuration);
       _state = TimerState.PLAY;
     } else if (_state == TimerState.STOP) {
       start();
@@ -56,22 +56,21 @@ class Timer {
   Duration getDuration() {
     switch (_state) {
       case TimerState.STOP: return Duration.zero; break;
-      case TimerState.PAUSE: return _pausedDuration; break;
+      case TimerState.PAUSE: return _savedDuration; break;
       default: return DateTime.now().difference(_startingTime); break;
     }
   }
 
-  String getPausedStringTime() {
-    return _convertDurationToString(_pausedDuration);
+  String getFormattedSavedTime() {
+    return _convertDurationToString(_savedDuration);
   }
 
-
-  String getStringTime() {
+  String getFormattedCurrentTime() {
     var dur = getDuration();
     return _convertDurationToString(dur);
   }
 
-  // Выводим разницу в формате MM:SS.mm
+  // Выводим Duration в формате "MM:SS.mm"
   String _convertDurationToString(Duration dur) {
     // функция добавляющая 0 перед однозначным числом
     String twoDigits(int n) {
@@ -81,7 +80,7 @@ class Timer {
 
     String twoDigitMinutes = twoDigits(dur.inMinutes.remainder(Duration.minutesPerHour) as int);
     String twoDigitSeconds = twoDigits(dur.inSeconds.remainder(Duration.secondsPerMinute) as int);
-    String twoDigitMls = twoDigits(dur.inMilliseconds.remainder(1000) ~/ 10);
+    String twoDigitMls = twoDigits(dur.inMilliseconds.remainder(1000) / 10 as int);
 
     return "$twoDigitMinutes:$twoDigitSeconds.$twoDigitMls";
   }

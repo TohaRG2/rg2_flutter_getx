@@ -4,7 +4,7 @@ import 'package:rg2_flutter_getx/database/entitys/basic_move.dart';
 import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
 import 'package:rg2_flutter_getx/database/entitys/phase_position_item.dart';
 import 'package:rg2_flutter_getx/database/main_database.dart';
-import 'package:rg2_flutter_getx/models/moves.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/moves.dart';
 import 'package:rg2_flutter_getx/models/phases.dart';
 import 'package:rg2_flutter_getx/res/azbuka/basic_3x3.dart';
 import 'package:rg2_flutter_getx/res/azbuka/basic_4x4.dart';

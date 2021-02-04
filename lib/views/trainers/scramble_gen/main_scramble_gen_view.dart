@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/trainers_scramble_gen_controller.dart';
-import 'package:rg2_flutter_getx/models/scramble_gen/blind_cube_support_arrays.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/blind_cube_support_arrays.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/input_scramble_dialog.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/show_scramble_text.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/view/input_scramble_dialog.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/view/show_scramble_text.dart';
 
-import 'bottom_menu_bar.dart';
-import 'melting_checkboxes.dart';
-import 'scramble_length_selection.dart';
-import 'show_blind_decision.dart';
+import 'view/bottom_menu_bar.dart';
+import 'view/melting_checkboxes.dart';
+import 'view/scramble_length_selection.dart';
+import 'view/show_blind_decision.dart';
 
 
 class ScrambleGenView extends StatelessWidget {

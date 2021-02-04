@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
-import 'package:rg2_flutter_getx/controllers/trainers_scramble_gen_controller.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/model/timer.dart';
 
 class TimerController extends GetxController {
@@ -19,9 +19,11 @@ class TimerController extends GetxController {
     super.onInit();
   }
 
-  final _time = ''.obs;
-  set time(value) => _time.value = value;
-  get time => _time.value;
+  final _currentTime = "00:00.00".obs;
+  String get currentTime => _currentTime.value;
+  set currentTime(String value) {
+    _currentTime.value = value;
+  }
 
   final _isOneHanded = false.obs;
   bool get isOneHanded => _isOneHanded.value;
@@ -63,12 +65,6 @@ class TimerController extends GetxController {
   int get rightIndicatorState => _rightIndicatorState.value;
   set rightIndicatorState(int value) {
     _rightIndicatorState.value = value;
-  }
-
-  final _currentTime = "00:00.00".obs;
-  String get currentTime => _currentTime.value;
-  set currentTime(String value) {
-    _currentTime.value = value;
   }
 
   Timer _timer = Timer();
@@ -214,16 +210,16 @@ class TimerController extends GetxController {
 
   showAsyncTimerTime() async {
     while (_state != TimerControllerState.pause && _state != TimerControllerState.waitForCancelPressing) {
-      currentTime = _timer.getStringTime();
+      currentTime = _timer.getFormattedCurrentTime();
       // обновляем с задержкой 16 мс, т.е. примерно 60 раз в секунду
       await Future.delayed(Duration(milliseconds: 16), () {});
     }
-    currentTime = _timer.getPausedStringTime();
+    currentTime = _timer.getFormattedSavedTime();
   }
 
   resetTimer() {
     _timer.stop();
-    currentTime = _timer.getStringTime();
+    currentTime = _timer.getFormattedCurrentTime();
   }
 
   tryToFullStopTimer() {

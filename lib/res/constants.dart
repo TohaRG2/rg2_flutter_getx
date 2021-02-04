@@ -24,4 +24,8 @@ class Const {
   static const CURRENT_AZBUKA_COLORS = 'currentAzbukaColors';
   static const CUSTOM_AZBUKA = 'customAzbuka';
   static const CUSTOM_AZBUKA_COLORS = 'customAzbukaColors';
+
+  static const isOneHanded = 'isOneHanded';
+  static const isDelayedStart = 'isDelayedStart';
+  static const isMetronomEnabled = 'isMetronomEnabled';
 }
