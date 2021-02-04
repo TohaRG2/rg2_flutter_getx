@@ -76,5 +76,11 @@ class R {
   static const timerBottomResults = "Результаты";
   static const timerBottomSettings = "Настройки";
   static const timerSettingsTitle = "Настройки";
+  static const timerDelayedStartText = "Удерживать 0,5 сек для старта";
+  static const timerOneHandedText = "Управление таймером одной рукой";
+  static const timerMetronomText = "Метроном";
+  static const timerMetronomFrequencyText = "Частота метронома уд/мин";
+  static const timerShowScrambleText = "Отображать скрамбл";
+  static const timerScrambleTextSize = "Размер текста скрамбла";
 
 }

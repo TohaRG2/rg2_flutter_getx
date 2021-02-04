@@ -25,7 +25,12 @@ class Const {
   static const CUSTOM_AZBUKA = 'customAzbuka';
   static const CUSTOM_AZBUKA_COLORS = 'customAzbukaColors';
 
-  static const isOneHanded = 'isOneHanded';
-  static const isDelayedStart = 'isDelayedStart';
-  static const isMetronomEnabled = 'isMetronomEnabled';
+  static const IS_ONE_HANDED = 'isOneHanded';
+  static const IS_DELAYED_START = 'isDelayedStart';
+  static const IS_METRONOM_ENABLED = 'isMetronomEnabled';
+  static const METRONOM_FREQUENCY = 'metronomFrequency';
+  static const SHOW_SCRAMBLE = 'showScramble';
+  static const SCRAMBLE_TEXT_SIZE = 'scrambleTextSize';
+  
+  
 }

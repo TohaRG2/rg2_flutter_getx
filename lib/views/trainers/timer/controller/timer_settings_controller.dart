@@ -7,9 +7,9 @@ class TimerSettingsController extends GetxController {
 
   @override
   void onInit() {
-    _isOneHanded.value = GetStorage().read(Const.isOneHanded) ?? false;
-    _isDelayedStart.value = GetStorage().read(Const.isDelayedStart) ?? false;
-    _isMetronomEnabled.value = GetStorage().read(Const.isMetronomEnabled) ?? false;
+    _isOneHanded.value = GetStorage().read(Const.IS_ONE_HANDED) ?? false;
+    _isDelayedStart.value = GetStorage().read(Const.IS_DELAYED_START) ?? false;
+    _isMetronomEnabled.value = GetStorage().read(Const.IS_METRONOM_ENABLED) ?? false;
     super.onInit();
   }
 
@@ -17,21 +17,28 @@ class TimerSettingsController extends GetxController {
     get isOneHanded => _isOneHanded.value;
     set isOneHanded(value) {
       _isOneHanded.value = value;
-      GetStorage().write(Const.isOneHanded, value);
+      GetStorage().write(Const.IS_ONE_HANDED, value);
     }
 
   final _isDelayedStart = false.obs;
-    get isDelayedStart => _isDelayedStart;
+    get isDelayedStart => _isDelayedStart.value;
     set isDelayedStart(value) {
       _isDelayedStart.value = value;
-      GetStorage().write(Const.isDelayedStart, value);
+      GetStorage().write(Const.IS_DELAYED_START, value);
     }
 
   final _isMetronomEnabled = true.obs;
     get isMetronomEnabled => _isMetronomEnabled.value;
     set isMetronomEnabled(value) {
       _isMetronomEnabled.value = value;
-      GetStorage().write(Const.isMetronomEnabled, value);
+      GetStorage().write(Const.IS_METRONOM_ENABLED, value);
     }
 
+  final _metronomFrequency = 60.obs;
+    int get metronomFrequency => _metronomFrequency.value;
+    set metronomFrequency(value) {
+      _metronomFrequency.value = value;
+      GetStorage().write(Const.METRONOM_FREQUENCY, value);
+    }
+    
 }

@@ -28,24 +28,14 @@ class SettingsScreen extends StatelessWidget {
           child: Column(
             children: [
               ThemeSettings(),
-              SizedBox(
-                height: UIHelper.SpaceMedium,
-              ),
+              SizedBox(height: UIHelper.SpaceMedium,),
               HelpSettings(),
-              SizedBox(
-                height: UIHelper.SpaceMedium,
-              ),
+              SizedBox(height: UIHelper.SpaceMedium,),
               SwipeSettings(),
-              SizedBox(
-                height: UIHelper.SpaceMedium,
-              ),
+              SizedBox(height: UIHelper.SpaceMedium,),
               PurchaseSettings(),
-              SizedBox(
-                height: UIHelper.SpaceMedium,
-              ),
-              SizedBox(
-                height: UIHelper.SpaceSmall,
-              ),
+              SizedBox(height: UIHelper.SpaceMedium,),
+              SizedBox(height: UIHelper.SpaceSmall,),
               InternetSettings(),
             ],
           ),
