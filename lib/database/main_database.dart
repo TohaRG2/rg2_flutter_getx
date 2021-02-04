@@ -6,7 +6,7 @@ import 'package:rg2_flutter_getx/database/daos/page_prop_dao.dart';
 import 'package:rg2_flutter_getx/database/daos/phase_position_dao.dart';
 import 'package:rg2_flutter_getx/database/entitys/page_properties.dart';
 import 'package:rg2_flutter_getx/database/entitys/phase_position_item.dart';
-import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/moves.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/moves.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import 'daos/main_dao.dart';

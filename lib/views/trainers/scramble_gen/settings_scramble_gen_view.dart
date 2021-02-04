@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
-import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
-import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/model/blind_cube_support_arrays.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/input_letter_dialog.dart';
+import 'controller/trainers_scramble_gen_controller.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/trainers/help/bottom_bar_with_back_button.dart';
-import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/trainers/scramble_gen/view/input_letter_dialog.dart';
+
+import 'model/blind_cube_support_arrays.dart';
 
 class ScrambleGenSettingsView extends StatelessWidget {
   final ScrambleGenController _controller = Get.find();
