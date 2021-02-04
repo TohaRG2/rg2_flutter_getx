@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_controller.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/settings_timer_view.dart';
 
 class BottomMenuBar extends StatelessWidget {
   BottomMenuBar({
@@ -34,7 +35,7 @@ class BottomMenuBar extends StatelessWidget {
             break;
         // Нажата кнопка "Настройки"
           case 2:
-            //Get.to(ScrambleGenSettingsView(), transition: Transition.rightToLeft);
+            Get.to(SettingsTimerView(), transition: Transition.rightToLeft);
             print("Нажали настройки");
             break;
           default:

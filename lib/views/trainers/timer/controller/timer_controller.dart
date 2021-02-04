@@ -125,8 +125,10 @@ class TimerController extends GetxController {
 
   void panelTouchCancel() {
     switch (_state) {
+      case TimerControllerState.onePadPressedToStart: onePadPressingCancel(); break;
       case TimerControllerState.twoPadPressedToStart: backToOnlyOnePadPressed(); break;
       case TimerControllerState.ready: startTimer(); break;
+      case TimerControllerState.onePadPressedToStop: onePadStopPressingCancel(); break;
       case TimerControllerState.waitForCancelPressing: tryToFullStopTimer(); break;
       default:
         print("Info! onPanelTouchCancel in $_state state.");
@@ -174,6 +176,10 @@ class TimerController extends GetxController {
   onePadPressingCancel() {
     _state = TimerControllerState.stopped;
   }
+
+  onePadStopPressingCancel() {
+    _state = TimerControllerState.running;
+  }
   
   backToOnlyOnePadPressed() {
     _state = TimerControllerState.onePadPressedToStart;
@@ -184,6 +190,8 @@ class TimerController extends GetxController {
     print("Start Timer");
     _state = TimerControllerState.running;
     _timer.start();
+    showBottomBar = false;
+    showTopBar = false;
     showAsyncTimerTime();
   }
 
@@ -191,6 +199,8 @@ class TimerController extends GetxController {
     print("Stop Timer");
     _state = TimerControllerState.waitForCancelPressing;
     _timer.stop();
+    showBottomBar = true;
+    showTopBar = true;
     updateIndicatorState(leftPadPressed: false, rightPadPressed: false);
   }
 

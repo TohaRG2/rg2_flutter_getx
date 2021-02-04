@@ -8,6 +8,7 @@ class SettingsTimerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Center(
             child: Text(R.timerSettingsTitle, style: TextStyle(color: Get.textTheme.headline5.color)),
           ),

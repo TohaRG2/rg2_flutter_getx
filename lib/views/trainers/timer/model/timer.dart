@@ -80,7 +80,7 @@ class Timer {
 
     String twoDigitMinutes = twoDigits(dur.inMinutes.remainder(Duration.minutesPerHour) as int);
     String twoDigitSeconds = twoDigits(dur.inSeconds.remainder(Duration.secondsPerMinute) as int);
-    String twoDigitMls = twoDigits(dur.inMilliseconds.remainder(1000) / 10 as int);
+    String twoDigitMls = twoDigits(dur.inMilliseconds.remainder(1000) ~/ 10 );
 
     return "$twoDigitMinutes:$twoDigitSeconds.$twoDigitMls";
   }

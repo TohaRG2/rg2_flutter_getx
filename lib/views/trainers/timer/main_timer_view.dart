@@ -114,6 +114,9 @@ class TimerView extends StatelessWidget {
                                         onTapDown: (_) {
                                           _controller.onLeftPanelTouch();
                                         },
+                                        onTapCancel: () {
+                                          _controller.onLeftPanelTouchCancel();
+                                        },
                                         onTapUp: (_) {
                                           _controller.onLeftPanelTouchCancel();
                                         },
@@ -126,6 +129,9 @@ class TimerView extends StatelessWidget {
                                       child: GestureDetector(
                                         onTapDown: (_) {
                                           _controller.onRightPanelTouch();
+                                        },
+                                        onTapCancel: () {
+                                          _controller.onRightPanelTouchCancel();
                                         },
                                         onTapUp: (_) {
                                           _controller.onRightPanelTouchCancel();
@@ -162,6 +168,9 @@ class TimerView extends StatelessWidget {
             onTapDown: (_) {
               _controller.onLeftPanelTouch();
             },
+            onTapCancel: () {
+              _controller.onLeftPanelTouchCancel();
+            },
             onTapUp: (_) {
               _controller.onLeftPanelTouchCancel();
             },
@@ -177,6 +186,9 @@ class TimerView extends StatelessWidget {
           child: GestureDetector(
             onTapDown: (_) {
               _controller.onRightPanelTouch();
+            },
+            onTapCancel: () {
+              _controller.onRightPanelTouchCancel();
             },
             onTapUp: (_) {
               _controller.onRightPanelTouchCancel();
