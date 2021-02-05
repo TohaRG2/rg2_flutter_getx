@@ -30,7 +30,7 @@ class Const {
   static const IS_METRONOM_ENABLED = 'isMetronomEnabled';
   static const METRONOM_FREQUENCY = 'metronomFrequency';
   static const SHOW_SCRAMBLE = 'showScramble';
-  static const SCRAMBLE_TEXT_SIZE = 'scrambleTextSize';
+  static const SCRAMBLE_TEXT_RATIO = 'scrambleTextSize';
   
   
 }

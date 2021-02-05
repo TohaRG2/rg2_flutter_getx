@@ -16,7 +16,7 @@ class BottomBarWithBackButton extends StatelessWidget {
           alignment: Alignment.centerLeft,
           height: 50,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            padding: const EdgeInsets.symmetric(horizontal: 40.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

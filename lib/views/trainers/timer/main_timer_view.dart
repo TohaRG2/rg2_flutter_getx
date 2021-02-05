@@ -3,9 +3,14 @@ import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/bottom_menu_bar.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/view/scramble_text_widget.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_settings_controller.dart';
 
 class TimerView extends StatelessWidget {
   final TimerController _controller = Get.find();
+  final ScrambleGenController _genController = Get.find();
+  final TimerSettingsController _settingsController = Get.find();
   final GlobalKey _keyBottomNavBar = GlobalKey();
   final Color _borderColor = Colors.blue;
   final double _borderThin = 10.0;
@@ -34,11 +39,15 @@ class TimerView extends StatelessWidget {
     }
   }
 
+  _generateNewScrambleByTap() {
+    _genController.generateNewScramble();
+  }
+
   @override
   Widget build(BuildContext context) {
     final _width = Get.width;
     _controller.trySetBottomBarHeight(Get.mediaQuery.padding.bottom + _defBottomBarHeight);
-    _controller.updateScrambleFromGenerator();
+    //_controller.updateScrambleFromGenerator();
     _controller.resetTimer();
     return Obx(() {
       //print("bottomHeight - ${_controller.bottomBarHeight}");
@@ -49,21 +58,30 @@ class TimerView extends StatelessWidget {
           SafeArea(
             bottom: false,
             child: Stack(fit: StackFit.expand, children: [
-              scrambleTextWidget(_width),
+              Positioned(
+                width: Get.width,
+                height: _settingsController.scrambleBarHeight,
+                child: ScrambleTextWidget(
+                  text: _genController.currentScramble,
+                  textRatio: _settingsController.scrambleTextRatio,
+                  onTapCallBack: _generateNewScrambleByTap,
+                ),
+              ),
               AnimatedPositioned(
                 duration: _duration, left: 0, right: 0,
-                top: _controller.showTopBar ? 50 : 0,
+                top: _controller.showTopBar ? _settingsController.scrambleBarHeight : 0,
                 bottom: _controller.showBottomBar ? _controller.bottomBarHeight : 0,
                 child: Container(
                   width: _width,
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
-                      // Выводим две основные плашки для правой и левой руки
+                      // Выводим две плашки для правой и левой руки, которые срабатывают только справа
+                      // и слева от счетчика времени, т.к. ниже перекрываются другими плашками
                       twoMainPad(),
                       // Перекрываем однорукой плашкой, если выбран такой режим
                       Visibility(
-                        visible: _controller.isOneHanded,
+                        visible: _settingsController.isOneHanded,
                         child: Container(
                           color: _borderColor,
                           padding: EdgeInsets.all(_borderThin),
@@ -205,45 +223,24 @@ class TimerView extends StatelessWidget {
     );
   }
 
-  Positioned scrambleTextWidget(double _width) {
-    return Positioned(
-              width: _width,
-              height: 50,
-              child: GestureDetector(
-                onTap: () {
-                  _controller.generateNewScrambleWithGeneratorParameters();
-                },
-                child: Container (
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: Center(
-                      child: Text(_controller.scramble, style: Get.textTheme.headline6.copyWith(color: _accentColor), maxLines: 2,)
-                  ),
-                ),
-              ),
-            );
-  }
-
   AnimatedPositioned bottomNavBar(Duration _duration, double _width, Color _primaryColor) {
     return AnimatedPositioned(
         duration: _duration,
-        bottom: _controller.showBottomBar ? 0 : - _controller.bottomBarHeight,
-        child: GetBuilder<TimerController>(
-            initState: (_) {
-              // Вот таким образом вызываем метод, который выполнится после отрисовки
-              // виджета и обновит высоту нижней панели в контроллере, а заодно и перериует виджет
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                _controller.bottomBarHeight = _getBottomBarHeight();
-              });
-            },
-            builder: (_) {
-              return Container(
-                width: _width,
-                color: _primaryColor,
-                child: BottomMenuBar(key: _keyBottomNavBar, bottomNavBarItem: _bottomNavBarItems),
-              );
-            }
-        )
-    );
+        bottom: _controller.showBottomBar ? 0 : -_controller.bottomBarHeight,
+        child: GetBuilder<TimerController>(initState: (_) {
+          // Вот таким образом вызываем метод, который выполнится после отрисовки
+          // виджета и обновит высоту нижней панели в контроллере, а заодно и перериует виджет
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _controller.bottomBarHeight = _getBottomBarHeight();
+          });
+        }, builder: (_) {
+          return Container(
+            width: _width,
+            color: _primaryColor,
+            child: BottomMenuBar(
+                key: _keyBottomNavBar, bottomNavBarItem: _bottomNavBarItems),
+          );
+        }));
   }
 
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
@@ -262,3 +259,4 @@ class TimerView extends StatelessWidget {
   ];
 
 }
+

@@ -104,7 +104,7 @@ class RG2App extends StatelessWidget {
     Get.put(AzbukaDialogController());
     Get.put(TrainersController());
     Get.put(ScrambleGenController());
-    Get.put(TimerController());
     Get.put(TimerSettingsController());
+    Get.put(TimerController());
   }
 }
