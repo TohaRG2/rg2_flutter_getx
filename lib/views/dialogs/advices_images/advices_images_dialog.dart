@@ -6,6 +6,8 @@ import 'package:rg2_flutter_getx/views/info/advice/advices.dart';
 
 import 'image_slider.dart';
 
+/// диалог с просмотром советов по программе
+///
 
 class AdvicesImagesDialog extends StatefulWidget {
   @override
