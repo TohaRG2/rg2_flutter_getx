@@ -2,8 +2,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:meta/meta.dart';
 import 'package:rg2_flutter_getx/res/constants.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 
 class TimerSettingsController extends GetxController {
+  ScrambleGenController _genController = Get.find();
 
   @override
   void onInit() {
@@ -40,5 +42,37 @@ class TimerSettingsController extends GetxController {
       _metronomFrequency.value = value;
       GetStorage().write(Const.METRONOM_FREQUENCY, value);
     }
-    
+
+  final _showScramble = false.obs;
+    bool get showScramble => _showScramble.value;
+    set showScramble(value) => _showScramble.value = value;
+
+  final _scrambleTextRatio = 1.0.obs;
+    double get scrambleTextRatio => _scrambleTextRatio.value;
+    set scrambleTextRatio(value) {
+      _scrambleTextRatio.value = value;
+      GetStorage().write(Const.SCRAMBLE_TEXT_RATIO, value);
+    }
+
+  double get scrambleBarHeight => 55 * scrambleTextRatio;
+
+
+  /// Методы
+
+  decreaseMetronomFrequency() {
+    if (metronomFrequency > 1) {
+      metronomFrequency--;
+    }
+  }
+
+  increaseMetronomFrequency() {
+    if (metronomFrequency < 240) {
+      metronomFrequency++;
+    }
+  }
+
+  resetMetronomFrequency() {
+    metronomFrequency = 60;
+  }
+
 }
