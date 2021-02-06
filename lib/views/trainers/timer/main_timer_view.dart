@@ -58,6 +58,7 @@ class TimerView extends StatelessWidget {
           SafeArea(
             bottom: false,
             child: Stack(fit: StackFit.expand, children: [
+              /// Скрамбл в верхней части экрана
               Positioned(
                 width: Get.width,
                 height: _settingsController.scrambleBarHeight,
@@ -67,19 +68,21 @@ class TimerView extends StatelessWidget {
                   onTapCallBack: _generateNewScrambleByTap,
                 ),
               ),
+
               AnimatedPositioned(
                 duration: _duration, left: 0, right: 0,
-                top: _controller.showTopBar ? _settingsController.scrambleBarHeight : 0,
+                top: (_controller.showTopBar && _settingsController.showScramble) ? _settingsController.scrambleBarHeight : 0,
                 bottom: _controller.showBottomBar ? _controller.bottomBarHeight : 0,
                 child: Container(
                   width: _width,
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: [
-                      // Выводим две плашки для правой и левой руки, которые срабатывают только справа
-                      // и слева от счетчика времени, т.к. ниже перекрываются другими плашками
+                      /// Выводим две плашки для правой и левой руки, которые срабатывают только справа
+                      /// и слева от счетчика времени, т.к. ниже перекрываются другими плашками
                       twoMainPad(),
-                      // Перекрываем однорукой плашкой, если выбран такой режим
+
+                      /// Перекрываем однорукой плашкой, если выбран такой режим
                       Visibility(
                         visible: _settingsController.isOneHanded,
                         child: Container(
@@ -90,35 +93,44 @@ class TimerView extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Выводим время с лампочками и иконки с руками (в них реагируем на нажатия)
+
+                      /// Выводим время с лампочками и иконки с руками (в них реагируем на нажатия)
                       Column(
                         children: [
-                          Container(
-                            width: 300,
-                            height: 120,
-                            color: _borderColor,
+                          /// Верхний контейнер в котором отображается время и индикаторы
+                          GestureDetector(
+                            onTap: () {
+                              _controller.onPauseTap();
+                            },
                             child: Container(
-                              color: _backgroundColor,
-                              margin: EdgeInsets.all(_borderThin),
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Icon(Icons.circle, color: _circleColors[_controller.leftIndicatorState],),
-                                    Container(
-                                        color: _timeWindowsColor,
-                                        height: 50,
-                                        width: 120,
-                                        child: Center(
-                                          child: Text(_controller.currentTime, 
-                                            style: Get.textTheme.headline5.copyWith(color: _backgroundColor),
-                                          ),
-                                        )
-                                    ),
-                                    Icon(Icons.circle, color: _circleColors[_controller.rightIndicatorState],),
-                                  ]
+                              width: 300,
+                              height: 120,
+                              color: _borderColor,
+                              child: Container(
+                                color: _backgroundColor,
+                                margin: EdgeInsets.all(_borderThin),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Icon(Icons.circle, color: _circleColors[_controller.leftIndicatorState],),
+                                      Container(
+                                          color: _timeWindowsColor,
+                                          height: 50,
+                                          width: 120,
+                                          child: Center(
+                                            child: Text(_controller.currentTime,
+                                              style: Get.textTheme.headline5.copyWith(color: _backgroundColor),
+                                            ),
+                                          )
+                                      ),
+                                      Icon(Icons.circle, color: _circleColors[_controller.rightIndicatorState],),
+                                    ]
+                                ),
                               ),
                             ),
                           ),
+
+                          /// Две основные плашки нажатия на которые обрабатываем (даже в одноруком режиме)
                           Flexible(
                             child: Container(
                               width: double.infinity,
@@ -170,6 +182,8 @@ class TimerView extends StatelessWidget {
                   ),
                 ),
               ),
+
+              /// Нижний навбар с кнопками (назад, результаты, настройки)
               bottomNavBar(_duration, _width, _primaryColor),
             ])
           )

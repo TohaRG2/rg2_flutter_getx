@@ -31,12 +31,12 @@ dependencies:
   csslib: ^0.16.2
   css_colors: ^1.0.2
   # Plugins for rendering the <video> tag.
-  video_player: ^1.0.1
-  chewie: ^0.12.2
+  # video_player: ^1.0.1
+  # chewie: ^0.12.2
   # Plugin for rendering the <iframe> tag.
   webview_flutter: ^1.0.7
   # Plugins for rendering the <audio> tag.
-  chewie_audio: ^1.1.1
+  # chewie_audio: ^1.1.1
 
   # Открываем ссылки во внешних программах (браузерах, почте и т.д.)
   url_launcher: ^5.7.10
@@ -51,7 +51,10 @@ dependencies:
   carousel_slider: ^3.0.0
 
   # Добавляем словарь с сортировкой по ключу (для решения блайндов)
-  sortedmap: ^0.4.2+1
+  # sortedmap: ^0.4.2+1
+
+  # Поддержка звука, для метронома в таймере
+  assets_audio_player: ^2.0.13+7
 
   # для анимации
   matrix4_transform: ^1.1.7
@@ -63,7 +66,7 @@ dev_dependencies:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация
   floor_generator: ^0.18.0
-  build_runner: ^1.11.0
+  build_runner: ^1.11.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -154,7 +157,7 @@ flutter:
     - assets/images/azbuka/basic_pyraminx_4x4/
     - assets/images/main3x3/adv_f2l/
     - assets/images/big_main/big_cubes/
-
+    - assets/sounds/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -5,6 +5,7 @@ import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/main_scramble_gen_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/main_timer_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/settings_timer_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/trainer_view_menu_item.dart';
 
 import 'help/help_view.dart';
@@ -71,7 +72,7 @@ class TrainersScreen extends StatelessWidget {
         Get.to(ScrambleGenSettingsView(), transition: Transition.rightToLeft);
         break;
       case R.trainersTimer:
-        print("Settings Timer");
+        Get.to(SettingsTimerView(), transition: Transition.rightToLeft);
         break;
       case R.trainersPll:
         print("Settings PLL trainer");

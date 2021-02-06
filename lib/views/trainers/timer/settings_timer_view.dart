@@ -71,22 +71,30 @@ class SettingsTimerView extends StatelessWidget {
                   ),
                   /// Кнопки точной настройки частоты
                   Container(
-                    child: ToggleButtons(
+                    padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
+                    child: Row(
                       children: [
-                        Icon(Icons.chevron_left_rounded),
-                        Text("${_controller.metronomFrequency}"),
-                        Icon(Icons.chevron_right_rounded)
+                        Expanded(child: Text(R.timerMetronomFrequencyText, style: Theme.of(context).textTheme.headline6,)),
+                        Container(
+                          child: ToggleButtons(
+                            children: [
+                              Icon(Icons.chevron_left_rounded),
+                              Text("${_controller.metronomFrequency}"),
+                              Icon(Icons.chevron_right_rounded)
+                            ],
+                            isSelected: _selections,
+                            onPressed: (index) {
+                              if (index == 0) {
+                                _controller.decreaseMetronomFrequency();
+                              } else if (index == 1) {
+                                _controller.resetMetronomFrequency();
+                              } else if (index == 2) {
+                                _controller.increaseMetronomFrequency();
+                              }
+                            },
+                          ),
+                        ),
                       ],
-                      isSelected: _selections,
-                      onPressed: (index) {
-                        if (index == 0) {
-                          _controller.decreaseMetronomFrequency();
-                        } else if (index == 1) {
-                          _controller.resetMetronomFrequency();
-                        } else if (index == 2) {
-                          _controller.increaseMetronomFrequency();
-                        }
-                      },
                     ),
                   ),
                   /// Слайдер выбора частоты метронома
@@ -101,11 +109,23 @@ class SettingsTimerView extends StatelessWidget {
                       _controller.metronomFrequency = value.toInt();
                     },
                   ),
+                  /// Свитч отображения скрамбла 
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(
+                      R.timerShowScrambleText,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    value: _controller.showScramble,
+                    onChanged: (value) {
+                      _controller.showScramble = value;
+                    },
+                  ),
                   /// Текст "Размер шрифта"
                   Padding(
                     padding: const EdgeInsets.only(left: UIHelper.SpaceSmall),
                     child: Text(
-                      R.textSize,
+                      R.timerScrambleTextSize,
                       style: Theme.of(context).textTheme.headline6,
                     ),
                   ),
@@ -120,16 +140,16 @@ class SettingsTimerView extends StatelessWidget {
                       _controller.scrambleTextRatio = value;
                     },
                     onChangeStart: (double startValue) {
-                      _controller.showScramble = true;
+                      _controller.showScrambleExample = true;
                     },
                     onChangeEnd: (double startValue) {
-                      _controller.showScramble = false;
+                      _controller.showScrambleExample = false;
                     },
                   ),
                 ],
               ),
               Visibility(
-                visible: _controller.showScramble,
+                visible: _controller.showScrambleExample,
                 child: Positioned(
                   width: Get.width,
                   height: _controller.scrambleBarHeight,

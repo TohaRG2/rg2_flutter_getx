@@ -16,6 +16,7 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     LearnDetailController _controller = Get.find();
     var item = _controller.currentItems[_curPageNumber];
+    bool isPngImg = item.icon.endsWith(".png");
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -23,10 +24,15 @@ class Header extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: SvgPicture.asset(
-              _controller.getImagePathFromAssets(item.icon),
-              height: 70,
-            ),
+            child: isPngImg
+                ? Image.asset(
+                    _controller.getImagePathFromAssets(item.icon),
+                    height: 70,
+                  )
+                : SvgPicture.asset(
+                    _controller.getImagePathFromAssets(item.icon),
+                    height: 70,
+                  ),
           ),
           Expanded(
               child: Padding(
