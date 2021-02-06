@@ -26,6 +26,7 @@ class TrainerViewMenuItem extends StatelessWidget {
             elevation: 10.0,
             borderRadius: BorderRadius.circular(10.0),
             shadowColor: Colors.black54,
+            /// Если не сработали нажатия на Настройки и на Подсказки - обрабатываем нажатие на основную плашку
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,6 +53,7 @@ class TrainerViewMenuItem extends StatelessWidget {
                         ],
                       ),
                     )),
+                /// Обрабатываем нажатия на кнопки подсказок
                 GestureDetector(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -61,6 +63,7 @@ class TrainerViewMenuItem extends StatelessWidget {
                     onHelpSelected(item);
                   },
                 ),
+                /// Обрабатываем нажатия на кнопки настроеек
                 GestureDetector(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

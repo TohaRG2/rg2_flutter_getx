@@ -5,7 +5,6 @@ import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/pair_for_melt
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/scramble_decision_condition.dart';
 import 'blind_cube_support_arrays.dart';
 import 'cube.dart';
-import 'package:sortedmap/sortedmap.dart';
 
 class BlindCube extends Cube {
 

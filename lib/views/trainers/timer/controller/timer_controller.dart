@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/model/timer.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_settings_controller.dart';
 
 class TimerController extends GetxController {
-//  ScrambleGenController _genController = Get.find();
   final TimerSettingsController _settingsController = Get.find();
+  final assetsAudioPlayer = AssetsAudioPlayer();
+  var sound = Audio("assets/sounds/metronom.mp3");
 
   @override
   void onReady() {
@@ -15,9 +15,17 @@ class TimerController extends GetxController {
   }
 
   @override
-  void onInit() {
+  void onInit() async {
     print("TimerController onInit");
+    _showBars();
+    //var duration = await player.setAsset('metronom.mp3');
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    print("TimerController dispose");
+    super.dispose();
   }
 
   bool get _isOneHanded => _settingsController.isOneHanded;
@@ -80,13 +88,22 @@ class TimerController extends GetxController {
 
   /// Обработчики нажатий на панельки таймера
 
+  onPauseTap() {
+    switch(_state) {
+      case TimerControllerState.pause: _continueTimer(); break;
+      case TimerControllerState.running: _pauseTimer(); break;
+      default:
+        break;
+    }
+  }
+  
   onLeftPanelTouch() {
-    updateIndicatorState(leftPadPressed: true, rightPadPressed: null);
+    _updateIndicatorState(leftPadPressed: true, rightPadPressed: null);
     _panelTouchStart();
   }
 
   onRightPanelTouch() {
-    updateIndicatorState(leftPadPressed: null, rightPadPressed: true);
+    _updateIndicatorState(leftPadPressed: null, rightPadPressed: true);
     _panelTouchStart();
   }
 
@@ -103,12 +120,12 @@ class TimerController extends GetxController {
   }
 
   onLeftPanelTouchCancel() {
-    updateIndicatorState(leftPadPressed: false, rightPadPressed: null);
+    _updateIndicatorState(leftPadPressed: false, rightPadPressed: null);
     panelTouchCancel();
   }
 
   onRightPanelTouchCancel() {
-    updateIndicatorState(leftPadPressed: null, rightPadPressed: false);
+    _updateIndicatorState(leftPadPressed: null, rightPadPressed: false);
     panelTouchCancel();
   }
 
@@ -116,9 +133,9 @@ class TimerController extends GetxController {
     switch (_state) {
       case TimerControllerState.onePadPressedToStart: _onePadPressingCancel(); break;
       case TimerControllerState.twoPadPressedToStart: _backToOnlyOnePadPressed(); break;
-      case TimerControllerState.ready: startTimer(); break;
+      case TimerControllerState.ready: _startTimer(); break;
       case TimerControllerState.onePadPressedToStop: _onePadStopPressingCancel(); break;
-      case TimerControllerState.waitForCancelPressing: tryToFullStopTimer(); break;
+      case TimerControllerState.waitForCancelPressing: _tryToFullStopTimer(); break;
       default:
         print("Info! onPanelTouchCancel in $_state state.");
         break;
@@ -168,7 +185,7 @@ class TimerController extends GetxController {
 
   _secondPadPressedToStop() {
     _state = TimerControllerState.stopped;
-    stopTimer();
+    _stopTimer();
   }
 
   _onePadPressingCancel() {
@@ -187,28 +204,27 @@ class TimerController extends GetxController {
     }
   }
 
-  startTimer() {
+  _startTimer() {
     print("Start Timer");
     _state = TimerControllerState.running;
     _timer.start();
-    showBottomBar = false;
-    showTopBar = false;
-    showAsyncTimerTime();
+    _hideBars();
+    _showAsyncTimerTime();
+    _playAsyncSound();
   }
 
-  stopTimer() {
+  _stopTimer() {
     print("Stop Timer");
     _state = TimerControllerState.waitForCancelPressing;
     _timer.stop();
-    showBottomBar = true;
-    showTopBar = true;
-    updateIndicatorState(leftPadPressed: false, rightPadPressed: false);
+    _showBars();
+    _updateIndicatorState(leftPadPressed: false, rightPadPressed: false);
   }
 
-  updateIndicatorState({bool leftPadPressed, bool rightPadPressed}) {
+  _updateIndicatorState({bool leftPadPressed, bool rightPadPressed}) {
     _isLeftPadPressed = leftPadPressed ?? _isLeftPadPressed;
     _isRightPadPressed = rightPadPressed ?? _isRightPadPressed;
-    print("updateIndicatorState: лев.- $_isLeftPadPressed пр.- $_isRightPadPressed, state = $_state");
+    //print("updateIndicatorState: лев.- $_isLeftPadPressed пр.- $_isRightPadPressed, state = $_state");
     if (_isOneHanded) {
       leftIndicatorState = _isLeftPadPressed || _isRightPadPressed ? 1 : 0;
       rightIndicatorState = _isLeftPadPressed || _isRightPadPressed ? 1 : 0;
@@ -218,8 +234,8 @@ class TimerController extends GetxController {
     }
   }
 
-  showAsyncTimerTime() async {
-    while (_state != TimerControllerState.pause && _state != TimerControllerState.waitForCancelPressing) {
+  _showAsyncTimerTime() async {
+    while ( _state != TimerControllerState.waitForCancelPressing && _state != TimerControllerState.stopped) {
       currentTime = _timer.getFormattedCurrentTime();
       // обновляем с задержкой 16 мс, т.е. примерно 60 раз в секунду
       await Future.delayed(Duration(milliseconds: 16), () {});
@@ -227,17 +243,52 @@ class TimerController extends GetxController {
     currentTime = _timer.getFormattedSavedTime();
   }
 
-  resetTimer() {
-    _timer.stop();
-    currentTime = _timer.getFormattedCurrentTime();
+  _playAsyncSound() async {
+    // вычисляем паузу в милисекундах, делим минуту (60 000мс) на кол-во тиков в минуту
+    var tikPause = Duration(milliseconds: 60000 ~/ _settingsController.metronomFrequency);
+    var nextTikTime = DateTime.now();
+    // выходим из цикла если таймер остановлен
+    while ( _state != TimerControllerState.waitForCancelPressing && _state != TimerControllerState.stopped) {
+      if (DateTime.now().isAfter(nextTikTime)) {
+        assetsAudioPlayer.open(sound);
+        nextTikTime = nextTikTime.add(tikPause);
+      }
+      await Future.delayed(Duration(milliseconds: 100), () {});
+    }
   }
 
-  tryToFullStopTimer() {
+  _tryToFullStopTimer() {
     if (_isLeftPadPressed == false && _isRightPadPressed == false) {
       _state = TimerControllerState.stopped;
     }
   }
-  
+
+  _pauseTimer() {
+    print("Pause Timer");
+    _state = TimerControllerState.pause;
+    _timer.pause();
+  }
+
+  _continueTimer() {
+    print("Continue Timer");
+    _state = TimerControllerState.running;
+    _timer.resume();
+  }
+
+  _showBars() {
+    showBottomBar = true;
+    showTopBar = true;
+  }
+
+  _hideBars() {
+    showBottomBar = false;
+    showTopBar = false;
+  }
+
+  resetTimer() {
+    _timer.stop();
+    currentTime = _timer.getFormattedCurrentTime();
+  }
 }
 
 /// Состояния контроллера таймера
