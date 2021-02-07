@@ -10,6 +10,7 @@ class TimerSettingsController extends GetxController {
   void onInit() {
     _isOneHanded.value = GetStorage().read(Const.IS_ONE_HANDED) ?? false;
     _isDelayedStart.value = GetStorage().read(Const.IS_DELAYED_START) ?? true;
+    _isIconsColored.value = GetStorage().read(Const.IS_ICONS_COLORED) ?? true;
     _isMetronomEnabled.value = GetStorage().read(Const.IS_METRONOM_ENABLED) ?? true;
     _metronomFrequency.value = GetStorage().read(Const.METRONOM_FREQUENCY) ?? 60;
     _showScramble.value = GetStorage().read(Const.SHOW_SCRAMBLE) ?? true;
@@ -23,6 +24,13 @@ class TimerSettingsController extends GetxController {
       _isOneHanded.value = value;
       GetStorage().write(Const.IS_ONE_HANDED, value);
     }
+
+  final _isIconsColored = true.obs;
+  get isIconsColored => _isIconsColored.value;
+  set isIconsColored(value) {
+    _isIconsColored.value = value;
+    GetStorage().write(Const.IS_ICONS_COLORED, value);
+  }
 
   final _isDelayedStart = true.obs;
     get isDelayedStart => _isDelayedStart.value;

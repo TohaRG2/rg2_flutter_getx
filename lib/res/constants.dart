@@ -26,6 +26,7 @@ class Const {
   static const CUSTOM_AZBUKA_COLORS = 'customAzbukaColors';
 
   static const IS_ONE_HANDED = 'isOneHanded';
+  static const IS_ICONS_COLORED = 'isIconsColored';
   static const IS_DELAYED_START = 'isDelayedStart';
   static const IS_METRONOM_ENABLED = 'isMetronomEnabled';
   static const METRONOM_FREQUENCY = 'metronomFrequency';

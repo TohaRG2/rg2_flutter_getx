@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
+import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/bottom_menu_bar.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/scramble_text_widget.dart';
@@ -20,6 +21,7 @@ class TimerView extends StatelessWidget {
   final Color _timeWindowsColor = Colors.white;
   final _duration = Duration(milliseconds: 300);
   final _defBottomBarHeight = 55.0;
+
   /// Цвета для кружков
   final Map<int, Color> _circleColors = {
     0 : Colors.red,
@@ -30,10 +32,9 @@ class TimerView extends StatelessWidget {
   // возвращаем размер нижнего NavBar, пока он не проинициализирован считаем, что defBottomBarHeight(55)
   double _getBottomBarHeight() {
     if (_keyBottomNavBar.currentContext != null) {
-      final RenderBox renderBoxRed = _keyBottomNavBar.currentContext
-          .findRenderObject();
-      final sizeRed = renderBoxRed.size;
-      return sizeRed.height;
+      final RenderBox renderBottomNavBar = _keyBottomNavBar.currentContext.findRenderObject();
+      final navBarSize = renderBottomNavBar.size;
+      return navBarSize.height;
     } else {
       return _defBottomBarHeight;
     }
@@ -45,10 +46,12 @@ class TimerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<bool> _selections = List.generate(3, (index) => false);
     final _width = Get.width;
     _controller.trySetBottomBarHeight(Get.mediaQuery.padding.bottom + _defBottomBarHeight);
     //_controller.updateScrambleFromGenerator();
     _controller.resetTimer();
+
     return Obx(() {
       //print("bottomHeight - ${_controller.bottomBarHeight}");
       return Stack(
@@ -177,7 +180,61 @@ class TimerView extends StatelessWidget {
                             )
                           )
                         ],
-                      )
+                      ),
+                      /// Нижняя панель с вариантами действий после остановки таймера
+                      Visibility(
+                        visible: _controller.showSaveResultBar,
+                        child: Positioned(
+                          bottom: 10,
+                          left: 10,
+                          right: 10,
+                          child: Material(
+                            child: Container(
+                              width: double.infinity,
+                              color: _backgroundColor,
+                              child: Column(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.only(bottom: UIHelper.SpaceSmall),
+                                    child: Text(R.timerSaveResultText,
+                                        style: Get.textTheme.headline6.copyWith(
+                                          fontSize: 18,
+                                          color: Colors.white,)
+                                    ),
+                                  ),
+                                  ToggleButtons(
+                                    //mainAxisAlignment: MainAxisAlignment.center,
+                                    isSelected: [false,false,false],
+                                    children: [
+                                       IconWithText(
+                                         icon: Icons.delete_forever_rounded,
+                                         text: R.timerSaveResultDontSave,
+                                         color: _settingsController.isIconsColored ? Colors.red : Colors.white,),
+                                       IconWithText(
+                                         icon: Icons.assignment_turned_in_rounded,
+                                         text: R.timerSaveResultWithoutComment,
+                                         color: _settingsController.isIconsColored ? Colors.yellow : Colors.white,),
+                                       IconWithText(
+                                         icon: Icons.textsms_rounded,
+                                         text: R.timerSaveResultWithComment,
+                                         color: _settingsController.isIconsColored ? Colors.green : Colors.white,),
+                                    ],
+                                    onPressed: (index) {
+                                      if (index == 0) {
+                                        _controller.cancelSavingResult();
+                                      } else if (index == 1) {
+                                        _controller.saveCurrentResult();
+                                      } else if (index == 2) {
+                                        _controller.saveCurrentResultWithComment();
+                                      }
+                                    },
+                                  ),
+                                ],
+                              ),
+                              ),
+                            ),
+                          ),
+                      ),
                     ]
                   ),
                 ),
@@ -272,5 +329,41 @@ class TimerView extends StatelessWidget {
     )
   ];
 
+}
+
+class IconWithText extends StatelessWidget {
+  IconWithText({
+    @required String text,
+    @required IconData icon,
+    Color color,
+    Key key,
+  }) : _text = text, _icon = icon, _color = color, super(key: key);
+
+  final String _text;
+  final IconData _icon;
+  final Color _color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(
+              _icon,
+              color: _color,
+              size: 40.0,)),
+          Text(_text,
+            style: Get.textTheme.headline6.copyWith(
+              fontSize: 14,
+              color: _color,
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
 

@@ -1,10 +1,13 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:get/get.dart';
+import 'package:rg2_flutter_getx/controllers/repository.dart';
+import 'package:rg2_flutter_getx/database/entitys/time_note_item.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/model/timer.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_settings_controller.dart';
 
 class TimerController extends GetxController {
   final TimerSettingsController _settingsController = Get.find();
+  final Repository _repository = Get.find();
   final assetsAudioPlayer = AssetsAudioPlayer();
   var sound = Audio("assets/sounds/metronom.mp3");
 
@@ -48,6 +51,12 @@ class TimerController extends GetxController {
     _showTopBar.value = value;
   }
 
+  final _showSaveResultBar = false.obs;
+  bool get showSaveResultBar => _showSaveResultBar.value;
+  set showSaveResultBar(value) {
+    _showSaveResultBar.value = value;
+  }
+
   final _showBottomBar = true.obs;
   bool get showBottomBar => _showBottomBar.value;
   set showBottomBar(value) {
@@ -70,6 +79,13 @@ class TimerController extends GetxController {
   int get rightIndicatorState => _rightIndicatorState.value;
   set rightIndicatorState(int value) {
     _rightIndicatorState.value = value;
+  }
+
+  //TODO подумать на сколько нужно делать obs переменную?
+  final _comment = "".obs;
+  String get comment => _comment.value;
+  set comment(value) {
+    _comment.value = value;
   }
 
   Timer _timer = Timer();
@@ -145,6 +161,7 @@ class TimerController extends GetxController {
 
   _firstPadPressedToStart() {
     _state = TimerControllerState.onePadPressedToStart;
+    showSaveResultBar = false;
     if (_isOneHanded) {
       _secondPadPressedToStart();
     }
@@ -210,7 +227,9 @@ class TimerController extends GetxController {
     _timer.start();
     _hideBars();
     _showAsyncTimerTime();
-    _playAsyncSound();
+    if (_settingsController.isMetronomEnabled) {
+      _playAsyncSound();
+    }
   }
 
   _stopTimer() {
@@ -260,6 +279,7 @@ class TimerController extends GetxController {
   _tryToFullStopTimer() {
     if (_isLeftPadPressed == false && _isRightPadPressed == false) {
       _state = TimerControllerState.stopped;
+      showSaveResultBar = true;
     }
   }
 
@@ -289,6 +309,30 @@ class TimerController extends GetxController {
     _timer.stop();
     currentTime = _timer.getFormattedCurrentTime();
   }
+
+  cancelSavingResult() {
+    showSaveResultBar = false;
+  }
+
+  saveCurrentResult() async {
+    showSaveResultBar = false;
+    _saveCurrentResultToBase("");
+  }
+
+  saveCurrentResultWithComment() {
+    showSaveResultBar = false;
+    _saveCurrentResultToBase("SomeComment");
+  }
+
+  _saveCurrentResultToBase(String comment) async {
+    var solvingTime = _timer.getFormattedSavedTime();
+    var _scramble = _settingsController.showScramble ? scramble : "";
+    var timeNote = TimeNoteItem(solvingTime, DateTime.now(), _scramble, comment);
+    _repository.addTimeNoteItem(timeNote);
+    var list = await _repository.getAllTimeNoteList();
+    print(list);
+  }
+  
 }
 
 /// Состояния контроллера таймера

@@ -68,6 +68,8 @@ class _$MainDatabase extends MainDatabase {
 
   PhasePositionDao _phasePositionDaoInstance;
 
+  TimesDao _timesDaoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -93,6 +95,8 @@ class _$MainDatabase extends MainDatabase {
             'CREATE TABLE IF NOT EXISTS `basic_moves` (`id` INTEGER, `eType` TEXT, `move` TEXT, `icon` TEXT, `toast` TEXT, PRIMARY KEY (`id`, `eType`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `phasePositions` (`phase` TEXT, `position` REAL, PRIMARY KEY (`phase`))');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `times` (`uuid` INTEGER PRIMARY KEY AUTOINCREMENT, `solvingTime` TEXT, `dateTime` INTEGER, `scramble` TEXT, `comment` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -120,6 +124,11 @@ class _$MainDatabase extends MainDatabase {
   PhasePositionDao get phasePositionDao {
     return _phasePositionDaoInstance ??=
         _$PhasePositionDao(database, changeListener);
+  }
+
+  @override
+  TimesDao get timesDao {
+    return _timesDaoInstance ??= _$TimesDao(database, changeListener);
   }
 }
 
@@ -649,3 +658,111 @@ class _$PhasePositionDao extends PhasePositionDao {
         .deleteListAndReturnChangedRows(items);
   }
 }
+
+class _$TimesDao extends TimesDao {
+  _$TimesDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database),
+        _timeNoteItemInsertionAdapter = InsertionAdapter(
+            database,
+            'times',
+            (TimeNoteItem item) => <String, dynamic>{
+                  'uuid': item.uuid,
+                  'solvingTime': item.solvingTime,
+                  'dateTime': _dateTimeConverter.encode(item.dateTime),
+                  'scramble': item.scramble,
+                  'comment': item.comment
+                }),
+        _timeNoteItemUpdateAdapter = UpdateAdapter(
+            database,
+            'times',
+            ['uuid'],
+            (TimeNoteItem item) => <String, dynamic>{
+                  'uuid': item.uuid,
+                  'solvingTime': item.solvingTime,
+                  'dateTime': _dateTimeConverter.encode(item.dateTime),
+                  'scramble': item.scramble,
+                  'comment': item.comment
+                }),
+        _timeNoteItemDeletionAdapter = DeletionAdapter(
+            database,
+            'times',
+            ['uuid'],
+            (TimeNoteItem item) => <String, dynamic>{
+                  'uuid': item.uuid,
+                  'solvingTime': item.solvingTime,
+                  'dateTime': _dateTimeConverter.encode(item.dateTime),
+                  'scramble': item.scramble,
+                  'comment': item.comment
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<TimeNoteItem> _timeNoteItemInsertionAdapter;
+
+  final UpdateAdapter<TimeNoteItem> _timeNoteItemUpdateAdapter;
+
+  final DeletionAdapter<TimeNoteItem> _timeNoteItemDeletionAdapter;
+
+  @override
+  Future<List<TimeNoteItem>> getAllItems() async {
+    return _queryAdapter.queryList('select * from times',
+        mapper: (Map<String, dynamic> row) => TimeNoteItem(
+            row['solvingTime'] as String,
+            _dateTimeConverter.decode(row['dateTime'] as int),
+            row['scramble'] as String,
+            row['comment'] as String,
+            uuid: row['uuid'] as int));
+  }
+
+  @override
+  Future<void> clearTable() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM times');
+  }
+
+  @override
+  Future<int> insertItem(TimeNoteItem item) {
+    return _timeNoteItemInsertionAdapter.insertAndReturnId(
+        item, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<List<int>> insertItems(List<TimeNoteItem> items) {
+    return _timeNoteItemInsertionAdapter.insertListAndReturnIds(
+        items, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<int> insertOrReplace(TimeNoteItem item) {
+    return _timeNoteItemInsertionAdapter.insertAndReturnId(
+        item, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<int> updateItem(TimeNoteItem item) {
+    return _timeNoteItemUpdateAdapter.updateAndReturnChangedRows(
+        item, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<int> updateItems(List<TimeNoteItem> items) {
+    return _timeNoteItemUpdateAdapter.updateListAndReturnChangedRows(
+        items, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<int> deleteItem(TimeNoteItem item) {
+    return _timeNoteItemDeletionAdapter.deleteAndReturnChangedRows(item);
+  }
+
+  @override
+  Future<int> deleteItems(List<TimeNoteItem> items) {
+    return _timeNoteItemDeletionAdapter.deleteListAndReturnChangedRows(items);
+  }
+}
+
+// ignore_for_file: unused_element
+final _dateTimeConverter = DateTimeConverter();

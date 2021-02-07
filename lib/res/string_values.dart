@@ -78,9 +78,14 @@ class R {
   static const timerSettingsTitle = "Настройки";
   static const timerDelayedStartText = "Удерживать 0,5 сек для старта";
   static const timerOneHandedText = "Управление таймером одной рукой";
+  static const timerIsIconColored = "Цветные икноки сохранения результата";
   static const timerMetronomText = "Метроном";
   static const timerMetronomFrequencyText = "Частота метронома уд/мин";
   static const timerShowScrambleText = "Отображать скрамбл";
   static const timerScrambleTextSize = "Размер текста скрамбла";
+  static const timerSaveResultText = "Сохранить результат?";
+  static const timerSaveResultDontSave = "не сохран.";
+  static const timerSaveResultWithoutComment = "без коммент";
+  static const timerSaveResultWithComment = "+ коммент";
 
 }
