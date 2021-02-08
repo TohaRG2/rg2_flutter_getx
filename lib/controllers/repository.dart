@@ -95,4 +95,10 @@ class Repository extends GetxController {
   Future<int> deleteTimeNoteItem(TimeNoteItem item) async {
     return await _timesDao.deleteItem(item);
   }
+  
+  void clearTimesTable() async {
+    return await _timesDao.clearTable();
+  }
+  
+  
 }

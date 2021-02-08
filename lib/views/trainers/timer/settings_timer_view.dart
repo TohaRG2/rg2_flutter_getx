@@ -16,154 +16,187 @@ class SettingsTimerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<bool> _selections = List.generate(3, (index) => false);
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Center(
-            child: Text(R.timerSettingsTitle, style: TextStyle(color: Get.textTheme.headline5.color)),
-          ),
-          backgroundColor: Get.theme.scaffoldBackgroundColor,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Center(
+          child: Text(R.timerSettingsTitle, style: TextStyle(color: Get.textTheme.headline5.color)),
         ),
-        //ListView c выбором темы
-        body: Obx(
-          () => Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    /// Задержка 0,5 сек перед стартом
-                    SwitchListTile(
-                      contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                      title: Text(
-                        R.timerDelayedStartText,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      value: _controller.isDelayedStart,
-                      onChanged: (v) {
-                        _controller.isDelayedStart = v;
-                      },
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
+      ),
+      //ListView c выбором темы
+      body: Obx(() {
+        /// Обработчик нажатий на кнопки изменений частоты метронома
+        var _onChangeMetronomFrequencyByButtons;
+        if (_controller.isMetronomEnabled) {
+          _onChangeMetronomFrequencyByButtons = (index) {
+            if (index == 0) {
+              _controller.decreaseMetronomFrequency();
+            } else if (index == 1) {
+              _controller.resetMetronomFrequency();
+            } else if (index == 2) {
+              _controller.increaseMetronomFrequency();
+            }
+          };
+        }
+
+        /// Обработчик изменений слайдера частоты метронома
+        var _onChangeMetronomFrequency;
+        if (_controller.isMetronomEnabled) {
+          _onChangeMetronomFrequency = (value) {
+            _controller.metronomFrequency = value.toInt();
+          };
+        }
+
+        /// Обработчик изменений слайдера размера шрифта скрамбла
+        var _onChangeScrambleRatio;
+        var _onChangeStartScrambleRatio;
+        var _onChangeEndScrambleRatio;
+        if (_controller.showScramble) {
+          _onChangeScrambleRatio = (value) {
+            _controller.scrambleTextRatio = value;
+          };
+          _onChangeStartScrambleRatio = (value) {
+            _controller.showScrambleExample = true;
+          };
+          _onChangeEndScrambleRatio = (value) {
+            _controller.showScrambleExample = false;
+          };
+        }
+
+        return Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  /// Задержка 0,5 сек перед стартом
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(
+                      R.timerDelayedStartText,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                    SizedBox(height: UIHelper.SpaceSmall,),
-                    /// Управление таймером одной рукой
-                    SwitchListTile(
-                      contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                      title: Text(
-                        R.timerOneHandedText,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      value: _controller.isOneHanded,
-                      onChanged: (v) {
-                        _controller.isOneHanded = v;
-                      },
+                    value: _controller.isDelayedStart,
+                    onChanged: (v) {
+                      _controller.isDelayedStart = v;
+                    },
+                  ),
+                  SizedBox(height: UIHelper.SpaceSmall,),
+                  /// Управление таймером одной рукой
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(
+                      R.timerOneHandedText,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                    SizedBox(height: UIHelper.SpaceSmall,),
-                    /// Цветные или белые иконки
-                    SwitchListTile(
-                      contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                      title: Text(
-                        R.timerIsIconColored,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      value: _controller.isIconsColored,
-                      onChanged: (v) {
-                        _controller.isIconsColored = v;
-                      },
+                    value: _controller.isOneHanded,
+                    onChanged: (v) {
+                      _controller.isOneHanded = v;
+                    },
+                  ),
+                  SizedBox(height: UIHelper.SpaceSmall,),
+                  /// Цветные или белые иконки
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(
+                      R.timerIsIconColored,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                    SizedBox(height: UIHelper.SpaceSmall,),
-                    /// Метроном
-                    SwitchListTile(
-                      contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                      title: Text(
-                        R.timerMetronomText,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      value: _controller.isMetronomEnabled,
-                      onChanged: (v) {
-                        _controller.isMetronomEnabled = v;
-                      },
+                    value: _controller.isIconsColored,
+                    onChanged: (v) {
+                      _controller.isIconsColored = v;
+                    },
+                  ),
+                  SizedBox(height: UIHelper.SpaceSmall,),
+                  /// Метроном
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(
+                      R.timerMetronomText,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                    /// Кнопки точной настройки частоты
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
-                      child: Row(
-                        children: [
-                          Expanded(child: Text(R.timerMetronomFrequencyText, style: Theme.of(context).textTheme.headline6,)),
-                          Container(
-                            child: ToggleButtons(
-                              children: [
-                                Icon(Icons.chevron_left_rounded),
-                                Text("${_controller.metronomFrequency}"),
-                                Icon(Icons.chevron_right_rounded)
-                              ],
-                              isSelected: _selections,
-                              onPressed: (index) {
-                                if (index == 0) {
-                                  _controller.decreaseMetronomFrequency();
-                                } else if (index == 1) {
-                                  _controller.resetMetronomFrequency();
-                                } else if (index == 2) {
-                                  _controller.increaseMetronomFrequency();
-                                }
-                              },
+                    value: _controller.isMetronomEnabled,
+                    onChanged: (v) {
+                      _controller.isMetronomEnabled = v;
+                    },
+                  ),
+                  /// Кнопки точной настройки частоты
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Opacity(
+                            opacity: _controller.isMetronomEnabled ? 1.0 : 0.5,
+                            child: Text(
+                              R.timerMetronomFrequencyText,
+                              style: Get.textTheme.headline6,
                             ),
+                          )
+                        ),
+                        Container(
+                          child: ToggleButtons(
+                            children: [
+                              Icon(Icons.chevron_left_rounded),
+                              Text("${_controller.metronomFrequency}"),
+                              Icon(Icons.chevron_right_rounded)
+                            ],
+                            isSelected: _selections,
+                            onPressed: _onChangeMetronomFrequencyByButtons,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    /// Слайдер выбора частоты метронома
-                    Slider(
-                      value: _controller.metronomFrequency.toDouble() ,
-                      min: 1,
-                      max: 240,
-                      divisions: 240,
-                      activeColor: Theme.of(context).accentColor,
-                      label: _controller.metronomFrequency.toString(),
-                      onChanged: (value) {
-                        _controller.metronomFrequency = value.toInt();
-                      },
+                  ),
+                  /// Слайдер выбора частоты метронома
+                  Slider(
+                    value: _controller.metronomFrequency.toDouble() ,
+                    min: 1,
+                    max: 240,
+                    divisions: 240,
+                    activeColor: Theme.of(context).accentColor,
+                    label: _controller.metronomFrequency.toString(),
+                    onChanged: _onChangeMetronomFrequency,
+                  ),
+                  /// Свитч отображения скрамбла
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(
+                      R.timerShowScrambleText,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                    /// Свитч отображения скрамбла
-                    SwitchListTile(
-                      contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                      title: Text(
-                        R.timerShowScrambleText,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      value: _controller.showScramble,
-                      onChanged: (value) {
-                        _controller.showScramble = value;
-                      },
-                    ),
-                    /// Текст "Размер шрифта"
-                    Padding(
-                      padding: const EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    value: _controller.showScramble,
+                    onChanged: (value) {
+                      _controller.showScramble = value;
+                    },
+                  ),
+                  /// Текст "Размер шрифта"
+                  Padding(
+                    padding: const EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    child: Opacity(
+                      opacity: _controller.showScramble ? 1.0 : 0.5,
                       child: Text(
                         R.timerScrambleTextSize,
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     ),
-                    /// Слайдер выбора размера шрифта
-                    Slider(
-                      value: _controller.scrambleTextRatio,
-                      min: 0.7,
-                      max: 1.3,
-                      divisions: 6,
-                      activeColor: Theme.of(context).accentColor,
-                      onChanged: (value) {
-                        _controller.scrambleTextRatio = value;
-                      },
-                      onChangeStart: (double startValue) {
-                        _controller.showScrambleExample = true;
-                      },
-                      onChangeEnd: (double startValue) {
-                        _controller.showScrambleExample = false;
-                      },
-                    ),
-                  ],
-                ),
+                  ),
+                  /// Слайдер выбора размера шрифта
+                  Slider(
+                    value: _controller.scrambleTextRatio,
+                    min: 0.7,
+                    max: 1.3,
+                    divisions: 6,
+                    activeColor: Theme.of(context).accentColor,
+                    onChanged: _onChangeScrambleRatio,
+                    onChangeStart: _onChangeStartScrambleRatio,
+                    onChangeEnd: _onChangeEndScrambleRatio,
+                  ),
+                ],
               ),
-              Visibility(
+            ),
+            Visibility(
                 visible: _controller.showScrambleExample,
                 child: Positioned(
                   width: Get.width,
@@ -176,11 +209,11 @@ class SettingsTimerView extends StatelessWidget {
                     ),
                   ),
                 )
-              ),
-            ]
-          ),
-        ),
-        bottomNavigationBar: BottomBarWithBackButton(),
+            ),
+          ]
+        );
+      }),
+      bottomNavigationBar: BottomBarWithBackButton(),
     );
   }
 

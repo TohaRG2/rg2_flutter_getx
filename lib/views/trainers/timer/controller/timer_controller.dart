@@ -82,11 +82,11 @@ class TimerController extends GetxController {
   }
 
   //TODO подумать на сколько нужно делать obs переменную?
-  final _comment = "".obs;
-  String get comment => _comment.value;
-  set comment(value) {
-    _comment.value = value;
-  }
+  // final _comment = "".obs;
+  // String get comment => _comment.value;
+  // set comment(value) {
+  //   _comment.value = value;
+  // }
 
   Timer _timer = Timer();
   TimerControllerState _state = TimerControllerState.stopped;
@@ -307,6 +307,8 @@ class TimerController extends GetxController {
 
   resetTimer() {
     _timer.stop();
+    //TODO Убрать очишение таблицы при вызове таймера
+    _repository.clearTimesTable();
     currentTime = _timer.getFormattedCurrentTime();
   }
 
@@ -319,9 +321,9 @@ class TimerController extends GetxController {
     _saveCurrentResultToBase("");
   }
 
-  saveCurrentResultWithComment() {
+  saveCurrentResultWithComment(String _comment) {
     showSaveResultBar = false;
-    _saveCurrentResultToBase("SomeComment");
+    _saveCurrentResultToBase(_comment);
   }
 
   _saveCurrentResultToBase(String comment) async {

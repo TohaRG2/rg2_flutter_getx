@@ -21,7 +21,7 @@ class EditButton extends StatelessWidget {
           _textController.text = _controller.getCurrentComment();
           Get.defaultDialog(
               title: R.learnEditComment,
-              buttonColor: Theme.of(context).secondaryHeaderColor,
+              buttonColor: Get.theme.secondaryHeaderColor,
               content: Container(
                 child: Padding(
                   padding: const EdgeInsets.all(UIHelper.SpaceMedium),
@@ -40,9 +40,9 @@ class EditButton extends StatelessWidget {
                 ),
               ),
               textCancel: R.buttonCancelText,
-              cancelTextColor: Theme.of(context).primaryColor,
+              cancelTextColor: Get.theme.primaryColor,
               textConfirm: R.buttonOkText,
-              confirmTextColor: Theme.of(context).accentColor,
+              confirmTextColor: Get.theme.accentColor,
               onConfirm: () => {
                 _controller.setCurrentCommentTo(_textController.text),
                 Get.back()

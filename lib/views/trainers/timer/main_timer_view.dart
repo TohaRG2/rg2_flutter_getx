@@ -12,14 +12,24 @@ class TimerView extends StatelessWidget {
   final TimerController _controller = Get.find();
   final ScrambleGenController _genController = Get.find();
   final TimerSettingsController _settingsController = Get.find();
+  final _textController = TextEditingController();
+
+  // переменная, позволяющая идентифицировать bottomNavBar
   final GlobalKey _keyBottomNavBar = GlobalKey();
+  // цвет рамки
   final Color _borderColor = Colors.blue;
+  // толщина рамки
   final double _borderThin = 10.0;
+  // цвет кнопок нижней панели bottomNavBar
   final Color _primaryColor = Get.theme.primaryColor;
   final Color _accentColor = Get.theme.accentColor;
+  // цвет подложки
   final Color _backgroundColor = Color.fromARGB(255, 50, 50, 50);
+  // цвет окошка в котором выводится время
   final Color _timeWindowsColor = Colors.white;
-  final _duration = Duration(milliseconds: 300);
+  // время анимации скрытия/отображения нижней панели и скрамбла
+  final _animationDuration = Duration(milliseconds: 300);
+  // считаем, что такова высота нижней панели, пока ее не отобразили на реальном устройстве. Реальная будет +/- 3 пикс.
   final _defBottomBarHeight = 55.0;
 
   /// Цвета для кружков
@@ -48,8 +58,8 @@ class TimerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<bool> _selections = List.generate(3, (index) => false);
     final _width = Get.width;
+    // изначально задаем размер нижней панели как Default + padding для SafeArea
     _controller.trySetBottomBarHeight(Get.mediaQuery.padding.bottom + _defBottomBarHeight);
-    //_controller.updateScrambleFromGenerator();
     _controller.resetTimer();
 
     return Obx(() {
@@ -73,7 +83,7 @@ class TimerView extends StatelessWidget {
               ),
 
               AnimatedPositioned(
-                duration: _duration, left: 0, right: 0,
+                duration: _animationDuration, left: 0, right: 0,
                 top: (_controller.showTopBar && _settingsController.showScramble) ? _settingsController.scrambleBarHeight : 0,
                 bottom: _controller.showBottomBar ? _controller.bottomBarHeight : 0,
                 child: Container(
@@ -134,51 +144,7 @@ class TimerView extends StatelessWidget {
                           ),
 
                           /// Две основные плашки нажатия на которые обрабатываем (даже в одноруком режиме)
-                          Flexible(
-                            child: Container(
-                              width: double.infinity,
-                              height: double.infinity,
-                              child: Container(
-                                // Делим экран на две части для срабатывания нажатий
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTapDown: (_) {
-                                          _controller.onLeftPanelTouch();
-                                        },
-                                        onTapCancel: () {
-                                          _controller.onLeftPanelTouchCancel();
-                                        },
-                                        onTapUp: (_) {
-                                          _controller.onLeftPanelTouchCancel();
-                                        },
-                                        child: Container(
-                                          height: double.infinity,
-                                          color: Colors.transparent,
-                                          child: Center(child: Image.asset("assets/images/trainers/timer/left_hand.png", width: 80,))),
-                                      )),
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTapDown: (_) {
-                                          _controller.onRightPanelTouch();
-                                        },
-                                        onTapCancel: () {
-                                          _controller.onRightPanelTouchCancel();
-                                        },
-                                        onTapUp: (_) {
-                                          _controller.onRightPanelTouchCancel();
-                                        },
-                                        child: Container(
-                                          height: double.infinity,
-                                          color: Colors.transparent,
-                                          child: Center(child: Image.asset("assets/images/trainers/timer/right_hand.png", width: 80,))),
-                                      ))
-                                  ],
-                                ),
-                              ),
-                            )
-                          )
+                          TwoMainPadsWidget(controller: _controller)
                         ],
                       ),
                       /// Нижняя панель с вариантами действий после остановки таймера
@@ -203,7 +169,6 @@ class TimerView extends StatelessWidget {
                                     ),
                                   ),
                                   ToggleButtons(
-                                    //mainAxisAlignment: MainAxisAlignment.center,
                                     isSelected: [false,false,false],
                                     children: [
                                        IconWithText(
@@ -225,7 +190,7 @@ class TimerView extends StatelessWidget {
                                       } else if (index == 1) {
                                         _controller.saveCurrentResult();
                                       } else if (index == 2) {
-                                        _controller.saveCurrentResultWithComment();
+                                        _tryToSaveCurrentResultWithComment();
                                       }
                                     },
                                   ),
@@ -241,12 +206,46 @@ class TimerView extends StatelessWidget {
               ),
 
               /// Нижний навбар с кнопками (назад, результаты, настройки)
-              bottomNavBar(_duration, _width, _primaryColor),
+              bottomNavBar(_animationDuration, _width, _primaryColor),
             ])
           )
         ],
       );
     });
+  }
+
+  _tryToSaveCurrentResultWithComment() {
+    Get.defaultDialog(
+      title: R.timerEditResultComment,
+      buttonColor: Get.theme.secondaryHeaderColor,
+      content: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(UIHelper.SpaceMedium),
+          child: Column(
+            children: [
+              TextField(
+                autofocus: true,
+                decoration: InputDecoration(
+                  hintText: R.timerEditResultHint,
+                ),
+                maxLines: 3,
+                controller: _textController,
+              ),
+            ],
+          ),
+        ),
+      ),
+      textCancel: R.buttonCancelText,
+      cancelTextColor: Get.theme.primaryColor,
+      textConfirm: R.buttonOkText,
+      confirmTextColor: Get.theme.accentColor,
+      onConfirm: () => {
+        _controller.saveCurrentResultWithComment(_textController.text),
+        _textController.text = "",
+        Get.back()
+      }
+    );
+
   }
 
   Row twoMainPad() {
@@ -329,6 +328,64 @@ class TimerView extends StatelessWidget {
     )
   ];
 
+}
+
+class TwoMainPadsWidget extends StatelessWidget {
+  const TwoMainPadsWidget({
+    Key key,
+    @required TimerController controller,
+  }) : _controller = controller, super(key: key);
+
+  final TimerController _controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: Container(
+          // Делим экран на две части для срабатывания нажатий
+          child: Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTapDown: (_) {
+                    _controller.onLeftPanelTouch();
+                  },
+                  onTapCancel: () {
+                    _controller.onLeftPanelTouchCancel();
+                  },
+                  onTapUp: (_) {
+                    _controller.onLeftPanelTouchCancel();
+                  },
+                  child: Container(
+                    height: double.infinity,
+                    color: Colors.transparent,
+                    child: Center(child: Image.asset("assets/images/trainers/timer/left_hand.png", width: 80,))),
+                )),
+              Expanded(
+                child: GestureDetector(
+                  onTapDown: (_) {
+                    _controller.onRightPanelTouch();
+                  },
+                  onTapCancel: () {
+                    _controller.onRightPanelTouchCancel();
+                  },
+                  onTapUp: (_) {
+                    _controller.onRightPanelTouchCancel();
+                  },
+                  child: Container(
+                    height: double.infinity,
+                    color: Colors.transparent,
+                    child: Center(child: Image.asset("assets/images/trainers/timer/right_hand.png", width: 80,))),
+                ))
+            ],
+          ),
+        ),
+      )
+    );
+  }
 }
 
 class IconWithText extends StatelessWidget {

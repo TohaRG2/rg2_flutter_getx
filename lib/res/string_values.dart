@@ -87,5 +87,7 @@ class R {
   static const timerSaveResultDontSave = "не сохран.";
   static const timerSaveResultWithoutComment = "без коммент";
   static const timerSaveResultWithComment = "+ коммент";
+  static const timerEditResultComment = "Введите комментарий:";
+  static const timerEditResultHint = "Например, был OLL скип";
 
 }
