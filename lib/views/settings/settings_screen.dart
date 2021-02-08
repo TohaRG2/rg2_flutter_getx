@@ -14,7 +14,7 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text(R.settingsTitle,
+          child: Text(StrRes.settingsTitle,
               style: TextStyle(
                   color: Theme.of(context).textTheme.headline5.color)
           ),

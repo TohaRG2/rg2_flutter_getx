@@ -48,7 +48,7 @@ class AdviceView extends StatelessWidget {
       bottomSheet: Container(
         padding: EdgeInsets.all(UIHelper.SpaceSmall),
         child: Text(
-            R.infoAdviceComment,
+            StrRes.infoAdviceComment,
             style: TextStyle(
               color: Theme.of(context).accentColor,
               fontSize: 16,

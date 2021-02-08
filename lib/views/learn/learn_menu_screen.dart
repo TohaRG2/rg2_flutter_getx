@@ -16,7 +16,7 @@ class LearnScreen extends StatelessWidget {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
-              return Text(R.somethingWrong);
+              return Text(StrRes.somethingWrong);
 
             case ConnectionState.active:
             case ConnectionState.waiting:
@@ -29,7 +29,7 @@ class LearnScreen extends StatelessWidget {
               return LearnViewPager();   //Если все ок, выводим ViewPager
 
             default:
-              return Text(R.somethingWrong);
+              return Text(StrRes.somethingWrong);
           }
         });
   }

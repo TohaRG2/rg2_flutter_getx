@@ -82,15 +82,15 @@ class ScrambleGenView extends StatelessWidget {
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(
       icon: Icon(Icons.arrow_back),
-      label: R.scrambleGenBottomBack,
+      label: StrRes.scrambleGenBottomBack,
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.autorenew_rounded),
-      label: R.scrambleGenBottomGenerate,
+      label: StrRes.scrambleGenBottomGenerate,
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.settings),
-      label: R.scrambleGenBottomSettings,
+      label: StrRes.scrambleGenBottomSettings,
     )
   ];
 }

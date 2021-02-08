@@ -37,7 +37,7 @@ class _AdvicesImagesDialogState extends State<AdvicesImagesDialog>
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(R.infoAdviceTitle, style: _theme.textTheme.headline5),
+                    child: Text(StrRes.infoAdviceTitle, style: _theme.textTheme.headline5),
                   ),
                   Expanded(
                     child: Container(

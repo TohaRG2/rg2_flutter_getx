@@ -1,4 +1,4 @@
-class R {
+class StrRes {
   static const appTheme = "Внешний вид:";
   static const darkTheme = "Темная тема";
   static const primaryColor = "Основной цвет";
@@ -89,5 +89,6 @@ class R {
   static const timerSaveResultWithComment = "+ коммент";
   static const timerEditResultComment = "Введите комментарий:";
   static const timerEditResultHint = "Например, был OLL скип";
+  static const timerResultTitle = "Результаты:";
 
 }

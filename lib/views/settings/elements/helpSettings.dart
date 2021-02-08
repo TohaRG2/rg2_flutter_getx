@@ -16,7 +16,7 @@ class HelpSettings extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            R.miniHelpSettingsText,
+            StrRes.miniHelpSettingsText,
             style: Theme.of(context).textTheme.headline5,
           ),
           SizedBox(
@@ -25,7 +25,7 @@ class HelpSettings extends StatelessWidget {
           SwitchListTile(
             contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
             title: Text(
-              R.miniHelpSettingsSwitch,
+              StrRes.miniHelpSettingsSwitch,
               style: Theme.of(context).textTheme.headline6,
             ),
             value: _settings.isStartHelpEnabled.value,

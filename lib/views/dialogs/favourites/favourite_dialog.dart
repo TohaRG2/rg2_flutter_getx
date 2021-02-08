@@ -27,13 +27,13 @@ class FavouriteDialog extends StatelessWidget {
               child: Column(children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(R.favouritesTitle, style: theme.textTheme.headline5),
+                  child: Text(StrRes.favouritesTitle, style: theme.textTheme.headline5),
                 ),
                 Expanded(
                     child: (_learnController.pages[0].currentList.length == 0)
                         ? Center(
                             child: Text(
-                            R.nothingInFavourites,
+                            StrRes.nothingInFavourites,
                             style: theme.textTheme.headline5,
                           ))
                         : FavouriteDialogList()),
@@ -46,13 +46,13 @@ class FavouriteDialog extends StatelessWidget {
                             Get.back();
                           },
                           color: _primaryColor,
-                          child: Text(R.backButtonText)),
+                          child: Text(StrRes.backButtonText)),
                     ),
                     Flexible(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
-                          R.favouriteDialogHint,
+                          StrRes.favouriteDialogHint,
                           style: theme.textTheme.headline6.copyWith(
                             fontSize: 14,
                           ),

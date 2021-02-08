@@ -19,7 +19,7 @@ class SettingsTimerView extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Center(
-          child: Text(R.timerSettingsTitle, style: TextStyle(color: Get.textTheme.headline5.color)),
+          child: Text(StrRes.timerSettingsTitle, style: TextStyle(color: Get.textTheme.headline5.color)),
         ),
         backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
@@ -74,7 +74,7 @@ class SettingsTimerView extends StatelessWidget {
                   SwitchListTile(
                     contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                     title: Text(
-                      R.timerDelayedStartText,
+                      StrRes.timerDelayedStartText,
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     value: _controller.isDelayedStart,
@@ -87,7 +87,7 @@ class SettingsTimerView extends StatelessWidget {
                   SwitchListTile(
                     contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                     title: Text(
-                      R.timerOneHandedText,
+                      StrRes.timerOneHandedText,
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     value: _controller.isOneHanded,
@@ -100,7 +100,7 @@ class SettingsTimerView extends StatelessWidget {
                   SwitchListTile(
                     contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                     title: Text(
-                      R.timerIsIconColored,
+                      StrRes.timerIsIconColored,
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     value: _controller.isIconsColored,
@@ -113,7 +113,7 @@ class SettingsTimerView extends StatelessWidget {
                   SwitchListTile(
                     contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                     title: Text(
-                      R.timerMetronomText,
+                      StrRes.timerMetronomText,
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     value: _controller.isMetronomEnabled,
@@ -130,7 +130,7 @@ class SettingsTimerView extends StatelessWidget {
                           child: Opacity(
                             opacity: _controller.isMetronomEnabled ? 1.0 : 0.5,
                             child: Text(
-                              R.timerMetronomFrequencyText,
+                              StrRes.timerMetronomFrequencyText,
                               style: Get.textTheme.headline6,
                             ),
                           )
@@ -163,7 +163,7 @@ class SettingsTimerView extends StatelessWidget {
                   SwitchListTile(
                     contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                     title: Text(
-                      R.timerShowScrambleText,
+                      StrRes.timerShowScrambleText,
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     value: _controller.showScramble,
@@ -177,7 +177,7 @@ class SettingsTimerView extends StatelessWidget {
                     child: Opacity(
                       opacity: _controller.showScramble ? 1.0 : 0.5,
                       child: Text(
-                        R.timerScrambleTextSize,
+                        StrRes.timerScrambleTextSize,
                         style: Theme.of(context).textTheme.headline6,
                       ),
                     ),

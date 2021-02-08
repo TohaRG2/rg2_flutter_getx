@@ -21,7 +21,7 @@ class MeltingCheckBoxes extends StatelessWidget {
         Expanded(
           child: CheckboxListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-              title: Text(R.scrambleGenEdgeBuffer),
+              title: Text(StrRes.scrambleGenEdgeBuffer),
               controlAffinity: ListTileControlAffinity.leading,
               value: isEdgeEnabled,
               onChanged: (value) {
@@ -31,7 +31,7 @@ class MeltingCheckBoxes extends StatelessWidget {
         Expanded(
           child: CheckboxListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-              title: Text(R.scrambleGenCornerBuffer),
+              title: Text(StrRes.scrambleGenCornerBuffer),
               controlAffinity: ListTileControlAffinity.leading,
               value: isCornerEnabled,
               onChanged: (value) {

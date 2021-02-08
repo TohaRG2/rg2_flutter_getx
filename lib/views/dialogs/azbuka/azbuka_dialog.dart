@@ -19,7 +19,7 @@ class AzbukaDialog extends StatelessWidget {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
-              return Text(R.somethingWrong);
+              return Text(StrRes.somethingWrong);
 
             case ConnectionState.active:
             case ConnectionState.waiting:
@@ -31,7 +31,7 @@ class AzbukaDialog extends StatelessWidget {
               return _showDialog(context);   //Если все ок, выводим диалог
 
             default:
-              return Text(R.somethingWrong);
+              return Text(StrRes.somethingWrong);
           }
         });
   }
@@ -54,7 +54,7 @@ class AzbukaDialog extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(R.azbukaDialogTitle, style: _theme.textTheme.headline5),
+                  child: Text(StrRes.azbukaDialogTitle, style: _theme.textTheme.headline5),
                 ),
                 Expanded(
                   child: ListView.builder(
@@ -75,13 +75,13 @@ class AzbukaDialog extends StatelessWidget {
                             Get.back();
                           },
                           color: _primaryColor,
-                          child: Text(R.backButtonText)),
+                          child: Text(StrRes.backButtonText)),
                     ),
                     Flexible(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
-                          R.azbukaDialogHint,
+                          StrRes.azbukaDialogHint,
                           style: _theme.textTheme.headline6.copyWith(
                             fontSize: 14,
                           ),

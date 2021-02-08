@@ -19,7 +19,7 @@ class LearnDetailScreen extends StatelessWidget {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:        // если pages = null;
-              return Text(R.somethingWrong);
+              return Text(StrRes.somethingWrong);
 
             case ConnectionState.active:
             case ConnectionState.waiting:
@@ -31,7 +31,7 @@ class LearnDetailScreen extends StatelessWidget {
               return LearnDetailView();
 
             default:
-              return Text(R.somethingWrong);
+              return Text(StrRes.somethingWrong);
           }
         });
   }

@@ -21,7 +21,7 @@ class BottomBarWithBackButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Icons.arrow_back, color: backgroundColor,),
-                Text(R.backButtonText,
+                Text(StrRes.backButtonText,
                   style: Theme.of(context).textTheme.bodyText1.copyWith(color: backgroundColor, fontSize: 14),
                 )
               ],

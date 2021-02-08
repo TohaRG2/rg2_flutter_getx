@@ -38,7 +38,7 @@ class FavouriteDialogCardItem extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                R.deleteItem,
+                StrRes.deleteItem,
                 style: textTheme.bodyText2.copyWith(
                   color: Colors.white,
                 ),

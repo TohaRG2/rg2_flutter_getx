@@ -20,7 +20,7 @@ class EditButton extends StatelessWidget {
         onPressed: () {
           _textController.text = _controller.getCurrentComment();
           Get.defaultDialog(
-              title: R.learnEditComment,
+              title: StrRes.learnEditComment,
               buttonColor: Get.theme.secondaryHeaderColor,
               content: Container(
                 child: Padding(
@@ -30,7 +30,7 @@ class EditButton extends StatelessWidget {
                       TextField(
                         autofocus: true,
                         decoration: InputDecoration(
-                          hintText: R.learnHintComment,
+                          hintText: StrRes.learnHintComment,
                         ),
                         maxLines: 3,
                         controller: _textController,
@@ -39,9 +39,9 @@ class EditButton extends StatelessWidget {
                   ),
                 ),
               ),
-              textCancel: R.buttonCancelText,
+              textCancel: StrRes.buttonCancelText,
               cancelTextColor: Get.theme.primaryColor,
-              textConfirm: R.buttonOkText,
+              textConfirm: StrRes.buttonOkText,
               confirmTextColor: Get.theme.accentColor,
               onConfirm: () => {
                 _controller.setCurrentCommentTo(_textController.text),

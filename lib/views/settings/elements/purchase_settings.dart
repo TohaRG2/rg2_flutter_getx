@@ -19,7 +19,7 @@ class PurchaseSettings extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-                R.settingsPurchase,
+                StrRes.settingsPurchase,
                 style: Theme.of(context).textTheme.headline5,
             ),
             SizedBox(
@@ -28,7 +28,7 @@ class PurchaseSettings extends StatelessWidget {
             SwitchListTile(
               contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
               title: Text(
-                R.settingsPurchaseMenuText,
+                StrRes.settingsPurchaseMenuText,
                 style: Theme.of(context).textTheme.headline6,
               ),
               value: _settings.isPurchaseEnabled.value,

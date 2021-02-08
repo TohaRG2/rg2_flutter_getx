@@ -3,7 +3,7 @@ import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 
 final scrambleGen = TrainerMenuItem(
-    id: R.trainersScrambleGen,
+    id: StrRes.trainersScrambleGen,
     title: scramble_gen_title,
     icon: scramble_gen_icon,
     helpItem: scramble_gen_help

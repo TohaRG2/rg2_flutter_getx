@@ -15,7 +15,7 @@ class InternetSettings extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            R.internetSettingsText,
+            StrRes.internetSettingsText,
             style: Theme.of(context).textTheme.headline5,
           ),
           SizedBox(height: UIHelper.SpaceSmall,),
@@ -23,13 +23,13 @@ class InternetSettings extends StatelessWidget {
             padding: const EdgeInsets.only(
                 left: UIHelper.SpaceSmall, right: UIHelper.SpaceSmall),
             child: Text(
-              R.internetSettingsHelp,
+              StrRes.internetSettingsHelp,
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           SizedBox(height: UIHelper.SpaceSmall,),
           ListTile(
-            title: Text(R.allInternetUsingText, style: Theme.of(context).textTheme.headline6,),
+            title: Text(StrRes.allInternetUsingText, style: Theme.of(context).textTheme.headline6,),
             trailing: Radio (
               value: 0,
               groupValue: _settings.internetUsage.value,
@@ -39,7 +39,7 @@ class InternetSettings extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(R.wiFiUsingText, style: Theme.of(context).textTheme.headline6,),
+            title: Text(StrRes.wiFiUsingText, style: Theme.of(context).textTheme.headline6,),
             trailing: Radio (
               value: 2,
               groupValue: _settings.internetUsage.value,
@@ -49,7 +49,7 @@ class InternetSettings extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(R.disableInternetUsingText, style: Theme.of(context).textTheme.headline6,),
+            title: Text(StrRes.disableInternetUsingText, style: Theme.of(context).textTheme.headline6,),
             trailing: Radio (
               value: 3,
               groupValue: _settings.internetUsage.value,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/settings_timer_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/view/results_dialog.dart';
 
 class BottomMenuBar extends StatelessWidget {
   BottomMenuBar({
@@ -31,6 +32,7 @@ class BottomMenuBar extends StatelessWidget {
         // Нажата кнопка "Результаты"
           case 1:
             //_controller.generateNewScramble();
+            Get.to(TimerResultsDialog(), transition: Transition.rightToLeft);
             print("Нажали результаты");
             break;
         // Нажата кнопка "Настройки"

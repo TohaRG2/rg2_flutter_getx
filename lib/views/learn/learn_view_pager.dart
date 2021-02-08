@@ -39,7 +39,7 @@ class LearnViewPager extends StatelessWidget {
               appBar: AppBar(
                 title: Center(
                     child: Text(
-                        "${R.learnTitle}",
+                        "${StrRes.learnTitle}",
                         style: TextStyle(
                             color: Theme.of(context).textTheme.headline5.color),
                     )),

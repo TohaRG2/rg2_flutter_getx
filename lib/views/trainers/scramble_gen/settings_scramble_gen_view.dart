@@ -34,7 +34,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
             automaticallyImplyLeading: false,
             title: Center(
               child: Text(
-                R.scrambleGenAzbukaSelect,
+                StrRes.scrambleGenAzbukaSelect,
                 style: TextStyle(color: Theme.of(context).textTheme.headline5.color),
               ),
             ),
@@ -138,7 +138,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(R.scrambleGenSettingsLoadMyAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
+                            child: Text(StrRes.scrambleGenSettingsLoadMyAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
                           ),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
@@ -154,7 +154,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(R.scrambleGenSettingsLoadMaximAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
+                            child: Text(StrRes.scrambleGenSettingsLoadMaximAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
                           ),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
@@ -174,7 +174,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(R.scrambleGenSettingsLoadCustomAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
+                            child: Text(StrRes.scrambleGenSettingsLoadCustomAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
                           ),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
@@ -190,7 +190,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8.0),
-                            child: Text(R.scrambleGenSettingsSaveCustomAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
+                            child: Text(StrRes.scrambleGenSettingsSaveCustomAzbuka, textAlign: TextAlign.center, style: TextStyle(fontSize: 16),),
                           ),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                         ),
@@ -210,13 +210,13 @@ class ScrambleGenSettingsView extends StatelessWidget {
     _controller.selectedLetter = item.letter;
     _controller.storedLetter = item.letter;
     Get.defaultDialog(
-        title: R.scrambleGenSettingsSelectLetter,
+        title: StrRes.scrambleGenSettingsSelectLetter,
         barrierDismissible: false,
         content: InputLetterDialog(),
         buttonColor: Theme.of(context).secondaryHeaderColor,
-        textCancel: R.buttonCancelText,
+        textCancel: StrRes.buttonCancelText,
         cancelTextColor: Theme.of(context).primaryColor,
-        textConfirm: R.buttonOkText,
+        textConfirm: StrRes.buttonOkText,
         confirmTextColor: Theme.of(context).accentColor,
         onConfirm: () => {
           _controller.confirmLetterSelection(item.index),

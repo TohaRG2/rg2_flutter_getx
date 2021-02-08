@@ -28,7 +28,7 @@ class InfoScreen extends StatelessWidget {
         return Scaffold(
             appBar: AppBar(
               title: Center(
-                child: Text(R.infoTitle,
+                child: Text(StrRes.infoTitle,
                     style: TextStyle(
                         color: Theme.of(context).textTheme.headline5.color)),
               ),
@@ -39,9 +39,9 @@ class InfoScreen extends StatelessWidget {
                 unselectedLabelColor:
                     Theme.of(context).textTheme.headline5.color.withAlpha(130),
                 tabs: [
-                  Tab(text: R.infoAboutTitle),
-                  Tab(text: R.infoThanksTitle),
-                  Tab(text: R.infoAdviceTitle),
+                  Tab(text: StrRes.infoAboutTitle),
+                  Tab(text: StrRes.infoThanksTitle),
+                  Tab(text: StrRes.infoAdviceTitle),
                 ],
               ),
             ),

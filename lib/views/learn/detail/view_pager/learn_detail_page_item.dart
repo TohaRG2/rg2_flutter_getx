@@ -42,7 +42,7 @@ class LearnDetailPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(R.commentPager,
+                          Text(StrRes.commentPager,
                             style: TextStyle(
                                 fontSize: 16
                             ),

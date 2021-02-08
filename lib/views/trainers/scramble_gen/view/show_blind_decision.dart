@@ -20,7 +20,7 @@ class ShowBlindDecision extends StatelessWidget {
       children: [
         Container(
             padding: const EdgeInsets.only(top: 10.0 ),
-            child: Text(R.scrambleGenBlindDecision)),
+            child: Text(StrRes.scrambleGenBlindDecision)),
         CheckboxListTile(
             contentPadding: const EdgeInsets.all(0.0),
             title: Text(blindDecision),

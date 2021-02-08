@@ -19,7 +19,7 @@ class TrainersScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Center(
-            child: Text(R.trainersTitle,
+            child: Text(StrRes.trainersTitle,
                 style: TextStyle(
                     color: Theme.of(context).textTheme.headline5.color)),
           ),
@@ -42,18 +42,18 @@ class TrainersScreen extends StatelessWidget {
 
   _onItemSelected (TrainerMenuItem item) {
     switch(item.id) {
-      case R.trainersScrambleGen:
+      case StrRes.trainersScrambleGen:
         print("Start Scramble Generator");
         Get.to(ScrambleGenView(title: item.title), transition: Transition.fadeIn);
         break;
-      case R.trainersTimer:
+      case StrRes.trainersTimer:
         print("Start Timer");
         Get.to(TimerView(), transition: Transition.fadeIn);
         break;
-      case R.trainersPll:
+      case StrRes.trainersPll:
         print("Start PLL trainer");
         break;
-      case R.trainersAzbuka:
+      case StrRes.trainersAzbuka:
         print("Start AZBUKA trainer");
         break;
       default:
@@ -68,16 +68,16 @@ class TrainersScreen extends StatelessWidget {
 
   _onSettingsSelected (TrainerMenuItem item) {
     switch(item.id) {
-      case R.trainersScrambleGen:
+      case StrRes.trainersScrambleGen:
         Get.to(ScrambleGenSettingsView(), transition: Transition.rightToLeft);
         break;
-      case R.trainersTimer:
+      case StrRes.trainersTimer:
         Get.to(SettingsTimerView(), transition: Transition.rightToLeft);
         break;
-      case R.trainersPll:
+      case StrRes.trainersPll:
         print("Settings PLL trainer");
         break;
-      case R.trainersAzbuka:
+      case StrRes.trainersAzbuka:
         print("Settings AZBUKA trainer");
         break;
       default:

@@ -162,7 +162,7 @@ class TimerView extends StatelessWidget {
                                 children: [
                                   Container(
                                     padding: const EdgeInsets.only(bottom: UIHelper.SpaceSmall),
-                                    child: Text(R.timerSaveResultText,
+                                    child: Text(StrRes.timerSaveResultText,
                                         style: Get.textTheme.headline6.copyWith(
                                           fontSize: 18,
                                           color: Colors.white,)
@@ -173,15 +173,15 @@ class TimerView extends StatelessWidget {
                                     children: [
                                        IconWithText(
                                          icon: Icons.delete_forever_rounded,
-                                         text: R.timerSaveResultDontSave,
+                                         text: StrRes.timerSaveResultDontSave,
                                          color: _settingsController.isIconsColored ? Colors.red : Colors.white,),
                                        IconWithText(
                                          icon: Icons.assignment_turned_in_rounded,
-                                         text: R.timerSaveResultWithoutComment,
+                                         text: StrRes.timerSaveResultWithoutComment,
                                          color: _settingsController.isIconsColored ? Colors.yellow : Colors.white,),
                                        IconWithText(
                                          icon: Icons.textsms_rounded,
-                                         text: R.timerSaveResultWithComment,
+                                         text: StrRes.timerSaveResultWithComment,
                                          color: _settingsController.isIconsColored ? Colors.green : Colors.white,),
                                     ],
                                     onPressed: (index) {
@@ -216,7 +216,7 @@ class TimerView extends StatelessWidget {
 
   _tryToSaveCurrentResultWithComment() {
     Get.defaultDialog(
-      title: R.timerEditResultComment,
+      title: StrRes.timerEditResultComment,
       buttonColor: Get.theme.secondaryHeaderColor,
       content: Container(
         child: Padding(
@@ -226,7 +226,7 @@ class TimerView extends StatelessWidget {
               TextField(
                 autofocus: true,
                 decoration: InputDecoration(
-                  hintText: R.timerEditResultHint,
+                  hintText: StrRes.timerEditResultHint,
                 ),
                 maxLines: 3,
                 controller: _textController,
@@ -235,9 +235,9 @@ class TimerView extends StatelessWidget {
           ),
         ),
       ),
-      textCancel: R.buttonCancelText,
+      textCancel: StrRes.buttonCancelText,
       cancelTextColor: Get.theme.primaryColor,
-      textConfirm: R.buttonOkText,
+      textConfirm: StrRes.buttonOkText,
       confirmTextColor: Get.theme.accentColor,
       onConfirm: () => {
         _controller.saveCurrentResultWithComment(_textController.text),
@@ -316,15 +316,15 @@ class TimerView extends StatelessWidget {
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(
       icon: Icon(Icons.arrow_back),
-      label: R.timerBottomBack,
+      label: StrRes.timerBottomBack,
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.restore_rounded),
-      label: R.timerBottomResults,
+      label: StrRes.timerBottomResults,
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.settings),
-      label: R.timerBottomSettings,
+      label: StrRes.timerBottomSettings,
     )
   ];
 

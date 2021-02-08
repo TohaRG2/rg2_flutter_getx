@@ -19,7 +19,7 @@ class SwipeSettings extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-                R.settingsSwipe,
+                StrRes.settingsSwipe,
                 style: Theme.of(context).textTheme.headline5,
             ),
             SizedBox(
@@ -28,7 +28,7 @@ class SwipeSettings extends StatelessWidget {
             SwitchListTile(
               contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
               title: Text(
-                R.settingsSwipeMenuText,
+                StrRes.settingsSwipeMenuText,
                 style: Theme.of(context).textTheme.headline6,
               ),
               value: _settings.isSwipeEnabled.value,

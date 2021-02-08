@@ -16,14 +16,14 @@ class ThemeSettings extends StatelessWidget {
           children: [
             /// Заголовок "Внешний вид:"
             Text(
-              R.appTheme,
+              StrRes.appTheme,
               style: Theme.of(context).textTheme.headline5,
             ),
             /// Свитч выбора темная или светлая схема
             SwitchListTile(
               contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
               title: Text(
-                R.darkTheme,
+                StrRes.darkTheme,
                 style: Theme.of(context).textTheme.headline6,
               ),
               value: _settings.isDarkThemeSelect.value,
@@ -43,7 +43,7 @@ class ThemeSettings extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        R.primaryColor,
+                        StrRes.primaryColor,
                         style: Theme.of(context).textTheme.headline6,
                       ),
                       CircleAvatar(
@@ -67,7 +67,7 @@ class ThemeSettings extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      R.accentColor,
+                      StrRes.accentColor,
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     CircleAvatar(
@@ -87,7 +87,7 @@ class ThemeSettings extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: UIHelper.SpaceSmall),
               child: Text(
-                R.textSize,
+                StrRes.textSize,
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),
