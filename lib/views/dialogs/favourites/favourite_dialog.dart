@@ -34,6 +34,7 @@ class FavouriteDialog extends StatelessWidget {
                         ? Center(
                             child: Text(
                             StrRes.nothingInFavourites,
+                            textAlign: TextAlign.center,
                             style: theme.textTheme.headline5,
                           ))
                         : FavouriteDialogList()),

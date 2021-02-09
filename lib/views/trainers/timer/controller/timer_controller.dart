@@ -21,7 +21,6 @@ class TimerController extends GetxController {
   void onInit() async {
     print("TimerController onInit");
     _showBars();
-    //var duration = await player.setAsset('metronom.mp3');
     super.onInit();
   }
 

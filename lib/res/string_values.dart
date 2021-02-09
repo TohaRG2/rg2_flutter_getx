@@ -90,5 +90,6 @@ class StrRes {
   static const timerEditResultComment = "Введите комментарий:";
   static const timerEditResultHint = "Например, был OLL скип";
   static const timerResultTitle = "Результаты:";
+  static const timerResultNothing = "Нет сохраненных результатов сборок";
 
 }
