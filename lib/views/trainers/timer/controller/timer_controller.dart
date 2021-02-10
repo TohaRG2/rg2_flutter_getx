@@ -330,6 +330,7 @@ class TimerController extends GetxController {
     var _scramble = _settingsController.showScramble ? scramble : "";
     var timeNote = TimeNoteItem(solvingTime, DateTime.now(), _scramble, comment);
     _repository.addTimeNoteItem(timeNote);
+    //TODO убрать чтение из базы
     var list = await _repository.getAllTimeNoteList();
     print(list);
   }

@@ -12,10 +12,9 @@ class SavedResultListForDialog extends StatelessWidget {
       print("Отображаем список из ${items.length} записей");
       return Container(
         child: ListView(
-          children: [
-            Text("aaa"),
-            Text("bbb")
-          ],
+          children: items.map((item) =>
+            Text("${item.solvingTime} + ${item.comment}")
+          ).toList(),
       ));
     });
   }
