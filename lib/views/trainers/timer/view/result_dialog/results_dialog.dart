@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/result_dialog_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/view/saved_result_list_for_dialog.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/view/result_dialog/saved_result_list_for_dialog.dart';
 
 class TimerResultsDialog extends StatelessWidget {
   final ResultDialogController _controller = Get.find();

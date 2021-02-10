@@ -307,7 +307,7 @@ class TimerController extends GetxController {
   resetTimer() {
     _timer.stop();
     //TODO Убрать очишение таблицы при вызове таймера
-    _repository.clearTimesTable();
+    //_repository.clearTimesTable();
     currentTime = _timer.getFormattedCurrentTime();
   }
 

@@ -367,7 +367,7 @@ packages:
     source: hosted
     version: "0.3.2"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -408,13 +408,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.10-nullsafety.1"
-  matrix4_transform:
-    dependency: "direct main"
-    description:
-      name: matrix4_transform
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.7"
   meta:
     dependency: transitive
     description:
@@ -601,7 +594,7 @@ packages:
       name: source_gen
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.10+1"
+    version: "0.9.10+2"
   source_span:
     dependency: transitive
     description:
