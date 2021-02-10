@@ -47,7 +47,7 @@ class TimerResultsDialog extends StatelessWidget {
         child: (_controller.timeNoteItems.length == 0)
             ? Center(
             child: Text(
-              StrRes.timerResultNothing,
+              StrRes.timerResultNothing,    // Нет сохраненных результатов сборок
               textAlign: TextAlign.center,
               style: Get.theme.textTheme.headline5,
             ))
