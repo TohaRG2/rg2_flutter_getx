@@ -78,7 +78,7 @@ class StrRes {
   static const timerSettingsTitle = "Настройки";
   static const timerDelayedStartText = "Удерживать 0,5 сек для старта";
   static const timerOneHandedText = "Управление таймером одной рукой";
-  static const timerIsIconColored = "Цветные икноки сохранения результата";
+  static const timerIsIconColored = "Цветные кнопки сохранения результата";
   static const timerMetronomText = "Метроном";
   static const timerMetronomFrequencyText = "Частота метронома уд/мин";
   static const timerShowScrambleText = "Отображать скрамбл";
