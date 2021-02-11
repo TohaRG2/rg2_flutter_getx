@@ -10,10 +10,8 @@ class ResultDialogController extends GetxController {
   List<TimeNoteItem> get timeNoteItems => _timeNoteItems;
 
   updateTimeNoteItems() async {
-    var list = await _repository.getAllTimeNoteList();
+    var list = await _repository.getAllTimeNoteList(orderBy: "solvingTime");
     _timeNoteItems.assignAll(list);
-    print("list - $list");
-
   }
 
 }

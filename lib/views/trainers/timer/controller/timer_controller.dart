@@ -4,9 +4,11 @@ import 'package:rg2_flutter_getx/controllers/repository.dart';
 import 'package:rg2_flutter_getx/database/entitys/time_note_item.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/model/timer.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_settings_controller.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 
 class TimerController extends GetxController {
   final TimerSettingsController _settingsController = Get.find();
+  final ScrambleGenController _genController = Get.find();
   final Repository _repository = Get.find();
   final assetsAudioPlayer = AssetsAudioPlayer();
   var sound = Audio("assets/sounds/metronom.mp3");
@@ -22,6 +24,7 @@ class TimerController extends GetxController {
     print("TimerController onInit");
     _showBars();
     super.onInit();
+    // _repository.clearTimesTable();
   }
 
   @override
@@ -38,11 +41,7 @@ class TimerController extends GetxController {
     _currentTime.value = value;
   }
 
-  final _scramble = "".obs;
-  String get scramble => _scramble.value;
-  set scramble(value) {
-    _scramble.value = value;
-  }
+  String get scramble => _genController.currentScramble;
 
   final _showTopBar = true.obs;
   bool get showTopBar => _showTopBar.value;
@@ -79,13 +78,6 @@ class TimerController extends GetxController {
   set rightIndicatorState(int value) {
     _rightIndicatorState.value = value;
   }
-
-  //TODO подумать на сколько нужно делать obs переменную?
-  // final _comment = "".obs;
-  // String get comment => _comment.value;
-  // set comment(value) {
-  //   _comment.value = value;
-  // }
 
   Timer _timer = Timer();
   TimerControllerState _state = TimerControllerState.stopped;
@@ -318,11 +310,13 @@ class TimerController extends GetxController {
   saveCurrentResult() async {
     showSaveResultBar = false;
     _saveCurrentResultToBase("");
+    generateNewScramble();
   }
 
   saveCurrentResultWithComment(String _comment) {
     showSaveResultBar = false;
     _saveCurrentResultToBase(_comment);
+    generateNewScramble();
   }
 
   _saveCurrentResultToBase(String comment) async {
@@ -330,11 +324,13 @@ class TimerController extends GetxController {
     var _scramble = _settingsController.showScramble ? scramble : "";
     var timeNote = TimeNoteItem(solvingTime, DateTime.now(), _scramble, comment);
     _repository.addTimeNoteItem(timeNote);
-    //TODO убрать чтение из базы
-    var list = await _repository.getAllTimeNoteList();
-    print(list);
+    print("$timeNote");
   }
-  
+
+  generateNewScramble() {
+    _genController.generateNewScramble();
+  }
+
 }
 
 /// Состояния контроллера таймера

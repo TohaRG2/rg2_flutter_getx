@@ -53,15 +53,27 @@ class TimerResultsDialog extends StatelessWidget {
             ))
             : SavedResultListForDialog()
       ),
+
+    /// Кнопки в нижней части экрана
     bottomNavigationBar: Row(
       children: [
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceMedium),
+          padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
           child: FlatButton(
             color: Get.theme.primaryColor,
             child: Text("Назад"),
             onPressed: () {
               Get.back();
+            },
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
+          child: FlatButton(
+            color: Get.theme.primaryColor,
+            child: Text("по дате"),
+            onPressed: () {
+
             },
           ),
         ),

@@ -15,4 +15,5 @@ class TimeNoteItem {
 
   @override
   String toString() => "uuid = $uuid, solvingTime = $solvingTime, dateTime = $dateTime, scramble = $scramble, comment = $comment\n";
+
 }

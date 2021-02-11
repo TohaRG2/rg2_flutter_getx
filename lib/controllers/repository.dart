@@ -84,8 +84,20 @@ class Repository extends GetxController {
 
   //------------------------------------------------
 
-  Future<List<TimeNoteItem>> getAllTimeNoteList() async {
-    return await _timesDao.getAllItems();
+  /// Получаем список отсортированных по одному из полей записей
+  Future<List<TimeNoteItem>> getAllTimeNoteList({String orderBy}) async {
+    var result = await _timesDao.getAllItems();
+    var orderColumn = orderBy ?? "SOLVINGTIME"; //если orderBy не NULL, иначе "SolvingTime"
+    // Делаем проверку
+    switch(orderColumn.toUpperCase()) {
+      case "UUID": orderColumn = "uuid"; result.sort((item1, item2) => item1.uuid.compareTo(item2.uuid)); break;
+      case "DATETIME": orderColumn = "dateTime"; result.sort((item1, item2) => item1.dateTime.compareTo(item2.dateTime)); break;
+      case "SCRAMBLE": orderColumn = "scramble"; result.sort((item1, item2) => item1.scramble.compareTo(item2.scramble)); break;
+      case "COMMENT": orderColumn = "comment"; result.sort((item1, item2) => item1.comment.compareTo(item2.comment)); break;
+      default: orderColumn = "solvingTime"; result.sort((item1, item2) => item1.solvingTime.compareTo(item2.solvingTime));
+    }
+    print("orderBy - $orderColumn");
+    return result;
   }
 
   Future<int> addTimeNoteItem(TimeNoteItem item) async {

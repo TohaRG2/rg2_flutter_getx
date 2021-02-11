@@ -10,7 +10,6 @@ class SavedResultListForDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       var items = _controller.timeNoteItems;
-      print("Отображаем список из ${items.length} записей");
       return Container(
         child: ListView(
           children: items.map((item) =>

@@ -4,22 +4,21 @@ import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_controlle
 import 'package:rg2_flutter_getx/views/trainers/timer/settings_timer_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/result_dialog/results_dialog.dart';
 
-class BottomMenuBar extends StatelessWidget {
-  BottomMenuBar({
+class TimerBottomMenuBar extends StatelessWidget {
+  TimerBottomMenuBar({
     Key key,
     @required List<BottomNavigationBarItem> bottomNavBarItem,
-  })  : _bottomNavBarItem = bottomNavBarItem,
-        super(key: key);
+  })  : _bottomNavBarItem = bottomNavBarItem, super(key: key);
 
   final List<BottomNavigationBarItem> _bottomNavBarItem;
   final TimerController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    var selectedColor = Theme.of(context).scaffoldBackgroundColor;
+    var selectedColor = Get.theme.scaffoldBackgroundColor;
     return BottomNavigationBar(
       items: _bottomNavBarItem,
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Get.theme.primaryColor,
       unselectedItemColor: selectedColor,
       selectedItemColor: selectedColor,
       type: BottomNavigationBarType.fixed,

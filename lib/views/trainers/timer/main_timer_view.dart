@@ -3,14 +3,13 @@ import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/view/bottom_menu_bar.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/view/timer_bottom_menu_bar.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/scramble_text_widget.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_settings_controller.dart';
 
 class TimerView extends StatelessWidget {
   final TimerController _controller = Get.find();
-  final ScrambleGenController _genController = Get.find();
+  // final ScrambleGenController _genController = Get.find();
   final TimerSettingsController _settingsController = Get.find();
   final _textController = TextEditingController();
 
@@ -51,7 +50,7 @@ class TimerView extends StatelessWidget {
   }
 
   _generateNewScrambleByTap() {
-    _genController.generateNewScramble();
+    _controller.generateNewScramble();
   }
 
   @override
@@ -76,7 +75,7 @@ class TimerView extends StatelessWidget {
                 width: Get.width,
                 height: _settingsController.scrambleBarHeight,
                 child: ScrambleTextWidget(
-                  text: _genController.currentScramble,
+                  text: _controller.scramble,
                   textRatio: _settingsController.scrambleTextRatio,
                   onTapCallBack: _generateNewScrambleByTap,
                 ),
@@ -307,8 +306,10 @@ class TimerView extends StatelessWidget {
           return Container(
             width: _width,
             color: _primaryColor,
-            child: BottomMenuBar(
-                key: _keyBottomNavBar, bottomNavBarItem: _bottomNavBarItems),
+            child: TimerBottomMenuBar(
+              key: _keyBottomNavBar,
+              bottomNavBarItem: _bottomNavBarItems
+            ),
           );
         }));
   }
