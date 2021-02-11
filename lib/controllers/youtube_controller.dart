@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:meta/meta.dart';
-
-import 'package:get/get.dart';
-import 'package:meta/meta.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MyYouTubeController extends GetxController {
 
@@ -18,12 +11,10 @@ class MyYouTubeController extends GetxController {
   int getPlayerState() => _playerState.value;
 
   final _playbackRate = (1.0).obs;
-
-  setPlaybackRate(double value) {
-    _playbackRate.value = value;
+  double get playbackRate => _playbackRate.value;
+  set playbackRate(double value) {
+    var rounded = (value * 100).round() / 100;
+    _playbackRate.value = rounded;
   }
-
-  double getPlaybackRate() => _playbackRate.value;
-
 
 }

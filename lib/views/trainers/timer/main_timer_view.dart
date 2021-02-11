@@ -113,7 +113,7 @@ class TimerView extends StatelessWidget {
                           /// Верхний контейнер в котором отображается время и индикаторы
                           GestureDetector(
                             onTap: () {
-                              _controller.onPauseTap();
+                              _controller.onTopPanelTap();
                             },
                             child: Container(
                               width: 300,
@@ -206,7 +206,7 @@ class TimerView extends StatelessWidget {
               ),
 
               /// Нижний навбар с кнопками (назад, результаты, настройки)
-              _bottomNavBar(_animationDuration, _width, _primaryColor),
+              _bottomNavBar(_animationDuration, _primaryColor),
             ])
           )
         ],
@@ -294,7 +294,7 @@ class TimerView extends StatelessWidget {
     );
   }
 
-  AnimatedPositioned _bottomNavBar(Duration _duration, double _width, Color _primaryColor) {
+  AnimatedPositioned _bottomNavBar(Duration _duration, Color _primaryColor) {
     return AnimatedPositioned(
         duration: _duration,
         bottom: _controller.showBottomBar ? 0 : -_controller.bottomBarHeight,
@@ -306,7 +306,7 @@ class TimerView extends StatelessWidget {
           });
         }, builder: (_) {
           return Container(
-            width: _width,
+            width: Get.width,
             color: _primaryColor,
             child: TimerBottomMenuBar(
               key: _keyBottomNavBar,

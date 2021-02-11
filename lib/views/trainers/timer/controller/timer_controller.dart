@@ -95,8 +95,9 @@ class TimerController extends GetxController {
 
   /// Обработчики нажатий на панельки таймера
 
-  onPauseTap() {
+  onTopPanelTap() {
     switch(_state) {
+      case TimerControllerState.stopped: _setDefaultTime(); break;
       case TimerControllerState.pause: _continueTimer(); break;
       case TimerControllerState.running: _pauseTimer(); break;
       default:
@@ -210,6 +211,10 @@ class TimerController extends GetxController {
     } else {
       _state = TimerControllerState.onePadPressedToStart;
     }
+  }
+
+  _setDefaultTime() {
+    currentTime = "00:00.00";
   }
 
   _startTimer() {

@@ -36,12 +36,13 @@ class YouTubeView extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
+                    Container(
                       padding: const EdgeInsets.all(8.0),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(_alg,
-                          style: Theme.of(context).textTheme.headline5.copyWith(color: Theme.of(context).accentColor),),
+                          style: Get.textTheme.headline5.copyWith(color: Get.theme.accentColor),
+                        ),
                       ),
                     ),
                     YoutubePlayer(
@@ -57,8 +58,8 @@ class YouTubeView extends StatelessWidget {
                           if (_youTubeController.value.playerState != _playerState) {
                             _playerState = _youTubeController.value.playerState;
                             if ((_playerState == PlayerState.playing) || (_playerState == PlayerState.cued)) {
-                              _youTubeController.setPlaybackRate(_controller.getPlaybackRate());
-                              if (_controller.getPlaybackRate() < 0.75) {
+                              _youTubeController.setPlaybackRate(_controller.playbackRate);
+                              if (_controller.playbackRate < 0.75) {
                                 _youTubeController.mute();
                               } else {
                                 _youTubeController.unMute();
@@ -74,60 +75,25 @@ class YouTubeView extends StatelessWidget {
                 ),
               ),
             )),
-            Row(
-              children: [
-                Flexible(
-                  child: RaisedButton(
-                    child: Text("0.25x"),
-                    onPressed: () {
-                      _youTubeController.setPlaybackRate(0.25);
-                      _controller.setPlaybackRate(0.25);
+            Material(
+              child: Obx(
+                () => Slider(
+                  value: _controller.playbackRate,
+                  min: 0.25,
+                  max: 1.75,
+                  divisions: 6,
+                  label: _controller.playbackRate.toString(),
+                  onChanged: (value) {
+                    _youTubeController.setPlaybackRate(value);
+                    _controller.playbackRate = value;
+                    if (value < 0.75) {
                       _youTubeController.mute();
-                    },
-                  ),
-                ),
-                Flexible(
-                  child: RaisedButton(
-                    child: Text("0.5x"),
-                    onPressed: () {
-                      _youTubeController.setPlaybackRate(0.5);
-                      _controller.setPlaybackRate(0.5);
-                      _youTubeController.mute();
-                    },
-                  ),
-                ),
-                Flexible(
-                  child: RaisedButton(
-                    child: Text("0.75x"),
-                    onPressed: () {
-                      _youTubeController.setPlaybackRate(0.75);
-                      _controller.setPlaybackRate(0.75);
+                    } else {
                       _youTubeController.unMute();
-                    },
-                  ),
+                    }
+                  }
                 ),
-                Flexible(
-                  child: RaisedButton(
-                    child: Text("1x"),
-                    onPressed: () {
-                      _youTubeController.setPlaybackRate(1.0);
-                      _controller.setPlaybackRate(1.0);
-                      _youTubeController.unMute();
-                    },
-                  ),
-                ),
-                Flexible(
-                  child: RaisedButton(
-                    child: Text("1.5x"),
-                    onPressed: () {
-                      _youTubeController.setPlaybackRate(1.5);
-                      _controller.setPlaybackRate(1.5);
-                      _youTubeController.unMute();
-                    },
-                  ),
-                ),
-
-              ],
+              ),
             ),
             playerNavigation(_youTubeController, _controller),
           ],
@@ -138,65 +104,66 @@ class YouTubeView extends StatelessWidget {
 
   Center playerNavigation(YoutubePlayerController _youTubeController, MyYouTubeController _controller) {
     return Center(
-            child: Row(
-              children: [
-                Flexible(
-                  child: RaisedButton(
-                    child: Icon(Icons.arrow_back_rounded),
-                    onPressed: () {
-                      Get.back();
-                    },
-                  ),
-                ),
-                Flexible(
-                  child: RaisedButton(
-                    child: Icon(Icons.skip_previous_rounded),
-                    onPressed: () {
-                      _youTubeController
-                          .seekTo(Duration(seconds: _tryParseTime(_time)));
-                    },
-                  ),
-                ),
-                Flexible(
-                  child: RaisedButton(
-                    child: Icon(Icons.fast_rewind_rounded),
-                    onPressed: () {
-                      var backTo =
-                          _youTubeController.value.position.inSeconds - 10;
-                      _youTubeController.seekTo(Duration(seconds: backTo));
-                    },
-                  ),
-                ),
-                 Obx(
-                    () => Flexible(
-                      child: RaisedButton(
-                        child: (_controller.getPlayerState() == 4) ? Icon(Icons.play_arrow_rounded) : Icon(Icons.pause_rounded),
-                        onPressed: () {
-                          if (_controller.getPlayerState() == PlayerState.paused.index) {
-                            _youTubeController.play();
-                          } else {
-                            _youTubeController.pause();
-                          }
-                        },
-                      ),
-                    ),
-                 ),
-                Flexible(
-                  child: RaisedButton(
-                    child: Icon(Icons.fast_forward_rounded),
-                    onPressed: () {
-                      var forwardTo =
-                          _youTubeController.value.position.inSeconds + 10;
-                      _youTubeController.seekTo(Duration(seconds: forwardTo));
-                    },
-                  ),
-                ),
-              ],
+      child: Row(
+        children: [
+          Flexible(
+            child: RaisedButton(
+              child: Icon(Icons.arrow_back_rounded),
+              onPressed: () {
+                Get.back();
+              },
             ),
-          );
+          ),
+          SizedBox(width: 4,),
+          Flexible(
+            child: RaisedButton(
+              child: Icon(Icons.skip_previous_rounded),
+              onPressed: () {
+                _youTubeController.seekTo(Duration(seconds: _tryParseTime(_time)));
+              },
+            ),
+          ),
+          SizedBox(width: 4,),
+          Flexible(
+            child: RaisedButton(
+              child: Icon(Icons.fast_rewind_rounded),
+              onPressed: () {
+                var backTo = _youTubeController.value.position.inSeconds - 10;
+                _youTubeController.seekTo(Duration(seconds: backTo));
+              },
+            ),
+          ),
+          SizedBox(width: 4,),
+          Obx(
+            () => Flexible(
+              child: RaisedButton(
+                child: (_controller.getPlayerState() == 4) ? Icon(Icons.play_arrow_rounded) : Icon(Icons.pause_rounded),
+                onPressed: () {
+                  if (_controller.getPlayerState() == PlayerState.paused.index) {
+                    _youTubeController.play();
+                  } else {
+                    _youTubeController.pause();
+                  }
+                },
+              ),
+            ),
+          ),
+          SizedBox(width: 4,),
+          Flexible(
+            child: RaisedButton(
+              child: Icon(Icons.fast_forward_rounded),
+              onPressed: () {
+                var forwardTo = _youTubeController.value.position.inSeconds + 10;
+                _youTubeController.seekTo(Duration(seconds: forwardTo));
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
-  //преобразовываем строку вида 1:34 в секунды
+  //преобразовываем строку вида 1:34 в секунды (94)
   int _tryParseTime(String stTime) {
     DateTime dt;
     var format = DateFormat('m:s');
