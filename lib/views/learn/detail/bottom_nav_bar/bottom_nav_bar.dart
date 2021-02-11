@@ -16,36 +16,32 @@ class BottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = Get.width;
     final iconColor = Theme.of(context).scaffoldBackgroundColor;
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      child: Container(
-        width: width,
-        height: 70,
-        child: Stack(
-          overflow: Overflow.visible,
-          children: [
-            // Подложка
-            CustomPaint(
-              size: Size(width, 70),
-              painter: BottomNavBarPainter(Theme.of(context).primaryColor),
-            ),
-            // FAB
-            Center(
-              heightFactor: 0.6,
-              child: FloatingActionButton(
-                  backgroundColor: Theme.of(context).accentColor,
-                  foregroundColor: iconColor,
-                  child: Icon(Icons.repeat),
-                  elevation: 0.1,
-                  onPressed: () {
-                    Get.dialog(AzbukaDialog(_controller.obsPhase.value));
-                  }),
-            ),
-            // Кнопки на подложке
-            ButtonsContainer(width: width, iconColor: iconColor)
-          ],
-        ),
+    return Container(
+      width: width,
+      height: 70,
+      child: Stack(
+        overflow: Overflow.visible,
+        children: [
+          /// Подложка
+          CustomPaint(
+            size: Size(width, 70),
+            painter: BottomNavBarPainter(Theme.of(context).primaryColor),
+          ),
+          /// Кнопки на подложке
+          ButtonsContainer(width: width, iconColor: iconColor),
+          /// FAB
+          Center(
+            heightFactor: 0.6,
+            child: FloatingActionButton(
+                backgroundColor: Theme.of(context).accentColor,
+                foregroundColor: iconColor,
+                child: Icon(Icons.repeat),
+                elevation: 0.1,
+                onPressed: () {
+                  Get.dialog(AzbukaDialog(_controller.obsPhase));
+                }),
+          )
+        ],
       ),
     );
   }

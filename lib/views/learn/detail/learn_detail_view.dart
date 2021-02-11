@@ -8,6 +8,7 @@ import 'view_pager/learn_detail_view_pager.dart';
 
 class LearnDetailView extends StatelessWidget {
   final LearnDetailController _controller = Get.find();
+  final _duration = Duration(milliseconds: 300);
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +25,13 @@ class LearnDetailView extends StatelessWidget {
               controller: _scrollController,
               children: items.map((listItem) =>
                 DrawerMenuItem(
-                      item: listItem,
-                      onItemSelected: (selectedItem) {
-                        print("DrawerPressed on ${selectedItem.title}");
-                        _controller.changeCurrentPageByItem(selectedItem);
-                        Get.back();
-                      },
-                    )
+                  item: listItem,
+                  onItemSelected: (selectedItem) {
+                    print("DrawerPressed on ${selectedItem.title}");
+                    _controller.changeCurrentPageByItem(selectedItem);
+                    Get.back();
+                  },
+                )
               ).toList(),
             );
           }),
@@ -41,7 +42,13 @@ class LearnDetailView extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             LearnDetailViewPager(),
-            BottomNavBar(),
+            Obx(() =>
+              AnimatedPositioned(
+                duration: _duration,
+                bottom: _controller.isBottomBarShowing ? 0 : -80,
+                child: BottomNavBar(),
+              ),
+            ),
           ],
         ));
   }

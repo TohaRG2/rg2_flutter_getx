@@ -24,7 +24,7 @@ class LearnDetailViewPager extends StatelessWidget {
           }
         });
         return Obx(() {
-          tabController.index = _controller.curPageNumberObs.value;
+          tabController.index = _controller.curPageNumber;
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,

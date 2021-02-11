@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/learn/detail/view_pager/my_html_view.dart';
@@ -27,12 +28,22 @@ class LearnDetailPage extends StatelessWidget {
     bool showYouTubeVideo =
         (_controller.currentItems[_curPageNumber].url != "") &&
             (_settingsController.internetUsage.value != 3);
+    ScrollController _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      var isScrollDirectionReverse = _scrollController.position.userScrollDirection == ScrollDirection.forward;
+      if (_controller.isBottomBarShowing != isScrollDirectionReverse) {
+        _controller.isBottomBarShowing = isScrollDirectionReverse;
+      }
+    });
+    //_scrollController.position.userScrollDirection
+
     return Column(
       children: <Widget>[
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: SingleChildScrollView(
+              controller: _scrollController,
               child: Column(
                 children: [
                   Header(curPageNumber: _curPageNumber),

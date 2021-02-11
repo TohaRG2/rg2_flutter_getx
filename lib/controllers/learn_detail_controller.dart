@@ -12,18 +12,29 @@ import 'learn_controller.dart';
 class LearnDetailController extends GetxController {
   Repository _repo = Get.find();
   LearnController _learnController = Get.find();
-  SettingsController _settings = Get.find();
 
   RxInt curPageNumberObs = 0.obs;
   int get curPageNumber => curPageNumberObs.value;
 
+  RxBool _isBottomBarShowing = true.obs;
+  bool get isBottomBarShowing => _isBottomBarShowing.value;
+  set isBottomBarShowing(value) {
+    _isBottomBarShowing.value = value;
+  }
 
-  RxString obsPhase = "".obs;
+  RxString _obsPhase = "".obs;
+  String get obsPhase => _obsPhase.value;
+  set obsPhase(value) {
+    _obsPhase.value = value;
+  }
+
+
+  //TODO Переделать на _currentItem и сделать get/set
   Rx<MainDBItem> currentItem = MainDBItem(id: 0, phase: "").obs;
   RxList<MainDBItem> currentItems = <MainDBItem>[].obs;
 
   Future<void> loadPages(String phase, int id) async {
-    obsPhase.value = phase;
+    obsPhase = phase;
     var list = await _repo.getPhasePages(phase);
     currentItems.assignAll(list);
     changeCurrentPageNumberTo(_getNumFromId(id));
