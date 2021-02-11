@@ -7,7 +7,7 @@ import 'package:rg2_flutter_getx/controllers/trainers_controller.dart';
 import 'package:rg2_flutter_getx/controllers/youtube_controller.dart';
 import 'package:rg2_flutter_getx/views/dialogs/favourites/favourite_dialog.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/controller/result_dialog_controller.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/controller/result_view_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_settings_controller.dart';
 import 'controllers/db_controller.dart';
 import 'controllers/info_controller.dart';
@@ -107,6 +107,6 @@ class RG2App extends StatelessWidget {
     Get.put(ScrambleGenController());
     Get.put(TimerSettingsController());
     Get.put(TimerController());
-    Get.put(ResultDialogController());
+    Get.put(ResultViewController());
   }
 }

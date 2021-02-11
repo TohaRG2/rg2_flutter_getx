@@ -32,6 +32,7 @@ class Const {
   static const METRONOM_FREQUENCY = 'metronomFrequency';
   static const SHOW_SCRAMBLE = 'showScramble';
   static const SCRAMBLE_TEXT_RATIO = 'scrambleTextSize';
-  
+  static const RESULT_ORDER_BY = 'resultOrderBy';
+
   
 }

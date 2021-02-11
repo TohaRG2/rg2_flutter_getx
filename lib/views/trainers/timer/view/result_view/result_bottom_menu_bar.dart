@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/settings_timer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/view/result_view/results_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/controller/result_view_controller.dart';
 
-class TimerBottomMenuBar extends StatelessWidget {
-  TimerBottomMenuBar({Key key,}) : super(key: key);
+class ResultBottomMenuBar extends StatelessWidget {
+  ResultBottomMenuBar({Key key,})  :  super(key: key);
+
+  final ResultViewController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +25,13 @@ class TimerBottomMenuBar extends StatelessWidget {
             break;
         // Нажата кнопка "Результаты"
           case 1:
-            //_controller.generateNewScramble();
-            Get.to(TimerResultsView(), transition: Transition.rightToLeft);
-            print("Нажали результаты");
+            _controller.sortTimeNoteItemsByDate();
+            print("Нажали сортировка по дате");
             break;
         // Нажата кнопка "Настройки"
           case 2:
-            Get.to(SettingsTimerView(), transition: Transition.rightToLeft);
-            print("Нажали настройки");
+            _controller.sortTimeNoteItemsBySolvingTime();
+            print("Нажали сортировка по результатам");
             break;
           default:
             print("WARNING!!! selected bottom item - $tappedItemIndex");
@@ -44,17 +44,16 @@ class TimerBottomMenuBar extends StatelessWidget {
   final List<BottomNavigationBarItem> _bottomNavBarItems = [
     BottomNavigationBarItem(
       icon: Icon(Icons.arrow_back),
-      label: StrRes.timerBottomBack,
+      label: StrRes.timerResultBottomBack,
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.restore_rounded),
-      label: StrRes.timerBottomResults,
+      icon: Icon(Icons.date_range_rounded),
+      label: StrRes.timerResultBottomSortByDate,
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.settings),
-      label: StrRes.timerBottomSettings,
+      icon: Icon(Icons.timer_rounded),
+      label: StrRes.timerResultBottomSortBySolvingTime,
     )
   ];
-
 
 }

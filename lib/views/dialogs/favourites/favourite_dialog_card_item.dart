@@ -18,8 +18,7 @@ class FavouriteDialogCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-    final textTheme = theme.textTheme;
+    final textTheme = Get.textTheme;
     final _imagePath = _learnController.getAssetFilePath(_item.icon, _item.phase);
     final List<Widget> actions = [
       SlideAction(
@@ -74,7 +73,7 @@ class FavouriteDialogCardItem extends StatelessWidget {
                       _item.title,
                       softWrap: true,
                       maxLines: 3,
-                      style: theme.textTheme.headline6.copyWith(fontSize: 18),
+                      style: Get.textTheme.headline6.copyWith(fontSize: 18),
                     ),
                   ),
                   const Handle(

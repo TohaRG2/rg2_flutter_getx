@@ -89,7 +89,13 @@ class StrRes {
   static const timerSaveResultWithComment = "+ коммент";
   static const timerEditResultComment = "Введите комментарий:";
   static const timerEditResultHint = "Например, был OLL скип";
+
   static const timerResultTitle = "Результаты:";
   static const timerResultNothing = "Нет сохраненных результатов сборок";
-
+  static const timerResultItemScramble= "Скрамбл: ";
+  static const timerResultItemComment= "Коммент: ";
+  static const timerResultBottomBack = "Назад";
+  static const timerResultBottomSortByDate = "Сорт.по дате";
+  static const timerResultBottomSortBySolvingTime = "Сорт.по времени";
+  static const timerResultEditItemTitle = "Комментарий:";
 }

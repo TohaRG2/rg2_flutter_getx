@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_controller.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/view/icon_with_text_widget.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/timer_bottom_menu_bar.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/scramble_text_widget.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_settings_controller.dart';
@@ -92,7 +93,7 @@ class TimerView extends StatelessWidget {
                     children: [
                       /// Выводим две плашки для правой и левой руки, которые срабатывают только справа
                       /// и слева от счетчика времени, т.к. ниже перекрываются другими плашками
-                      twoMainPad(),
+                      _twoMainPad(),
 
                       /// Перекрываем однорукой плашкой, если выбран такой режим
                       Visibility(
@@ -168,17 +169,17 @@ class TimerView extends StatelessWidget {
                                     ),
                                   ),
                                   ToggleButtons(
-                                    isSelected: [false,false,false],
+                                    isSelected: [false, false, false],
                                     children: [
-                                       IconWithText(
+                                      IconWithTextWidget(
                                          icon: Icons.delete_forever_rounded,
                                          text: StrRes.timerSaveResultDontSave,
                                          color: _settingsController.isIconsColored ? Colors.red : Colors.white,),
-                                       IconWithText(
+                                      IconWithTextWidget(
                                          icon: Icons.assignment_turned_in_rounded,
                                          text: StrRes.timerSaveResultWithoutComment,
                                          color: _settingsController.isIconsColored ? Colors.yellow : Colors.white,),
-                                       IconWithText(
+                                      IconWithTextWidget(
                                          icon: Icons.textsms_rounded,
                                          text: StrRes.timerSaveResultWithComment,
                                          color: _settingsController.isIconsColored ? Colors.green : Colors.white,),
@@ -205,7 +206,7 @@ class TimerView extends StatelessWidget {
               ),
 
               /// Нижний навбар с кнопками (назад, результаты, настройки)
-              bottomNavBar(_animationDuration, _width, _primaryColor),
+              _bottomNavBar(_animationDuration, _width, _primaryColor),
             ])
           )
         ],
@@ -216,7 +217,6 @@ class TimerView extends StatelessWidget {
   _tryToSaveCurrentResultWithComment() {
     Get.defaultDialog(
       title: StrRes.timerEditResultComment,
-      buttonColor: Get.theme.secondaryHeaderColor,
       content: Container(
         child: Padding(
           padding: const EdgeInsets.all(UIHelper.SpaceMedium),
@@ -234,6 +234,8 @@ class TimerView extends StatelessWidget {
           ),
         ),
       ),
+      /// Кнопки
+      buttonColor: Get.theme.secondaryHeaderColor,
       textCancel: StrRes.buttonCancelText,
       cancelTextColor: Get.theme.primaryColor,
       textConfirm: StrRes.buttonOkText,
@@ -247,7 +249,7 @@ class TimerView extends StatelessWidget {
 
   }
 
-  Row twoMainPad() {
+  Row _twoMainPad() {
     return Row(
       children: [
         Expanded(
@@ -292,7 +294,7 @@ class TimerView extends StatelessWidget {
     );
   }
 
-  AnimatedPositioned bottomNavBar(Duration _duration, double _width, Color _primaryColor) {
+  AnimatedPositioned _bottomNavBar(Duration _duration, double _width, Color _primaryColor) {
     return AnimatedPositioned(
         duration: _duration,
         bottom: _controller.showBottomBar ? 0 : -_controller.bottomBarHeight,
@@ -308,26 +310,10 @@ class TimerView extends StatelessWidget {
             color: _primaryColor,
             child: TimerBottomMenuBar(
               key: _keyBottomNavBar,
-              bottomNavBarItem: _bottomNavBarItems
             ),
           );
         }));
   }
-
-  final List<BottomNavigationBarItem> _bottomNavBarItems = [
-    BottomNavigationBarItem(
-      icon: Icon(Icons.arrow_back),
-      label: StrRes.timerBottomBack,
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.restore_rounded),
-      label: StrRes.timerBottomResults,
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.settings),
-      label: StrRes.timerBottomSettings,
-    )
-  ];
 
 }
 
@@ -389,39 +375,5 @@ class TwoMainPadsWidget extends StatelessWidget {
   }
 }
 
-class IconWithText extends StatelessWidget {
-  IconWithText({
-    @required String text,
-    @required IconData icon,
-    Color color,
-    Key key,
-  }) : _text = text, _icon = icon, _color = color, super(key: key);
 
-  final String _text;
-  final IconData _icon;
-  final Color _color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(8.0),
-            child: Icon(
-              _icon,
-              color: _color,
-              size: 40.0,)),
-          Text(_text,
-            style: Get.textTheme.headline6.copyWith(
-              fontSize: 14,
-              color: _color,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
 

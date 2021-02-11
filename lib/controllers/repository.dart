@@ -1,3 +1,4 @@
+import 'package:csslib/parser.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/database/daos/main_dao.dart';
 import 'package:rg2_flutter_getx/database/daos/moves_dao.dart';
@@ -100,6 +101,10 @@ class Repository extends GetxController {
     return result;
   }
 
+  Future<int> updateTimeNoteItem(TimeNoteItem item) async {
+    return await _timesDao.updateItem(item);
+  }
+
   Future<int> addTimeNoteItem(TimeNoteItem item) async {
     return await _timesDao.insertItem(item);
   }
@@ -111,6 +116,6 @@ class Repository extends GetxController {
   void clearTimesTable() async {
     return await _timesDao.clearTable();
   }
-  
-  
+
+
 }
