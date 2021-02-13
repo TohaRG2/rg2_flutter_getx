@@ -3,13 +3,13 @@ import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/trainers_controller.dart';
 import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/main_scramble_gen_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/main_timer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/settings_timer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/trainer_view_menu_item.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/main_scramble_gen_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/view/main_timer_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/view/settings_timer_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/trainers_view/trainer_view_menu_item.dart';
 
-import 'help/help_view.dart';
-import 'scramble_gen/settings_scramble_gen_view.dart';
+import '../help/help_view.dart';
+import '../scramble_gen/view/settings_scramble_gen_view.dart';
 
 class TrainersScreen extends StatelessWidget {
   final TrainersController _controller = Get.find();

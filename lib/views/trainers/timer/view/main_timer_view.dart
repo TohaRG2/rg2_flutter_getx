@@ -296,23 +296,23 @@ class TimerView extends StatelessWidget {
 
   AnimatedPositioned _bottomNavBar(Duration _duration, Color _primaryColor) {
     return AnimatedPositioned(
-        duration: _duration,
-        bottom: _controller.showBottomBar ? 0 : -_controller.bottomBarHeight,
-        child: GetBuilder<TimerController>(initState: (_) {
-          // Вот таким образом вызываем метод, который выполнится после отрисовки
-          // виджета и обновит высоту нижней панели в контроллере, а заодно и перериует виджет
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            _controller.bottomBarHeight = _getBottomBarHeight();
-          });
-        }, builder: (_) {
-          return Container(
-            width: Get.width,
-            color: _primaryColor,
-            child: TimerBottomMenuBar(
-              key: _keyBottomNavBar,
-            ),
-          );
-        }));
+      duration: _duration,
+      bottom: _controller.showBottomBar ? 0 : -_controller.bottomBarHeight,
+      child: GetBuilder<TimerController>(initState: (_) {
+        // Вот таким образом вызываем метод, который выполнится после отрисовки
+        // виджета и обновит высоту нижней панели в контроллере, а заодно и перериует виджет
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _controller.bottomBarHeight = _getBottomBarHeight();
+        });
+      }, builder: (_) {
+        return Container(
+          width: Get.width,
+          color: _primaryColor,
+          child: TimerBottomMenuBar(
+            key: _keyBottomNavBar,
+          ),
+        );
+      }));
   }
 
 }

@@ -7,7 +7,7 @@ import 'package:rg2_flutter_getx/views/learn/learn_menu_screen.dart';
 import 'package:rg2_flutter_getx/views/settings/settings_screen.dart';
 
 import 'bottomNavBarItems.dart';
-import 'trainers/trainers_screen.dart';
+import 'trainers/trainers_view/trainers_screen.dart';
 
 class MainViewWithBottomBar extends StatelessWidget {
   final SettingsController _settings = Get.find();

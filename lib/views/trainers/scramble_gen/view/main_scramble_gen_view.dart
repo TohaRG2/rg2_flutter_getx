@@ -5,10 +5,10 @@ import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/blind_cube_support_arrays.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/show_scramble_text.dart';
 
-import 'view/bottom_menu_bar.dart';
-import 'view/melting_checkboxes.dart';
-import 'view/scramble_length_selection.dart';
-import 'view/show_blind_decision.dart';
+import 'bottom_menu_bar.dart';
+import 'melting_checkboxes.dart';
+import 'scramble_length_selection.dart';
+import 'show_blind_decision.dart';
 
 
 class ScrambleGenView extends StatelessWidget {

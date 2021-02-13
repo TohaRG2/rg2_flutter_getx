@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/settings_timer_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/timer/view/settings_timer_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/result_view/results_view.dart';
 
 class TimerBottomMenuBar extends StatelessWidget {
