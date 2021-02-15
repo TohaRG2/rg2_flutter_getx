@@ -74,25 +74,10 @@ class ScrambleGenView extends StatelessWidget {
             ),
           );
         }),
-        bottomNavigationBar:
-        BottomMenuBar(bottomNavBarItem: _bottomNavBarItems)
+        bottomNavigationBar: BottomMenuBar()
     );
   }
 
-  final List<BottomNavigationBarItem> _bottomNavBarItems = [
-    BottomNavigationBarItem(
-      icon: Icon(Icons.arrow_back),
-      label: StrRes.scrambleGenBottomBack,
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.autorenew_rounded),
-      label: StrRes.scrambleGenBottomGenerate,
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.settings),
-      label: StrRes.scrambleGenBottomSettings,
-    )
-  ];
 }
 
 

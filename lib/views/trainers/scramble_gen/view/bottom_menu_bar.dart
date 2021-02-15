@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/settings_scramble_gen_view.dart';
 
 class BottomMenuBar extends StatelessWidget {
-  BottomMenuBar({
-    Key key,
-    @required List<BottomNavigationBarItem> bottomNavBarItem,
-  })  : _bottomNavBarItem = bottomNavBarItem,
-        super(key: key);
+  BottomMenuBar({Key key,})  :  super(key: key);
 
-  final List<BottomNavigationBarItem> _bottomNavBarItem;
   final ScrambleGenController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     var selectedColor = Theme.of(context).scaffoldBackgroundColor;
     return BottomNavigationBar(
-      items: _bottomNavBarItem,
+      items: _bottomNavBarItems,
       backgroundColor: Theme.of(context).primaryColor,
       unselectedItemColor: selectedColor,
       selectedItemColor: selectedColor,
@@ -44,4 +40,19 @@ class BottomMenuBar extends StatelessWidget {
       },
     );
   }
+
+  final List<BottomNavigationBarItem> _bottomNavBarItems = [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.arrow_back),
+      label: StrRes.scrambleGenBottomBack,
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.autorenew_rounded),
+      label: StrRes.scrambleGenBottomGenerate,
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.settings),
+      label: StrRes.scrambleGenBottomSettings,
+    )
+  ];
 }
