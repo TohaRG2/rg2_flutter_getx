@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'dart:math';
+
+import 'package:rg2_flutter_getx/views/trainers/pll/model/quiz_variant.dart';
+
 
 class QuizGame {
   GameState _state = GameState.INIT;
 
-  var correctAnswer = 0;
+  var _correctAnswer = 0;
 
   /// Время для ответа на вопрос в секундах (от 0 до 30). Если 0, значит время отключено
   var _timeForAnswer = 6.obs;
@@ -27,13 +31,14 @@ class QuizGame {
   }
 
   /// Список возможных вариантов
-  var answersList = List<String>();
+  var _answersList = List<QuizVariant>();
 
   /// Счетчик правильных ответов
   var _rightAnswerCount = 0;
   /// Счетчик неправильных ответов
   var _wrongAnswerCount = 0;
 
+  /// Callback вызываемый, если закончилось время на ответ
   Function() onTimeIsOver;
 
   /// Сброс счетчико ответов
@@ -42,17 +47,19 @@ class QuizGame {
     _wrongAnswerCount = 0;
   }
 
-  /// Старт игры, возвращает номер из списка вариантов
-  int startGame() {
-    // выбираем вариант из списка
-    var selectedAnswer = new Random().nextInt(answersList.length);
+  /// Выбор вопроса. Возвращает номер из списка вариантов и запускает при необходимости таймер
+  int nextQuestion() {
+    // выбираем вариант из списка тех, которые помечены, как возможные для ответа
+    var availableAnswers = _answersList.where((variant) => variant.isSelectable).toList();
+    var rndAnswerNumber = Random().nextInt(availableAnswers.length);
+    _correctAnswer = availableAnswers[rndAnswerNumber].id;
     // устанавливаем время начала ответа на вопрос
     _currentVariantStartAnswerTime = DateTime.now();
+    _state = GameState.WAIT_ANSWER;
     if (timeForAnswer > 0) {
       startTimer();
     }
-    _state = GameState.INIT;
-    return selectedAnswer;
+    return _correctAnswer;
   }
 
   startTimer() async {
@@ -67,12 +74,48 @@ class QuizGame {
       await Future.delayed(Duration(milliseconds: 16), () {});
       now  = DateTime.now();
     }
+    if (now.isAfter(endAnswerTime) || now.isAtSameMomentAs(endAnswerTime)) {
+      onTimeIsOver();
+    }
+  }
+
+  /// Вход: Count - количество вариантов
+  /// Выход: Список из Count элементов, и номер правильного ответа
+  List<QuizVariant> getListOfVariants(int count) {
+    // создаем список из фиксированного кол-ва элементов
+    var tmpList = _answersList.toList(growable: false);
+
+    // перемешиваем массив ответов без правильного и ставим правильный ответ в
+    // случайную позицию в пределах count
+    var correctVariant = _answersList[_correctAnswer];
+    tmpList.removeAt(_correctAnswer);
+    tmpList.shuffle();
+    tmpList.add(correctVariant);
+
 
   }
 
+  /// Нормализируем список правильных ответов (убираем признак выбранного ответа и переопределяем номера)
+  _normalizeAnswersList() {
+    _answersList.asMap().forEach((index, variant) {
+      _answersList[index].id = index;
+      _answersList[index].isCorrectAnswer = false;
+    });
+  }
 
-  /// Конструктор. На входе, список возможных вариантов,
-  QuizGame({List<String> variants, });
+  /// Конструктор. На входе:
+  /// 1 .список возможных вариантов,
+  /// 2. коллбэк вызываемый, когда заканчивается время на ответ,
+  /// 3. время в секундах на ответ
+  QuizGame({
+    @required List<QuizVariant> answersList,
+    this.onTimeIsOver,
+    int timeForAnswerInSec,
+  }) {
+    this.timeForAnswer = timeForAnswerInSec;
+    this._answersList = answersList;
+    _normalizeAnswersList();
+  }
 }
 
 enum GameState {

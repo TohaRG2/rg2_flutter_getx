@@ -7,6 +7,8 @@ class PllTrainerMainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Text("PLL Trainer"),
+    );
   }
 }
