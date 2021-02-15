@@ -16,10 +16,12 @@ class QuizGame {
       _timeForAnswer.value = 0;
     }
   }
+  /// Время начала ответа на вопрос
+  DateTime _currentVariantStartAnswerTime = DateTime.now();
 
   /// Прогресс в %, сколько осталось до конца ответа
-  var _timerProgress = 100.obs;
-  int get timerProgress => _timerProgress.value;
+  var _timerProgress = 100.0.obs;
+  double get timerProgress => _timerProgress.value;
   set timerProgress(value){
     _timerProgress.value = value;
   }
@@ -32,6 +34,7 @@ class QuizGame {
   /// Счетчик неправильных ответов
   var _wrongAnswerCount = 0;
 
+  Function() onTimeIsOver;
 
   /// Сброс счетчико ответов
   resetCounts() {
@@ -41,7 +44,10 @@ class QuizGame {
 
   /// Старт игры, возвращает номер из списка вариантов
   int startGame() {
+    // выбираем вариант из списка
     var selectedAnswer = new Random().nextInt(answersList.length);
+    // устанавливаем время начала ответа на вопрос
+    _currentVariantStartAnswerTime = DateTime.now();
     if (timeForAnswer > 0) {
       startTimer();
     }
@@ -49,7 +55,18 @@ class QuizGame {
     return selectedAnswer;
   }
 
-  startTimer() {
+  startTimer() async {
+    var duration = Duration(seconds: timeForAnswer);
+    var endAnswerTime = _currentVariantStartAnswerTime.add(duration);
+    var now  = DateTime.now();
+    while (_state == GameState.WAIT_ANSWER && now.isBefore(endAnswerTime)) {
+      // остаток в милисекундах
+      var remains = endAnswerTime.difference(now).inMilliseconds;
+      timerProgress = remains / (duration.inMilliseconds / 100);
+      // обновляем с задержкой 16 мс, т.е. примерно 60 раз в секунду
+      await Future.delayed(Duration(milliseconds: 16), () {});
+      now  = DateTime.now();
+    }
 
   }
 
