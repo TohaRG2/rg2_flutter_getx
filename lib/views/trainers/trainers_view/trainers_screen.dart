@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/trainers_controller.dart';
 import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/view/pll_trainer_main_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/pll/view/main_pll_trainer_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/pll/view/settings_pll_trainer_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/main_scramble_gen_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/main_timer_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/settings_timer_view.dart';
@@ -45,15 +46,15 @@ class TrainersScreen extends StatelessWidget {
     switch(item.id) {
       case StrRes.trainersScrambleGen:
         print("Start Scramble Generator");
-        Get.to(ScrambleGenView(title: item.title), transition: Transition.fadeIn);
+        Get.to(() => ScrambleGenView(title: item.title), transition: Transition.fadeIn);
         break;
       case StrRes.trainersTimer:
         print("Start Timer");
-        Get.to(TimerView(), transition: Transition.fadeIn);
+        Get.to(() => TimerView(), transition: Transition.fadeIn);
         break;
       case StrRes.trainersPll:
         print("Start PLL trainer");
-        Get.to(PllTrainerMainView(), transition: Transition.fadeIn);
+        Get.to(() => MainPllTrainerView(), transition: Transition.fadeIn);
         break;
       case StrRes.trainersAzbuka:
         print("Start AZBUKA trainer");
@@ -71,13 +72,13 @@ class TrainersScreen extends StatelessWidget {
   _onSettingsSelected (TrainerMenuItem item) {
     switch(item.id) {
       case StrRes.trainersScrambleGen:
-        Get.to(ScrambleGenSettingsView(), transition: Transition.rightToLeft);
+        Get.to(() => ScrambleGenSettingsView(), transition: Transition.rightToLeft);
         break;
       case StrRes.trainersTimer:
-        Get.to(SettingsTimerView(), transition: Transition.rightToLeft);
+        Get.to(() => SettingsTimerView(), transition: Transition.rightToLeft);
         break;
       case StrRes.trainersPll:
-        print("Settings PLL trainer");
+        Get.to(() => SettingsPllTrainerView(), transition: Transition.rightToLeft);
         break;
       case StrRes.trainersAzbuka:
         print("Settings AZBUKA trainer");
