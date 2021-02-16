@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
@@ -39,7 +40,7 @@ class SettingsPllTrainerView extends StatelessWidget {
           /// Обработчик нажатий на кнопки изменений количества вариантов ответов
           // создаем пустой обработчик
           var _onChangeVariants;
-          if (_controller.showAllVariants) {
+          if (!_controller.showAllVariants) {
             //и переопредяем его, если отображаем не все варианты
             _onChangeVariants = (index) {
               if (index == 0) {
@@ -52,149 +53,162 @@ class SettingsPllTrainerView extends StatelessWidget {
             };
           }
 
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              //TODO заменить текстовки на StrRes
-              Text("Что тренируем:", style: Get.textTheme.headline5,),
+          return SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(UIHelper.SpaceSmall),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    child: Text(StrRes.pllTrainerSettingsWhatsTraining, style: Get.textTheme.headline5,)
+                  ),
 
-              /// Случайная сторона
-              SwitchListTile(
-                contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                title: Text("Случайная сторона", style: Get.textTheme.headline6,),
-                value: _controller.randomFrontSide,
-                onChanged: (v) {
-                  _controller.randomFrontSide = v;
-                },
-              ),
-              SizedBox(height: UIHelper.SpaceSmall,),
+                  /// Случайная сторона
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(StrRes.pllTrainerSettingsRandomSide, style: Get.textTheme.headline6,),
+                    value: _controller.randomFrontSide,
+                    onChanged: (v) {
+                      _controller.randomFrontSide = v;
+                    },
+                  ),
 
-              /// Выбор количества сторон
-              ListTile(
-                title: Text("Определение по 2-м сторонам", style: Get.textTheme.headline6,),
-                trailing: Radio(
-                  value: true,
-                  groupValue: _controller.twoSideRecognition,
-                  onChanged: (v) {
-                    _controller.twoSideRecognition = v;
-                  },
-                ),
-              ),
-              ListTile(
-                title: Text("Определение по 3-м сторонам", style: Get.textTheme.headline6,),
-                trailing: Radio(
-                  value: false,
-                  groupValue: _controller.twoSideRecognition,
-                  onChanged: (v) {
-                    _controller.twoSideRecognition = v;
-                  },
-                ),
-              ),
+                  /// Выбор количества сторон
+                  ListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(StrRes.pllTrainerSettings2SideRecognition, style: Get.textTheme.headline6,),
+                    trailing: Radio(
+                      value: true,
+                      groupValue: _controller.twoSideRecognition,
+                      onChanged: (v) {
+                        _controller.twoSideRecognition = v;
+                      },
+                    ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(StrRes.pllTrainerSettings3SideRecognition, style: Get.textTheme.headline6,),
+                    trailing: Radio(
+                      value: false,
+                      groupValue: _controller.twoSideRecognition,
+                      onChanged: (v) {
+                        _controller.twoSideRecognition = v;
+                      },
+                    ),
+                  ),
 
-              /// Игра на время
-              SwitchListTile(
-                contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                title: Text("Игра на время", style:Get.textTheme.headline6,),
-                value: _controller.isTimerEnabled,
-                onChanged: (v) {
-                  _controller.isTimerEnabled = v;
-                },
-              ),
-              SizedBox(height: UIHelper.SpaceSmall,),
+                  /// Игра на время
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(StrRes.pllTrainerSettingsEnableTimer, style:Get.textTheme.headline6,),
+                    value: _controller.isTimerEnabled,
+                    onChanged: (v) {
+                      _controller.isTimerEnabled = v;
+                    },
+                  ),
 
-              /// Кнопки настройки времени ответа
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Opacity(
-                          opacity: _controller.isTimerEnabled ? 1.0 : 0.5,
-                          child: Text(
-                            "Время на ответ (сек)",
-                            style: Get.textTheme.headline6,
+                  /// Кнопки настройки времени ответа
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Opacity(
+                              opacity: _controller.isTimerEnabled ? 1.0 : 0.5,
+                              child: Text(StrRes.pllTrainerSettingsTimeForAnswer,
+                                style: Get.textTheme.headline6,
+                              ),
+                            )
+                        ),
+                        Container(
+                          child: ToggleButtons(
+                            children: [
+                              Icon(Icons.chevron_left_rounded),
+                              Text("${_controller.timeForAnswer}"),
+                              Icon(Icons.chevron_right_rounded)
+                            ],
+                            isSelected: [false, false, false],
+                            onPressed: _onChangeTimerEnabled,
                           ),
-                        )
+                        ),
+                      ],
                     ),
-                    Container(
-                      child: ToggleButtons(
-                        children: [
-                          Icon(Icons.chevron_left_rounded),
-                          Text("${_controller.timeForAnswer}"),
-                          Icon(Icons.chevron_right_rounded)
-                        ],
-                        isSelected: [false, false, false],
-                        onPressed: _onChangeTimerEnabled,
-                      ),
+                  ),
+
+                  SizedBox(height: UIHelper.SpaceMedium,),
+                  /// Варианты ответов
+                  Text(StrRes.pllTrainerSettingsAnswerVariants, style: Get.textTheme.headline5,),
+
+                  /// Выбор вариантов
+                  ListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall, top: UIHelper.SpaceSmall),
+                    title: Text(StrRes.pllTrainerSettingsAllVariants, style: Get.textTheme.headline6,),
+                    trailing: Radio(
+                      value: true,
+                      groupValue: _controller.showAllVariants,
+                      onChanged: (v) {
+                        _controller.showAllVariants = v;
+                      },
                     ),
-                  ],
-                ),
-              ),
+                  ),
+                  ListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(StrRes.pllTrainerSettingsNotAllVariants, style: Get.textTheme.headline6,),
+                    trailing: Radio(
+                      value: false,
+                      groupValue: _controller.showAllVariants,
+                      onChanged: (v) {
+                        _controller.showAllVariants = v;
+                      },
+                    ),
+                  ),
+                  SizedBox(height: UIHelper.SpaceSmall,),
 
-              /// Варианты ответов
-              Text("Варианты ответов:", style: Get.textTheme.headline5,),
-
-              /// Выбор вариантов
-              ListTile(
-                title: Text("21 кнопка со стандартными названиями", style: Get.textTheme.headline6,),
-                trailing: Radio(
-                  value: true,
-                  groupValue: _controller.showAllVariants,
-                  onChanged: (v) {
-                    _controller.showAllVariants = v;
-                  },
-                ),
-              ),
-              ListTile(
-                title: Text("Меньше вариантов, можно задать свои названия алгоритмов", style: Get.textTheme.headline6,),
-                trailing: Radio(
-                  value: false,
-                  groupValue: _controller.showAllVariants,
-                  onChanged: (v) {
-                    _controller.showAllVariants = v;
-                  },
-                ),
-              ),
-
-              /// Кнопки настройки количества вариантов для ответа
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: Opacity(
-                          opacity: _controller.isTimerEnabled ? 1.0 : 0.5,
-                          child: Text(
-                            "Количество вариантов",
-                            style: Get.textTheme.headline6,
+                  /// Кнопки настройки количества вариантов для ответа
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
+                    child: Row(
+                      children: [
+                        Expanded(
+                            child: Opacity(
+                              opacity: _controller.showAllVariants ? 0.5 : 1.0,
+                              child: Text(StrRes.pllTrainerSettingsVariantsCount,
+                                style: Get.textTheme.headline6,
+                              ),
+                            )
+                        ),
+                        Container(
+                          child: ToggleButtons(
+                            children: [
+                              Icon(Icons.chevron_left_rounded),
+                              Text("${_controller.variantsCount}"),
+                              Icon(Icons.chevron_right_rounded)
+                            ],
+                            isSelected: [false, false, false],
+                            onPressed: _onChangeVariants,
                           ),
-                        )
+                        ),
+                      ],
                     ),
-                    Container(
-                      child: ToggleButtons(
-                        children: [
-                          Icon(Icons.chevron_left_rounded),
-                          Text("${_controller.variantsCount}"),
-                          Icon(Icons.chevron_right_rounded)
-                        ],
-                        isSelected: [false, false, false],
-                        onPressed: _onChangeVariants,
-                      ),
+                  ),
+                  SizedBox(height: UIHelper.SpaceMedium,),
+
+                  /// Кнопка Выбрать/Переименовать алгоритмы
+                  Center(
+                    child: FlatButton(
+                      color: Get.theme.accentColor,
+                      onPressed: () {
+                        print("Rename algoritms pressed");
+                      },
+                      child: Text(StrRes.pllTrainerSettingsRenameAlgButtonText, style: Get.textTheme.bodyText2,)
                     ),
-                  ],
-                ),
-              ),
+                  ),
 
-              /// Кнопка Выбрать/Переименовать алгоритмы
-              FlatButton(
-                onPressed: () {
-                  print("Rename algoritms pressed");
-                },
-                child: Text("Выбрать/переименовать алгоритмы")
+                ],
               ),
-
-            ],
+            ),
           );
         }),
 

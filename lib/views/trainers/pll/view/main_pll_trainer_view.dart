@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2_flutter_getx/res/mainMenu/main_other3x3/gear.dart';
+import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_trainer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/view/bottom_menu_bar_pll_trainer.dart';
 
@@ -30,12 +32,15 @@ class MainPllTrainerView extends StatelessWidget {
 
   Widget buildStartScreen() {
     return Center(
-      child: RaisedButton.icon(
+      child: RaisedButton(
+        color: Get.theme.primaryColor,
         onPressed: () {
 
         },
-        icon: null,
-        label: Text("Начать")
+        child: Container(
+          padding: const EdgeInsets.all(UIHelper.SpaceSmall),
+          child: Text("Начать", style: Get.textTheme.headline5,)
+        ),
       )
     );
   }

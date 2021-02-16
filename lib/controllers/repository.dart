@@ -4,7 +4,8 @@ import 'package:rg2_flutter_getx/database/daos/main_dao.dart';
 import 'package:rg2_flutter_getx/database/daos/moves_dao.dart';
 import 'package:rg2_flutter_getx/database/daos/page_prop_dao.dart';
 import 'package:rg2_flutter_getx/database/daos/phase_position_dao.dart';
-import 'package:rg2_flutter_getx/database/daos/times.dao.dart';
+import 'package:rg2_flutter_getx/database/daos/pll_trainer_dao.dart';
+import 'package:rg2_flutter_getx/database/daos/times_dao.dart';
 import 'package:rg2_flutter_getx/database/entitys/basic_move.dart';
 import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
 import 'package:rg2_flutter_getx/database/entitys/page_properties.dart';
@@ -17,6 +18,7 @@ class Repository extends GetxController {
   MovesDao _movesDao = Get.find();
   PhasePositionDao _positionsDao = Get.find();
   TimesDao _timesDao = Get.find();
+  PllTrainerDao _pllTrainerDao = Get.find();
 
   List<MainDBItem> _cache = [];
 

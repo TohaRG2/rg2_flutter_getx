@@ -99,6 +99,7 @@ class RG2App extends StatelessWidget {
     Get.put(db.movesDao);
     Get.put(db.phasePositionDao);
     Get.put(db.timesDao);
+    Get.put(db.pllTrainerDao);
     Get.put(Repository());
     Get.put(LearnController());
     Get.put(InfoController());

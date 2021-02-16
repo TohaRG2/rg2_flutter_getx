@@ -66,7 +66,7 @@ class TrainersScreen extends StatelessWidget {
 
   _onHelpSelected (TrainerMenuItem item) {
     //print("Pressed on ${item.title} - help");
-    Get.to(HelpView(item: item), transition: Transition.fadeIn);
+    Get.to(() => HelpView(item: item), transition: Transition.fadeIn);
   }
 
   _onSettingsSelected (TrainerMenuItem item) {

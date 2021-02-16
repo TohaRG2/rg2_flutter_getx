@@ -100,4 +100,17 @@ class StrRes {
   static const timerResultEditItemTitle = "Комментарий:";
 
   static const pllTrainerSettingsTitle = "Настройки";
+  static const pllTrainerSettingsWhatsTraining = "Что тренируем:";
+  static const pllTrainerSettingsRandomSide = "Случайная сторона";
+  static const pllTrainerSettings2SideRecognition = "Определение по 2-м сторонам";
+  static const pllTrainerSettings3SideRecognition = "Определение по 3-м сторонам";
+  static const pllTrainerSettingsEnableTimer = "Игра на время";
+  static const pllTrainerSettingsTimeForAnswer = "Время на ответ (сек)";
+  static const pllTrainerSettingsAnswerVariants = "Варианты ответов:";
+  static const pllTrainerSettingsAllVariants = "21 вариант со стандартными названиями";
+  static const pllTrainerSettingsNotAllVariants = "Меньше вариантов, но можно задать свои названия";
+  static const pllTrainerSettingsVariantsCount = "Количество вариантов";
+  static const pllTrainerSettingsRenameAlgButtonText = "Выбрать/переименовать алгоритмы";
+
+
 }

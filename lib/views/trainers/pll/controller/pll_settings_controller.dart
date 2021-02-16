@@ -10,9 +10,9 @@ class PllSettingsController extends GetxController {
     _randomFrontSide.value = GetStorage().read(Const.RANDOM_FRONT_SIDE) ?? false;
     _twoSideRecognition.value = GetStorage().read(Const.TWO_SIDE_RECOGNITION) ?? false;
     _isTimerEnabled.value = GetStorage().read(Const.IS_PLL_TIMER_ENABLED) ?? false;
-    _timeForAnswer.value = GetStorage().read(Const.PLL_TIME_FOR_ANSWER) ?? false;
-    _showAllVariants.value = GetStorage().read(Const.PLL_SHOW_ALL_VARIANTS) ?? false;
-    _variantsCount.value = GetStorage().read(Const.PLL_VARIANTS_COUNT) ?? false;
+    _timeForAnswer.value = GetStorage().read(Const.PLL_TIME_FOR_ANSWER) ?? 6;
+    _showAllVariants.value = GetStorage().read(Const.PLL_SHOW_ALL_VARIANTS) ?? true;
+    _variantsCount.value = GetStorage().read(Const.PLL_VARIANTS_COUNT) ?? 6;
     super.onInit();
   }
 

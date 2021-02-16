@@ -70,6 +70,8 @@ class _$MainDatabase extends MainDatabase {
 
   TimesDao _timesDaoInstance;
 
+  PllTrainerDao _pllTrainerDaoInstance;
+
   Future<sqflite.Database> open(String path, List<Migration> migrations,
       [Callback callback]) async {
     final databaseOptions = sqflite.OpenDatabaseOptions(
@@ -97,6 +99,8 @@ class _$MainDatabase extends MainDatabase {
             'CREATE TABLE IF NOT EXISTS `phasePositions` (`phase` TEXT, `position` REAL, PRIMARY KEY (`phase`))');
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `times` (`uuid` INTEGER PRIMARY KEY AUTOINCREMENT, `solvingTime` TEXT, `dateTime` INTEGER, `scramble` TEXT, `comment` TEXT)');
+        await database.execute(
+            'CREATE TABLE IF NOT EXISTS `pll_trainer` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `internationalName` TEXT, `maximName` TEXT, `customName` TEXT, `currentName` TEXT, `scramble` TEXT, `imagePath` TEXT, `isChecked` INTEGER)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -129,6 +133,11 @@ class _$MainDatabase extends MainDatabase {
   @override
   TimesDao get timesDao {
     return _timesDaoInstance ??= _$TimesDao(database, changeListener);
+  }
+
+  @override
+  PllTrainerDao get pllTrainerDao {
+    return _pllTrainerDaoInstance ??= _$PllTrainerDao(database, changeListener);
   }
 }
 
@@ -761,6 +770,126 @@ class _$TimesDao extends TimesDao {
   @override
   Future<int> deleteItems(List<TimeNoteItem> items) {
     return _timeNoteItemDeletionAdapter.deleteListAndReturnChangedRows(items);
+  }
+}
+
+class _$PllTrainerDao extends PllTrainerDao {
+  _$PllTrainerDao(this.database, this.changeListener)
+      : _queryAdapter = QueryAdapter(database),
+        _pllTrainerItemInsertionAdapter = InsertionAdapter(
+            database,
+            'pll_trainer',
+            (PllTrainerItem item) => <String, dynamic>{
+                  'id': item.id,
+                  'internationalName': item.internationalName,
+                  'maximName': item.maximName,
+                  'customName': item.customName,
+                  'currentName': item.currentName,
+                  'scramble': item.scramble,
+                  'imagePath': item.imagePath,
+                  'isChecked':
+                      item.isChecked == null ? null : (item.isChecked ? 1 : 0)
+                }),
+        _pllTrainerItemUpdateAdapter = UpdateAdapter(
+            database,
+            'pll_trainer',
+            ['id'],
+            (PllTrainerItem item) => <String, dynamic>{
+                  'id': item.id,
+                  'internationalName': item.internationalName,
+                  'maximName': item.maximName,
+                  'customName': item.customName,
+                  'currentName': item.currentName,
+                  'scramble': item.scramble,
+                  'imagePath': item.imagePath,
+                  'isChecked':
+                      item.isChecked == null ? null : (item.isChecked ? 1 : 0)
+                }),
+        _pllTrainerItemDeletionAdapter = DeletionAdapter(
+            database,
+            'pll_trainer',
+            ['id'],
+            (PllTrainerItem item) => <String, dynamic>{
+                  'id': item.id,
+                  'internationalName': item.internationalName,
+                  'maximName': item.maximName,
+                  'customName': item.customName,
+                  'currentName': item.currentName,
+                  'scramble': item.scramble,
+                  'imagePath': item.imagePath,
+                  'isChecked':
+                      item.isChecked == null ? null : (item.isChecked ? 1 : 0)
+                });
+
+  final sqflite.DatabaseExecutor database;
+
+  final StreamController<String> changeListener;
+
+  final QueryAdapter _queryAdapter;
+
+  final InsertionAdapter<PllTrainerItem> _pllTrainerItemInsertionAdapter;
+
+  final UpdateAdapter<PllTrainerItem> _pllTrainerItemUpdateAdapter;
+
+  final DeletionAdapter<PllTrainerItem> _pllTrainerItemDeletionAdapter;
+
+  @override
+  Future<List<PllTrainerItem>> getAllItems() async {
+    return _queryAdapter.queryList('SELECT * FROM PLL_TRAINER',
+        mapper: (Map<String, dynamic> row) => PllTrainerItem(
+            row['internationalName'] as String,
+            row['maximName'] as String,
+            row['customName'] as String,
+            row['currentName'] as String,
+            row['scramble'] as String,
+            row['imagePath'] as String,
+            row['isChecked'] == null ? null : (row['isChecked'] as int) != 0,
+            id: row['id'] as int));
+  }
+
+  @override
+  Future<void> clearTable() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM PLL_TRAINER');
+  }
+
+  @override
+  Future<int> insertItem(PllTrainerItem item) {
+    return _pllTrainerItemInsertionAdapter.insertAndReturnId(
+        item, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<List<int>> insertItems(List<PllTrainerItem> items) {
+    return _pllTrainerItemInsertionAdapter.insertListAndReturnIds(
+        items, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<int> insertOrReplace(PllTrainerItem item) {
+    return _pllTrainerItemInsertionAdapter.insertAndReturnId(
+        item, OnConflictStrategy.replace);
+  }
+
+  @override
+  Future<int> updateItem(PllTrainerItem item) {
+    return _pllTrainerItemUpdateAdapter.updateAndReturnChangedRows(
+        item, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<int> updateItems(List<PllTrainerItem> items) {
+    return _pllTrainerItemUpdateAdapter.updateListAndReturnChangedRows(
+        items, OnConflictStrategy.abort);
+  }
+
+  @override
+  Future<int> deleteItem(PllTrainerItem item) {
+    return _pllTrainerItemDeletionAdapter.deleteAndReturnChangedRows(item);
+  }
+
+  @override
+  Future<int> deleteItems(List<PllTrainerItem> items) {
+    return _pllTrainerItemDeletionAdapter.deleteListAndReturnChangedRows(items);
   }
 }
 
