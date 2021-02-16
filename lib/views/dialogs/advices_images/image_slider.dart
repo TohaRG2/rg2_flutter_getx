@@ -18,7 +18,7 @@ class ComplicatedImageDemo extends StatelessWidget {
                       child: Text(
                         '${item.adviceText}',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline5,
+                        style: Get.textTheme.headline5,
                       ),
                     ),
                   ),
@@ -55,7 +55,7 @@ class ComplicatedImageDemo extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: _position.value == index
                       ? Theme.of(context).accentColor
-                      : Theme.of(context).textTheme.headline5.color,
+                      : Get.textTheme.headline5.color,
                 ),
               );
             }).toList(),

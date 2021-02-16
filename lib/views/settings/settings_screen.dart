@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/views/settings/elements/purchase_settings.dart';
 import 'package:rg2_flutter_getx/views/settings/elements/swipe_settings.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
@@ -16,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
         title: Center(
           child: Text(StrRes.settingsTitle,
               style: TextStyle(
-                  color: Theme.of(context).textTheme.headline5.color)
+                  color: Get.textTheme.headline5.color)
           ),
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,

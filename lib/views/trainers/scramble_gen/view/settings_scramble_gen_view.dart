@@ -24,7 +24,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
     final Size size = context.mediaQuery.size;
     const padding = 8.0;
     var cellHeight = (size.width - padding * 2) / 12;
-    var arrowColor = Theme.of(context).textTheme.headline6.color;
+    var arrowColor = Get.textTheme.headline6.color;
     var border = 2.0;
     return Obx(() {
       var cubeAsTable = _controller.settingsColoredAzbuka;
@@ -35,7 +35,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
             title: Center(
               child: Text(
                 StrRes.scrambleGenAzbukaSelect,
-                style: TextStyle(color: Theme.of(context).textTheme.headline5.color),
+                style: TextStyle(color: Get.textTheme.headline5.color),
               ),
             ),
             backgroundColor: backgroundColor,

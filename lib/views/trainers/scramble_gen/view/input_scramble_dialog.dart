@@ -16,7 +16,7 @@ class InputScrambleDialog extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 0.0),
                   child: Text(_controller.inputScramble,
                     maxLines: 3,
-                    style: Theme.of(context).textTheme.headline4.copyWith(color: Theme.of(context).accentColor),
+                    style: Get.textTheme.headline4.copyWith(color: Theme.of(context).accentColor),
                   )
               ),
               Row( children: [

@@ -99,6 +99,5 @@ class StrRes {
   static const timerResultBottomSortBySolvingTime = "Сорт.по времени";
   static const timerResultEditItemTitle = "Комментарий:";
 
-
   static const pllTrainerSettingsTitle = "Настройки";
 }

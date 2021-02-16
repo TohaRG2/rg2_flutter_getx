@@ -1,4 +1,5 @@
 class Const {
+  /// Общие нстройки программы
   static const THEME = 'theme';
   static const PRIMARY_COLOR = 'primaryColor';
   static const ACCENT_COLOR = 'accentColor';
@@ -13,6 +14,7 @@ class Const {
   static const CURRENT_INFO_PAGE_NUMBER = 'currentInfoPageNumber';
   static const FAVOURITES = 'FAVOURITES';
 
+  /// Настройки генератора скрамблов
   static const IS_EDGE_ENABLED = 'isEdgeEnabled';
   static const IS_CORNER_ENABLED = 'isCornerEnabled';
   static const SCRAMBLE_LENGTH = 'scrambleLength';
@@ -20,11 +22,13 @@ class Const {
   static const CURRENT_DECISION = 'currentDecision';
   static const SHOW_DECISION = 'showDecision';
 
+  /// Настройки азбуки блайндов
   static const CURRENT_AZBUKA = 'currentAzbuka';
   static const CURRENT_AZBUKA_COLORS = 'currentAzbukaColors';
   static const CUSTOM_AZBUKA = 'customAzbuka';
   static const CUSTOM_AZBUKA_COLORS = 'customAzbukaColors';
 
+  /// Настройки для таймера
   static const IS_ONE_HANDED = 'isOneHanded';
   static const IS_ICONS_COLORED = 'isIconsColored';
   static const IS_DELAYED_START = 'isDelayedStart';
@@ -34,5 +38,12 @@ class Const {
   static const SCRAMBLE_TEXT_RATIO = 'scrambleTextSize';
   static const RESULT_ORDER_BY = 'resultOrderBy';
 
-  
+  /// Настройки для PLL тренажера
+  static const RANDOM_FRONT_SIDE = 'randomFrontSide';
+  static const TWO_SIDE_RECOGNITION = 'twoSideRecognition';
+  static const IS_PLL_TIMER_ENABLED = 'isPllTimerEnabled';
+  static const PLL_TIME_FOR_ANSWER = 'pllTimeForAnswer';
+  static const PLL_SHOW_ALL_VARIANTS = 'pllShowAllVariants';
+  static const PLL_VARIANTS_COUNT = 'pllVariantsCount';
+
 }

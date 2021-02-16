@@ -8,16 +8,39 @@ class MainPllTrainerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Center(
-        child: Text("PLL Trainer",
-        style: TextStyle(
-        color: Theme.of(context).textTheme.headline5.color)),
+          child: Text("PLL Trainer",
+            style: TextStyle(
+            color: Get.textTheme.headline5.color)),
         )
       ),
-      body: Center(child: Text("PLL Trainer")),
+
+      body: Obx(() {
+        return _controller.showBottomBar ? buildStartScreen() : buildGameScreen();
+      }),
+
       bottomNavigationBar: PllTrainerBottomMenuBar(),
     );
+  }
+
+
+  Widget buildStartScreen() {
+    return Center(
+      child: RaisedButton.icon(
+        onPressed: () {
+
+        },
+        icon: null,
+        label: Text("Начать")
+      )
+    );
+  }
+
+  Widget buildGameScreen() {
+    return Container(color: Colors.red, width: 100, height: 100,);
   }
 }

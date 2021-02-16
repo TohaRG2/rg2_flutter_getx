@@ -30,7 +30,7 @@ class ScrambleGenView extends StatelessWidget {
           title: Center(
             child: Text( title,
               style:
-              TextStyle(color: Theme.of(context).textTheme.headline5.color),
+              TextStyle(color: Get.textTheme.headline5.color),
             ),
           ),
           backgroundColor: backgroundColor,

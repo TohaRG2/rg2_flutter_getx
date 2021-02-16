@@ -30,14 +30,14 @@ class InfoScreen extends StatelessWidget {
               title: Center(
                 child: Text(StrRes.infoTitle,
                     style: TextStyle(
-                        color: Theme.of(context).textTheme.headline5.color)),
+                        color: Get.textTheme.headline5.color)),
               ),
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               bottom: TabBar(
                 indicatorWeight: 3.0,
-                labelColor: Theme.of(context).textTheme.headline5.color,
+                labelColor: Get.textTheme.headline5.color,
                 unselectedLabelColor:
-                    Theme.of(context).textTheme.headline5.color.withAlpha(130),
+                    Get.textTheme.headline5.color.withAlpha(130),
                 tabs: [
                   Tab(text: StrRes.infoAboutTitle),
                   Tab(text: StrRes.infoThanksTitle),

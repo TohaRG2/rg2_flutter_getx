@@ -22,7 +22,7 @@ class BottomBarWithBackButton extends StatelessWidget {
               children: [
                 Icon(Icons.arrow_back, color: backgroundColor,),
                 Text(StrRes.backButtonText,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(color: backgroundColor, fontSize: 14),
+                  style: Get.textTheme.bodyText1.copyWith(color: backgroundColor, fontSize: 14),
                 )
               ],
             ),

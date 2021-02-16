@@ -20,7 +20,7 @@ class PurchaseSettings extends StatelessWidget {
           children: <Widget>[
             Text(
                 StrRes.settingsPurchase,
-                style: Theme.of(context).textTheme.headline5,
+                style: Get.textTheme.headline5,
             ),
             SizedBox(
               height: UIHelper.SpaceSmall,
@@ -29,7 +29,7 @@ class PurchaseSettings extends StatelessWidget {
               contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
               title: Text(
                 StrRes.settingsPurchaseMenuText,
-                style: Theme.of(context).textTheme.headline6,
+                style: Get.textTheme.headline6,
               ),
               value: _settings.isPurchaseEnabled.value,
               onChanged: (v) {

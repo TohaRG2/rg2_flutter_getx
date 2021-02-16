@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/flutter_html/flutter_html.dart';
 import 'package:rg2_flutter_getx/flutter_html/style.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
@@ -22,11 +23,11 @@ class AboutProgramView extends StatelessWidget {
                 Expanded(
                     child: Column(
                       children: [
-                        Text(TextAbout.infoAppDescription, style: Theme.of(context).textTheme.headline5.copyWith(fontSize: 26),),
+                        Text(TextAbout.infoAppDescription, style: Get.textTheme.headline5.copyWith(fontSize: 26),),
                         Container(
                             alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: Text(TextAbout.version, style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),)
+                            child: Text(TextAbout.version, style: Get.textTheme.headline6.copyWith(fontSize: 16),)
                         )
                       ],
                     )

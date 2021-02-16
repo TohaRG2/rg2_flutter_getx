@@ -17,7 +17,7 @@ class HelpSettings extends StatelessWidget {
         children: <Widget>[
           Text(
             StrRes.miniHelpSettingsText,
-            style: Theme.of(context).textTheme.headline5,
+            style: Get.textTheme.headline5,
           ),
           SizedBox(
             height: UIHelper.SpaceSmall,
@@ -26,7 +26,7 @@ class HelpSettings extends StatelessWidget {
             contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
             title: Text(
               StrRes.miniHelpSettingsSwitch,
-              style: Theme.of(context).textTheme.headline6,
+              style: Get.textTheme.headline6,
             ),
             value: _settings.isStartHelpEnabled.value,
             onChanged: (v) {

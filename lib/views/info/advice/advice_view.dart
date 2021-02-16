@@ -23,7 +23,7 @@ class AdviceView extends StatelessWidget {
                   top: UIHelper.SpaceSmall
               ),
               child: Text(Advices.advicesList[index].adviceText,
-                style: Theme.of(context).textTheme.headline4,
+                style: Get.textTheme.headline4,
                 textAlign: TextAlign.center,
               ),
             ),

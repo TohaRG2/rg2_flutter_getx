@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/flutter_html/flutter_html.dart';
 import 'package:rg2_flutter_getx/flutter_html/style.dart';
 import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
@@ -20,7 +21,7 @@ class HelpView extends StatelessWidget {
           title: Text(
                 item.title,
                 style: TextStyle(
-                    color: Theme.of(context).textTheme.headline5.color),
+                    color: Get.textTheme.headline5.color),
               ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),

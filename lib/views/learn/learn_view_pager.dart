@@ -41,15 +41,15 @@ class LearnViewPager extends StatelessWidget {
                     child: Text(
                         "${StrRes.learnTitle}",
                         style: TextStyle(
-                            color: Theme.of(context).textTheme.headline5.color),
+                            color: Get.textTheme.headline5.color),
                     )),
                 //backgroundColor: Theme.of(context).primaryColor,
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 bottom: TabBar(
                   indicatorWeight: 3.0,
                   //По умолчанию берется из ThemeData.primaryTextTheme.bodyText1.textColor
-                  labelColor: Theme.of(context).textTheme.headline5.color,
-                  unselectedLabelColor: Theme.of(context).textTheme.headline5.color.withAlpha(130),
+                  labelColor: Get.textTheme.headline5.color,
+                  unselectedLabelColor: Get.textTheme.headline5.color.withAlpha(130),
                   isScrollable: true,
                   tabs: _tabsList(),
                 ),

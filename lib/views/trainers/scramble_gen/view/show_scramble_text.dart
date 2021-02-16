@@ -21,7 +21,7 @@ class ShowScrambleText extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
             child: Text( scramble,
-              style: Theme.of(context).textTheme.headline6.copyWith(color: Theme.of(context).accentColor, fontWeight: FontWeight.w700),
+              style: Get.textTheme.headline6.copyWith(color: Theme.of(context).accentColor, fontWeight: FontWeight.w700),
             ),
           ),
         ],

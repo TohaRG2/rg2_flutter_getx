@@ -48,7 +48,7 @@ class DrawerMenuItem extends StatelessWidget {
                         item.title,
                         softWrap: true,
                         maxLines: 2,
-                        style: Theme.of(context).textTheme.bodyText2,
+                        style: Get.textTheme.bodyText2,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0),

@@ -44,7 +44,7 @@ class Header extends StatelessWidget {
                   item.title,
                   softWrap: true,
                   maxLines: 3,
-                  style: Theme.of(context).textTheme.headline6,
+                  style: Get.textTheme.headline6,
                 ),
               ],
             ),

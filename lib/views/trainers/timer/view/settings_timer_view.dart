@@ -77,7 +77,7 @@ class SettingsTimerView extends StatelessWidget {
                       contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                       title: Text(
                         StrRes.timerDelayedStartText,
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Get.textTheme.headline6,
                       ),
                       value: _controller.isDelayedStart,
                       onChanged: (v) {
@@ -90,7 +90,7 @@ class SettingsTimerView extends StatelessWidget {
                       contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                       title: Text(
                         StrRes.timerOneHandedText,
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Get.textTheme.headline6,
                       ),
                       value: _controller.isOneHanded,
                       onChanged: (v) {
@@ -103,7 +103,7 @@ class SettingsTimerView extends StatelessWidget {
                       contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                       title: Text(
                         StrRes.timerIsIconColored,
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Get.textTheme.headline6,
                       ),
                       value: _controller.isIconsColored,
                       onChanged: (v) {
@@ -116,7 +116,7 @@ class SettingsTimerView extends StatelessWidget {
                       contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                       title: Text(
                         StrRes.timerMetronomText,
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Get.textTheme.headline6,
                       ),
                       value: _controller.isMetronomEnabled,
                       onChanged: (v) {
@@ -157,7 +157,7 @@ class SettingsTimerView extends StatelessWidget {
                       min: 1,
                       max: 240,
                       divisions: 240,
-                      activeColor: Theme.of(context).accentColor,
+                      activeColor: Get.theme.accentColor,
                       label: _controller.metronomFrequency.toString(),
                       onChanged: _onChangeMetronomFrequency,
                     ),
@@ -166,7 +166,7 @@ class SettingsTimerView extends StatelessWidget {
                       contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                       title: Text(
                         StrRes.timerShowScrambleText,
-                        style: Theme.of(context).textTheme.headline6,
+                        style: Get.textTheme.headline6,
                       ),
                       value: _controller.showScramble,
                       onChanged: (value) {
@@ -180,7 +180,7 @@ class SettingsTimerView extends StatelessWidget {
                         opacity: _controller.showScramble ? 1.0 : 0.5,
                         child: Text(
                           StrRes.timerScrambleTextSize,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Get.textTheme.headline6,
                         ),
                       ),
                     ),
@@ -190,7 +190,7 @@ class SettingsTimerView extends StatelessWidget {
                       min: 0.7,
                       max: 1.3,
                       divisions: 6,
-                      activeColor: Theme.of(context).accentColor,
+                      activeColor: Get.theme.accentColor,
                       onChanged: _onChangeScrambleRatio,
                       onChangeStart: _onChangeStartScrambleRatio,
                       onChangeEnd: _onChangeEndScrambleRatio,

@@ -23,7 +23,7 @@ class TrainersScreen extends StatelessWidget {
           title: Center(
             child: Text(StrRes.trainersTitle,
                 style: TextStyle(
-                    color: Theme.of(context).textTheme.headline5.color)),
+                    color: Get.textTheme.headline5.color)),
           ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
