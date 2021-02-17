@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/res/mainMenu/main_other3x3/gear.dart';
 import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_trainer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/view/bottom_menu_bar_pll_trainer.dart';
@@ -12,6 +11,7 @@ class MainPllTrainerView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      /// Основное окно тренера
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Center(
@@ -21,6 +21,7 @@ class MainPllTrainerView extends StatelessWidget {
         )
       ),
 
+      /// Выбираем что отобразить, игру или начальный экрна с кнопкой
       body: Obx(() {
         return _controller.showBottomBar ? buildStartScreen() : buildGameScreen();
       }),
@@ -29,7 +30,7 @@ class MainPllTrainerView extends StatelessWidget {
     );
   }
 
-
+  /// Начальный экран с кнопкой "Начать"
   Widget buildStartScreen() {
     return Center(
       child: RaisedButton(
@@ -45,6 +46,7 @@ class MainPllTrainerView extends StatelessWidget {
     );
   }
 
+  /// Основной экран игры
   Widget buildGameScreen() {
     return Container(color: Colors.red, width: 100, height: 100,);
   }
