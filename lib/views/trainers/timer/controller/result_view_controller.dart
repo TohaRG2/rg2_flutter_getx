@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:meta/meta.dart';
 import 'package:rg2_flutter_getx/controllers/repository.dart';
 import 'package:rg2_flutter_getx/database/entitys/time_note_item.dart';
 import 'package:rg2_flutter_getx/res/constants.dart';
@@ -19,7 +18,7 @@ class ResultViewController extends GetxController {
   List<TimeNoteItem> get timeNoteItems => _timeNoteItems;
 
   updateTimeNoteItems() async {
-    var list = await _repository.getAllTimeNoteList(orderBy: _orderBy);
+    var list = await _repository.getAllTimeNotes(orderBy: _orderBy);
     _timeNoteItems.assignAll(list);
   }
 

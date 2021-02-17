@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:meta/meta.dart';
 import 'package:rg2_flutter_getx/res/constants.dart';
 
 class PllSettingsController extends GetxController {

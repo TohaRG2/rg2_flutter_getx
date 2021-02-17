@@ -78,6 +78,8 @@ import 'package:rg2_flutter_getx/res/mainMenu/main_skewb/skewb.dart';
 import 'package:rg2_flutter_getx/res/mainMenu/main_skewb/twisty_skewb.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/moves.dart';
 
+import '../views/trainers/pll/resources/pll_trainer_variants.dart';
+
 class DBController extends GetxController {
   bool needInit = false;
   MainDatabase _mainBase;
@@ -107,6 +109,7 @@ class DBController extends GetxController {
       //TODO Пока на время написания программы, будем пересоздавать базу каждый раз
       await _initCubeTypes();
       await _initPhases();
+      await PllTrainerVariants.initDb(_mainBase.pllTrainerDao);
       print("fillDB complete");
     }
 
@@ -118,7 +121,6 @@ class DBController extends GetxController {
     // await _mainBase.phasePositionDao.clearTable();
     // await _loadSomePositions();
     print("InitCubes");
-    await _initCubeTypes();
     await _mainBase.mainDao.clearTable();
     await _initPhase(BigMain());
     await _initPhase(Cross());
@@ -231,10 +233,4 @@ class DBController extends GetxController {
     list.forEach((item) => _mainBase.pagePropertiesDao.insertOrReplace(item));
   }
 
-
-  Future _loadSomePositions() async {
-    var list = List<PhasePositionItem>();
-    list.add(PhasePositionItem("MAIN_OTHER3X3", 4));
-    _mainBase.phasePositionDao.insertItems(list);
-  }
 }

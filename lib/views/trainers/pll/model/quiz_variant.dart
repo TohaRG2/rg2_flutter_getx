@@ -9,4 +9,9 @@ class QuizVariant {
   bool isCorrectAnswer = false;
 
   QuizVariant(this.id, this.value, this.isSelectable);
+
+  @override
+  String toString() => "$id, value = $value, "
+      "isSel = $isSelectable, isCorrect = $isCorrectAnswer\n";
+
 }

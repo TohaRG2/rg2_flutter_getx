@@ -9,7 +9,7 @@ class MainPllTrainerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    _controller.loadDataFromBase();
     return Scaffold(
       /// Основное окно тренера
       appBar: AppBar(
@@ -32,17 +32,24 @@ class MainPllTrainerView extends StatelessWidget {
 
   /// Начальный экран с кнопкой "Начать"
   Widget buildStartScreen() {
-    return Center(
-      child: RaisedButton(
-        color: Get.theme.primaryColor,
-        onPressed: () {
+    return Obx(
+      () => Center(
+        child: _controller.isStartButtonEnabled ? startButton() : CircularProgressIndicator(),
+      ),
+    );
+  }
 
-        },
-        child: Container(
-          padding: const EdgeInsets.all(UIHelper.SpaceSmall),
-          child: Text("Начать", style: Get.textTheme.headline5,)
-        ),
-      )
+  /// Кнопка Начать игру
+  Widget startButton() {
+    return RaisedButton(
+      color: Get.theme.primaryColor,
+      onPressed: () {
+        _controller.startGame();
+      },
+      child: Container(
+        padding: const EdgeInsets.all(UIHelper.SpaceSmall),
+        child: Text("Начать", style: Get.textTheme.headline5,)
+      ),
     );
   }
 

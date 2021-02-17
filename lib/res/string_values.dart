@@ -110,7 +110,7 @@ class StrRes {
   static const pllTrainerSettingsAllVariants = "21 вариант со стандартными названиями";
   static const pllTrainerSettingsNotAllVariants = "Меньше вариантов, но можно задать свои названия";
   static const pllTrainerSettingsVariantsCount = "Количество вариантов";
-  static const pllTrainerSettingsRenameAlgButtonText = "Выбрать/переименовать алгоритмы";
+  static const pllTrainerSettingsRenameAlgButtonText = "Выбрать/переименовать алгоритмы...";
 
 
 }

@@ -202,7 +202,10 @@ class SettingsPllTrainerView extends StatelessWidget {
                       onPressed: () {
                         print("Rename algoritms pressed");
                       },
-                      child: Text(StrRes.pllTrainerSettingsRenameAlgButtonText, style: Get.textTheme.bodyText2,)
+                      child: Container(
+                        padding: const EdgeInsets.all(UIHelper.SpaceMini),
+                        child: Text(StrRes.pllTrainerSettingsRenameAlgButtonText, style: Get.textTheme.bodyText2, textAlign: TextAlign.center,)
+                      )
                     ),
                   ),
 

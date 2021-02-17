@@ -10,6 +10,7 @@ import 'package:rg2_flutter_getx/database/entitys/basic_move.dart';
 import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
 import 'package:rg2_flutter_getx/database/entitys/page_properties.dart';
 import 'package:rg2_flutter_getx/database/entitys/phase_position_item.dart';
+import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
 import 'package:rg2_flutter_getx/database/entitys/time_note_item.dart';
 
 class Repository extends GetxController {
@@ -88,7 +89,7 @@ class Repository extends GetxController {
   //------------------------------------------------
 
   /// Получаем список отсортированных по одному из полей записей
-  Future<List<TimeNoteItem>> getAllTimeNoteList({String orderBy}) async {
+  Future<List<TimeNoteItem>> getAllTimeNotes({String orderBy}) async {
     var result = await _timesDao.getAllItems();
     var orderColumn = orderBy ?? "SOLVINGTIME"; //если orderBy не NULL, иначе "SolvingTime"
     // Делаем проверку
@@ -119,5 +120,9 @@ class Repository extends GetxController {
     return await _timesDao.clearTable();
   }
 
+  //------------------------------------------------
 
+  Future<List<PllTrainerItem>> getAllPllTrainer() async {
+    return await _pllTrainerDao.getAllItems();
+  }
 }

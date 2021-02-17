@@ -1,5 +1,24 @@
+import 'package:rg2_flutter_getx/database/daos/pll_trainer_dao.dart';
+import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
+
 class PllTrainerVariants {
-  static const maxim_names = [
+
+  static Future initDb(PllTrainerDao dao) async {
+    print("Заполняем таблицу PLL_Trainers данными");
+    dao.clearTable();
+    var items = List<PllTrainerItem>();
+    _internationalNames.asMap().forEach((index, intName) {
+      var maximName = _maximNames[index];
+      var imagePath = _images[index];
+      var scramble = _scrambles[index];
+      var customName = "$maximName ($intName)";
+      items.add(PllTrainerItem(intName, maximName, customName, customName, scramble, imagePath, true));
+    });
+    dao.insertItems(items);
+  }
+
+  /// Названия PLL алгоритмов по методике Максима Чечнева
+  static const _maximNames = [
     "Смежные окошки",
     "Противоположные окошки",
     "Рельсы",
@@ -23,7 +42,7 @@ class PllTrainerVariants {
     "Север",
   ];
 
-  static const international_names = [
+  static const _internationalNames = [
     "Ua",
     "Ub",
     "Z",
@@ -47,7 +66,7 @@ class PllTrainerVariants {
     "Ja",
   ];
 
-  static const images = [
+  static const _images = [
     "assets/images/trainers/pll_trainer/pll_test_1.svg",
     "assets/images/trainers/pll_trainer/pll_test_2.svg",
     "assets/images/trainers/pll_trainer/pll_test_3.svg",
@@ -71,7 +90,7 @@ class PllTrainerVariants {
     "assets/images/trainers/pll_trainer/pll_test_21.svg",
   ];
 
-  static const scrambles = [
+  static const _scrambles = [
     "R\' U R\' U\' R\' U\' R\' U R U R2",                                   // Ua
     "R2 U\' R\' U\' R U R U R U\' R",                                       // Ub
     "M2 U M2 U M\' U2 M2 U2 M\' U2",                                        // Z

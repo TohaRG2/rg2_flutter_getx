@@ -39,7 +39,7 @@ class QuizGame {
   var _wrongAnswerCount = 0;
 
   /// Callback вызываемый, если закончилось время на ответ
-  Function() onTimeIsOver;
+  Function() _onTimeIsOverCallback;
 
   /// Сброс счетчико ответов
   resetCounts() {
@@ -75,7 +75,8 @@ class QuizGame {
       now  = DateTime.now();
     }
     if (now.isAfter(endAnswerTime) || now.isAtSameMomentAs(endAnswerTime)) {
-      onTimeIsOver();
+      _onTimeIsOverCallback();
+      _state = GameState.TIME_OVER;
     }
   }
 
@@ -95,6 +96,19 @@ class QuizGame {
 
   }
 
+  bool checkAnswer(int answer) {
+    _state = GameState.STOP;
+    var result = false;
+    if (answer == _correctAnswer) {
+      result = true;
+      _rightAnswerCount++;
+    } else {
+      _wrongAnswerCount++;
+    }
+    return result;
+  }
+
+
   /// Нормализируем список правильных ответов (убираем признак выбранного ответа и переопределяем номера)
   _normalizeAnswersList() {
     _answersList.asMap().forEach((index, variant) {
@@ -109,11 +123,12 @@ class QuizGame {
   /// timeForAnswerInSec: время в секундах на ответ
   QuizGame({
     @required List<QuizVariant> answersList,
-    this.onTimeIsOver,
+    Function() onTimeIsOverCallback,
     int timeForAnswerInSec,
   }) {
     this.timeForAnswer = timeForAnswerInSec;
     this._answersList = answersList;
+    this._onTimeIsOverCallback = onTimeIsOverCallback;
     _normalizeAnswersList();
   }
 }
