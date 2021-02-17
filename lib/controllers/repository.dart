@@ -30,7 +30,7 @@ class Repository extends GetxController {
   }
 
   Future<List<MainDBItem>> getSubMenuList() async {
-    var result = await _mainDao.getSubMenuList();
+    var result = await _mainDao.getSubMenuList("submenu");
     return result;
   }
 
@@ -40,7 +40,7 @@ class Repository extends GetxController {
   }
 
   Future<List<MainDBItem>> getPhasePages(String phase) async {
-    var result = await _mainDao.getPhasePages(phase);
+    var result = await _mainDao.getPhasePages(phase, "submenu");
     return result;
   }
 

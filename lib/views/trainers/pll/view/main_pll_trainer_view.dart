@@ -43,6 +43,7 @@ class MainPllTrainerView extends StatelessWidget {
   Widget startButton() {
     return RaisedButton(
       color: Get.theme.primaryColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       onPressed: () {
         _controller.startGame();
       },

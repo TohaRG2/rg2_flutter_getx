@@ -33,6 +33,7 @@ class MainDBItem{
   //String toString() => "id = $id, phase = $phase, Fav = $isFavourite";
   //String toString() => "id = $id, phase = $phase, subId = $subId";
   String toString() => "title = $title, subId = $subId, isFav = $isFavourite";
+  //String toString() => "title = $title, url = $url";
 
 }
 

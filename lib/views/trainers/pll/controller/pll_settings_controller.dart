@@ -1,18 +1,34 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rg2_flutter_getx/controllers/repository.dart';
+import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
 import 'package:rg2_flutter_getx/res/constants.dart';
+import 'package:rg2_flutter_getx/views/trainers/pll/model/quiz_variant.dart';
 
 class PllSettingsController extends GetxController {
+  final Repository _repository = Get.find();
 
   @override
-  void onInit() {
+  void onInit() async {
+    print("PllSettingsController init");
     _randomFrontSide.value = GetStorage().read(Const.RANDOM_FRONT_SIDE) ?? false;
     _twoSideRecognition.value = GetStorage().read(Const.TWO_SIDE_RECOGNITION) ?? false;
     _isTimerEnabled.value = GetStorage().read(Const.IS_PLL_TIMER_ENABLED) ?? false;
     _timeForAnswer.value = GetStorage().read(Const.PLL_TIME_FOR_ANSWER) ?? 6;
     _showAllVariants.value = GetStorage().read(Const.PLL_SHOW_ALL_VARIANTS) ?? true;
     _variantsCount.value = GetStorage().read(Const.PLL_VARIANTS_COUNT) ?? 6;
+    pllTrainerItems = await _repository.getAllPllTrainer();
+    var quizVariants = pllTrainerItems.map((pllTrainerItem) =>
+        QuizVariant(pllTrainerItem.id, pllTrainerItem.customName, pllTrainerItem.isChecked)
+    ).toList();
+    print(quizVariants);
     super.onInit();
+  }
+
+  final RxList<PllTrainerItem> _pllTrainerItems = List().obs;
+  List<PllTrainerItem> get pllTrainerItems => _pllTrainerItems;
+  set pllTrainerItems(value) {
+    _pllTrainerItems.assignAll(value);
   }
 
   final _randomFrontSide = false.obs;

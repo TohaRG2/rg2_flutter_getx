@@ -12,7 +12,7 @@ class PllTrainerVariants {
       var imagePath = _images[index];
       var scramble = _scrambles[index];
       var customName = "$maximName ($intName)";
-      items.add(PllTrainerItem(intName, maximName, customName, customName, scramble, imagePath, true));
+      items.add(PllTrainerItem(intName, maximName, customName, customName, scramble, imagePath, true, id: index));
     });
     dao.insertItems(items);
   }

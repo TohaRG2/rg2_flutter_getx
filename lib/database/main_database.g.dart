@@ -249,10 +249,10 @@ class _$MainDao extends MainDao {
   }
 
   @override
-  Future<List<MainDBItem>> getPhasePages(String phase) async {
+  Future<List<MainDBItem>> getPhasePages(String phase, String submenu) async {
     return _queryAdapter.queryList(
-        'SELECT * FROM main WHERE phase = ? and url <> "submenu" ORDER BY ID',
-        arguments: <dynamic>[phase],
+        'SELECT * FROM main WHERE phase = ? and url <> ? ORDER BY ID',
+        arguments: <dynamic>[phase, submenu],
         mapper: (Map<String, dynamic> row) => MainDBItem(
             id: row['id'] as int,
             phase: row['phase'] as String,
@@ -269,9 +269,10 @@ class _$MainDao extends MainDao {
   }
 
   @override
-  Future<List<MainDBItem>> getSubMenuList() async {
+  Future<List<MainDBItem>> getSubMenuList(String submenu) async {
     return _queryAdapter.queryList(
-        'SELECT distinct * FROM main WHERE url = "submenu" ORDER BY ID',
+        'SELECT distinct * FROM main WHERE url = ? ORDER BY ID',
+        arguments: <dynamic>[submenu],
         mapper: (Map<String, dynamic> row) => MainDBItem(
             id: row['id'] as int,
             phase: row['phase'] as String,

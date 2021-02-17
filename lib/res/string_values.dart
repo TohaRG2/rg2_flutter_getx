@@ -112,5 +112,11 @@ class StrRes {
   static const pllTrainerSettingsVariantsCount = "Количество вариантов";
   static const pllTrainerSettingsRenameAlgButtonText = "Выбрать/переименовать алгоритмы...";
 
+  static const pllTrainerSettingsAlgorithmTitle = "Настройки PLL алгоритмов";
+  static const pllTrainerSettingsAlgorithmButton1 = "Стандартные названия";
+  static const pllTrainerSettingsAlgorithmButton2 = "Максимкины названия";
+  static const pllTrainerSettingsAlgorithmButton3 = "Сохранить текущие";
+  static const pllTrainerSettingsAlgorithmButton4 = "Загрузить сохраненные";
+
 
 }

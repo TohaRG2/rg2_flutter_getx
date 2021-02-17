@@ -242,6 +242,7 @@ class LearnController extends GetxController {
   //для корневых(основных) фаз backFrom будет возвращать null
   _loadBackPhases() async {
     var subMenusList = await _repo.getSubMenuList();
+    print(subMenusList);
     subMenusList.forEach((element) {
       backFrom[element.description] = element.phase;
     });
