@@ -8,6 +8,7 @@ import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/dialogs/favourites/favourite_dialog.dart';
 import 'package:rg2_flutter_getx/views/learn/detail/learn_detail_screen.dart';
 import 'package:rg2_flutter_getx/views/settings/settings_screen.dart';
+import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 
 class MainMenuItem extends StatelessWidget {
   final LearnController _learnController = Get.find();
@@ -22,8 +23,9 @@ class MainMenuItem extends StatelessWidget {
     var _accentColor = Theme.of(context).accentColor;
     var _primaryColor = Theme.of(context).primaryColor;
     var _imagePath = _learnController.getAssetFilePath(item.icon, item.phase);
+    //TODO переделать на использование card
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
       child: GestureDetector(
         child: Container(
           child: Material(

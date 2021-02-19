@@ -155,6 +155,7 @@ flutter:
     - assets/images/main3x3/adv_f2l/
     - assets/images/big_main/big_cubes/
     - assets/sounds/
+    - assets/images/trainers/pll_trainer/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

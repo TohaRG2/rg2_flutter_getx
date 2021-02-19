@@ -18,18 +18,19 @@ class PllSettingsController extends GetxController {
     _showAllVariants.value = GetStorage().read(Const.PLL_SHOW_ALL_VARIANTS) ?? true;
     _variantsCount.value = GetStorage().read(Const.PLL_VARIANTS_COUNT) ?? 6;
     pllTrainerItems = await _repository.getAllPllTrainer();
-    var quizVariants = pllTrainerItems.map((pllTrainerItem) =>
-        QuizVariant(pllTrainerItem.id, pllTrainerItem.customName, pllTrainerItem.isChecked)
-    ).toList();
-    print(quizVariants);
     super.onInit();
   }
 
-  final RxList<PllTrainerItem> _pllTrainerItems = List().obs;
+  final RxList<PllTrainerItem> _pllTrainerItems = List<PllTrainerItem>().obs;
   List<PllTrainerItem> get pllTrainerItems => _pllTrainerItems;
   set pllTrainerItems(value) {
     _pllTrainerItems.assignAll(value);
   }
+
+  List<QuizVariant> get quizVariants => pllTrainerItems.map((pllTrainerItem) =>
+      QuizVariant(pllTrainerItem.id, pllTrainerItem.customName, pllTrainerItem.isChecked)
+  ).toList();
+
 
   final _randomFrontSide = false.obs;
   bool get randomFrontSide => _randomFrontSide.value;
