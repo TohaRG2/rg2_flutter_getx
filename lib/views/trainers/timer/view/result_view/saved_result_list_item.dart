@@ -66,7 +66,7 @@ class SavedResultListItem extends StatelessWidget {
             ),
           ),
           onTap: () {
-            print("Нажали на элемент $_item");
+            //print("Нажали на элемент $_item");
             showEditCommentDialog();
           },
         ),
@@ -78,37 +78,38 @@ class SavedResultListItem extends StatelessWidget {
     var _textController = TextEditingController();
     _textController.text = _item.comment;
     return Get.defaultDialog(
-        title: StrRes.timerResultEditItemTitle,
-        content: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(UIHelper.SpaceMedium),
-            child: Column(
-              children: [
-                TextField(
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    hintText: StrRes.timerEditResultHint,
-                  ),
-                  maxLines: 2,
-                  controller: _textController,
+      title: StrRes.timerResultEditItemTitle,
+      content: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(UIHelper.SpaceMedium),
+          child: Column(
+            children: [
+              TextField(
+                autofocus: true,
+                decoration: InputDecoration(
+                  hintText: StrRes.timerEditResultHint,
                 ),
-              ],
-            ),
+                maxLines: 2,
+                controller: _textController,
+              ),
+            ],
           ),
         ),
-        buttonColor: Get.theme.secondaryHeaderColor,
+      ),
+      buttonColor: Get.theme.secondaryHeaderColor,
 
-        /// Кнопка Отмена
-        textCancel: StrRes.buttonCancelText,
-        cancelTextColor: Get.theme.primaryColor,
+      /// Кнопка Отмена
+      textCancel: StrRes.buttonCancelText,
+      cancelTextColor: Get.theme.primaryColor,
 
-        /// Кнопка ОК
-        textConfirm: StrRes.buttonOkText,
-        confirmTextColor: Get.theme.accentColor,
-        onConfirm: () => {
-          _controller.updateComment(_item, _textController.text),
-          Get.back()
-        });
+      /// Кнопка ОК
+      textConfirm: StrRes.buttonOkText,
+      confirmTextColor: Get.theme.accentColor,
+      onConfirm: () => {
+        _controller.updateComment(_item, _textController.text),
+        Get.back()
+      }
+    );
   }
 
   List<Widget> actions() => [

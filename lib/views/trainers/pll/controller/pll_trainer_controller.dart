@@ -31,8 +31,6 @@ class PllTrainerController extends GetxController {
         onTimeIsOverCallback: _onTimeIsOverCallback,
         timeForAnswerInSec: 5
     );
-    //TODO убрать задержку (отображение прелоадера)
-    await Future.delayed(Duration(seconds: 1), () {});
     isStartButtonEnabled = true;
   }
 

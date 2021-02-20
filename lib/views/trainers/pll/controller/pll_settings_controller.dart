@@ -9,7 +9,7 @@ class PllSettingsController extends GetxController {
   final Repository _repository = Get.find();
 
   @override
-  void onInit() async {
+  void onInit() {
     print("PllSettingsController init");
     _randomFrontSide.value = GetStorage().read(Const.RANDOM_FRONT_SIDE) ?? false;
     _twoSideRecognition.value = GetStorage().read(Const.TWO_SIDE_RECOGNITION) ?? false;
@@ -17,7 +17,6 @@ class PllSettingsController extends GetxController {
     _timeForAnswer.value = GetStorage().read(Const.PLL_TIME_FOR_ANSWER) ?? 6;
     _showAllVariants.value = GetStorage().read(Const.PLL_SHOW_ALL_VARIANTS) ?? true;
     _variantsCount.value = GetStorage().read(Const.PLL_VARIANTS_COUNT) ?? 6;
-    pllTrainerItems = await _repository.getAllPllTrainer();
     super.onInit();
   }
 
@@ -104,6 +103,69 @@ class PllSettingsController extends GetxController {
     }
   }
 
+  /// Для выбора алгоритмов
 
+  /// Загрузка данных по алгоритмам из базы
+  loadPllTrainerItems() async {
+    pllTrainerItems = await _repository.getAllPllTrainer();
+  }
+
+
+  /// Обновляем запись алгоритма
+  updatePllTrainerItem(PllTrainerItem item) {
+    //если снимаем галочку выбора, то делаем проверку, чтобы осталось не менее двух активных алгоритмов
+    var checkedBalance = pllTrainerItems.where((element) => element.isChecked).toList().length;
+    if (item.isChecked || checkedBalance >= 2) {
+      // чтобы обновить obs и перерисовался экран
+      pllTrainerItems[item.id] = item;
+      _repository.updatePllTrainerItem(item);
+    } else {
+      // т.к. item.isChecked по ссылке = pllTrainerItems[item.id].isChecked, то восстанавливаем значение на true
+      pllTrainerItems[item.id].isChecked = true;
+    }
+  }
+
+  /// Устанавливаем текущими только международные названия
+  selectInternationalNames() {
+    pllTrainerItems = pllTrainerItems.map((item) {
+      item.currentName = item.internationalName;
+      return item;
+    }).toList();
+    _repository.updatePllTrainerItems(pllTrainerItems);
+  }
+
+  /// Устанавливаем текущими только Максимкины названия
+  selectMaximNames() {
+    pllTrainerItems = pllTrainerItems.map((item) {
+      item.currentName = item.maximName;
+      return item;
+    }).toList();
+    _repository.updatePllTrainerItems(pllTrainerItems);
+  }
+
+  /// Устанавливаем текущими сохраненные названия
+  selectCustomNames() {
+    pllTrainerItems = pllTrainerItems.map((item) {
+      item.currentName = item.customName;
+      return item;
+    }).toList();
+    _repository.updatePllTrainerItems(pllTrainerItems);
+  }
+
+  /// Сохраняем текущие в кастомные
+  saveCurrentNames() {
+    pllTrainerItems = pllTrainerItems.map((item) {
+      item.customName = item.currentName;
+      return item;
+    }).toList();
+    _repository.updatePllTrainerItems(pllTrainerItems);
+  }
+
+  /// Обновляем текущее название для алгоритма
+  updateCurrentText(PllTrainerItem item, String newText) {
+    item.currentName = newText;
+    pllTrainerItems[item.id] = item;
+    _repository.updatePllTrainerItem(item);
+  }
 
 }

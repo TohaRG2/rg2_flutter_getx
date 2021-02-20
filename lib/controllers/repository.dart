@@ -125,4 +125,14 @@ class Repository extends GetxController {
   Future<List<PllTrainerItem>> getAllPllTrainer() async {
     return await _pllTrainerDao.getAllItems();
   }
+
+  Future<int> updatePllTrainerItem(PllTrainerItem item) async {
+    return await _pllTrainerDao.updateItem(item);
+  }
+
+  Future<int> updatePllTrainerItems(List<PllTrainerItem> items) async {
+    return await _pllTrainerDao.updateItems(items);
+  }
+
+
 }

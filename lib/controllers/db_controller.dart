@@ -102,6 +102,7 @@ class DBController extends GetxController {
     if (needInit) {
       await _initCubeTypes();
       await _initPhases();
+      await PllTrainerVariants.initDb(_mainBase.pllTrainerDao);
       //print("Init DB with db.dao");
       needInit = false;
     } else {
@@ -109,7 +110,6 @@ class DBController extends GetxController {
       //TODO Пока на время написания программы, будем пересоздавать базу каждый раз
       await _initCubeTypes();
       await _initPhases();
-      await PllTrainerVariants.initDb(_mainBase.pllTrainerDao);
       print("fillDB complete");
     }
 

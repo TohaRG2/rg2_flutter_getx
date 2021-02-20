@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
+import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 import 'package:rg2_flutter_getx/views/trainers/help/bottom_bar_with_back_button.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_settings_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/view/pll_select_view/pll_algorithm_selection_item.dart';
@@ -10,7 +12,7 @@ class PllAlgorithmSelectionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var backgroundColor = Get.theme.bottomAppBarColor;
+    _controller.loadPllTrainerItems();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -22,21 +24,23 @@ class PllAlgorithmSelectionView extends StatelessWidget {
       body: Container(
         child: Column(
           children: [
-            // Expanded(
-            //   child: buildPllList(),
-            // ),
+            Expanded(
+              child: buildPllList(),
+            ),
+            SizedBox(height: UIHelper.SpaceMini,),
             Row(
               children: [
-                buildButton1(context, backgroundColor),
-                buildButton2(context, backgroundColor),
+                buildButton(text: StrRes.pllTrainerSettingsAlgorithmButton1, onPressed: _controller.selectInternationalNames),
+                buildButton(text: StrRes.pllTrainerSettingsAlgorithmButton2, onPressed: _controller.selectMaximNames),
               ],
             ),
             Row(
               children: [
-                buildButton3(context, backgroundColor),
-                buildButton4(context, backgroundColor),
+                buildButton(text: StrRes.pllTrainerSettingsAlgorithmButton3, onPressed: _controller.saveCurrentNames),
+                buildButton(text: StrRes.pllTrainerSettingsAlgorithmButton4, onPressed: _controller.selectCustomNames),
               ],
             ),
+            SizedBox(height: UIHelper.SpaceMini,)
           ],
         ),
       ),
@@ -52,75 +56,39 @@ class PllAlgorithmSelectionView extends StatelessWidget {
       return ListView(
         controller: _scrollController,
         children: items.map((pllTrainerItem) =>
-          PllAlgorithmSelectionItem(item: pllTrainerItem),
+          PllAlgorithmSelectionItem(item: pllTrainerItem, onCheckBoxChange: _onCheckBoxChange, onTap: _onTapItem,),
         ).toList(),
       );
     });
   }
 
-  /// Кнопка Стандартные названия
-  Widget buildButton1(BuildContext context, Color backgroundColor) {
-    return Expanded(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 50.0),
-        child: RaisedButton(
-          color: Theme.of(context).primaryColor,
-          onPressed: () {
-            print("Стандартные названия");
-          },
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 0),
-            child: Text(
-              StrRes.pllTrainerSettingsAlgorithmButton1,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: backgroundColor),
-            ),
-          ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        ),
-      ),
-    );
+  /// Колбэк вызываемый при нажатии на чекбокс
+  /// на входе новое значение чекбокса и элемент для которого он изменен
+  _onCheckBoxChange(bool value, PllTrainerItem pllTrainerItem) {
+    pllTrainerItem.isChecked = value;
+    _controller.updatePllTrainerItem(pllTrainerItem);
   }
 
-
-  /// Кнопка Максимкины названия
-  Widget buildButton2(BuildContext context, Color backgroundColor) {
-    return Expanded(
-      child: Container(
-        //padding: EdgeInsets.symmetric(horizontal: 8.0),
-        child: RaisedButton(
-          color: Theme.of(context).primaryColor,
-          onPressed: () {
-            print("Максимкины названия");
-          },
-          child: Container(
-            //padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text(
-              StrRes.pllTrainerSettingsAlgorithmButton2,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: backgroundColor),
-            ),
-          ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        ),
-      ),
-    );
+  ///Колбэк вызваемый при нажатии на саму запись (изменяем текущее название)
+  _onTapItem(PllTrainerItem pllTrainerItem){
+    //print(pllTrainerItem);
+    showEditCommentDialog(pllTrainerItem);
   }
 
-  /// Кнопка Сохранить текущие
-  Widget buildButton3(BuildContext context, Color backgroundColor) {
+  /// Кнопка c надписью и колбэком
+  Widget buildButton({String text, Function onPressed}) {
     return Expanded(
       child: Container(
-        //padding: EdgeInsets.symmetric(horizontal: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
         child: FlatButton(
-          color: Theme.of(context).primaryColor,
+          color: Get.theme.primaryColor,
           onPressed: () {
-            print("Сохранить текущие");
+            onPressed();
           },
           child: Container(
-            //padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text(StrRes.pllTrainerSettingsAlgorithmButton3,
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: backgroundColor),
+            padding: const EdgeInsets.symmetric(vertical: UIHelper.SpaceMini),
+            child: Text(text,
+              textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: Get.theme.bottomAppBarColor),
             ),
           ),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -129,27 +97,42 @@ class PllAlgorithmSelectionView extends StatelessWidget {
     );
   }
 
-  /// Кнопка Загрузить сохраненные
-  Widget buildButton4(BuildContext context, Color backgroundColor) {
-    return Expanded(
-      child: Container(
-        //padding: EdgeInsets.symmetric(horizontal: 8.0),
-        child: FlatButton(
-          color: Theme.of(context).primaryColor,
-          onPressed: () {
-            print("Загрузить сохраненные");
-          },
-          child: Container(
-            //padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text(StrRes.pllTrainerSettingsAlgorithmButton4,
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: backgroundColor),
+  showEditCommentDialog(PllTrainerItem item) {
+    var _textController = TextEditingController();
+    _textController.text = item.currentName;
+    return Get.defaultDialog(
+        title: StrRes.timerResultEditItemTitle,
+        content: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(UIHelper.SpaceMedium),
+            child: Column(
+              children: [
+                TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    hintText: StrRes.timerEditResultHint,
+                  ),
+                  maxLines: 2,
+                  controller: _textController,
+                ),
+              ],
             ),
           ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
-      ),
+        buttonColor: Get.theme.secondaryHeaderColor,
+
+        /// Кнопка Отмена
+        textCancel: StrRes.buttonCancelText,
+        cancelTextColor: Get.theme.primaryColor,
+
+        /// Кнопка ОК
+        textConfirm: StrRes.buttonOkText,
+        confirmTextColor: Get.theme.accentColor,
+        onConfirm: () => {
+          _controller.updateCurrentText(item, _textController.text),
+          Get.back()
+        }
     );
   }
-
 
 }
