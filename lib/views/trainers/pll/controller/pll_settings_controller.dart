@@ -12,6 +12,7 @@ class PllSettingsController extends GetxController {
   void onInit() {
     print("PllSettingsController init");
     _randomFrontSide.value = GetStorage().read(Const.RANDOM_FRONT_SIDE) ?? false;
+    _randomAUF.value = GetStorage().read(Const.RANDOM_AUF) ?? false;
     _twoSideRecognition.value = GetStorage().read(Const.TWO_SIDE_RECOGNITION) ?? false;
     _isTimerEnabled.value = GetStorage().read(Const.IS_PLL_TIMER_ENABLED) ?? false;
     _timeForAnswer.value = GetStorage().read(Const.PLL_TIME_FOR_ANSWER) ?? 6;
@@ -26,16 +27,18 @@ class PllSettingsController extends GetxController {
     _pllTrainerItems.assignAll(value);
   }
 
-  List<QuizVariant> get quizVariants => pllTrainerItems.map((pllTrainerItem) =>
-      QuizVariant(pllTrainerItem.id, pllTrainerItem.customName, pllTrainerItem.isChecked)
-  ).toList();
-
-
   final _randomFrontSide = false.obs;
   bool get randomFrontSide => _randomFrontSide.value;
   set randomFrontSide(value) {
     _randomFrontSide.value = value;
     GetStorage().write(Const.RANDOM_FRONT_SIDE, value);
+  }
+
+  final _randomAUF = false.obs;
+  bool get randomAUF => _randomAUF.value;
+  set randomAUF(value) {
+    _randomAUF.value = value;
+    GetStorage().write(Const.RANDOM_AUF, value);
   }
 
   final _twoSideRecognition = false.obs;
@@ -53,7 +56,7 @@ class PllSettingsController extends GetxController {
   }
 
   final _timeForAnswer = 6.obs;
-  int get timeForAnswer => _timeForAnswer.value;
+  int get timeForAnswer => isTimerEnabled ? _timeForAnswer.value : 0;
   set timeForAnswer(value) {
     _timeForAnswer.value = value;
     GetStorage().write(Const.PLL_TIME_FOR_ANSWER, value);
@@ -167,5 +170,18 @@ class PllSettingsController extends GetxController {
     pllTrainerItems[item.id] = item;
     _repository.updatePllTrainerItem(item);
   }
+
+  /// Возвращает список текущих вариантов для игры (Номер, Текст, Возможность выбора варианта для загадывания)
+  List<QuizVariant> get _quizVariants => pllTrainerItems.map((pllTrainerItem) =>
+      QuizVariant(pllTrainerItem.id, pllTrainerItem.currentName, pllTrainerItem.isChecked)
+  ).toList();
+
+  /// Возвращает список международных вариантов для игры (Номер, Текст, Возможность выбора варианта для загадывания)
+  List<QuizVariant> get _internationalQuizVariants => pllTrainerItems.map((pllTrainerItem) =>
+      QuizVariant(pllTrainerItem.id, pllTrainerItem.internationalName, pllTrainerItem.isChecked)
+  ).toList();
+
+  /// Возвращаем список вариантов в зависимости от настройки
+  List<QuizVariant> getVariants() => showAllVariants ? _internationalQuizVariants : _quizVariants;
 
 }

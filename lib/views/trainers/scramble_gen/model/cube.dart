@@ -1,6 +1,10 @@
 import 'dart:core';
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
+import 'blind_cube_support_arrays.dart';
+
 ///
 /// Сущность для представления кубика
 ///
@@ -23,18 +27,26 @@ class Cube {
   static const List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
 
   /// Список из 6-ти текущих цветов в кубике (его центров)
-  List<int> get currentColors => _centersPositions.map((pos) => asList[pos]).toList();
+  List<int> get currentColorsNumbers => _centersPositions.map((pos) => asList[pos]).toList();
+
+  List<Color> get currentCenterColors => _centersPositions.map((e) => cubeColor[_cube[e]]).toList();
+  
+  /// номера элементов для 3хстороннего PLL
+  static const List<int> _3sideElements = [11, 14, 17, 45, 46, 47, 33, 30, 27];
+
+  /// возвращаем список из 9-ти цветов (верхних боковых элементов) для отображения PLL с 3-х сторон
+  List<Color> get threeSidePllColors => _3sideElements.map((e) => cubeColor[_cube[e]]).toList();
+
+  /// номера элементов для 2хстороннего PLL
+  static const List<int> _2sideElements = [45, 46, 47, 33, 30, 27];
+
+  /// возвращаем список из 6-ти цветов (верхних боковых элементов) для отображения PLL с 2-х сторон
+  List<Color> get twoSidePllColors => _2sideElements.map((e) => cubeColor[_cube[e]]).toList();
 
   /// Конструкторы
   Cube() {
     resetCube();
   }
-
-  // Cube.colored(List<int> colors) {
-  //   _setColorsSide(colors);
-  //   resetCube();
-  // }
-
 
   /// Устанавливаем цвета в кубике в зависимости от переданного параметра
   setDefaultColors(List<int> list) {
@@ -47,7 +59,7 @@ class Cube {
 
   /// Устанавливаем цвета в кубике по цветам текущих центров
   setDefaultColorsByCurrent() {
-    currentColors.asMap().forEach((index, colorNum) {
+    currentColorsNumbers.asMap().forEach((index, colorNum) {
         _defaultColorsSide[index] = colorNum;
     });
   }
@@ -234,7 +246,7 @@ class Cube {
 
   /// берем цвета из currentColors и обновляем их в _colorsSide, чтобы кубик сбрасывался уже к новому начальному состоянию
   updateDefaultColorsToCurrent() {
-    currentColors.asMap().forEach((index, value) {
+    currentColorsNumbers.asMap().forEach((index, value) {
       _defaultColorsSide[index] = value;
     });
   }
@@ -747,3 +759,14 @@ class Cube {
   }
 }
 
+///       Расположение элементов в кубике
+///
+///                0   1   2
+///                3   4   5
+///                6   7   8
+///    9  10  11  18  19  20  27  28  29  36  37  38
+///   12  13  14  21  22  23  30  31  32  39  40  41
+///   15  16  17  24  25  26  33  34  35  42  43  44
+///               45  46  47
+///               48  49  50
+///               51  52  53

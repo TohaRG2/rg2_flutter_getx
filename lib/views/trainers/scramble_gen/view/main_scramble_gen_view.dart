@@ -56,17 +56,19 @@ class ScrambleGenView extends StatelessWidget {
                   Table(
                     //border: TableBorder.all(width: 0.0, color: backgroundColor),
                     children: tableRows.map((row) =>
-                        TableRow(
-                          children: row.map((tableItem) =>
-                              Container(
-                                padding: EdgeInsets.all(border),
-                                color: (tableItem.colorNumber != 7) ? Colors.black87 : cubeColor[tableItem.colorNumber],
-                                child: Container(
-                                  height: cellHeight - (border * 2),
-                                  color: cubeColor[tableItem.colorNumber],
-                                ),
-                              )).toList(),
-                        )).toList(),
+                      TableRow(
+                        children: row.map((tableItem) =>
+                          Container(
+                            padding: EdgeInsets.all(border),
+                            color: (tableItem.colorNumber != 7) ? Colors.black87 : cubeColor[tableItem.colorNumber],
+                            child: Container(
+                              height: cellHeight - (border * 2),
+                              color: cubeColor[tableItem.colorNumber],
+                            ),
+                          )
+                        ).toList(),
+                      )
+                    ).toList(),
                   ),
                   ShowBlindDecision(blindDecision: blindDecision, controller: _controller, showDecision: showDecision,),
                 ],

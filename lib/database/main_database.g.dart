@@ -100,7 +100,7 @@ class _$MainDatabase extends MainDatabase {
         await database.execute(
             'CREATE TABLE IF NOT EXISTS `times` (`uuid` INTEGER PRIMARY KEY AUTOINCREMENT, `solvingTime` TEXT, `dateTime` INTEGER, `scramble` TEXT, `comment` TEXT)');
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `pll_trainer` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `internationalName` TEXT, `maximName` TEXT, `customName` TEXT, `currentName` TEXT, `scramble` TEXT, `imagePath` TEXT, `isChecked` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `pll_trainer` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `internationalName` TEXT, `maximName` TEXT, `customName` TEXT, `currentName` TEXT, `imagePath` TEXT, `isChecked` INTEGER)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -786,7 +786,6 @@ class _$PllTrainerDao extends PllTrainerDao {
                   'maximName': item.maximName,
                   'customName': item.customName,
                   'currentName': item.currentName,
-                  'scramble': item.scramble,
                   'imagePath': item.imagePath,
                   'isChecked':
                       item.isChecked == null ? null : (item.isChecked ? 1 : 0)
@@ -801,7 +800,6 @@ class _$PllTrainerDao extends PllTrainerDao {
                   'maximName': item.maximName,
                   'customName': item.customName,
                   'currentName': item.currentName,
-                  'scramble': item.scramble,
                   'imagePath': item.imagePath,
                   'isChecked':
                       item.isChecked == null ? null : (item.isChecked ? 1 : 0)
@@ -816,7 +814,6 @@ class _$PllTrainerDao extends PllTrainerDao {
                   'maximName': item.maximName,
                   'customName': item.customName,
                   'currentName': item.currentName,
-                  'scramble': item.scramble,
                   'imagePath': item.imagePath,
                   'isChecked':
                       item.isChecked == null ? null : (item.isChecked ? 1 : 0)
@@ -842,7 +839,6 @@ class _$PllTrainerDao extends PllTrainerDao {
             row['maximName'] as String,
             row['customName'] as String,
             row['currentName'] as String,
-            row['scramble'] as String,
             row['imagePath'] as String,
             row['isChecked'] == null ? null : (row['isChecked'] as int) != 0,
             id: row['id'] as int));

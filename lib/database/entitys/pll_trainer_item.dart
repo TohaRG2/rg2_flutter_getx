@@ -10,7 +10,6 @@ class PllTrainerItem {
   String maximName = "";
   String customName = "";
   String currentName = "";
-  String scramble = "";
   String imagePath = "";
   bool isChecked = true;
 
@@ -19,7 +18,6 @@ class PllTrainerItem {
   /// [maximName] - название от Максима Чечнева,
   /// [customName] - сохраненное пользовательское название,
   /// [currentName] - текущее название алгоритма (отображаемое),
-  /// [scramble] - алгоритм для получения ситуации из собранного состояния,
   /// [imagePath] - путь к картинке с ситуацией в ассетах,
   /// [isChecked] - может ли алгоритм быть загадан
   PllTrainerItem(
@@ -27,7 +25,6 @@ class PllTrainerItem {
       this.maximName,
       this.customName,
       this.currentName,
-      this.scramble,
       this.imagePath,
       this.isChecked,
       {this.id}

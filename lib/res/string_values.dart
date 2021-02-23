@@ -100,8 +100,10 @@ class StrRes {
   static const timerResultEditItemTitle = "Комментарий:";
 
   static const pllTrainerSettingsTitle = "Настройки";
-  static const pllTrainerSettingsWhatsTraining = "Что тренируем:";
-  static const pllTrainerSettingsRandomSide = "Случайная сторона";
+  static const pllTrainerSettingTrainingTitle = "Сложность тренировки:";
+  static const pllTrainerSettingsAUF = "Случайная сторона алгоритма";
+  static const pllTrainerSettingsRandomSide = "Случайная передняя сторона";
+  static const pllTrainerSettingsCubeView = "Внешний вид кубика:";
   static const pllTrainerSettings2SideRecognition = "Определение по 2-м сторонам";
   static const pllTrainerSettings3SideRecognition = "Определение по 3-м сторонам";
   static const pllTrainerSettingsEnableTimer = "Игра на время";
@@ -118,5 +120,10 @@ class StrRes {
   static const pllTrainerSettingsAlgorithmButton3 = "Сохранить текущие";
   static const pllTrainerSettingsAlgorithmButton4 = "Загрузить сохраненные";
 
-
+  static const pllTrainerPauseButtonText = "Пауза";
+  static const pllTrainerCancelButtonText = "Прервать";
+  static const pllTrainerContinueButtonText = "Далее";
+  static const pllTrainerRightTitle = "Правильно";
+  static const pllTrainerWrongTitle = "Неверно, это был - ";
+  static const pllTrainerTimeOverTitle = "Это был - ";
 }

@@ -224,7 +224,7 @@ class ScrambleGenController extends GetxController {
   void saveCurrentAzbukaSettings() {
     settingsColoredAzbuka = settingsCube.getColoredAzbuka();
     settingsCube.setDefaultColorsByCurrent();
-    mainCube.setDefaultColors(settingsCube.currentColors);
+    mainCube.setDefaultColors(settingsCube.currentColorsNumbers);
     updateMainCubePresentation();
   }
 

@@ -40,6 +40,7 @@ class Const {
 
   /// Настройки для PLL тренажера
   static const RANDOM_FRONT_SIDE = 'randomFrontSide';
+  static const RANDOM_AUF = 'randomAUF';
   static const TWO_SIDE_RECOGNITION = 'twoSideRecognition';
   static const IS_PLL_TIMER_ENABLED = 'isPllTimerEnabled';
   static const PLL_TIME_FOR_ANSWER = 'pllTimeForAnswer';

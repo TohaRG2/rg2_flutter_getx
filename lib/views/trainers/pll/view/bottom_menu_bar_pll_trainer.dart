@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
+import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_trainer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/view/settings_pll_trainer_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/settings_timer_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/view/result_view/results_view.dart';
 
 class PllTrainerBottomMenuBar extends StatelessWidget {
+  final PllTrainerController _controller = Get.find();
   PllTrainerBottomMenuBar({Key key,}) : super(key: key);
 
   @override
@@ -21,12 +23,12 @@ class PllTrainerBottomMenuBar extends StatelessWidget {
         switch (tappedItemIndex) {
         // Нажата кнопка "Назад"
           case 0:
-            Get.back();
+            if (_controller.exitTrainer()) Get.back();
             break;
         // Нажата кнопка "Настройки"
           case 1:
             Get.to(() => SettingsPllTrainerView(), transition: Transition.rightToLeft);
-            print("Нажали настройки");
+            _controller.exitTrainer();
             break;
           default:
             print("WARNING!!! selected bottom item - $tappedItemIndex");

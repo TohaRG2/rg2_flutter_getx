@@ -62,11 +62,22 @@ class SettingsPllTrainerView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
+                /// Сложность тренировки:
                 Container(
-                  child: Text(StrRes.pllTrainerSettingsWhatsTraining, style: Get.textTheme.headline5,)
+                  child: Text(StrRes.pllTrainerSettingTrainingTitle, style: Get.textTheme.headline5,)
                 ),
 
-                /// Случайная сторона
+                /// Случайная сторона PLL алгоритма
+                SwitchListTile(
+                  contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                  title: Text(StrRes.pllTrainerSettingsAUF, style: Get.textTheme.headline6,),
+                  value: _controller.randomAUF,
+                  onChanged: (v) {
+                    _controller.randomAUF = v;
+                  },
+                ),
+
+                /// Случайная передняя сторона
                 SwitchListTile(
                   contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                   title: Text(StrRes.pllTrainerSettingsRandomSide, style: Get.textTheme.headline6,),
@@ -74,30 +85,6 @@ class SettingsPllTrainerView extends StatelessWidget {
                   onChanged: (v) {
                     _controller.randomFrontSide = v;
                   },
-                ),
-
-                /// Выбор количества сторон
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  title: Text(StrRes.pllTrainerSettings2SideRecognition, style: Get.textTheme.headline6,),
-                  trailing: Radio(
-                    value: true,
-                    groupValue: _controller.twoSideRecognition,
-                    onChanged: (v) {
-                      _controller.twoSideRecognition = v;
-                    },
-                  ),
-                ),
-                ListTile(
-                  contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  title: Text(StrRes.pllTrainerSettings3SideRecognition, style: Get.textTheme.headline6,),
-                  trailing: Radio(
-                    value: false,
-                    groupValue: _controller.twoSideRecognition,
-                    onChanged: (v) {
-                      _controller.twoSideRecognition = v;
-                    },
-                  ),
                 ),
 
                 /// Игра на время
@@ -135,6 +122,37 @@ class SettingsPllTrainerView extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                ),
+
+                SizedBox(height: UIHelper.SpaceMedium,),
+
+                /// Внешний вид кубика:
+                Container(
+                    child: Text(StrRes.pllTrainerSettingsCubeView, style: Get.textTheme.headline5,)
+                ),
+
+                /// Выбор количества сторон
+                ListTile(
+                  contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                  title: Text(StrRes.pllTrainerSettings2SideRecognition, style: Get.textTheme.headline6,),
+                  trailing: Radio(
+                    value: true,
+                    groupValue: _controller.twoSideRecognition,
+                    onChanged: (v) {
+                      _controller.twoSideRecognition = v;
+                    },
+                  ),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                  title: Text(StrRes.pllTrainerSettings3SideRecognition, style: Get.textTheme.headline6,),
+                  trailing: Radio(
+                    value: false,
+                    groupValue: _controller.twoSideRecognition,
+                    onChanged: (v) {
+                      _controller.twoSideRecognition = v;
+                    },
                   ),
                 ),
 

@@ -56,6 +56,9 @@ dependencies:
   # Для удобной работы с датой/временем
   intl: ^0.16.1
 
+  # Индикатор оставшегося времени на ответ
+  percent_indicator: ^2.1.9+1
+
   cupertino_icons: ^1.0.0
 
 dev_dependencies:
@@ -78,6 +81,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/images/trainers/pll_cube_2side/
+    - assets/images/trainers/pll_cube_3side/
     - assets/images/trainers/timer/
     - assets/images/trainers/
     - assets/images/main_other3x3/ghost/
