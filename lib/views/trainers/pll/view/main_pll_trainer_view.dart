@@ -22,32 +22,29 @@ class MainPllTrainerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _controller.loadDataFromBase();
+    return Obx(() {
+      return _controller.showStartScreen ? buildStartScreen() : buildGameScreen();
+    });
+  }
+
+  /// Основное окно тренера
+  Widget buildStartScreen() {
     return Scaffold(
-      /// Основное окно тренера
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Center(
-          child: Text("PLL Trainer",
-            style: TextStyle(
-            color: Get.textTheme.headline5.color)),
-        )
+          child: Text(StrRes.pllTrainerTitle,
+              style: TextStyle(color: Get.textTheme.headline5.color)),
+        ),
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
 
-      /// Выбираем что отобразить, игру или начальный экрна с кнопкой
-      body: Obx(() {
-        return _controller.showStartScreen ? buildStartScreen() : buildGameScreen();
-      }),
+      /// Выбираем что отобразить, кнопку или прелоадер
+      body: _controller.isStartButtonEnabled
+          ? Center(child: startButton())
+          : Center(child: CircularProgressIndicator()),
 
       bottomNavigationBar: PllTrainerBottomMenuBar(),
-    );
-  }
-
-  /// Начальный экран с кнопкой "Начать"
-  Widget buildStartScreen() {
-    return Obx(
-      () => Center(
-        child: _controller.isStartButtonEnabled ? startButton() : CircularProgressIndicator(),
-      ),
     );
   }
 
@@ -68,54 +65,64 @@ class MainPllTrainerView extends StatelessWidget {
 
   /// Основной экран игры (стэк из основного экрана и экрана с результатами ответа
   Widget buildGameScreen() {
-    return Obx(() {
-      return Stack( children: [
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Stack(children: [
         buildMainGame(),
         Visibility(
-          visible: _controller.isShowResultEnabled,
-          child: buildResultScreen()
-        ),
-      ]);
-    });
+            visible: _controller.isShowResultEnabled, child: buildResultScreen()),
+      ]),
+    );
   }
+
+  Future<bool> _onWillPop() async {
+    return _controller.exitTrainer();
+  }
+
 
   /// Основной экран игры с индикатором, количеством ответов, кубиком и кнопками с вариантами
   Widget buildMainGame() {
     var is2side = _controller.twoSideRecognition;
     var showAllVariants = _controller.showAllVariants;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
-      child: Column(
-        children: [
-          // Индикатор оставшего времени
-          Obx(() {
-            var _color = _controller.quizGame.timerProgress < 0.25 ? Colors.red : Colors.green;
-            return LinearPercentIndicator(
-              //width: Get.size.width,
-              lineHeight: 5.0,
-              percent: _controller.quizGame.timerProgress,
-              linearStrokeCap: LinearStrokeCap.roundAll,
-              progressColor: _color,
-            );
-          }),
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
+          child: Column(
+            children: [
+              // Индикатор оставшего времени
+              Obx(() {
+                var _color = _controller.quizGame.timerProgress < 0.25 ? Colors.red : Colors.green;
+                return LinearPercentIndicator(
+                  //width: Get.size.width,
+                  lineHeight: 5.0,
+                  percent: _controller.quizGame.timerProgress,
+                  linearStrokeCap: LinearStrokeCap.roundAll,
+                  progressColor: _color,
+                );
+              }),
 
-          // Счет
-          buildTrainerCounts(),
+              // Счет
+              buildTrainerCounts(),
 
-          // Подсказка
-          Row(children: [Text("${_controller.hint}")]),
+              // Подсказка
+              Row(children: [Text("${_controller.hint}")]),
 
-          // Изображение кубика
-          Expanded(
-            child: Container(
-              child: Center(
-                  child: is2side ? _controller.cubeImage.getPll2SideImage() : _controller.cubeImage.getPll3SideImage()
-              ),
-          )),
+              // Изображение кубика
+              Expanded(
+                child: Container(
+                  child: Center(
+                      child: is2side ? _controller.cubeImage.getPll2SideImage() : _controller.cubeImage.getPll3SideImage()
+                  ),
+              )),
 
-          // ряд кнопок с ответами
-          (showAllVariants) ? buildTableWith21Button() : buildTableWithCustomButtons(),
-        ],
+              // ряд кнопок с ответами
+              (showAllVariants) ? buildTableWith21Button() : buildTableWithCustomButtons(),
+
+              SizedBox(height: UIHelper.SpaceSmall,),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -230,7 +237,7 @@ class MainPllTrainerView extends StatelessWidget {
           color: imageColor,
         ),
         SizedBox(height: UIHelper.SpaceSmall,),
-        Text(message, style: Get.textTheme.headline4,),
+        Text(message, style: Get.textTheme.headline4, softWrap: true, textAlign: TextAlign.center, ),
         SizedBox(height: UIHelper.SpaceSmall,),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -288,40 +295,29 @@ class MainPllTrainerView extends StatelessWidget {
   }
 
   /// Табличка из N-кнопок
-  //TODO Доделать: не обновлять кнопки каждую секунду, цвет шапки в тренажере, цвета кнопок, убрирать подвал и шапку при игре
   Widget buildTableWithCustomButtons() {
-    var list = _controller.getListOfVariants();
-    print("list = $list");
-    List<TableRow> rows = [];
-    for (var i = 0; i < list.length; i+=2) {
-      rows.add(TableRow(
-          children: [
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: _horizontalBorder, vertical: _verticalBorder),
-              child: FlatButton(
-                color: Get.theme.primaryColor,
-                child: Text("${list[i]}", softWrap: true, textAlign: TextAlign.center,),
-                onPressed: () {
-                  _controller.checkAnswerByString(list[i]);
-                },
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: _horizontalBorder, vertical: _verticalBorder),
-              child: FlatButton(
-                color: Get.theme.primaryColor,
-                child: Text("${list[i+1]}", softWrap: true, textAlign: TextAlign.center,),
-                onPressed: () {
-                  _controller.checkAnswerByString(list[i+1]);
-                },
-              ),
-            ),
-          ]
-      ));
-    }
-    print("rows Complete");
+    var _tableRows = _controller.textForButtons;
     return Table(
-      children: rows,
+      children: _tableRows.map((row) =>
+          TableRow(
+            children: row.map((text) =>
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: _horizontalBorder, vertical: _verticalBorder),
+                  child: FlatButton(
+                    color: Get.theme.primaryColor,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 3.0),
+                      child: Text("$text", softWrap: true, textAlign: TextAlign.center,)
+                    ),
+                    onPressed: () {
+                      _controller.checkAnswerByString(text);
+                    },
+                  ),
+                )
+            ).toList(),
+          ),
+      ).toList(),
     );
   }
 

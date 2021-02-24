@@ -56,7 +56,7 @@ class LearnViewPager extends StatelessWidget {
               ),
               body: WillPopScope(
                 // Обработчик нажатия на Back в андродид
-                onWillPop: onWillPop,
+                onWillPop: _onWillPop,
                 child: TabBarView(
                   controller: _tabController,
                   //Прокрутка свайпами в зависимости от настроек программы
@@ -73,7 +73,7 @@ class LearnViewPager extends StatelessWidget {
   }
 
   //Возвращаем true, если надо дальше продолжать обрабатывать нажатие, т.е. выход из программы
-  Future<bool> onWillPop() async {
+  Future<bool> _onWillPop() async {
     //print("Back pressed");
     return _learnController.canReturnToOnePhaseBack();
   }

@@ -120,10 +120,11 @@ class StrRes {
   static const pllTrainerSettingsAlgorithmButton3 = "Сохранить текущие";
   static const pllTrainerSettingsAlgorithmButton4 = "Загрузить сохраненные";
 
+  static const pllTrainerTitle = "PLL тренажер";
   static const pllTrainerPauseButtonText = "Пауза";
   static const pllTrainerCancelButtonText = "Прервать";
   static const pllTrainerContinueButtonText = "Далее";
   static const pllTrainerRightTitle = "Правильно";
-  static const pllTrainerWrongTitle = "Неверно, это был - ";
-  static const pllTrainerTimeOverTitle = "Это был - ";
+  static const pllTrainerWrongTitle = "Неверно, это - ";
+  static const pllTrainerTimeOverTitle = "Это - ";
 }

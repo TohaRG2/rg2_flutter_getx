@@ -36,10 +36,10 @@ class PllTrainerController extends GetxController {
 
   QuizGame quizGame;
   CubeImage cubeImage;
+  List<List<String>> textForButtons = List();
 
   bool get twoSideRecognition => _settingsController.twoSideRecognition;
   bool get showAllVariants => _settingsController.showAllVariants;
-
 
   /// Методы
 
@@ -75,12 +75,21 @@ class PllTrainerController extends GetxController {
     var randomFS = _settingsController.randomFrontSide;
     cubeImage = CubeImage(id: correctAnswer.id, randomAUF: randomAUF, randomFrontSide: randomFS);
     hint = correctAnswer.value;
+    textForButtons = _getListOfVariants();
     print("Загадали $correctAnswer");
   }
 
   /// Возвращаем список из нескольких случайных вариантов и правильного на случайном месте
-  List<String> getListOfVariants() {
-    return quizGame.getListOfVariants(_settingsController.variantsCount).map((e) => e.value).toList();
+  /// в виде списка списков по 2 элемента (2 столбца для ввода кнопок)
+  List<List<String>> _getListOfVariants() {
+    List<List<String>> result = List();
+    var count = _settingsController.variantsCount;
+    var variants = quizGame.getListOfVariants(count).map((e) => e.value).toList();
+    for (var i = 0; i < variants.length; i += 2) {
+      var row = variants.getRange(i, i + 2).toList();
+      result.add(row);
+    }
+    return result;
   }
 
   /// Создаем новую игру с параметрами из настроек
