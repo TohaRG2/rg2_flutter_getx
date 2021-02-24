@@ -116,9 +116,9 @@ class PllSettingsController extends GetxController {
 
   /// Обновляем запись алгоритма
   updatePllTrainerItem(PllTrainerItem item) {
-    //если снимаем галочку выбора, то делаем проверку, чтобы осталось не менее двух активных алгоритмов
+    //если снимаем галочку выбора, то делаем проверку, чтобы осталось не менее трех активных алгоритмов
     var checkedBalance = pllTrainerItems.where((element) => element.isChecked).toList().length;
-    if (item.isChecked || checkedBalance >= 2) {
+    if (item.isChecked || checkedBalance >= 3) {
       // чтобы обновить obs и перерисовался экран
       pllTrainerItems[item.id] = item;
       _repository.updatePllTrainerItem(item);
