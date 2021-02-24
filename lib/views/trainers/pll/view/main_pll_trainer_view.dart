@@ -75,10 +75,10 @@ class MainPllTrainerView extends StatelessWidget {
     );
   }
 
+  /// Обрабатываем нажатие физической кнопки назад во время игры
   Future<bool> _onWillPop() async {
     return _controller.exitTrainer();
   }
-
 
   /// Основной экран игры с индикатором, количеством ответов, кубиком и кнопками с вариантами
   Widget buildMainGame() {
