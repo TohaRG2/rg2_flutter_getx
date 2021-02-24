@@ -10,12 +10,18 @@ class SettingsController extends GetxController {
   var textScaleFactor = 1.0.obs;
   var isStartHelpEnabled = true.obs;
   var isSwipeEnabled = true.obs;
-  var isPurchaseEnabled = false.obs;
   var internetUsage = 0.obs;
   var bottomItem = 1.obs;
   var currentPageNumber = 2.obs;
   var currentInfoPageNumber = 0.obs;
-  
+
+  var _isPurchaseEnabled = false.obs;
+  bool get isPurchaseEnabled => _isPurchaseEnabled.value;
+  set isPurchaseEnabled(value) {
+    _isPurchaseEnabled.value = value;
+    GetStorage().write(Const.IS_PURCHASE_ENABLED, value);
+  }
+
   var _godMode = false.obs;
   bool get godMode => _godMode.value;       // геттер public
   set __godMode(value) {                    // сеттер private
@@ -47,8 +53,7 @@ class SettingsController extends GetxController {
     bool _isSwipeEnabled = GetStorage().read(Const.IS_SWIPE_ENABLED) ?? true;
     isSwipeEnabled.value = _isSwipeEnabled;
 
-    bool _isPurchaseEnabled = GetStorage().read(Const.IS_PURCHASE_ENABLED) ?? false;
-    isPurchaseEnabled.value = _isPurchaseEnabled;
+    _isPurchaseEnabled.value = GetStorage().read(Const.IS_PURCHASE_ENABLED) ?? false;
 
     int _internetUsage = GetStorage().read(Const.INTERNET_USING) ?? 0;
     internetUsage.value = _internetUsage;
@@ -89,10 +94,6 @@ class SettingsController extends GetxController {
 
     ever(isSwipeEnabled, (v) {
       GetStorage().write(Const.IS_SWIPE_ENABLED, v);
-    });
-
-    ever(isPurchaseEnabled, (v) {
-      GetStorage().write(Const.IS_PURCHASE_ENABLED, v);
     });
 
     ever(internetUsage, (v) {

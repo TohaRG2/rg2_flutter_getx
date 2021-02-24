@@ -31,9 +31,9 @@ class PurchaseSettings extends StatelessWidget {
                 StrRes.settingsPurchaseMenuText,
                 style: Get.textTheme.headline6,
               ),
-              value: _settings.isPurchaseEnabled.value,
+              value: _settings.isPurchaseEnabled,
               onChanged: (v) {
-                _settings.isPurchaseEnabled.value = v;
+                _settings.isPurchaseEnabled = v;
               },
             ),
           ]),

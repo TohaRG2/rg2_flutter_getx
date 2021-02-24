@@ -18,7 +18,8 @@ class MenuList extends StatelessWidget {
   Widget build(BuildContext context) {
     var position = _learnController.getPositionForPage(pageNumber);
     var _scrollController = ScrollController(initialScrollOffset: position);
-    var _isPurchaseEnabled = _settingsController.isPurchaseEnabled.value;
+    var _isPurchaseEnabled = _settingsController.isPurchaseEnabled;
+    var _godMode = _settingsController.godMode;
 
     _scrollController.addListener(() {
       _learnController.curPositionInList = _scrollController.offset;
@@ -36,7 +37,7 @@ class MenuList extends StatelessWidget {
         children: items.map((listItem) =>
           MainMenuItem(
               item: listItem,
-              isItemEnabled: (_isPurchaseEnabled || pageNumber < 3)
+              isItemEnabled: (_isPurchaseEnabled || pageNumber < 3 || _godMode)
           )
         ).toList(),
       );

@@ -19,7 +19,7 @@ class HelpSettings extends StatelessWidget {
           /// Подсказки по программе, при 5-ти кратном нажатии режим разработчика
           GestureDetector(
             child: Text(
-              _settings.godMode ? "${StrRes.miniHelpSettingsText}+" : StrRes.miniHelpSettingsText,
+              _settings.godMode ? "${StrRes.miniHelpSettingsText} +" : StrRes.miniHelpSettingsText,
               style: Get.textTheme.headline5,
             ),
             onTap: () {

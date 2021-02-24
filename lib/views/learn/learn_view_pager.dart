@@ -37,13 +37,12 @@ class LearnViewPager extends StatelessWidget {
             }
             return Scaffold(
               appBar: AppBar(
-                title: Center(
-                    child: Text(
-                        "${StrRes.learnTitle}",
-                        style: TextStyle(
-                            color: Get.textTheme.headline5.color),
-                    )),
-                //backgroundColor: Theme.of(context).primaryColor,
+              title: Center(
+                child: Text(
+                  "${StrRes.learnTitle}",
+                  style: TextStyle(color: Get.textTheme.headline5.color),
+              )),
+              //backgroundColor: Theme.of(context).primaryColor,
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 bottom: TabBar(
                   indicatorWeight: 3.0,
