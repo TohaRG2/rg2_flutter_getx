@@ -13,6 +13,7 @@ class Const {
   static const CURRENT_PAGE_NUMBER = 'currentPageNumber';
   static const CURRENT_INFO_PAGE_NUMBER = 'currentInfoPageNumber';
   static const FAVOURITES = 'FAVOURITES';
+  static const GOD_MODE = 'godMode';
 
   /// Настройки генератора скрамблов
   static const IS_EDGE_ENABLED = 'isEdgeEnabled';

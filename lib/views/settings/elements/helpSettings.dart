@@ -10,14 +10,21 @@ class HelpSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var clickCount = 0;
     return Obx(
       () => Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            StrRes.miniHelpSettingsText,
-            style: Get.textTheme.headline5,
+          /// Подсказки по программе, при 5-ти кратном нажатии режим разработчика
+          GestureDetector(
+            child: Text(
+              _settings.godMode ? "${StrRes.miniHelpSettingsText}+" : StrRes.miniHelpSettingsText,
+              style: Get.textTheme.headline5,
+            ),
+            onTap: () {
+              _settings.tryChangeGodMode();
+            },
           ),
           SizedBox(
             height: UIHelper.SpaceSmall,

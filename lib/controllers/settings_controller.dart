@@ -15,10 +15,20 @@ class SettingsController extends GetxController {
   var bottomItem = 1.obs;
   var currentPageNumber = 2.obs;
   var currentInfoPageNumber = 0.obs;
+  
+  var _godMode = false.obs;
+  bool get godMode => _godMode.value;       // геттер public
+  set __godMode(value) {                    // сеттер private
+    _godMode.value = value;
+    GetStorage().write(Const.GOD_MODE, value);
+  }
+  var _godCount = 0;
 
   @override
   void onInit() {
     print("onInit Start");
+    _godMode.value = GetStorage().read(Const.GOD_MODE) ?? false;
+    
     int _primaryColor = GetStorage().read(Const.PRIMARY_COLOR) ?? Colors.orange[600].value;
     primaryThemeColor.value = Color(_primaryColor);
 
@@ -121,4 +131,20 @@ class SettingsController extends GetxController {
     );
     Get.changeTheme(theme);
   }
+
+  tryChangeGodMode() {
+    if (_godCount == 5) {
+      _godCount++;
+      __godMode = !godMode;
+    } else {
+      _godCount++;
+      _delayedResetGodCount();
+    }
+  }
+  
+  _delayedResetGodCount() async {
+    await Future.delayed(Duration(milliseconds: 2500), () {});
+    _godCount = 0;
+  }
+  
 }

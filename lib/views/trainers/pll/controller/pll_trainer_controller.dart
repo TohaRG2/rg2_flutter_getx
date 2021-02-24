@@ -76,7 +76,7 @@ class PllTrainerController extends GetxController {
     cubeImage = CubeImage(id: correctAnswer.id, randomAUF: randomAUF, randomFrontSide: randomFS);
     hint = correctAnswer.value;
     textForButtons = _getListOfVariants();
-    print("Загадали $correctAnswer");
+    print("Загадали $correctAnswer, rndFS - $randomFS, AUF - $randomAUF");
   }
 
   /// Возвращаем список из нескольких случайных вариантов и правильного на случайном месте

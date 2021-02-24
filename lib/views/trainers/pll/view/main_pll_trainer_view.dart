@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_trainer_controller.dart';
@@ -8,6 +9,7 @@ import 'package:rg2_flutter_getx/views/trainers/pll/view/bottom_menu_bar_pll_tra
 
 class MainPllTrainerView extends StatelessWidget {
   final PllTrainerController _controller = Get.find();
+  final SettingsController _settingsController = Get.find();
 
   final List<String> _pllButtonsNamesRow1 = ["Ga", ""  , "Y" , "F" , "H" , "E" ];
   final List<String> _pllButtonsNamesRow2 = ["Gb", "Na", "Ra", "Ja", "Ua", "Aa"];
@@ -106,11 +108,15 @@ class MainPllTrainerView extends StatelessWidget {
               buildTrainerCounts(),
 
               // Подсказка
-              Row(children: [Text("${_controller.hint}")]),
+              Visibility(
+                visible: _settingsController.godMode,
+                child: Row(children: [Text("${_controller.hint}")])
+              ),
 
               // Изображение кубика
               Expanded(
                 child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Center(
                       child: is2side ? _controller.cubeImage.getPll2SideImage() : _controller.cubeImage.getPll3SideImage()
                   ),

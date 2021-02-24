@@ -14,21 +14,22 @@ class CubeImage {
       id = 0;
       print("Задан некорректный id pll алгоритма, будет равен 0");
     }
-
+    // генерируем случайный поворот верхней грани и применяем если нужно
     var rndStrAUF = "";
     for (var i = 0; i < Random().nextInt(3); i++) {
       rndStrAUF += "U ";
     }
     var aufTurn = randomAUF ? rndStrAUF : "";
 
+    // генерируем случайный разворот кубика и применяем если надо
     var rndFS = "";
     for (var i = 0; i < Random().nextInt(3); i++) {
       rndFS += "y ";
     }
+    var turnFS = randomFrontSide ? rndFS : "";
 
     _cube = Cube();
-    var scramble = "z2 y\' $rndFS ${_scrambles[id]} $aufTurn";
-    print("Scramble - $scramble");
+    var scramble = "z2 y\' $turnFS ${_scrambles[id]} $aufTurn";
     _cube.executeScramble(scramble);
   }
 
