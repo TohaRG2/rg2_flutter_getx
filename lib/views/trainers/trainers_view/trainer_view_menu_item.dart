@@ -3,19 +3,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/trainers_controller.dart';
 import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
+import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 
 class TrainerViewMenuItem extends StatelessWidget {
-  final TrainersController _controller = Get.find();
   final TrainerMenuItem item;
   final Function(TrainerMenuItem) onItemSelected;
   final Function(TrainerMenuItem) onHelpSelected;
   final Function(TrainerMenuItem) onSettingsSelected;
+
+  final double _iconWidth = 30.0;
 
   TrainerViewMenuItem({this.item, this.onItemSelected, this.onHelpSelected, this.onSettingsSelected});
 
   @override
   Widget build(BuildContext context) {
     var _primaryColor = Theme.of(context).primaryColor;
+
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
@@ -40,7 +43,7 @@ class TrainerViewMenuItem extends StatelessWidget {
                 ),
                 Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceSmall),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -56,8 +59,8 @@ class TrainerViewMenuItem extends StatelessWidget {
                 /// Обрабатываем нажатия на кнопки подсказок
                 GestureDetector(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(item.getIcHelpPath(), width: 30, color: _primaryColor),
+                    padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMedium),
+                    child: Image.asset(item.getIcHelpPath(), width: _iconWidth, color: _primaryColor),
                   ),
                   onTap: () {
                     onHelpSelected(item);
@@ -66,8 +69,8 @@ class TrainerViewMenuItem extends StatelessWidget {
                 /// Обрабатываем нажатия на кнопки настроеек
                 GestureDetector(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(item.getIcSettingsPath(), width: 30, color: _primaryColor),
+                    padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMedium),
+                    child: Image.asset(item.getIcSettingsPath(), width: _iconWidth, color: _primaryColor),
                   ),
                   onTap: (){
                     onSettingsSelected(item);

@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/trainers_controller.dart';
 import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
+import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/view/main_azbuka_trainer_view.dart';
+import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/view/settings_azbuka_trainer_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/view/main_pll_trainer_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/view/settings_pll_trainer_view.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/main_scramble_gen_view.dart';
@@ -58,6 +60,7 @@ class TrainersScreen extends StatelessWidget {
         break;
       case StrRes.trainersAzbuka:
         print("Start AZBUKA trainer");
+        Get.to(() => MainAzbukaTrainerView(), transition: Transition.fadeIn);
         break;
       default:
         print("Warning!!! Pressed on ${item.title}");
@@ -81,7 +84,7 @@ class TrainersScreen extends StatelessWidget {
         Get.to(() => SettingsPllTrainerView(), transition: Transition.rightToLeft);
         break;
       case StrRes.trainersAzbuka:
-        print("Settings AZBUKA trainer");
+        Get.to(() => SettingsAzbukaTrainerView(), transition: Transition.rightToLeft);
         break;
       default:
         print("Warning!!! Pressed on settings on ${item.title}");

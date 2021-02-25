@@ -127,4 +127,6 @@ class StrRes {
   static const pllTrainerRightTitle = "Правильно";
   static const pllTrainerWrongTitle = "Неверно, это - ";
   static const pllTrainerTimeOverTitle = "Это - ";
+
+  static const azbukaTrainerTitle = "Тренажер азбуки";
 }

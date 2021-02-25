@@ -48,4 +48,10 @@ class Const {
   static const PLL_SHOW_ALL_VARIANTS = 'pllShowAllVariants';
   static const PLL_VARIANTS_COUNT = 'pllVariantsCount';
 
+  /// Настройки для тренажера азбуки блайндов
+  static const IS_AZBUKA_CORNER_ENABLED = 'isAzbukaCornerEnabled';
+  static const IS_AZBUKA_EDGE_ENABLED = 'isAzbukaEdgeEnabled';
+  static const IS_AZBUKA_TIMER_ENABLED = 'isAzbukaTimerEnabled';
+  static const AZBUKA_TIME_FOR_ANSWER = 'azbukaTimeForAnswer';
+
 }
