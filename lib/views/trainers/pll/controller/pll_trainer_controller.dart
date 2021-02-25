@@ -7,7 +7,7 @@ import 'package:rg2_flutter_getx/views/trainers/pll/model/quiz_game.dart';
 class PllTrainerController extends GetxController {
   final PllSettingsController _settingsController = Get.find();
 
-  PllState _state = PllState.INIT;
+  TrainerState _state = TrainerState.INIT;
   ResultVariant answerResult = ResultVariant.UNKNOWN;
 
   final _showStartScreen = true.obs;
@@ -59,7 +59,7 @@ class PllTrainerController extends GetxController {
   /// Можем ли выйти из тренажера, true - если уже находимся на начальном экране, а значит можем спокойно выйти
   bool exitTrainer() {
     var result = false;
-    if (_state != PllState.START_SCREEN) {
+    if (_state != TrainerState.START_SCREEN) {
       _stateStartScreen();
     } else {
       result = true;
@@ -104,7 +104,7 @@ class PllTrainerController extends GetxController {
 
   /// Колбэк обработки TimeOver
   _onTimeIsOverCallback() {
-    if (_state == PllState.WAIT_ANSWER && quizGame.timerProgress == 0.0) {
+    if (_state == TrainerState.WAIT_ANSWER && quizGame.timerProgress == 0.0) {
       // Выводим диалог окончания времени
       _stateShowTimeIsOver();
       // Переводим в режим без автонажатия кнопки
@@ -129,7 +129,7 @@ class PllTrainerController extends GetxController {
 
   /// Переводим в паузу или на стартовый экран
   pauseOrResetTrainer() {
-    if (_state != PllState.PAUSED) {
+    if (_state != TrainerState.PAUSED) {
       _statePaused();
     } else {
       _stateStartScreen();
@@ -141,7 +141,7 @@ class PllTrainerController extends GetxController {
 
   _stateInit() {
     print("state Init");
-    _state = PllState.INIT;
+    _state = TrainerState.INIT;
     isStartButtonEnabled = false;
     showStartScreen = true;
     isShowResultEnabled = false;
@@ -150,7 +150,7 @@ class PllTrainerController extends GetxController {
 
   _stateStartScreen() {
     print("state StartScreen");
-    _state = PllState.START_SCREEN;
+    _state = TrainerState.START_SCREEN;
     isStartButtonEnabled = true;
     showStartScreen = true;
     isShowResultEnabled = false;
@@ -159,7 +159,7 @@ class PllTrainerController extends GetxController {
 
   _stateWaitAnswer() {
     print("state WaitAnswer");
-    _state = PllState.WAIT_ANSWER;
+    _state = TrainerState.WAIT_ANSWER;
     isStartButtonEnabled = false;
     showStartScreen = false;
     isShowResultEnabled = false;
@@ -168,7 +168,7 @@ class PllTrainerController extends GetxController {
 
   _stateShowRightResult() {
     print("state ShowRightResult");
-    _state = PllState.SHOW_RESULT;
+    _state = TrainerState.SHOW_RESULT;
     isStartButtonEnabled = false;
     showStartScreen = false;
     isShowResultEnabled = true;
@@ -178,7 +178,7 @@ class PllTrainerController extends GetxController {
 
   _stateShowWrongResult() {
     print("state ShowWrongResult");
-    _state = PllState.SHOW_RESULT;
+    _state = TrainerState.SHOW_RESULT;
     isStartButtonEnabled = false;
     showStartScreen = false;
     isShowResultEnabled = true;
@@ -188,7 +188,7 @@ class PllTrainerController extends GetxController {
 
   _stateShowTimeIsOver() {
     print("state ShowTimeIsOver");
-    _state = PllState.SHOW_RESULT;
+    _state = TrainerState.SHOW_RESULT;
     isStartButtonEnabled = false;
     showStartScreen = false;
     isShowResultEnabled = true;
@@ -215,7 +215,7 @@ class PllTrainerController extends GetxController {
 
   _statePaused() {
     print("state Paused");
-    _state = PllState.PAUSED;
+    _state = TrainerState.PAUSED;
     isStartButtonEnabled = false;
     showStartScreen = false;
     isShowResultEnabled = true;
@@ -225,7 +225,7 @@ class PllTrainerController extends GetxController {
 
 }
 
-enum PllState {
+enum TrainerState {
   INIT,
   START_SCREEN,
   WAIT_ANSWER,
