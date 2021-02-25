@@ -22,7 +22,7 @@ class SettingsPllTrainerView extends StatelessWidget {
         backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
       body: Obx(() {
-        /// Обработчик нажатий на кнопки изменений частоты метронома
+        /// Обработчик нажатий на кнопки изменений времени ответа на вопрос
         // создаем пустой обработчик
         var _onChangeTimerEnabled;
         if (_controller.isTimerEnabled) {
@@ -64,7 +64,7 @@ class SettingsPllTrainerView extends StatelessWidget {
               children: [
                 /// Сложность тренировки:
                 Container(
-                  child: Text(StrRes.pllTrainerSettingTrainingTitle, style: Get.textTheme.headline5,)
+                  child: Text(StrRes.pllTrainerSettingsTrainingTitle, style: Get.textTheme.headline5,)
                 ),
 
                 /// Случайная сторона PLL алгоритма

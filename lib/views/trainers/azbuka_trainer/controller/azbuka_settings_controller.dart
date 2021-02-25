@@ -43,4 +43,24 @@ class AzbukaSettingsController extends GetxController {
     GetStorage().write(Const.AZBUKA_TIME_FOR_ANSWER, value);
   }
 
+
+  /// Методы
+
+  decreaseTimerTime() {
+    if (timeForAnswer > 1) {
+      timeForAnswer--;
+    }
+  }
+
+  increaseTimerTime() {
+    if (timeForAnswer < 30) {
+      timeForAnswer++;
+    }
+  }
+
+  resetTimerTime() {
+    timeForAnswer = 6;
+  }
+
+
 }

@@ -6,6 +6,8 @@ import 'package:rg2_flutter_getx/controllers/learn_detail_controller.dart';
 import 'package:rg2_flutter_getx/controllers/trainers_controller.dart';
 import 'package:rg2_flutter_getx/controllers/youtube_controller.dart';
 import 'package:rg2_flutter_getx/views/dialogs/favourites/favourite_dialog.dart';
+import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/controller/azbuka_settings_controller.dart';
+import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/controller/azbuka_trainer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_settings_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_trainer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
@@ -113,5 +115,7 @@ class RG2App extends StatelessWidget {
     Get.put(ResultViewController());
     Get.put(PllSettingsController());
     Get.put(PllTrainerController());
+    Get.put(AzbukaTrainerController());
+    Get.put(AzbukaSettingsController());
   }
 }

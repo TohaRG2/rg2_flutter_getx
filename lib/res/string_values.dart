@@ -100,7 +100,7 @@ class StrRes {
   static const timerResultEditItemTitle = "Комментарий:";
 
   static const pllTrainerSettingsTitle = "Настройки";
-  static const pllTrainerSettingTrainingTitle = "Сложность тренировки:";
+  static const pllTrainerSettingsTrainingTitle = "Сложность тренировки:";
   static const pllTrainerSettingsAUF = "Случайная сторона алгоритма";
   static const pllTrainerSettingsRandomSide = "Случайная передняя сторона";
   static const pllTrainerSettingsCubeView = "Внешний вид кубика:";
@@ -129,4 +129,10 @@ class StrRes {
   static const pllTrainerTimeOverTitle = "Это - ";
 
   static const azbukaTrainerTitle = "Тренажер азбуки";
+  static const azbukaTrainerSettingsTrainingTitle = "Что тренируем:";
+  static const azbukaTrainerSettingsCorner = "Углы";
+  static const azbukaTrainerSettingsEdge = "Ребра";
+  static const azbukaTrainerSettingsEnableTimer = "Игра на время";
+  static const azbukaTrainerSettingsTimeForAnswer = "Время на ответ (сек)";
+
 }
