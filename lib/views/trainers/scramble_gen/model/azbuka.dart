@@ -38,6 +38,8 @@ class Azbuka {
     }
   }
 
+
+  /// Возвращаем список из 54 (6*9) букв
   List<String> get currentAzbuka => (_currentAzbuka.isNotEmpty) ? _currentAzbuka : myAzbuka;
   set currentAzbuka(List<String> list) {
     if (list.isNotEmpty) {
@@ -137,9 +139,9 @@ class Azbuka {
     print("сохраняем custom colors в файл $savedString");
   }
  
-  List<int> get defaultAzbukaColors => [0,1,2,3,4,5];
+  static List<int> get defaultAzbukaColors => [0,1,2,3,4,5];
 
-  List<String> get maximAzbuka =>
+  static List<String> get maximAzbuka =>
       [
         "М", "Л", "Л",
         "М", "-", "К",
@@ -166,7 +168,7 @@ class Azbuka {
         "З", "Ж", "Ж"
       ];
 
-  List<String> get myAzbuka =>
+  static List<String> get myAzbuka =>
       [
         "М", "Л", "Л",
         "М", "-", "К",

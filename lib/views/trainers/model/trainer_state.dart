@@ -1,0 +1,7 @@
+enum TrainerState {
+  INIT,
+  START_SCREEN,
+  WAIT_ANSWER,
+  SHOW_RESULT,
+  PAUSED
+}

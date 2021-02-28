@@ -44,7 +44,7 @@ class QuizGame {
   Function() _onTimeIsOverCallback;
 
   /// Сброс счетчико ответов
-  resetCounts() {
+  _resetCounts() {
     _rightAnswerCount.value = 0;
     _wrongAnswerCount.value = 0;
   }
@@ -55,17 +55,23 @@ class QuizGame {
     var availableAnswers = answersList.where((variant) => variant.isSelectable).toList();
     var rndAnswerNumber = Random().nextInt(availableAnswers.length);
     _correctAnswer = availableAnswers[rndAnswerNumber];
-    // устанавливаем время начала ответа на вопрос
-    _currentVariantStartAnswerTime = DateTime.now();
-    _state = GameState.WAIT_ANSWER;
-    if (timeForAnswer > 0) {
-      startTimer();
-    }
+    _goToWaitAnswer();
     return _correctAnswer;
   }
 
+  /// Запускаем ожидание ответа на вопрос
+  _goToWaitAnswer() {
+    // устанавливаем время начала ответа на вопрос
+    _currentVariantStartAnswerTime = DateTime.now();
+    _state = GameState.WAIT_ANSWER;
+    // запускаем таймер, если установлена настройка
+    if (timeForAnswer > 0) {
+      _startTimer();
+    }
+  }
+  
   /// Запускаем таймер, который обновляет прогресс и переводит таймер в TIME_OVER если ответ не был дан
-  startTimer() async {
+  _startTimer() async {
     var duration = Duration(seconds: timeForAnswer);
     var endAnswerTime = _currentVariantStartAnswerTime.add(duration);
     var now  = DateTime.now();
@@ -103,6 +109,7 @@ class QuizGame {
     return tmpList.sublist(0, count);
   }
 
+  /// Проверяем ответ по номеру (совпадает ли с номером загаданного варианта)
   bool checkAnswerById(int answer) {
     _state = GameState.STOP;
     var result = false;
@@ -112,20 +119,21 @@ class QuizGame {
     } else {
       _wrongAnswerCount++;
     }
-    print("Counts = $rightAnswerCount, $wrongAnswerCount");
+    //print("Counts = $rightAnswerCount, $wrongAnswerCount");
     return result;
   }
 
+  /// Проверяем ответ по значению
   bool checkAnswerByValue(String answer) {
     var id = answersList.indexWhere((element) => element.value == answer);
-    return checkAnswerById(id);
+    // если нет в списке (id = -1), то сразу возвращаем false
+    return (id == -1) ? false : checkAnswerById(id);
   }
 
 
-  /// Нормализируем список правильных ответов (убираем признак выбранного ответа и переопределяем номера)
+  /// Нормализируем список правильных ответов (убираем признак выбранного ответа)
   _normalizeAnswersList() {
     answersList.asMap().forEach((index, variant) {
-      //_answersList[index].id = index;
       answersList[index].isCorrectAnswer = false;
     });
     _correctAnswer = answersList[0];
@@ -144,7 +152,32 @@ class QuizGame {
     this.answersList = answersList;
     this._onTimeIsOverCallback = onTimeIsOverCallback;
     _normalizeAnswersList();
+    _resetCounts();
   }
+
+  /// Задаем новый список вариантов
+  setNewVariants(List<QuizVariant> answersList) {
+    this.answersList = answersList;
+    _normalizeAnswersList();
+  }
+
+  /// Принудительно задаем правильный ответ по значению
+  setCorrectAnswerByValue(String answer) {
+    var id = answersList.indexWhere((element) => element.value == answer);
+    // Если ответа нет в списке, устанавливаем правильным первый элемент из списка и пишем в лог
+    if (id == -1) {
+      id = 0;
+      print("Попытка задать правильным отсутствующий в списке вариант! Установлен 0 вариант");
+    }
+    _setCorrectAnswerById(id);
+  }
+
+  /// Задаем правильный ответ по номеру и запускаем ожидание ответа
+  _setCorrectAnswerById(int id) {
+    _correctAnswer = answersList[id];
+    _goToWaitAnswer();
+  }
+
 }
 
 enum GameState {

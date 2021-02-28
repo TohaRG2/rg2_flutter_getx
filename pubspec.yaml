@@ -161,6 +161,7 @@ flutter:
     - assets/images/big_main/big_cubes/
     - assets/sounds/
     - assets/images/trainers/pll_trainer/
+    - assets/images/trainers/azbuka_cube/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

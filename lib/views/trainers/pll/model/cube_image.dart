@@ -5,11 +5,11 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/cube.dart';
 
-class CubeImage {
+class PllCubeImage {
   int id;
   Cube _cube;
 
-  CubeImage({this.id, bool randomAUF = false, bool randomFrontSide = false}){
+  PllCubeImage({this.id, bool randomAUF = false, bool randomFrontSide = false}){
     if (id < 0 || id > 20) {
       id = 0;
       print("Задан некорректный id pll алгоритма, будет равен 0");

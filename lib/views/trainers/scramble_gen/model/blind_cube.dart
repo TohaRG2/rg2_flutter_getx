@@ -96,9 +96,9 @@ class BlindCube extends Cube {
     //решаем ребра
     do {
       //сначала ребра: смотрим что в буфере ребер
-      var sumColor = _getColorOfElement(23, 30);
+      var sumColor = getColorOfElement(23, 30);
       //если там буферный элемент, т.е. его цвета как цвета верхнего и правого центров (22 и 31 элементы), то ставим признак переплавки
-      if ((sumColor == _getColorOfElement(22, 31)) || (sumColor == _getColorOfElement(31, 22))) {
+      if ((sumColor == getColorOfElement(22, 31)) || (sumColor == getColorOfElement(31, 22))) {
         isEdgeMelted = true;
       }
       // ставим на место ребро из буфера и сохраняем результаты выполнения одной "буквы"
@@ -120,10 +120,10 @@ class BlindCube extends Cube {
     decision += " (";
     do {
       //сначала ребра: смотрим что в буфере углов (врхняя и левая наклейка заднего левого верхнего угла, т.е. элементы 18 и 11)
-      final sumColor = _getColorOfElement(18,11);
+      final sumColor = getColorOfElement(18,11);
       //если там буферный элемент, то ставим признак переплавки (верхний, левый и заднний центры это элементы 22, 13 и 4)
       //если верх белый, то 4,22 = сине-белый, 22,13 = бело-оранжевый, 13,4 = оранжево-синий
-      if ((sumColor == _getColorOfElement(4,22)) || (sumColor == _getColorOfElement(22,13)) || (sumColor == _getColorOfElement(13,4))) {
+      if ((sumColor == getColorOfElement(4,22)) || (sumColor == getColorOfElement(22,13)) || (sumColor == getColorOfElement(13,4))) {
         isCornerMelted = true;
       }
       // ставим на место угол из буфера и сохраняем результаты выполнения одной "буквы"
@@ -362,7 +362,7 @@ class BlindCube extends Cube {
 
 
   ///получаем цвет переданных ячеек куба (двузначное число, первая и вторая цифры которого соответствую искомым цветам)
-  int _getColorOfElement(int firstElement, int secondElement) {
+  int getColorOfElement(int firstElement, int secondElement) {
    return (asList[firstElement] + 1) * 10 + asList[secondElement] + 1;
   }
 

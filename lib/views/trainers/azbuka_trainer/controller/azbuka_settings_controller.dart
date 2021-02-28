@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:meta/meta.dart';
 import 'package:rg2_flutter_getx/res/constants.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/azbuka.dart';
 
 class AzbukaSettingsController extends GetxController {
 
@@ -46,21 +47,23 @@ class AzbukaSettingsController extends GetxController {
 
   /// Методы
 
+  /// Уменьшаем время на ответ на 1
   decreaseTimerTime() {
     if (timeForAnswer > 1) {
       timeForAnswer--;
     }
   }
 
+  /// Увеличиваем время на ответ на 1
   increaseTimerTime() {
     if (timeForAnswer < 30) {
       timeForAnswer++;
     }
   }
 
+  /// Устанавливаем значение времени для таймера по умолчанию (6)
   resetTimerTime() {
     timeForAnswer = 6;
   }
-
 
 }

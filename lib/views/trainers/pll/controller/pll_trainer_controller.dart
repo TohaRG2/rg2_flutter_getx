@@ -1,45 +1,30 @@
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
+import 'package:rg2_flutter_getx/views/trainers/model/result_variants.dart';
+import 'package:rg2_flutter_getx/views/trainers/model/trainer_controller.dart';
+import 'package:rg2_flutter_getx/views/trainers/model/trainer_state.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_settings_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/model/cube_image.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/model/quiz_game.dart';
 
-class PllTrainerController extends GetxController {
+class PllTrainerController extends TrainerController {
   final PllSettingsController _settingsController = Get.find();
+  bool get twoSideRecognition => _settingsController.twoSideRecognition;
+  bool get showAllVariants => _settingsController.showAllVariants;
+  bool get _randomAUF => _settingsController.randomAUF;
+  bool get _randomFS => _settingsController.randomFrontSide;
+  int get _timeForAnswer => _settingsController.timeForAnswer;
+  int get _variantsCount => _settingsController.variantsCount;
 
   TrainerState _state = TrainerState.INIT;
-  ResultVariant answerResult = ResultVariant.UNKNOWN;
-
-  final _showStartScreen = true.obs;
-  bool get showStartScreen => _showStartScreen.value;
-  set showStartScreen(value) => _showStartScreen.value = value;
 
   final _isStartButtonEnabled = false.obs;
   bool get isStartButtonEnabled => _isStartButtonEnabled.value;
   set isStartButtonEnabled(value) => _isStartButtonEnabled.value = value;
 
-  final _isShowResultEnabled = false.obs;
-  bool get isShowResultEnabled => _isShowResultEnabled.value;
-  set isShowResultEnabled(value) => _isShowResultEnabled.value = value;
+  PllCubeImage _pllCubeImage;
+  get pllCubeImage => _pllCubeImage;
 
-  final _hint = "".obs;
-  String get hint => _hint.value;
-  set hint(value) => _hint.value = value;
-
-  final _secondsRemains = 0.obs;
-  int get secondsRemains => _secondsRemains.value;
-  set secondsRemains(value) => _secondsRemains.value = value;
-
-  final _cancelButtonText = "".obs;
-  String get cancelButtonText => _cancelButtonText.value;
-  set cancelButtonText(value) => _cancelButtonText.value = value;
-
-  QuizGame quizGame;
-  CubeImage cubeImage;
-  List<List<String>> textForButtons = List();
-
-  bool get twoSideRecognition => _settingsController.twoSideRecognition;
-  bool get showAllVariants => _settingsController.showAllVariants;
 
   /// Методы
 
@@ -69,22 +54,20 @@ class PllTrainerController extends GetxController {
 
   /// Задаем следующий вопрос
   nextQuestion() {
-    _stateWaitAnswer();
     var correctAnswer = quizGame.nextQuestion();
-    var randomAUF = _settingsController.randomAUF;
-    var randomFS = _settingsController.randomFrontSide;
-    cubeImage = CubeImage(id: correctAnswer.id, randomAUF: randomAUF, randomFrontSide: randomFS);
+
+    _pllCubeImage = PllCubeImage(id: correctAnswer.id, randomAUF: _randomAUF, randomFrontSide: _randomFS);
     hint = correctAnswer.value;
     textForButtons = _getListOfVariants();
-    print("Загадали $correctAnswer, rndFS - $randomFS, AUF - $randomAUF");
+    print("Загадали $correctAnswer, rndFS - $_randomFS, AUF - $_randomAUF");
+    _stateWaitAnswer();
   }
 
   /// Возвращаем список из нескольких случайных вариантов и правильного на случайном месте
   /// в виде списка списков по 2 элемента (2 столбца для ввода кнопок)
   List<List<String>> _getListOfVariants() {
     List<List<String>> result = List();
-    var count = _settingsController.variantsCount;
-    var variants = quizGame.getListOfVariants(count).map((e) => e.value).toList();
+    var variants = quizGame.getListOfVariants(_variantsCount).map((e) => e.value).toList();
     for (var i = 0; i < variants.length; i += 2) {
       var row = variants.getRange(i, i + 2).toList();
       result.add(row);
@@ -98,7 +81,7 @@ class PllTrainerController extends GetxController {
     quizGame = QuizGame(
         answersList: quizVariants,
         onTimeIsOverCallback: _onTimeIsOverCallback,
-        timeForAnswerInSec: _settingsController.timeForAnswer
+        timeForAnswerInSec: _timeForAnswer
     );
   }
 
@@ -114,16 +97,18 @@ class PllTrainerController extends GetxController {
 
   /// Проверка ответа
   checkAnswerByString(String answer) {
-    if (quizGame.checkAnswerByValue(answer)) {
-      // Выводим диалог правильного ответа
-      _stateShowRightResult();
-      // Задаем автонажатие кнопки Далее на 2 сек
-      _delayedWaitAnswer(Duration(seconds: 2));
-    } else {
-      // Выводим диалог ошибочного ответа
-      _stateShowWrongResult();
-      // Задаем автонажатие кнопки Далее на 5 сек
-      _delayedWaitAnswer(Duration(seconds: 5));
+    if (_state == TrainerState.WAIT_ANSWER) {
+      if (quizGame.checkAnswerByValue(answer)) {
+        // Выводим диалог правильного ответа
+        _stateShowRightResult();
+        // Задаем автонажатие кнопки Далее на 2 сек
+        _delayedWaitAnswer(Duration(seconds: 2));
+      } else {
+        // Выводим диалог ошибочного ответа
+        _stateShowWrongResult();
+        // Задаем автонажатие кнопки Далее на 5 сек
+        _delayedWaitAnswer(Duration(seconds: 5));
+      }
     }
   }
 
@@ -145,7 +130,7 @@ class PllTrainerController extends GetxController {
     isStartButtonEnabled = false;
     showStartScreen = true;
     isShowResultEnabled = false;
-    answerResult = ResultVariant.UNKNOWN;
+    answerResult = ResultVariants.UNKNOWN;
   }
 
   _stateStartScreen() {
@@ -154,7 +139,7 @@ class PllTrainerController extends GetxController {
     isStartButtonEnabled = true;
     showStartScreen = true;
     isShowResultEnabled = false;
-    answerResult = ResultVariant.UNKNOWN;
+    answerResult = ResultVariants.UNKNOWN;
   }
 
   _stateWaitAnswer() {
@@ -163,7 +148,7 @@ class PllTrainerController extends GetxController {
     isStartButtonEnabled = false;
     showStartScreen = false;
     isShowResultEnabled = false;
-    answerResult = ResultVariant.UNKNOWN;
+    answerResult = ResultVariants.UNKNOWN;
   }
 
   _stateShowRightResult() {
@@ -172,8 +157,8 @@ class PllTrainerController extends GetxController {
     isStartButtonEnabled = false;
     showStartScreen = false;
     isShowResultEnabled = true;
-    answerResult = ResultVariant.RIGHT;
-    cancelButtonText = StrRes.pllTrainerPauseButtonText;
+    answerResult = ResultVariants.RIGHT;
+    cancelButtonText = StrRes.TrainerPauseButtonText;
   }
 
   _stateShowWrongResult() {
@@ -182,8 +167,8 @@ class PllTrainerController extends GetxController {
     isStartButtonEnabled = false;
     showStartScreen = false;
     isShowResultEnabled = true;
-    answerResult = ResultVariant.WRONG;
-    cancelButtonText = StrRes.pllTrainerPauseButtonText;
+    answerResult = ResultVariants.WRONG;
+    cancelButtonText = StrRes.TrainerPauseButtonText;
   }
 
   _stateShowTimeIsOver() {
@@ -192,8 +177,8 @@ class PllTrainerController extends GetxController {
     isStartButtonEnabled = false;
     showStartScreen = false;
     isShowResultEnabled = true;
-    answerResult = ResultVariant.TIME_OVER;
-    cancelButtonText = StrRes.pllTrainerPauseButtonText;
+    answerResult = ResultVariants.TIME_OVER;
+    cancelButtonText = StrRes.TrainerPauseButtonText;
   }
 
   _delayedWaitAnswer(Duration delay) async {
@@ -220,22 +205,8 @@ class PllTrainerController extends GetxController {
     showStartScreen = false;
     isShowResultEnabled = true;
     secondsRemains = 0;
-    cancelButtonText = StrRes.pllTrainerCancelButtonText;
+    cancelButtonText = StrRes.TrainerCancelButtonText;
   }
 
 }
 
-enum TrainerState {
-  INIT,
-  START_SCREEN,
-  WAIT_ANSWER,
-  SHOW_RESULT,
-  PAUSED
-}
-
-enum ResultVariant {
-  UNKNOWN,
-  RIGHT,
-  WRONG,
-  TIME_OVER
-}

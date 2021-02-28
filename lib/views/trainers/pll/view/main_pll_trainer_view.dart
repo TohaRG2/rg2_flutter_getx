@@ -4,6 +4,7 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
+import 'package:rg2_flutter_getx/views/trainers/model/result_variants.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_trainer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/view/bottom_menu_bar_pll_trainer.dart';
 
@@ -11,15 +12,17 @@ class MainPllTrainerView extends StatelessWidget {
   final PllTrainerController _controller = Get.find();
   final SettingsController _settingsController = Get.find();
 
+  bool get _godMode => _settingsController.godMode;
+
   final List<String> _pllButtonsNamesRow1 = ["Ga", ""  , "Y" , "F" , "H" , "E" ];
   final List<String> _pllButtonsNamesRow2 = ["Gb", "Na", "Ra", "Ja", "Ua", "Aa"];
   final List<String> _pllButtonsNamesRow3 = ["Gc", "Nb", "Rb", "Jb", "Ub", "Ab"];
   final List<String> _pllButtonsNamesRow4 = ["Gd", ""  , "V" , "T" , "Z" , ""  ];
   final _horizontalBorder = 3.0;
   final _verticalBorder = 0.0;
-  final _goodIconPath = "assets/images/trainers/pll_trainer/ok_icon.png";
-  final _badIconPath = "assets/images/trainers/pll_trainer/delete_icon.png";
-  final _timerIconPath = "assets/images/trainers/timer.png";
+  final _goodIconPath = StrRes.TrainerGoodIconPath;
+  final _badIconPath = StrRes.TrainerBadIconPath;
+  final _timerIconPath = StrRes.TrainerTimerIconPath;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +75,9 @@ class MainPllTrainerView extends StatelessWidget {
       child: Stack(children: [
         buildMainGame(),
         Visibility(
-            visible: _controller.isShowResultEnabled, child: buildResultScreen()),
+            visible: _controller.isShowResultEnabled,
+            child: buildResultScreen()
+        ),
       ]),
     );
   }
@@ -109,7 +114,7 @@ class MainPllTrainerView extends StatelessWidget {
 
               // Подсказка
               Visibility(
-                visible: _settingsController.godMode,
+                visible: _godMode,
                 child: Row(children: [Text("${_controller.hint}")])
               ),
 
@@ -118,13 +123,14 @@ class MainPllTrainerView extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Center(
-                      child: is2side ? _controller.cubeImage.getPll2SideImage() : _controller.cubeImage.getPll3SideImage()
+                      child: is2side ? _controller.pllCubeImage.getPll2SideImage() : _controller.pllCubeImage.getPll3SideImage()
                   ),
               )),
 
               // ряд кнопок с ответами
               (showAllVariants) ? buildTableWith21Button() : buildTableWithCustomButtons(),
 
+              // немного пустого места после кнопок
               SizedBox(height: UIHelper.SpaceSmall,),
             ],
           ),
@@ -187,7 +193,7 @@ class MainPllTrainerView extends StatelessWidget {
     Widget result;
     switch (_controller.answerResult) {
       // Диалог, если ответ верный
-      case ResultVariant.RIGHT:
+      case ResultVariants.RIGHT:
         var buttonText = (_controller.secondsRemains != 0) ? "Далее (${_controller.secondsRemains} сек)" : "Далее";
         var message = StrRes.pllTrainerRightTitle;
         result = buildOverlayDialog(
@@ -199,7 +205,7 @@ class MainPllTrainerView extends StatelessWidget {
         break;
 
       // Диалог, если ответ неверный
-      case ResultVariant.WRONG:
+      case ResultVariants.WRONG:
         var buttonText = (_controller.secondsRemains != 0) ? "Продолжить (${_controller.secondsRemains} сек)" : "Продолжить";
         var message = "${StrRes.pllTrainerWrongTitle}${_controller.hint}";
         result = buildOverlayDialog(
@@ -211,7 +217,7 @@ class MainPllTrainerView extends StatelessWidget {
         break;
 
       // Диалог, если время закончилось
-      case ResultVariant.TIME_OVER:
+      case ResultVariants.TIME_OVER:
         var buttonText = (_controller.secondsRemains != 0) ? "Продолжить (${_controller.secondsRemains} сек)" : "Продолжить";
         var message = "${StrRes.pllTrainerTimeOverTitle}${_controller.hint}";
         result = buildOverlayDialog(
@@ -223,8 +229,8 @@ class MainPllTrainerView extends StatelessWidget {
         break;
 
         // Диалог, если что-то пошло не так... не должны сюда пападать
-      case ResultVariant.UNKNOWN:
-        result = Image.asset("assets/images/trainers/pll_trainer/ok_icon.png", width: 150, height: 150, color: Colors.white,);
+      case ResultVariants.UNKNOWN:
+        result = Image.asset(_badIconPath, width: 150, height: 150, color: Colors.white,);
         break;
     }
     return result;

@@ -115,7 +115,7 @@ class RG2App extends StatelessWidget {
     Get.put(ResultViewController());
     Get.put(PllSettingsController());
     Get.put(PllTrainerController());
-    Get.put(AzbukaTrainerController());
     Get.put(AzbukaSettingsController());
+    Get.put(AzbukaTrainerController());
   }
 }
