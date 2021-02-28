@@ -118,7 +118,9 @@ class MainAzbukaTrainerView extends StatelessWidget {
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: _controller.azbukaCubeImage.getScrambledDrawable(),
+                  child: Center(
+                    child: _controller.azbukaCubeImage.getScrambledDrawable(),
+                  )
                 ),
               ),
 
