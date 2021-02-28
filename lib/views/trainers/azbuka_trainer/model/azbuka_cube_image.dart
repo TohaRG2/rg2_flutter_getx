@@ -13,7 +13,7 @@ class AzbukaCubeImage {
     //this._scramble = scramble;
     this._slot = slot;
     // развернем кубик, чтобы его было удобнее отображать (первыми тремя сторонами см.коммент внизу)
-    _cube.executeScramble("$scramble y y");
+    _cube.executeScrambleWithReset("$scramble y y");
   }
 
   // функция преобразующая int в String и добавляющая 0 перед однозначным числом

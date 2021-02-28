@@ -56,13 +56,11 @@ class AzbukaTrainerController extends TrainerController {
 
   nextQuestion() {
     var scramble = _blindCube.generateScramble(19);
-    _blindCube.executeScramble(scramble);
-    print("Скрамбл = $scramble");
+    _blindCube.executeScrambleWithReset(scramble);
 
     var slot = _selectRandomSlot();
     // получаем цвета элемента в загаданном слоте по номерам элементов из _slotElementsNumbers
     var colorOfElement = _blindCube.getColorOfElement(_slotElementsNumbers[slot].first, _slotElementsNumbers[slot].last);
-    print("Цвет $colorOfElement, Слот = $slot, ${_slotElementsNumbers[slot].first}, ${_slotElementsNumbers[slot].last}");
     //и по цвету элемента и его слоту (угол/ребро), определяем его номер в кубике через mainCorner/mainEdge,
     // а по номеру достаем выбранную букву из азбуки
     // задаем варианты для игры
@@ -70,20 +68,17 @@ class AzbukaTrainerController extends TrainerController {
       // слот угла
       quizGame.setNewVariants(_quizCornerVariants);
       hint = _azbuka.currentAzbuka[mainCorner[colorOfElement]];
-      print("Угол - ${mainCorner[colorOfElement]}");
     } else {
       // слот ребра
       quizGame.setNewVariants(_quizEdgeVariants);
       hint = _azbuka.currentAzbuka[mainEdge[colorOfElement]];
-      print("Ребро - ${mainEdge[colorOfElement]}");
     }
     // и записываем выбранный вариант в подсказку
     quizGame.setCorrectAnswerByValue(hint);
 
-    //TODO вывести картинку загаданного кубика
     _azbukaCubeImage = AzbukaCubeImage(scramble: scramble, slot: slot);
     
-    print("Загадали $hint $slot");
+    //print("Загадали $hint $slot");
     _stateWaitAnswer();
   }
 
