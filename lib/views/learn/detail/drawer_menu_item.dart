@@ -3,8 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/learn_controller.dart';
 import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
-import 'package:rg2_flutter_getx/views/dialogs/favourites/favourite_dialog.dart';
-import 'package:rg2_flutter_getx/views/learn/detail/learn_detail_screen.dart';
 
 class DrawerMenuItem extends StatelessWidget {
   final LearnController _learnController = Get.find();
@@ -15,8 +13,6 @@ class DrawerMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _accentColor = Theme.of(context).accentColor;
-    var _primaryColor = Theme.of(context).primaryColor;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),

@@ -1,4 +1,3 @@
-import 'package:csslib/parser.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/database/daos/main_dao.dart';
 import 'package:rg2_flutter_getx/database/daos/moves_dao.dart';

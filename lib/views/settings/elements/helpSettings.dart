@@ -10,7 +10,6 @@ class HelpSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var clickCount = 0;
     return Obx(
       () => Column(
         mainAxisAlignment: MainAxisAlignment.start,

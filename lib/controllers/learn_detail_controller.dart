@@ -1,11 +1,6 @@
-import 'package:floor/floor.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/repository.dart';
-import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
 import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
-import 'package:rg2_flutter_getx/database/entitys/page_properties.dart';
-import 'package:rg2_flutter_getx/res/constants.dart';
 
 import 'learn_controller.dart';
 

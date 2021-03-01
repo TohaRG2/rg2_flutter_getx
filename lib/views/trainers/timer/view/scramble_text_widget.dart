@@ -15,7 +15,6 @@ class ScrambleTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color _accentColor = Get.theme.accentColor;
-    final double _width = Get.width;
     final textSize = Get.textTheme.headline6.fontSize * _textRatio;
     return GestureDetector(
       onTap: () {

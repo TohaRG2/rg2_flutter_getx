@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rg2_flutter_getx/controllers/learn_detail_controller.dart';
 import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
-import 'package:rg2_flutter_getx/views/dialogs/azbuka/azbuka_dialog.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/views/shared/bottom_nav_bar_painter.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/main_scramble_gen_view.dart';

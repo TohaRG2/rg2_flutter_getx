@@ -6,8 +6,6 @@ import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
 import 'package:rg2_flutter_getx/views/shared/url_helper.dart';
 import 'package:rg2_flutter_getx/views/trainers/help/bottom_bar_with_back_button.dart';
 
-import 'bottom_nav_bar.dart';
-
 class HelpView extends StatelessWidget {
   final TrainerMenuItem item;
 

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
 
 import '../string_values.dart';

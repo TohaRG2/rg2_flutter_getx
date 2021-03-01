@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:meta/meta.dart';
 import 'package:rg2_flutter_getx/res/constants.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 
 class TimerSettingsController extends GetxController {
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/flutter_html/flutter_html.dart';
 import 'package:rg2_flutter_getx/flutter_html/style.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/info/about/text_about.dart';
 import 'package:rg2_flutter_getx/views/shared/url_helper.dart';
 

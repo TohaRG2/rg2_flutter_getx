@@ -56,7 +56,6 @@ class TimerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<bool> _selections = List.generate(3, (index) => false);
     final _width = Get.width;
     // изначально задаем размер нижней панели как Default + padding для SafeArea
     _controller.trySetBottomBarHeight(Get.mediaQuery.padding.bottom + _defBottomBarHeight);

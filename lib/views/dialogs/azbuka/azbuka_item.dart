@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/azbuka_dialog_controller.dart';
 import 'package:rg2_flutter_getx/database/entitys/basic_move.dart';

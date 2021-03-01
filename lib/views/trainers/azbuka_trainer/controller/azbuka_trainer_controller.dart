@@ -5,6 +5,7 @@ import 'package:rg2_flutter_getx/models/pair.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/controller/azbuka_settings_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/model/azbuka_cube_image.dart';
+import 'package:rg2_flutter_getx/views/trainers/model/cube_element_types.dart';
 import 'package:rg2_flutter_getx/views/trainers/model/result_variants.dart';
 import 'package:rg2_flutter_getx/views/trainers/model/trainer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/model/trainer_state.dart';
@@ -12,7 +13,6 @@ import 'package:rg2_flutter_getx/views/trainers/pll/model/quiz_game.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/model/quiz_variant.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/azbuka.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/blind_cube.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/blind_cube_support_arrays.dart';
 
 class AzbukaTrainerController extends TrainerController {
   final AzbukaSettingsController _settingsController = Get.find();
@@ -70,6 +70,12 @@ class AzbukaTrainerController extends TrainerController {
 
     _azbukaCubeImage = AzbukaCubeImage(cube: _blindCube, slot: slot);
 
+    var elementType = _blindCube.getElementType(elementNumber);
+    if (elementType == CubeElementTypes.CORNER) {
+      quizGame.setNewVariants(_quizCornerVariants);
+    } else {
+      quizGame.setNewVariants(_quizEdgeVariants);
+    }
     quizGame.setCorrectAnswerByValue(hint);
     _stateWaitAnswer();
   }

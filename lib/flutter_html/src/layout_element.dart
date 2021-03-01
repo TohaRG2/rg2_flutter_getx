@@ -5,7 +5,6 @@ import 'styled_element.dart';
 import '../style.dart';
 import 'package:html/dom.dart' as dom;
 
-import '../style.dart';
 
 /// A [LayoutElement] is an element that breaks the normal Inline flow of
 /// an html document with a more complex layout. LayoutElements handle

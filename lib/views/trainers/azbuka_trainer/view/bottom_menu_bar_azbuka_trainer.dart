@@ -3,10 +3,6 @@ import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/controller/azbuka_trainer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/view/settings_azbuka_trainer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_trainer_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/view/settings_pll_trainer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/view/settings_timer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/view/result_view/results_view.dart';
 
 class AzbukaTrainerBottomMenuBar extends StatelessWidget {
   final AzbukaTrainerController _controller = Get.find();

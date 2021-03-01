@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/learn_detail_controller.dart';
 import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
 import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
 
 import 'learn_detail_page_item.dart';
 

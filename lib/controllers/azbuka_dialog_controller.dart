@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:meta/meta.dart';
 import 'package:rg2_flutter_getx/controllers/repository.dart';
 import 'package:rg2_flutter_getx/database/entitys/basic_move.dart';
 import 'package:rg2_flutter_getx/res/azbuka/phase_types.dart';

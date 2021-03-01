@@ -13,7 +13,13 @@ class SettingsController extends GetxController {
   var internetUsage = 0.obs;
   var bottomItem = 1.obs;
   var currentPageNumber = 2.obs;
-  var currentInfoPageNumber = 0.obs;
+
+  var _currentInfoPageNumber = 0.obs;
+  int get currentInfoPageNumber => _currentInfoPageNumber.value;
+  set currentInfoPageNumber (value) {
+    _currentInfoPageNumber.value = value;
+    GetStorage().write(Const.CURRENT_INFO_PAGE_NUMBER, value);
+  }
 
   var _isPurchaseEnabled = false.obs;
   bool get isPurchaseEnabled => _isPurchaseEnabled.value;
@@ -64,8 +70,7 @@ class SettingsController extends GetxController {
     int _currentPageNumber = GetStorage().read(Const.CURRENT_PAGE_NUMBER) ?? 2;
     currentPageNumber = _currentPageNumber.obs;
 
-    int _currentInfoPageNumber = GetStorage().read(Const.CURRENT_INFO_PAGE_NUMBER) ?? 0;
-    currentInfoPageNumber = _currentInfoPageNumber.obs;
+    _currentInfoPageNumber.value = GetStorage().read(Const.CURRENT_INFO_PAGE_NUMBER) ?? 0;
 
     ever(isDarkThemeSelect, (v) {
       GetStorage().write(Const.IS_THEME_DARK, v);
@@ -106,10 +111,6 @@ class SettingsController extends GetxController {
 
     ever(currentPageNumber, (v) {
       GetStorage().write(Const.CURRENT_PAGE_NUMBER, v);
-    });
-
-    ever(currentInfoPageNumber, (v) {
-      GetStorage().write(Const.CURRENT_INFO_PAGE_NUMBER, v);
     });
 
     super.onInit();

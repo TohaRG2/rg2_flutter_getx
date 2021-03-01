@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/learn_controller.dart';
 import 'package:rg2_flutter_getx/controllers/learn_detail_controller.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/blind_cube_support_arrays.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/show_scramble_text.dart';

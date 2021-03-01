@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/views/trainers/model/result_variants.dart';
-import 'package:rg2_flutter_getx/views/trainers/model/trainer_state.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/model/quiz_game.dart';
 
 class TrainerController extends GetxController {

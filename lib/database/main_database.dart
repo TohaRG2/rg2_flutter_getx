@@ -11,7 +11,6 @@ import 'package:rg2_flutter_getx/database/entitys/page_properties.dart';
 import 'package:rg2_flutter_getx/database/entitys/phase_position_item.dart';
 import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
 import 'package:rg2_flutter_getx/database/entitys/time_note_item.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/moves.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import 'daos/main_dao.dart';

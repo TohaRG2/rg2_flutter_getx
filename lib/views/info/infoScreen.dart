@@ -21,10 +21,10 @@ class InfoScreen extends StatelessWidget {
         final TabController _tabController = DefaultTabController.of(context);
         _tabController.addListener(() {
           if (!_tabController.indexIsChanging) {
-            _settings.currentInfoPageNumber.value = _tabController.index;
+            _settings.currentInfoPageNumber = _tabController.index;
           }
         });
-        _tabController.index = _settings.currentInfoPageNumber.value;
+        _tabController.index = _settings.currentInfoPageNumber;
         return Scaffold(
             appBar: AppBar(
               title: Center(

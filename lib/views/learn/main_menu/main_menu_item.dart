@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/learn_controller.dart';
-import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
 import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 import 'package:rg2_flutter_getx/views/dialogs/favourites/favourite_dialog.dart';
@@ -12,7 +11,6 @@ import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 
 class MainMenuItem extends StatelessWidget {
   final LearnController _learnController = Get.find();
-  final SettingsController _settingsController = Get.find();
   final MainDBItem item;
   final bool isItemEnabled;
 
@@ -20,8 +18,7 @@ class MainMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _accentColor = Theme.of(context).accentColor;
-    var _primaryColor = Theme.of(context).primaryColor;
+    var _primaryColor = Get.theme.primaryColor;
     var _imagePath = _learnController.getAssetFilePath(item.icon, item.phase);
     //TODO переделать на использование card
     return Padding(

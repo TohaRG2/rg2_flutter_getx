@@ -1,6 +1,4 @@
-
 import 'package:floor/floor.dart';
-import 'package:flutter/material.dart';
 
 @Entity (tableName: 'pll_trainer')
 class PllTrainerItem {
