@@ -113,6 +113,8 @@ class StrRes {
   static const pllTrainerSettingsNotAllVariants = "Меньше вариантов, но можно задать свои названия";
   static const pllTrainerSettingsVariantsCount = "Количество вариантов";
   static const pllTrainerSettingsRenameAlgButtonText = "Выбрать/переименовать алгоритмы...";
+  static const pllTrainerSettingsTimeForGoodAnswer = "Продолжение при удачном ответе (сек)";
+  static const pllTrainerSettingsTimeForBadAnswer = "Продолжение при ошибочном ответе (сек)";
 
   static const pllTrainerSettingsAlgorithmTitle = "Настройки PLL алгоритмов";
   static const pllTrainerSettingsAlgorithmButton1 = "Стандартные названия";
@@ -138,5 +140,7 @@ class StrRes {
   static const azbukaTrainerSettingsEdge = "Ребра";
   static const azbukaTrainerSettingsEnableTimer = "Игра на время";
   static const azbukaTrainerSettingsTimeForAnswer = "Время на ответ (сек)";
+  static const azbukaTrainerSettingsTimeForGoodAnswer = "Продолжение при удачном ответе (сек)";
+  static const azbukaTrainerSettingsTimeForBadAnswer = "Продолжение при ошибочном ответе (сек)";
 
 }

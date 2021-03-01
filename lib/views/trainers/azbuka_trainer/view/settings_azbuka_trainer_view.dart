@@ -22,22 +22,6 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
         backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
       body: Obx(() {
-        /// Обработчик нажатий на кнопки изменений времени ответа на вопрос
-        // создаем пустой обработчик
-        var _onChangeTimerEnabled;
-        if (_controller.isTimerEnabled) {
-          //и переопредяем его, если таймер включен
-          _onChangeTimerEnabled = (index) {
-            if (index == 0) {
-              _controller.decreaseTimerTime();
-            } else if (index == 1) {
-              _controller.resetTimerTime();
-            } else if (index == 2) {
-              _controller.increaseTimerTime();
-            }
-          };
-        }
-
         return SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(UIHelper.SpaceSmall),
@@ -89,33 +73,15 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
                 ),
 
                 /// Кнопки настройки времени ответа
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Opacity(
-                            opacity: _controller.isTimerEnabled ? 1.0 : 0.5,
-                            child: Text(StrRes.azbukaTrainerSettingsTimeForAnswer,
-                              style: Get.textTheme.headline6,
-                            ),
-                          )
-                      ),
-                      Container(
-                        child: ToggleButtons(
-                          children: [
-                            Icon(Icons.chevron_left_rounded),
-                            Text("${_controller.timeForAnswer}"),
-                            Icon(Icons.chevron_right_rounded)
-                          ],
-                          isSelected: [false, false, false],
-                          onPressed: _onChangeTimerEnabled,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                buildSetAnswerTime(),
+                SizedBox(height: UIHelper.SpaceMedium,),
 
+                /// Кнопки навтройки автопродолжения при успешном ответе
+                buildSetGoodTime(),
+                SizedBox(height: UIHelper.SpaceMedium,),
+
+                /// Кнопки навтройки автопродолжения при ошибочном ответе
+                buildSetBadTime(),
                 SizedBox(height: UIHelper.SpaceMedium,),
 
                 /// Настройки азбуки
@@ -128,5 +94,102 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
       bottomNavigationBar: BottomBarWithBackButton(),
     );
   }
+
+  Widget buildSetAnswerTime() {
+    /// Обработчик нажатий на кнопки изменений времени ответа на вопрос
+    // создаем пустой обработчик
+    Function _onChangeTimerEnabled;
+    if (_controller.isTimerEnabled) {
+      //и переопредяем его, если таймер включен
+      _onChangeTimerEnabled = (index) {
+        if (index == 0) {
+          _controller.decreaseTimerTime();
+        } else if (index == 1) {
+          _controller.resetTimerTime();
+        } else if (index == 2) {
+          _controller.increaseTimerTime();
+        }
+      };
+    }
+    return buildSetTime(
+        text: StrRes.azbukaTrainerSettingsTimeForAnswer,
+        time: _controller.timeForAnswer.toString(),
+        enabled: _controller.isTimerEnabled,
+        onButtonsPressing: _onChangeTimerEnabled
+    );
+  }
+
+  /// Виджет выбора времени автопродолжения при удачном ответе
+  Widget buildSetGoodTime() {
+    /// Обработчик нажатий на кнопки изменений времени овтопродолжения при удачном ответе
+    Function _onChangeTime = (index) {
+        if (index == 0) {
+          _controller.decreaseGoodAnswerWaiting();
+        } else if (index == 1) {
+          _controller.resetGoodAnswerWaiting();
+        } else if (index == 2) {
+          _controller.increaseGoodAnswerWaiting();
+        }
+    };
+    return buildSetTime(
+        text: StrRes.azbukaTrainerSettingsTimeForGoodAnswer,
+        time: (_controller.goodAnswerWaiting == 11) ? "∞" : "${_controller.goodAnswerWaiting}",
+        enabled: true,
+        onButtonsPressing: _onChangeTime
+    );
+  }
+
+
+  /// Виджет выбора времени автопродолжения при ошибочном ответе
+  Widget buildSetBadTime() {
+    /// Обработчик нажатий на кнопки изменений времени овтопродолжения при ошибочном ответе
+    Function _onChangeTime = (index) {
+        if (index == 0) {
+          _controller.decreaseBadAnswerWaiting();
+        } else if (index == 1) {
+          _controller.resetBadAnswerWaiting();
+        } else if (index == 2) {
+          _controller.increaseBadAnswerWaiting();
+        }
+    };
+    return buildSetTime(
+        text: StrRes.azbukaTrainerSettingsTimeForBadAnswer,
+        time: (_controller.badAnswerWaiting == 11) ? "∞" : "${_controller.badAnswerWaiting}",
+        enabled: true,
+        onButtonsPressing: _onChangeTime
+    );
+  }
+
+
+  /// Шаблон виджета выбора времени
+  Widget buildSetTime({String text, String time, bool enabled, Function onButtonsPressing}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMini),
+      child: Row(
+        children: [
+          Expanded(
+              child: Opacity(
+            opacity: enabled ? 1.0 : 0.5,
+            child: Text(
+              text,
+              style: Get.textTheme.headline6,
+            ),
+          )),
+          Container(
+            child: ToggleButtons(
+              children: [
+                Icon(Icons.chevron_left_rounded),
+                Text("$time"),
+                Icon(Icons.chevron_right_rounded)
+              ],
+              isSelected: [false, false, false],
+              onPressed: onButtonsPressing,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
 
 }
