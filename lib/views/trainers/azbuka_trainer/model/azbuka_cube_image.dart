@@ -9,11 +9,11 @@ class AzbukaCubeImage {
   int _slot = 0;
   Cube _cube = Cube();
 
-  AzbukaCubeImage({String scramble, int slot}) {
+  AzbukaCubeImage({Cube cube, int slot}) {
     //this._scramble = scramble;
     this._slot = slot;
+    this._cube = cube;
     // развернем кубик, чтобы его было удобнее отображать (первыми тремя сторонами см.коммент внизу)
-    _cube.executeScrambleWithReset("$scramble y y");
   }
 
   // функция преобразующая int в String и добавляющая 0 перед однозначным числом
@@ -23,6 +23,7 @@ class AzbukaCubeImage {
   }
 
   Widget getScrambledDrawable() {
+    _cube.executeScramble("y y");
     // созданем массив [0,1,2,3,4...26,27]
     var list = List.generate(28, (int index) => index, growable: false);
     var imageList = list.map((i) {
@@ -33,6 +34,7 @@ class AzbukaCubeImage {
     }).toList(growable: true);
     imageList.add(Image.asset("$_imgPath/azbuka_slot_$_slot.png"));
 
+    _cube.executeScramble("y y");
     return Stack(children: imageList);
   }
 

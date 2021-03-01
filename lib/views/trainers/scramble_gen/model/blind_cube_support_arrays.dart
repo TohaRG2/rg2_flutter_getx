@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:rg2_flutter_getx/views/trainers/model/cube_element_types.dart';
 
 /// Таблица для цветов кубика (используется для отображения кубика в генераторе и его настройках)
 List<Color> cubeColor = [
@@ -17,7 +18,7 @@ List<Color> cubeColor = [
 ///Создаем табличку (словарь) номеров основных ребер, для определенных сочетаний цветов, остальные элементы равны null
 ///первое число цвет, например 12 = синий 1 + оранжевый 2
 ///второе число номер основного(первого) цвета (места) как элемента куба (0..53)
-Map mainEdge = {
+Map<int,int> mainEdge = {
   12 : 3, //для сине-оранжевого ребра
   13 : 7, //для сине-белого ребра
   14 : 5, //для сине-красного ребра
@@ -45,7 +46,7 @@ Map mainEdge = {
 };
 
 /// Пары номеров позиций в кубике для ребер (mainPosition : slavePosition), например, 1:37 и соответственно 37:1
-Map dopEdge = {
+Map<int,int> dopEdge = {
   1 : 37, //сине-желтое
   3 : 10, //сине-оранжевое
   5 : 28, //сине-красное
@@ -90,7 +91,7 @@ List edgePriority = [
 ///Создаем табличку номеров основных углов to для определенных сочетаний цветов (по цвету его место)
 ///первое число цвет to например 12 = синий 1 + оранжевый 2
 ///второе число номер основного(первого) цвета как элемента куба (0..53)
-Map mainCorner = {
+Map<int,int> mainCorner = {
   12 : 0, //для сине-оранжево-желтого угла
   13 : 6, //для сине-бело-оранжевого угла
   14 : 8, //для сине-красно-белого угла
@@ -120,7 +121,7 @@ Map mainCorner = {
 ///Создаем табличку соответствия основного и дополнительного угла [где искать второй цвет]
 ///углы рассматриваем по часовой стрелке to поэтому достаточно первых двух цветов to чтобы пределить угол
 ///первая и вторая цифра номер соответствующих позиций угла в кубе. т.е. 0->9 to 9->38 to 38->0
-Map dopCorner = {
+Map<int,int> dopCorner = {
   0: 9, //сине-оранжево-желтый Л
   2: 36, //сине-желто-красный К
   6: 18, //сине-бело-оранжевый М
@@ -157,3 +158,79 @@ Map cornerPriority = {
   5: 20, // бело-сине-красный
   6: 24, // бело-зелено-оранжевый
 };
+
+Map <int, CubeElementTypes> elementTypes = {
+  0: CubeElementTypes.CORNER,
+  1: CubeElementTypes.EDGE,
+  2: CubeElementTypes.CORNER,
+  3: CubeElementTypes.EDGE,
+  4: CubeElementTypes.CENTER,
+  5: CubeElementTypes.EDGE,
+  6: CubeElementTypes.CORNER,
+  7: CubeElementTypes.EDGE,
+  8: CubeElementTypes.CORNER,
+  9: CubeElementTypes.CORNER,
+
+  10: CubeElementTypes.EDGE,
+  11: CubeElementTypes.CORNER,
+  12: CubeElementTypes.EDGE,
+  13: CubeElementTypes.CENTER,
+  14: CubeElementTypes.EDGE,
+  15: CubeElementTypes.CORNER,
+  16: CubeElementTypes.EDGE,
+  17: CubeElementTypes.CORNER,
+
+  18: CubeElementTypes.CORNER,
+  19: CubeElementTypes.EDGE,
+  20: CubeElementTypes.CORNER,
+  21: CubeElementTypes.EDGE,
+  22: CubeElementTypes.CENTER,
+  23: CubeElementTypes.EDGE,
+  24: CubeElementTypes.CORNER,
+  25: CubeElementTypes.EDGE,
+  26: CubeElementTypes.CORNER,
+
+  27: CubeElementTypes.CORNER,
+  28: CubeElementTypes.EDGE,
+  29: CubeElementTypes.CORNER,
+  30: CubeElementTypes.EDGE,
+  31: CubeElementTypes.CENTER,
+  32: CubeElementTypes.EDGE,
+  33: CubeElementTypes.CORNER,
+  34: CubeElementTypes.EDGE,
+  35: CubeElementTypes.CORNER,
+
+  36: CubeElementTypes.CORNER,
+  37: CubeElementTypes.EDGE,
+  38: CubeElementTypes.CORNER,
+  39: CubeElementTypes.EDGE,
+  40: CubeElementTypes.CENTER,
+  41: CubeElementTypes.EDGE,
+  42: CubeElementTypes.CORNER,
+  43: CubeElementTypes.EDGE,
+  44: CubeElementTypes.CORNER,
+
+  45: CubeElementTypes.CORNER,
+  46: CubeElementTypes.EDGE,
+  47: CubeElementTypes.CORNER,
+  48: CubeElementTypes.EDGE,
+  49: CubeElementTypes.CENTER,
+  50: CubeElementTypes.EDGE,
+  51: CubeElementTypes.CORNER,
+  52: CubeElementTypes.EDGE,
+  53: CubeElementTypes.CORNER,
+};
+
+
+
+///       Расположение элементов в кубике
+///
+///                0   1   2
+///                3   4   5
+///                6   7   8
+///    9  10  11  18  19  20  27  28  29  36  37  38
+///   12  13  14  21  22  23  30  31  32  39  40  41
+///   15  16  17  24  25  26  33  34  35  42  43  44
+///               45  46  47
+///               48  49  50
+///               51  52  53

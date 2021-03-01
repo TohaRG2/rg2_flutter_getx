@@ -35,7 +35,10 @@ class AzbukaTrainerController extends TrainerController {
     nextQuestion();
   }
 
+  /// Создаем новую игру используя параметры из настроек
   _createNewGame() {
+    _blindCube = BlindCube.colored(colors: Azbuka().currentColorsSide, azbuka: Azbuka().currentAzbuka);
+    //print("$_blindCube");
     quizGame = QuizGame(
         answersList: _quizCornerVariants,
         onTimeIsOverCallback: _onTimeIsOverCallback,
@@ -55,30 +58,19 @@ class AzbukaTrainerController extends TrainerController {
   }
 
   nextQuestion() {
+    // Генерируем случайный скрамбл и перемешиваем по нему кубик
     var scramble = _blindCube.generateScramble(19);
     _blindCube.executeScrambleWithReset(scramble);
 
+    // выбираем случайный слот (в соответствии с настройками)
     var slot = _selectRandomSlot();
-    // получаем цвета элемента в загаданном слоте по номерам элементов из _slotElementsNumbers
-    var colorOfElement = _blindCube.getColorOfElement(_slotElementsNumbers[slot].first, _slotElementsNumbers[slot].last);
-    //и по цвету элемента и его слоту (угол/ребро), определяем его номер в кубике через mainCorner/mainEdge,
-    // а по номеру достаем выбранную букву из азбуки
-    // задаем варианты для игры
-    if (slot < 3) {
-      // слот угла
-      quizGame.setNewVariants(_quizCornerVariants);
-      hint = _azbuka.currentAzbuka[mainCorner[colorOfElement]];
-    } else {
-      // слот ребра
-      quizGame.setNewVariants(_quizEdgeVariants);
-      hint = _azbuka.currentAzbuka[mainEdge[colorOfElement]];
-    }
-    // и записываем выбранный вариант в подсказку
-    quizGame.setCorrectAnswerByValue(hint);
+    // определяем номер элемента по номеру слота и получаем для него букву из азбуки
+    var elementNumber = _slotElementsNumbers[slot].first;
+    hint = _blindCube.getLetterByCurrentNumber(elementNumber);
 
-    _azbukaCubeImage = AzbukaCubeImage(scramble: scramble, slot: slot);
-    
-    //print("Загадали $hint $slot");
+    _azbukaCubeImage = AzbukaCubeImage(cube: _blindCube, slot: slot);
+
+    quizGame.setCorrectAnswerByValue(hint);
     _stateWaitAnswer();
   }
 
@@ -229,7 +221,7 @@ class AzbukaTrainerController extends TrainerController {
   static const _cornersNumbers = [0, 2, 6, 8, 9, 11, 15, 17, 18, 20, 24, 26, 27, 29, 33, 35, 36, 38, 42, 44, 45, 47, 51, 53];
   static const _edgeNumbers = [1, 3, 5, 7, 10, 12, 14, 16, 19, 21, 23, 25, 30, 28, 32, 34, 37, 39, 41, 43, 46, 48, 50, 52];
 
-  static Map<int, Pair> _slotElementsNumbers = {
+  static Map<int, Pair<int,int>> _slotElementsNumbers = {
     0 : Pair(33,47),
     1 : Pair(47,26),
     2 : Pair(26,33),

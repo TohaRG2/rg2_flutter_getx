@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:rg2_flutter_getx/views/trainers/model/cube_element_types.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/pair_for_melting.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/scramble_decision_condition.dart';
@@ -34,10 +35,9 @@ class BlindCube extends Cube {
   /// на входе - цветная азбука
   /// устанавливаем цвета граней и азбуку по входу и сбрасываем куб
   resetByColoredAzbuka(List<ColoredAzbukaItem> coloredAzbuka) {
-    coloredAzbuka.asMap().forEach((index, simpleItem) {
-      azbuka[index] = simpleItem.letter;  
+    coloredAzbuka.forEach((azbukaItem) {
+      azbuka[azbukaItem.index] = azbukaItem.letter;
     });
-    print(azbuka);
     List<int> colors =  _centersPositions.map((pos) => coloredAzbuka[pos].colorNumber).toList();
     setDefaultColors(colors);
     resetCube();
@@ -96,9 +96,9 @@ class BlindCube extends Cube {
     //решаем ребра
     do {
       //сначала ребра: смотрим что в буфере ребер
-      var sumColor = getColorOfElement(23, 30);
+      var sumColor = _getColorOfElement(23, 30);
       //если там буферный элемент, т.е. его цвета как цвета верхнего и правого центров (22 и 31 элементы), то ставим признак переплавки
-      if ((sumColor == getColorOfElement(22, 31)) || (sumColor == getColorOfElement(31, 22))) {
+      if ((sumColor == _getColorOfElement(22, 31)) || (sumColor == _getColorOfElement(31, 22))) {
         isEdgeMelted = true;
       }
       // ставим на место ребро из буфера и сохраняем результаты выполнения одной "буквы"
@@ -120,10 +120,10 @@ class BlindCube extends Cube {
     decision += " (";
     do {
       //сначала ребра: смотрим что в буфере углов (врхняя и левая наклейка заднего левого верхнего угла, т.е. элементы 18 и 11)
-      final sumColor = getColorOfElement(18,11);
+      final sumColor = _getColorOfElement(18,11);
       //если там буферный элемент, то ставим признак переплавки (верхний, левый и заднний центры это элементы 22, 13 и 4)
       //если верх белый, то 4,22 = сине-белый, 22,13 = бело-оранжевый, 13,4 = оранжево-синий
-      if ((sumColor == getColorOfElement(4,22)) || (sumColor == getColorOfElement(22,13)) || (sumColor == getColorOfElement(13,4))) {
+      if ((sumColor == _getColorOfElement(4,22)) || (sumColor == _getColorOfElement(22,13)) || (sumColor == _getColorOfElement(13,4))) {
         isCornerMelted = true;
       }
       // ставим на место угол из буфера и сохраняем результаты выполнения одной "буквы"
@@ -231,18 +231,10 @@ class BlindCube extends Cube {
     return PairForMelting(allComplete: result, elementsNotOnPlace: edgesListNotOnPlace);
   }
 
-  /// Получаем позицию ребра, в зависимости от его цвета
-  /// цвет в данном случае двухзначное число
+  /// Получаем "родную" позицию ребра, в зависимости от его текущго цвета
+  /// цвет в данном случае двухзначное число (десятки - цвет первого, единицы - цвет воторог элемента)
   int _getEdgePosition(int color) {
-    //определить по цветам центров значение цвета для дефолтного кубика
-    var mainColor = (color ~/ 10) - 1;
-    var slaveColor = (color % 10) - 1;
-    var defaultColor = 0;
-    // перебираем центральные элементы кубика и сравниваем их цвет с цветом ребра, получаем цвет в дефолтном кубике (белый верх, зеленый фронт)
-    _centersPositions.asMap().forEach((index, position) {
-      if (asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
-      if (asList[position] == slaveColor) { defaultColor += (index + 1); }
-    });
+    var defaultColor = _getElementColorInDefaultCube(color);
     // возвращаем номер элемента, по таблице для дефолтного кубика
     return mainEdge[defaultColor];
   }
@@ -251,10 +243,10 @@ class BlindCube extends Cube {
   /// Установка на свое место элемента цвета elementPosition находящегося в буфере углов
   /// Возвращает SolveCube = куб после выполнения установки и решение solve + текущий ход
   String _cornerBufferSolve(int elementPosition, String solve) {
-    var solv = solve;
+    var _solve = solve;
     //если с не равно 18,11 или 6, то буфер не на месте и добавляем букву к решению
     if (!(elementPosition == 18 || elementPosition == 11 || elementPosition == 6)) {
-      solv += azbuka[elementPosition] + " ";
+      _solve += azbuka[elementPosition] + " ";
     }
     switch (elementPosition) {
       case 0 : _blind0(); break;
@@ -262,7 +254,7 @@ class BlindCube extends Cube {
       case 6 :
         var pair4Melting = _isAllCornersOnItsPlace();
         if (!pair4Melting.allComplete) {
-          solv = _meltingCorner(solv, pair4Melting.elementsNotOnPlace);
+          _solve = _meltingCorner(_solve, pair4Melting.elementsNotOnPlace);
         }
         break;
       case 8 : _blind8(); break;
@@ -270,7 +262,7 @@ class BlindCube extends Cube {
       case 11 :
         var pair4Melting = _isAllCornersOnItsPlace();
         if (!pair4Melting.allComplete) {
-          solv = _meltingCorner(solv, pair4Melting.elementsNotOnPlace);
+          _solve = _meltingCorner(_solve, pair4Melting.elementsNotOnPlace);
         }
         break;
       case 15 : _blind15(); break;
@@ -278,7 +270,7 @@ class BlindCube extends Cube {
       case 18 :
         var pair4Melting = _isAllCornersOnItsPlace();
         if (!pair4Melting.allComplete) {
-          solv = _meltingCorner(solv, pair4Melting.elementsNotOnPlace);
+          _solve = _meltingCorner(_solve, pair4Melting.elementsNotOnPlace);
         }
         break;
       case 20 : _blind20(); break;
@@ -297,11 +289,11 @@ class BlindCube extends Cube {
       case 51 : _blind51(); break;
       case 53 : _blind53(); break;
     }
-    return solv;
+    return _solve;
   }
 
   /// Переплавка буфера углов
-  String _meltingCorner(String solv, List<int> cornersListNotOnPlace) {
+  String _meltingCorner(String solve, List<int> cornersListNotOnPlace) {
     var positionOfElement = 0;
     // цикл поиска свободной корзины
     var j = 0;
@@ -316,7 +308,7 @@ class BlindCube extends Cube {
       j++;
     }
     //переплавляем буфер (рекурсия)
-    return _cornerBufferSolve(positionOfElement, solv);
+    return _cornerBufferSolve(positionOfElement, solve);
   }
 
   ///проверяем все ли углы на своих местах, т.к. буфер оказался на своем месте
@@ -344,26 +336,72 @@ class BlindCube extends Cube {
     return PairForMelting(allComplete: result, elementsNotOnPlace: cornersListNotOnPlace);
   }
 
-  /// Получаем позицию угла, в зависимости от его цвета
-  /// цвет в данном случае двухзначное число
+  /// Получаем позицию "родного" места угла, в зависимости от его цвета
+  /// цвет в данном случае двухзначное число (десятки - цвет первого, единицы - цвет воторог элемента)
   int _getCornerPosition(int color) {
+    var defaultColor = _getElementColorInDefaultCube(color);
+    // возвращаем номер элемента, по таблице для дефолтного кубика
+    return mainCorner[defaultColor];
+  }
+
+  /// По текущему цвету получаем цвет в дефолтном кубике (белый верх, зеленый фронт)
+  int _getElementColorInDefaultCube(int curColor) {
     //определить по цветам центров значение цвета для дефолтного кубика
-    var mainColor = (color ~/ 10) - 1;
-    var slaveColor = (color % 10) - 1;
+    var mainColor = (curColor ~/ 10) - 1;
+    var slaveColor = (curColor % 10) - 1;
     var defaultColor = 0;
     // перебираем центральные элементы кубика и сравниваем их цвет с цветом ребра, получаем цвет в дефолтном кубике (белый верх, зеленый фронт)
     _centersPositions.asMap().forEach((index, position) {
       if (asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
       if (asList[position] == slaveColor) { defaultColor += (index + 1); }
     });
-    // возвращаем номер элемента, по таблице для дефолтного кубика
-    return mainCorner[defaultColor];
+    return defaultColor;
   }
 
+  /// Возвращаем цвет элемента в дефолтном кубике по его текущему номеру
+  int _getColorInDefaultCubeByElementNumber(int currentNumber) {
+    var mainColor = asList[currentNumber];
+    var dopElement = Map<int,int>();
+    dopElement.addAll(dopCorner);
+    dopElement.addAll(dopEdge);
+    var secondNumber = dopElement[currentNumber];
+    var secondColor = asList[secondNumber];
+
+    var defaultColor = 0;
+    // перебираем центральные элементы кубика и сравниваем их цвет с цветом ребра, получаем цвет в дефолтном кубике (белый верх, зеленый фронт)
+    _centersPositions.asMap().forEach((index, position) {
+      if (asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
+      if (asList[position] == secondColor) { defaultColor += (index + 1); }
+    });
+    return defaultColor;
+  }
+
+  /// Получаем букву в текущей азбуке, которой соответствует заданный элемент (для разобранного кубика)
+  String getLetterByCurrentNumber(int mainNumber) {
+    var defaultColor = _getColorInDefaultCubeByElementNumber(mainNumber);
+    var elementType = getElementType(mainNumber);
+    switch(elementType) {
+      case CubeElementTypes.CORNER:
+        return azbuka[mainCorner[defaultColor]];
+        break;
+      case CubeElementTypes.EDGE:
+        return azbuka[mainEdge[defaultColor]];
+        break;
+      default:
+        print("У центра нет буквы в азбуке");
+        return "-";
+    }
+  }
+
+  //TODO можно переделать на вычисления, вместо получения данных из Map
+  /// Получаем тип элемента (угол, ребро или центр) по его номеру
+  CubeElementTypes getElementType(int number) {
+    return elementTypes[number];
+  }
 
   ///получаем цвет переданных ячеек куба (двузначное число, первая и вторая цифры которого соответствую искомым цветам)
-  int getColorOfElement(int firstElement, int secondElement) {
-   return (asList[firstElement] + 1) * 10 + asList[secondElement] + 1;
+  int _getColorOfElement(int firstElement, int secondElement) {
+    return (asList[firstElement] + 1) * 10 + asList[secondElement] + 1;
   }
 
   /// Алгоритм "Запад"
