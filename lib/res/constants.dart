@@ -53,7 +53,7 @@ class Const {
   static const IS_AZBUKA_EDGE_ENABLED = 'isAzbukaEdgeEnabled';
   static const IS_AZBUKA_TIMER_ENABLED = 'isAzbukaTimerEnabled';
   static const AZBUKA_TIME_FOR_ANSWER = 'azbukaTimeForAnswer';
-  static const GOOD_ANSWER_WAITING = 'goodAnswerWaiting';
-  static const BAD_ANSWER_WAITING = 'badAnswerWaiting';
+  static const AZBUKA_GOOD_ANSWER_WAITING = 'goodAnswerWaiting';
+  static const AZBUKA_BAD_ANSWER_WAITING = 'badAnswerWaiting';
 
 }

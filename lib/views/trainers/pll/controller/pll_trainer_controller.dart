@@ -15,6 +15,8 @@ class PllTrainerController extends TrainerController {
   bool get _randomFS => _settingsController.randomFrontSide;
   int get _timeForAnswer => _settingsController.timeForAnswer;
   int get _variantsCount => _settingsController.variantsCount;
+  int get _goodAnswerWaiting => _settingsController.goodAnswerWaiting;
+  int get _badAnswerWaiting => _settingsController.badAnswerWaiting;
 
   TrainerState _state = TrainerState.INIT;
 
@@ -101,13 +103,21 @@ class PllTrainerController extends TrainerController {
       if (quizGame.checkAnswerByValue(answer)) {
         // Выводим диалог правильного ответа
         _stateShowRightResult();
-        // Задаем автонажатие кнопки Далее на 2 сек
-        _delayedWaitAnswer(Duration(seconds: 2));
+        // Задаем автонажатие кнопки Далее
+        if (_goodAnswerWaiting != 11) {
+          _delayedWaitAnswer(Duration(seconds: _goodAnswerWaiting));
+        } else {
+          _statePaused();
+        }
       } else {
         // Выводим диалог ошибочного ответа
         _stateShowWrongResult();
-        // Задаем автонажатие кнопки Далее на 5 сек
-        _delayedWaitAnswer(Duration(seconds: 5));
+        // Задаем автонажатие кнопки Далее (11 = бесконечность)
+        if (_badAnswerWaiting != 11) {
+          _delayedWaitAnswer(Duration(seconds: _badAnswerWaiting));
+        } else {
+          _statePaused();
+        }
       }
     }
   }

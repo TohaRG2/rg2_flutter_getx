@@ -21,38 +21,6 @@ class SettingsPllTrainerView extends StatelessWidget {
         backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
       body: Obx(() {
-        /// Обработчик нажатий на кнопки изменений времени ответа на вопрос
-        // создаем пустой обработчик
-        var _onChangeTimerEnabled;
-        if (_controller.isTimerEnabled) {
-          //и переопредяем его, если таймер включен
-          _onChangeTimerEnabled = (index) {
-            if (index == 0) {
-              _controller.decreaseTimerTime();
-            } else if (index == 1) {
-              _controller.resetTimerTime();
-            } else if (index == 2) {
-              _controller.increaseTimerTime();
-            }
-          };
-        }
-
-        /// Обработчик нажатий на кнопки изменений количества вариантов ответов
-        // создаем пустой обработчик
-        var _onChangeVariants;
-        if (!_controller.showAllVariants) {
-          //и переопредяем его, если отображаем не все варианты
-          _onChangeVariants = (index) {
-            if (index == 0) {
-              _controller.decreaseVariantsCount();
-            } else if (index == 1) {
-              //_controller.resetVariantsCount();
-            } else if (index == 2) {
-              _controller.increaseVariantsCount();
-            }
-          };
-        }
-
         return SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(UIHelper.SpaceSmall),
@@ -97,33 +65,15 @@ class SettingsPllTrainerView extends StatelessWidget {
                 ),
 
                 /// Кнопки настройки времени ответа
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Opacity(
-                            opacity: _controller.isTimerEnabled ? 1.0 : 0.5,
-                            child: Text(StrRes.pllTrainerSettingsTimeForAnswer,
-                              style: Get.textTheme.headline6,
-                            ),
-                          )
-                      ),
-                      Container(
-                        child: ToggleButtons(
-                          children: [
-                            Icon(Icons.chevron_left_rounded),
-                            Text("${_controller.timeForAnswer}"),
-                            Icon(Icons.chevron_right_rounded)
-                          ],
-                          isSelected: [false, false, false],
-                          onPressed: _onChangeTimerEnabled,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                buildSetAnswerTime(),
+                SizedBox(height: UIHelper.SpaceMedium,),
 
+                /// Кнопки настройки автопродолжения при успешном ответе
+                buildSetGoodTime(),
+                SizedBox(height: UIHelper.SpaceMedium,),
+
+                /// Кнопки настройки автопродолжения при ошибочном ответе
+                buildSetBadTime(),
                 SizedBox(height: UIHelper.SpaceMedium,),
 
                 /// Внешний вид кубика:
@@ -159,7 +109,7 @@ class SettingsPllTrainerView extends StatelessWidget {
                 /// Варианты ответов
                 Text(StrRes.pllTrainerSettingsAnswerVariants, style: Get.textTheme.headline5,),
 
-                /// Выбор вариантов
+                /// Выбор вариантов (все 21 или кастомные)
                 ListTile(
                   contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall, top: UIHelper.SpaceSmall),
                   title: Text(StrRes.pllTrainerSettingsAllVariants, style: Get.textTheme.headline6,),
@@ -185,48 +135,11 @@ class SettingsPllTrainerView extends StatelessWidget {
                 SizedBox(height: UIHelper.SpaceSmall,),
 
                 /// Кнопки настройки количества вариантов для ответа
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Opacity(
-                            opacity: _controller.showAllVariants ? 0.5 : 1.0,
-                            child: Text(StrRes.pllTrainerSettingsVariantsCount,
-                              style: Get.textTheme.headline6,
-                            ),
-                          )
-                      ),
-                      Container(
-                        child: ToggleButtons(
-                          children: [
-                            Icon(Icons.chevron_left_rounded),
-                            Text("${_controller.variantsCount}"),
-                            Icon(Icons.chevron_right_rounded)
-                          ],
-                          isSelected: [false, false, false],
-                          onPressed: _onChangeVariants,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                buildSelectCustomVariantsCount(),
                 SizedBox(height: UIHelper.SpaceMedium,),
 
                 /// Кнопка Выбрать/Переименовать алгоритмы
-                Center(
-                  child: FlatButton(
-                    color: Get.theme.accentColor,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    onPressed: () {
-                      Get.to(() => PllAlgorithmSelectionView(), transition: Transition.rightToLeft);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(UIHelper.SpaceMini),
-                      child: Text(StrRes.pllTrainerSettingsRenameAlgButtonText, style: Get.textTheme.bodyText2, textAlign: TextAlign.center,)
-                    )
-                  ),
-                ),
+                buildSelectRenameButton(),
                 SizedBox(height: UIHelper.SpaceMedium,),
               ],
             ),
@@ -235,6 +148,166 @@ class SettingsPllTrainerView extends StatelessWidget {
       }),
 
       bottomNavigationBar: BottomBarWithBackButton(),
+    );
+  }
+
+  Widget buildSetAnswerTime() {
+    /// Обработчик нажатий на кнопки изменений времени ответа на вопрос
+    // создаем пустой обработчик
+    Function _onChangeTimerEnabled;
+    if (_controller.isTimerEnabled) {
+      //и переопредяем его, если таймер включен
+      _onChangeTimerEnabled = (index) {
+        if (index == 0) {
+          _controller.decreaseTimerTime();
+        } else if (index == 1) {
+          _controller.resetTimerTime();
+        } else if (index == 2) {
+          _controller.increaseTimerTime();
+        }
+      };
+    }
+    return buildSetTime(
+        text: StrRes.pllTrainerSettingsTimeForAnswer,
+        time: _controller.timeForAnswer.toString(),
+        enabled: _controller.isTimerEnabled,
+        onButtonsPressing: _onChangeTimerEnabled
+    );
+  }
+
+  /// Виджет выбора времени автопродолжения при удачном ответе
+  Widget buildSetGoodTime() {
+    /// Обработчик нажатий на кнопки изменений времени овтопродолжения при удачном ответе
+    Function _onChangeTime = (index) {
+      if (index == 0) {
+        _controller.decreaseGoodAnswerWaiting();
+      } else if (index == 1) {
+        _controller.resetGoodAnswerWaiting();
+      } else if (index == 2) {
+        _controller.increaseGoodAnswerWaiting();
+      }
+    };
+    return buildSetTime(
+        text: StrRes.pllTrainerSettingsTimeForGoodAnswer,
+        time: (_controller.goodAnswerWaiting == 11) ? "∞" : "${_controller.goodAnswerWaiting}",
+        enabled: true,
+        onButtonsPressing: _onChangeTime
+    );
+  }
+
+
+  /// Виджет выбора времени автопродолжения при ошибочном ответе
+  Widget buildSetBadTime() {
+    /// Обработчик нажатий на кнопки изменений времени овтопродолжения при ошибочном ответе
+    Function _onChangeTime = (index) {
+      if (index == 0) {
+        _controller.decreaseBadAnswerWaiting();
+      } else if (index == 1) {
+        _controller.resetBadAnswerWaiting();
+      } else if (index == 2) {
+        _controller.increaseBadAnswerWaiting();
+      }
+    };
+    return buildSetTime(
+        text: StrRes.pllTrainerSettingsTimeForBadAnswer,
+        time: (_controller.badAnswerWaiting == 11) ? "∞" : "${_controller.badAnswerWaiting}",
+        enabled: true,
+        onButtonsPressing: _onChangeTime
+    );
+  }
+
+  /// Шаблон виджета выбора времени
+  Widget buildSetTime({String text, String time, bool enabled, Function onButtonsPressing}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMini),
+      child: Row(
+        children: [
+          Expanded(
+              child: Opacity(
+                opacity: enabled ? 1.0 : 0.5,
+                child: Text(
+                  text,
+                  style: Get.textTheme.headline6,
+                ),
+              )),
+          Container(
+            child: ToggleButtons(
+              children: [
+                Icon(Icons.chevron_left_rounded),
+                Text("$time"),
+                Icon(Icons.chevron_right_rounded)
+              ],
+              isSelected: [false, false, false],
+              onPressed: onButtonsPressing,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Кнопки изменений количества вариантов ответов
+  Container buildSelectCustomVariantsCount() {
+    /// Обработчик нажатий на кнопки изменений количества вариантов ответов
+    // создаем пустой обработчик
+    var _onChangeVariants;
+    if (!_controller.showAllVariants) {
+      // Переопредяем его, если отображаем не все варианты.
+      // Если отображаем все варианты, то обработчик остается пустой и кнопки будут серыми
+      _onChangeVariants = (index) {
+        if (index == 0) {
+          _controller.decreaseVariantsCount();
+        } else if (index == 1) {
+          //_controller.resetVariantsCount();
+        } else if (index == 2) {
+          _controller.increaseVariantsCount();
+        }
+      };
+    }
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
+      child: Row(
+        children: [
+          Expanded(
+              child: Opacity(
+            opacity: _controller.showAllVariants ? 0.5 : 1.0,
+            child: Text(
+              StrRes.pllTrainerSettingsVariantsCount,
+              style: Get.textTheme.headline6,
+            ),
+          )),
+          Container(
+            child: ToggleButtons(
+              children: [
+                Icon(Icons.chevron_left_rounded),
+                Text("${_controller.variantsCount}"),
+                Icon(Icons.chevron_right_rounded)
+              ],
+              isSelected: [false, false, false],
+              onPressed: _onChangeVariants,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Center buildSelectRenameButton() {
+    return Center(
+      child: FlatButton(
+          color: Get.theme.accentColor,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+          onPressed: () {
+            Get.to(() => PllAlgorithmSelectionView(),
+                transition: Transition.rightToLeft);
+          },
+          child: Container(
+              padding: const EdgeInsets.all(UIHelper.SpaceMini),
+              child: Text(
+                StrRes.pllTrainerSettingsRenameAlgButtonText,
+                style: Get.textTheme.bodyText2,
+                textAlign: TextAlign.center,
+              ))),
     );
   }
 }
