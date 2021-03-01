@@ -93,7 +93,7 @@ class MainAzbukaTrainerView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
           child: Column(
             children: [
-              // Индикатор оставшего времени
+              /// Индикатор оставшего времени
               Obx(() {
                 var _color = _controller.quizGame.timerProgress < 0.25 ? Colors.red : Colors.green;
                 return LinearPercentIndicator(
@@ -105,16 +105,16 @@ class MainAzbukaTrainerView extends StatelessWidget {
                 );
               }),
 
-              // Счет игры
+              /// Счет игры
               buildTrainerCounts(),
 
-              // Подсказка
+              /// Подсказка, если включен "режим разработчика"
               Visibility(
                   visible: _godMode,
                   child: Row(children: [Text("${_controller.hint}")])
               ),
 
-              // Изображение кубика
+              /// Изображение кубика
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -124,10 +124,10 @@ class MainAzbukaTrainerView extends StatelessWidget {
                 ),
               ),
 
-              // ряд кнопок с ответами
+              /// ряд кнопок с ответами
               buildTableWithButton(),
 
-              // немного пустого места после кнопок
+              /// немного пустого места после кнопок
               SizedBox(height: UIHelper.SpaceSmall,),
             ],
           ),
@@ -136,6 +136,7 @@ class MainAzbukaTrainerView extends StatelessWidget {
     );
   }
 
+  /// Виджет с кастомными вариантами ответов
   Widget buildTableWithButton() {
     List<QuizVariant> _showAllVariants = _controller.quizGame.answersList;
     List<List<String>> _tableRows = _variantsToTableRows(_showAllVariants, 6);
@@ -205,7 +206,7 @@ class MainAzbukaTrainerView extends StatelessWidget {
   Widget resultScreen() {
     Widget result;
     switch (_controller.answerResult) {
-    // Диалог, если ответ верный
+      /// Диалог, если ответ верный
       case ResultVariants.RIGHT:
         var buttonText = (_controller.secondsRemains != 0) ? "Далее (${_controller.secondsRemains} сек)" : "Далее";
         var message = StrRes.pllTrainerRightTitle;
@@ -217,7 +218,7 @@ class MainAzbukaTrainerView extends StatelessWidget {
         );
         break;
 
-    // Диалог, если ответ неверный
+      /// Диалог, если ответ неверный
       case ResultVariants.WRONG:
         var buttonText = (_controller.secondsRemains != 0) ? "Продолжить (${_controller.secondsRemains} сек)" : "Продолжить";
         var message = "${StrRes.pllTrainerWrongTitle}${_controller.hint}";
@@ -229,7 +230,7 @@ class MainAzbukaTrainerView extends StatelessWidget {
         );
         break;
 
-    // Диалог, если время закончилось
+      /// Диалог, если время закончилось
       case ResultVariants.TIME_OVER:
         var buttonText = (_controller.secondsRemains != 0) ? "Продолжить (${_controller.secondsRemains} сек)" : "Продолжить";
         var message = "${StrRes.pllTrainerTimeOverTitle}${_controller.hint}";
@@ -241,7 +242,7 @@ class MainAzbukaTrainerView extends StatelessWidget {
         );
         break;
 
-    // Диалог, если что-то пошло не так... не должны сюда пападать
+      /// Диалог, если что-то пошло не так... не должны сюда пападать
       case ResultVariants.UNKNOWN:
         result = Image.asset(_badIconPath, width: 150, height: 150, color: Colors.white,);
         break;
