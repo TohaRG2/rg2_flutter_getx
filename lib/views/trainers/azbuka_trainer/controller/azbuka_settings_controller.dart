@@ -48,11 +48,11 @@ class AzbukaSettingsController extends GetxController {
   }
 
   /// Время автонажатия кнопки далее при успешном ответе
-  final _goodAnswerWaiting = 2.obs;
+  final _goodAnswerWaiting = 1.obs;
   int get goodAnswerWaiting => _goodAnswerWaiting.value;
   set goodAnswerWaiting(value) {
     _goodAnswerWaiting.value = value;
-    GetStorage().write(Const.GOOD_ANSWER_WAITING, value);
+    GetStorage().write(Const.AZBUKA_GOOD_ANSWER_WAITING, value);
   }
 
   /// Время автонажатия кнопки далее при неуспешном ответе
@@ -60,7 +60,7 @@ class AzbukaSettingsController extends GetxController {
   int get badAnswerWaiting => _badAnswerWaiting.value;
   set badAnswerWaiting(value) {
     _badAnswerWaiting.value = value;
-    GetStorage().write(Const.BAD_ANSWER_WAITING, value);
+    GetStorage().write(Const.AZBUKA_BAD_ANSWER_WAITING, value);
   }
 
 
@@ -102,7 +102,7 @@ class AzbukaSettingsController extends GetxController {
 
   ///Сбрасываем время автонажатия кнопки далее при успешном ответе на 2 сек
   resetGoodAnswerWaiting() {
-    goodAnswerWaiting = 2;
+    goodAnswerWaiting = 1;
   }
 
 
