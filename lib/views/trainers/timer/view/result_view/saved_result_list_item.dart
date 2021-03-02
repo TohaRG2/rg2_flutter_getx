@@ -45,7 +45,15 @@ class SavedResultListItem extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(StrRes.timerResultItemScramble, style: Get.textTheme.subtitle2),
-                          Text("${_item.scramble}", style: Get.textTheme.subtitle2,),
+                          Expanded(
+                            child: Text(
+                              "${_item.scramble}",
+                              style: Get.textTheme.subtitle2,
+                              softWrap: true,
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                            )
+                          ),
                         ],
                       ),
                     )),
@@ -56,7 +64,15 @@ class SavedResultListItem extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(StrRes.timerResultItemComment, style: Get.textTheme.subtitle2),
-                          Text("${_item.comment}", style: Get.textTheme.subtitle2.copyWith(color: Get.theme.primaryColor),),
+                          Expanded(
+                            child: Text(
+                              "${_item.comment}",
+                              style: Get.textTheme.subtitle2.copyWith(color: Get.theme.primaryColor),
+                              softWrap: true,
+                              textAlign: TextAlign.left,
+                              maxLines: 3,
+                            )
+                          ),
                         ],
                       ),
                     )
