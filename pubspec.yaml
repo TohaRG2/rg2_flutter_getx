@@ -12,9 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
   # SQL Database
-  floor: ^0.18.0
+  floor: ^0.19.1
   # DI + StateManagement
-  get: ^3.24.0
+  get: ^3.25.6
   # Работаем с SharedPreferences
   get_storage: ^1.4.0
   # Окно выбора цвета
@@ -51,7 +51,7 @@ dependencies:
   carousel_slider: ^3.0.0
 
   # Поддержка звука, для метронома в таймере
-  assets_audio_player: ^2.0.13+7
+  assets_audio_player: ^2.0.14
 
   # Для удобной работы с датой/временем
   intl: ^0.16.1
@@ -61,12 +61,20 @@ dependencies:
 
   cupertino_icons: ^1.0.0
 
+  flutter_launcher_icons: ^0.8.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация
-  floor_generator: ^0.18.0
+  floor_generator: ^0.19.1
   build_runner: ^1.11.1
+
+flutter_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "assets/icons/icon_rg2.png"
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
