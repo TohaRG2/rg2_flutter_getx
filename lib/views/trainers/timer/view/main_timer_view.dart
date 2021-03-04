@@ -60,7 +60,8 @@ class TimerView extends StatelessWidget {
     // изначально задаем размер нижней панели как Default + padding для SafeArea
     _controller.trySetBottomBarHeight(Get.mediaQuery.padding.bottom + _defBottomBarHeight);
     _controller.resetTimer();
-
+    _controller.preloadSound();
+    //TODO добавить обработчик физической кнопки Назад, чтобы прерывать отсчет времени
     return Obx(() {
       //print("bottomHeight - ${_controller.bottomBarHeight}");
       return Stack(

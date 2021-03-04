@@ -1,7 +1,7 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/repository.dart';
 import 'package:rg2_flutter_getx/database/entitys/time_note_item.dart';
+import 'package:audioplayers/audio_cache.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/model/timer.dart';
 import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_settings_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
@@ -10,8 +10,11 @@ class TimerController extends GetxController {
   final TimerSettingsController _settingsController = Get.find();
   final ScrambleGenController _genController = Get.find();
   final Repository _repository = Get.find();
-  final assetsAudioPlayer = AssetsAudioPlayer();
-  var sound = Audio("assets/sounds/metronom.mp3");
+
+  // final assetsAudioPlayer = AssetsAudioPlayer();
+  // var sound = Audio("assets/sounds/metronom.mp3");
+  final player = AudioCache(prefix: "assets/sounds/");
+  final _metronomSound = "metronom.mp3";
 
   @override
   void onReady() {
@@ -22,8 +25,8 @@ class TimerController extends GetxController {
   @override
   void onInit() async {
     print("TimerController onInit");
-    _showBars();
     super.onInit();
+    _showBars();
     // _repository.clearTimesTable();
   }
 
@@ -86,6 +89,10 @@ class TimerController extends GetxController {
   var _isRightPadPressed = false;
 
   /// Methods
+
+  preloadSound(){
+    player.load(_metronomSound);
+  }
 
   trySetBottomBarHeight(double newValue) {
     if (bottomBarHeight == 0) {
@@ -265,7 +272,8 @@ class TimerController extends GetxController {
     // выходим из цикла если таймер остановлен
     while ( _state != TimerControllerState.waitForCancelPressing && _state != TimerControllerState.stopped) {
       if (DateTime.now().isAfter(nextTikTime)) {
-        assetsAudioPlayer.open(sound);
+        //assetsAudioPlayer.open(sound);
+        player.play(_metronomSound);
         nextTikTime = nextTikTime.add(tikPause);
       }
       await Future.delayed(Duration(milliseconds: 100), () {});
@@ -303,8 +311,6 @@ class TimerController extends GetxController {
 
   resetTimer() {
     _timer.stop();
-    //TODO Убрать очишение таблицы при вызове таймера
-    //_repository.clearTimesTable();
     currentTime = _timer.getFormattedCurrentTime();
   }
 

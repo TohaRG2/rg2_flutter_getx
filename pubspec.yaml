@@ -51,7 +51,8 @@ dependencies:
   carousel_slider: ^3.0.0
 
   # Поддержка звука, для метронома в таймере
-  assets_audio_player: ^2.0.14
+  #assets_audio_player: ^2.0.14
+  audioplayers: ^0.17.4
 
   # Для удобной работы с датой/временем
   intl: ^0.16.1

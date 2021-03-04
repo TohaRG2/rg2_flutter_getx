@@ -116,7 +116,7 @@ class MainMenuItem extends StatelessWidget {
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.black54,
               duration: Duration(seconds: 6),
-              mainButton: FlatButton(
+              mainButton: TextButton(
                   onPressed: (){
                     //TODO Сделать переход к настройкам, а не открытие в новом окне
                     Get.to(SettingsScreen());
