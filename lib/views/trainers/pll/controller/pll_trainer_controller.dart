@@ -104,19 +104,19 @@ class PllTrainerController extends TrainerController {
         // Выводим диалог правильного ответа
         _stateShowRightResult();
         // Задаем автонажатие кнопки Далее
-        if (_goodAnswerWaiting != 11) {
-          _delayedWaitAnswer(Duration(seconds: _goodAnswerWaiting));
-        } else {
+        if (_goodAnswerWaiting == 11) {
           _statePaused();
+        } else {
+          _delayedWaitAnswer(Duration(seconds: _goodAnswerWaiting));
         }
       } else {
         // Выводим диалог ошибочного ответа
         _stateShowWrongResult();
         // Задаем автонажатие кнопки Далее (11 = бесконечность)
-        if (_badAnswerWaiting != 11) {
-          _delayedWaitAnswer(Duration(seconds: _badAnswerWaiting));
-        } else {
+        if (_badAnswerWaiting == 11) {
           _statePaused();
+        } else {
+          _delayedWaitAnswer(Duration(seconds: _badAnswerWaiting));
         }
       }
     }
