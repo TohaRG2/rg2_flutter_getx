@@ -168,13 +168,13 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
       child: Row(
         children: [
           Expanded(
-              child: Opacity(
-            opacity: enabled ? 1.0 : 0.5,
-            child: Text(
-              text,
-              style: Get.textTheme.headline6,
-            ),
-          )),
+            child: Opacity(
+              opacity: enabled ? 1.0 : 0.5,
+              child: Text(
+                text,
+                style: Get.textTheme.headline6,
+              ),
+            )),
           Container(
             child: ToggleButtons(
               children: [
