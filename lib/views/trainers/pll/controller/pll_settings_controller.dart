@@ -28,7 +28,7 @@ class PllSettingsController extends GetxController {
     _pllTrainerItems.assignAll(value);
   }
 
-  /// Случайны цвет передней грани. Если false, то передняя грань всегда красная
+  /// Случайный цвет передней грани. Если false, то передняя грань всегда красная
   final _randomFrontSide = false.obs;
   bool get randomFrontSide => _randomFrontSide.value;
   set randomFrontSide(value) {
