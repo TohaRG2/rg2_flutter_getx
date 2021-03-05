@@ -14,7 +14,7 @@ dependencies:
   # SQL Database
   floor: ^0.19.1
   # DI + StateManagement
-  get: ^3.25.6
+  get: ^3.26.0
   # Работаем с SharedPreferences
   get_storage: ^1.4.0
   # Окно выбора цвета
@@ -22,19 +22,19 @@ dependencies:
   # возможность смахивать элементы List
   flutter_slidable: ^0.5.7
   # Добавляем возможность работы с SVG
-  flutter_svg: ^0.19.1
+  flutter_svg: ^0.19.3
 
   # Отображаем текст в html
   # Plugin for parsing html
-  html: ^0.14.0+4
+  html: ^0.15.0
   # Plugins for parsing css
-  csslib: ^0.16.2
-  css_colors: ^1.0.2
+  csslib: ^0.17.0
+  css_colors: ^1.1.0
   # Plugins for rendering the <video> tag.
   # video_player: ^1.0.1
   # chewie: ^0.12.2
   # Plugin for rendering the <iframe> tag.
-  webview_flutter: ^1.0.7
+  webview_flutter: ^2.0.1
   # Plugins for rendering the <audio> tag.
   # chewie_audio: ^1.1.1
 
@@ -55,12 +55,12 @@ dependencies:
   audioplayers: ^0.17.4
 
   # Для удобной работы с датой/временем
-  intl: ^0.16.1
+  intl: ^0.17.0
 
   # Индикатор оставшегося времени на ответ
   percent_indicator: ^2.1.9+1
 
-  cupertino_icons: ^1.0.0
+  cupertino_icons: ^1.0.2
 
   flutter_launcher_icons: ^0.8.1
 
@@ -69,7 +69,7 @@ dev_dependencies:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация
   floor_generator: ^0.19.1
-  build_runner: ^1.11.1
+  build_runner: ^1.11.5
 
 flutter_icons:
   android: "ic_launcher"
