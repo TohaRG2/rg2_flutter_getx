@@ -59,159 +59,166 @@ class TimerView extends StatelessWidget {
     final _width = Get.width;
     // изначально задаем размер нижней панели как Default + padding для SafeArea
     _controller.trySetBottomBarHeight(Get.mediaQuery.padding.bottom + _defBottomBarHeight);
-    _controller.resetTimer();
-    _controller.preloadSound();
-    //TODO добавить обработчик физической кнопки Назад, чтобы прерывать отсчет времени
-    return Obx(() {
-      //print("bottomHeight - ${_controller.bottomBarHeight}");
-      return Stack(
-        children: [
-          //Фон для верхней части экрана, для телефонов с загнутыми краями (
-          Positioned(top: 0, child: Container(height: 150, width: _width, color: _backgroundColor,)),
-          SafeArea(
-            bottom: false,
-            child: Stack(fit: StackFit.expand, children: [
-              /// Скрамбл в верхней части экрана
-              Positioned(
-                width: Get.width,
-                height: _settingsController.scrambleBarHeight,
-                child: ScrambleTextWidget(
-                  text: _controller.scramble,
-                  textRatio: _settingsController.scrambleTextRatio,
-                  onTapCallBack: _generateNewScrambleByTap,
+    _controller.initialization();
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Obx(() {
+        //print("bottomHeight - ${_controller.bottomBarHeight}");
+        return Stack(
+          children: [
+            //Фон для верхней части экрана, для телефонов с загнутыми краями (
+            Positioned(top: 0, child: Container(height: 150, width: _width, color: _backgroundColor,)),
+            SafeArea(
+              bottom: false,
+              child: Stack(fit: StackFit.expand, children: [
+                /// Скрамбл в верхней части экрана
+                Positioned(
+                  width: Get.width,
+                  height: _settingsController.scrambleBarHeight,
+                  child: ScrambleTextWidget(
+                    text: _controller.scramble,
+                    textRatio: _settingsController.scrambleTextRatio,
+                    onTapCallBack: _generateNewScrambleByTap,
+                  ),
                 ),
-              ),
 
-              AnimatedPositioned(
-                duration: _animationDuration, left: 0, right: 0,
-                top: (_controller.showTopBar && _settingsController.showScramble) ? _settingsController.scrambleBarHeight : 0,
-                bottom: _controller.showBottomBar ? _controller.bottomBarHeight : 0,
-                child: Container(
-                  width: _width,
-                  child: Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      /// Выводим две плашки для правой и левой руки, которые срабатывают только справа
-                      /// и слева от счетчика времени, т.к. ниже перекрываются другими плашками
-                      _twoMainPad(),
+                AnimatedPositioned(
+                  duration: _animationDuration, left: 0, right: 0,
+                  top: (_controller.showTopBar && _settingsController.showScramble) ? _settingsController.scrambleBarHeight : 0,
+                  bottom: _controller.showBottomBar ? _controller.bottomBarHeight : 0,
+                  child: Container(
+                    width: _width,
+                    child: Stack(
+                      alignment: Alignment.topCenter,
+                      children: [
+                        /// Выводим две плашки для правой и левой руки, которые срабатывают только справа
+                        /// и слева от счетчика времени, т.к. ниже перекрываются другими плашками
+                        _twoMainPad(),
 
-                      /// Перекрываем однорукой плашкой, если выбран такой режим
-                      Visibility(
-                        visible: _settingsController.isOneHanded,
-                        child: Container(
-                          color: _borderColor,
-                          padding: EdgeInsets.all(_borderThin),
+                        /// Перекрываем однорукой плашкой, если выбран такой режим
+                        Visibility(
+                          visible: _settingsController.isOneHanded,
                           child: Container(
-                            color: _backgroundColor,
+                            color: _borderColor,
+                            padding: EdgeInsets.all(_borderThin),
+                            child: Container(
+                              color: _backgroundColor,
+                            ),
                           ),
                         ),
-                      ),
 
-                      /// Выводим время с лампочками и иконки с руками (в них реагируем на нажатия)
-                      Column(
-                        children: [
-                          /// Верхний контейнер в котором отображается время и индикаторы
-                          GestureDetector(
-                            onTap: () {
-                              _controller.onTopPanelTap();
-                            },
-                            child: Container(
-                              width: 300,
-                              height: 120,
-                              color: _borderColor,
+                        /// Выводим время с лампочками и иконки с руками (в них реагируем на нажатия)
+                        Column(
+                          children: [
+                            /// Верхний контейнер в котором отображается время и индикаторы
+                            GestureDetector(
+                              onTap: () {
+                                _controller.onTopPanelTap();
+                              },
                               child: Container(
-                                color: _backgroundColor,
-                                margin: EdgeInsets.all(_borderThin),
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Icon(Icons.circle, color: _circleColors[_controller.leftIndicatorState],),
-                                      Container(
-                                          color: _timeWindowsColor,
-                                          height: 50,
-                                          width: 120,
-                                          child: Center(
-                                            child: Text(_controller.currentTime,
-                                              style: Get.textTheme.headline5.copyWith(color: _backgroundColor),
-                                            ),
-                                          )
-                                      ),
-                                      Icon(Icons.circle, color: _circleColors[_controller.rightIndicatorState],),
-                                    ]
+                                width: 300,
+                                height: 120,
+                                color: _borderColor,
+                                child: Container(
+                                  color: _backgroundColor,
+                                  margin: EdgeInsets.all(_borderThin),
+                                  child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Icon(Icons.circle, color: _circleColors[_controller.leftIndicatorState],),
+                                        Container(
+                                            color: _timeWindowsColor,
+                                            height: 50,
+                                            width: 120,
+                                            child: Center(
+                                              child: Text(_controller.currentTime,
+                                                style: Get.textTheme.headline5.copyWith(color: _backgroundColor),
+                                              ),
+                                            )
+                                        ),
+                                        Icon(Icons.circle, color: _circleColors[_controller.rightIndicatorState],),
+                                      ]
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
 
-                          /// Две основные плашки нажатия на которые обрабатываем (даже в одноруком режиме)
-                          TwoMainPadsWidget(controller: _controller)
-                        ],
-                      ),
-                      /// Нижняя панель с вариантами действий после остановки таймера
-                      Visibility(
-                        visible: _controller.showSaveResultBar,
-                        child: Positioned(
-                          bottom: 10,
-                          left: 10,
-                          right: 10,
-                          child: Material(
-                            child: Container(
-                              width: double.infinity,
-                              color: _backgroundColor,
-                              child: Column(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.only(bottom: UIHelper.SpaceSmall),
-                                    child: Text(StrRes.timerSaveResultText,
-                                        style: Get.textTheme.headline6.copyWith(
-                                          fontSize: 18,
-                                          color: Colors.white,)
+                            /// Две основные плашки нажатия на которые обрабатываем (даже в одноруком режиме)
+                            TwoMainPadsWidget(controller: _controller)
+                          ],
+                        ),
+                        /// Нижняя панель с вариантами действий после остановки таймера
+                        Visibility(
+                          visible: _controller.showSaveResultBar,
+                          child: Positioned(
+                            bottom: 10,
+                            left: 10,
+                            right: 10,
+                            child: Material(
+                              child: Container(
+                                width: double.infinity,
+                                color: _backgroundColor,
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.only(bottom: UIHelper.SpaceSmall),
+                                      child: Text(StrRes.timerSaveResultText,
+                                          style: Get.textTheme.headline6.copyWith(
+                                            fontSize: 18,
+                                            color: Colors.white,)
+                                      ),
                                     ),
-                                  ),
-                                  ToggleButtons(
-                                    isSelected: [false, false, false],
-                                    children: [
-                                      IconWithTextWidget(
-                                         icon: Icons.delete_forever_rounded,
-                                         text: StrRes.timerSaveResultDontSave,
-                                         color: _settingsController.isIconsColored ? Colors.red : Colors.white,),
-                                      IconWithTextWidget(
-                                         icon: Icons.assignment_turned_in_rounded,
-                                         text: StrRes.timerSaveResultWithoutComment,
-                                         color: _settingsController.isIconsColored ? Colors.yellow : Colors.white,),
-                                      IconWithTextWidget(
-                                         icon: Icons.textsms_rounded,
-                                         text: StrRes.timerSaveResultWithComment,
-                                         color: _settingsController.isIconsColored ? Colors.green : Colors.white,),
-                                    ],
-                                    onPressed: (index) {
-                                      if (index == 0) {
-                                        _controller.cancelSavingResult();
-                                      } else if (index == 1) {
-                                        _controller.saveCurrentResult();
-                                      } else if (index == 2) {
-                                        _tryToSaveCurrentResultWithComment();
-                                      }
-                                    },
-                                  ),
-                                ],
-                              ),
+                                    ToggleButtons(
+                                      isSelected: [false, false, false],
+                                      children: [
+                                        IconWithTextWidget(
+                                           icon: Icons.delete_forever_rounded,
+                                           text: StrRes.timerSaveResultDontSave,
+                                           color: _settingsController.isIconsColored ? Colors.red : Colors.white,),
+                                        IconWithTextWidget(
+                                           icon: Icons.assignment_turned_in_rounded,
+                                           text: StrRes.timerSaveResultWithoutComment,
+                                           color: _settingsController.isIconsColored ? Colors.yellow : Colors.white,),
+                                        IconWithTextWidget(
+                                           icon: Icons.textsms_rounded,
+                                           text: StrRes.timerSaveResultWithComment,
+                                           color: _settingsController.isIconsColored ? Colors.green : Colors.white,),
+                                      ],
+                                      onPressed: (index) {
+                                        if (index == 0) {
+                                          _controller.cancelSavingResult();
+                                        } else if (index == 1) {
+                                          _controller.saveCurrentResult();
+                                        } else if (index == 2) {
+                                          _tryToSaveCurrentResultWithComment();
+                                        }
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                ),
                               ),
                             ),
-                          ),
-                      ),
-                    ]
+                        ),
+                      ]
+                    ),
                   ),
                 ),
-              ),
 
-              /// Нижний навбар с кнопками (назад, результаты, настройки)
-              _bottomNavBar(_animationDuration, _primaryColor),
-            ])
-          )
-        ],
-      );
-    });
+                /// Нижний навбар с кнопками (назад, результаты, настройки)
+                _bottomNavBar(_animationDuration, _primaryColor),
+              ])
+            )
+          ],
+        );
+      }),
+    );
+  }
+
+  //Возвращаем true, если надо дальше продолжать обрабатывать нажатие, т.е. выход из таймера
+  Future<bool> _onWillPop() async {
+    //print("Back pressed");
+    return _controller.onBackButtonPressed();
   }
 
   _tryToSaveCurrentResultWithComment() {

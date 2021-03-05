@@ -90,14 +90,25 @@ class TimerController extends GetxController {
 
   /// Methods
 
-  preloadSound(){
+  initialization(){
     player.load(_metronomSound);
+    _resetTimer();
   }
 
   trySetBottomBarHeight(double newValue) {
     if (bottomBarHeight == 0) {
       bottomBarHeight = newValue;
     }
+  }
+
+  /// Если остановили таймер, то дальше не обрабатываем "back", поэтому возвращаем false, иначе true
+  bool onBackButtonPressed(){
+    if (_state != TimerControllerState.stopped) {
+      _secondPadPressedToStop();
+      _tryToFullStopTimer();
+      return false;
+    }
+    return true;
   }
 
   /// Обработчики нажатий на панельки таймера
@@ -185,6 +196,13 @@ class TimerController extends GetxController {
       _changeStateToReady();
     }
   }
+
+  a() {
+    Duration _delay =  Duration();
+    _secondBarPressingTime.add(_delay);
+  }
+
+
 
   _changeStateToReady() {
     leftIndicatorState = 2; rightIndicatorState = 2;
@@ -309,7 +327,7 @@ class TimerController extends GetxController {
     showTopBar = false;
   }
 
-  resetTimer() {
+  _resetTimer() {
     _timer.stop();
     currentTime = _timer.getFormattedCurrentTime();
   }
