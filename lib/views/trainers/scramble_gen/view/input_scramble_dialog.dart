@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2_flutter_getx/views/shared/buttons_style.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 
 class InputScrambleDialog extends StatelessWidget {
@@ -69,16 +70,16 @@ class OneButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var modifier = (letter == "'" || letter == "2" || letter == "W" ) ? true : false;
     return Expanded(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 3.0),
-        child: RaisedButton(
-          color: Theme.of(context).primaryColor,
+        child: ElevatedButton(
+          style: modifier ? raisedAccentButtonStyle : raisedButtonStyle,
           onPressed: () {
             _controller.inputLetter(letter);
           },
           child: Text(letter),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),
     );

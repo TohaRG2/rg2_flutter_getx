@@ -28,7 +28,7 @@ class LearnDetailViewPager extends StatelessWidget {
             appBar: AppBar(
               automaticallyImplyLeading: false,
               //Убираем автогенерируемую кнопку "Назад" из AppBar
-              leading: RaisedButton(
+              leading: ElevatedButton(
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
                 },
@@ -36,7 +36,9 @@ class LearnDetailViewPager extends StatelessWidget {
                   Icons.menu_rounded,
                   color: Theme.of(context).scaffoldBackgroundColor,
                 ),
-                color: Theme.of(context).primaryColor,
+                style: ElevatedButton.styleFrom(
+                  primary: Get.theme.primaryColor, // background
+                ),
               ),
               flexibleSpace: Center(
                 child: TabBar(

@@ -42,11 +42,13 @@ class FavouriteDialog extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
-                      child: FlatButton(
+                      child: TextButton(
                           onPressed: () {
                             Get.back();
                           },
-                          color: _primaryColor,
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(_primaryColor),
+                          ),
                           child: Text(StrRes.backButtonText)),
                     ),
                     Flexible(

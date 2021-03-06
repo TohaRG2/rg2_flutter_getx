@@ -47,7 +47,7 @@ class ThemeSettings extends StatelessWidget {
                         style: Get.textTheme.headline6,
                       ),
                       CircleAvatar(
-                          backgroundColor: _settings.primaryThemeColor.value,
+                          backgroundColor: _settings.primaryThemeColor,
                           radius: UIHelper.SpaceMedium),
                     ],
                   ),
@@ -140,9 +140,9 @@ class ThemeSettings extends StatelessWidget {
           MaterialColorPicker(
             shrinkWrap: true,
             allowShades: true,
-            selectedColor: _settings.primaryThemeColor.value,
+            selectedColor: _settings.primaryThemeColor,
             onColorChange: (color) {
-              _settings.primaryThemeColor.value = color;
+              _settings.primaryThemeColor = color;
             },
           ),
           CloseButton(

@@ -76,7 +76,7 @@ class RG2App extends StatelessWidget {
 
   ThemeData _getCurrentTheme() {
     bool isDark = _settings.isDarkThemeSelect.value;
-    Color primaryColor = _settings.primaryThemeColor.value;
+    Color primaryColor = _settings.primaryThemeColor;
     Color accentColor = _settings.accentThemeColor.value;
 
     return ThemeData(

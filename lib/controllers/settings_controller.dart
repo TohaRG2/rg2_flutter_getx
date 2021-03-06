@@ -5,7 +5,6 @@ import 'package:rg2_flutter_getx/res/constants.dart';
 
 class SettingsController extends GetxController {
   var isDarkThemeSelect = true.obs;
-  var primaryThemeColor = Colors.amber.shade700.obs;
   var accentThemeColor = Colors.green.shade500.obs;
   var textScaleFactor = 1.0.obs;
   var isStartHelpEnabled = true.obs;
@@ -13,6 +12,15 @@ class SettingsController extends GetxController {
   var internetUsage = 0.obs;
   var bottomItem = 1.obs;
   var currentPageNumber = 2.obs;
+
+  var _primaryThemeColor = Colors.amber.shade700.obs;
+  Color get primaryThemeColor => _primaryThemeColor.value;
+  set primaryThemeColor (color) {
+    _primaryThemeColor.value = color;
+    int v = color.value;
+    GetStorage().write(Const.PRIMARY_COLOR, v);
+    changeCurrentTheme();
+  }
 
   var _currentInfoPageNumber = 0.obs;
   int get currentInfoPageNumber => _currentInfoPageNumber.value;
@@ -42,7 +50,7 @@ class SettingsController extends GetxController {
     _godMode.value = GetStorage().read(Const.GOD_MODE) ?? false;
     
     int _primaryColor = GetStorage().read(Const.PRIMARY_COLOR) ?? Colors.orange[600].value;
-    primaryThemeColor.value = Color(_primaryColor);
+    _primaryThemeColor.value = Color(_primaryColor);
 
     int _accentColor = GetStorage().read(Const.ACCENT_COLOR) ?? Colors.green[600].value;
     accentThemeColor.value = Color(_accentColor);
@@ -74,12 +82,6 @@ class SettingsController extends GetxController {
 
     ever(isDarkThemeSelect, (v) {
       GetStorage().write(Const.IS_THEME_DARK, v);
-      changeCurrentTheme();
-    });
-
-    ever(primaryThemeColor, (_) {
-      int v = primaryThemeColor.value.value;
-      GetStorage().write(Const.PRIMARY_COLOR, v);
       changeCurrentTheme();
     });
 
@@ -120,7 +122,7 @@ class SettingsController extends GetxController {
   changeCurrentTheme() {
     ThemeData theme = ThemeData(
       brightness: isDarkThemeSelect.value ? Brightness.dark : Brightness.light,
-      primaryColor: primaryThemeColor.value,
+      primaryColor: primaryThemeColor,
       accentColor: accentThemeColor.value,
       toggleableActiveColor: accentThemeColor.value,
       textTheme: TextTheme().copyWith(
@@ -130,6 +132,10 @@ class SettingsController extends GetxController {
         bodyText1: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
         bodyText2: TextStyle(fontSize: 18, fontWeight: FontWeight.normal), //DefaultText для Text("")
       ),
+      buttonTheme: ButtonThemeData(
+        buttonColor: primaryThemeColor,
+        textTheme: ButtonTextTheme.primary
+      )
     );
     Get.changeTheme(theme);
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
+import 'package:rg2_flutter_getx/views/shared/buttons_style.dart';
 import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 import 'package:rg2_flutter_getx/views/trainers/help/bottom_bar_with_back_button.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_settings_controller.dart';
@@ -80,8 +81,8 @@ class PllAlgorithmSelectionView extends StatelessWidget {
     return Expanded(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
-        child: FlatButton(
-          color: Get.theme.primaryColor,
+        child: ElevatedButton(
+          style: raisedButtonStyle,
           onPressed: () {
             onPressed();
           },
@@ -91,7 +92,6 @@ class PllAlgorithmSelectionView extends StatelessWidget {
               textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: Get.theme.bottomAppBarColor),
             ),
           ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),
     );

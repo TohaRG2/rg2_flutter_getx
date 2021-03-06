@@ -37,15 +37,14 @@ class AzbukaDialog extends StatelessWidget {
   }
 
   SafeArea _showDialog(BuildContext context) {
-    var _theme = Theme.of(context);
-    var _primaryColor = _theme.primaryColor;
+    var _primaryColor = Get.theme.primaryColor;
     return SafeArea(
       child: Center(
         child: Container(
           width: context.mediaQuerySize.width - 50,
           height: context.mediaQuerySize.height - 50,
           decoration: BoxDecoration(
-            color: _theme.scaffoldBackgroundColor,
+            color: Get.theme.scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(20),
           ),
           child: Container(
@@ -54,7 +53,7 @@ class AzbukaDialog extends StatelessWidget {
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(StrRes.azbukaDialogTitle, style: _theme.textTheme.headline5),
+                  child: Text(StrRes.azbukaDialogTitle, style: Get.textTheme.headline5),
                 ),
                 Expanded(
                   child: ListView.builder(
@@ -70,11 +69,13 @@ class AzbukaDialog extends StatelessWidget {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
-                      child: FlatButton(
+                      child: TextButton(
                           onPressed: () {
                             Get.back();
                           },
-                          color: _primaryColor,
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(_primaryColor),
+                          ),
                           child: Text(StrRes.backButtonText)),
                     ),
                     Flexible(
@@ -82,7 +83,7 @@ class AzbukaDialog extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Text(
                           StrRes.azbukaDialogHint,
-                          style: _theme.textTheme.headline6.copyWith(
+                          style: Get.textTheme.headline6.copyWith(
                             fontSize: 14,
                           ),
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/controllers/youtube_controller.dart';
+import 'package:rg2_flutter_getx/views/shared/buttons_style.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:intl/intl.dart';
 
@@ -79,6 +80,7 @@ class YouTubeView extends StatelessWidget {
               child: Obx(
                 () => Slider(
                   value: _controller.playbackRate,
+                  activeColor: Get.theme.primaryColor,
                   min: 0.25,
                   max: 1.75,
                   divisions: 6,
@@ -105,9 +107,11 @@ class YouTubeView extends StatelessWidget {
   Center playerNavigation(YoutubePlayerController _youTubeController, MyYouTubeController _controller) {
     return Center(
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Flexible(
-            child: RaisedButton(
+            child: ElevatedButton(
+              style: raisedButtonStyle,
               child: Icon(Icons.arrow_back_rounded),
               onPressed: () {
                 Get.back();
@@ -116,7 +120,8 @@ class YouTubeView extends StatelessWidget {
           ),
           SizedBox(width: 4,),
           Flexible(
-            child: RaisedButton(
+            child: ElevatedButton(
+              style: raisedButtonStyle,
               child: Icon(Icons.skip_previous_rounded),
               onPressed: () {
                 _youTubeController.seekTo(Duration(seconds: _tryParseTime(_time)));
@@ -125,7 +130,8 @@ class YouTubeView extends StatelessWidget {
           ),
           SizedBox(width: 4,),
           Flexible(
-            child: RaisedButton(
+            child: ElevatedButton(
+              style: raisedButtonStyle,
               child: Icon(Icons.fast_rewind_rounded),
               onPressed: () {
                 var backTo = _youTubeController.value.position.inSeconds - 10;
@@ -136,7 +142,8 @@ class YouTubeView extends StatelessWidget {
           SizedBox(width: 4,),
           Obx(
             () => Flexible(
-              child: RaisedButton(
+              child: ElevatedButton(
+                style: raisedButtonStyle,
                 child: (_controller.getPlayerState() == 4) ? Icon(Icons.play_arrow_rounded) : Icon(Icons.pause_rounded),
                 onPressed: () {
                   if (_controller.getPlayerState() == PlayerState.paused.index) {
@@ -150,7 +157,8 @@ class YouTubeView extends StatelessWidget {
           ),
           SizedBox(width: 4,),
           Flexible(
-            child: RaisedButton(
+            child: ElevatedButton(
+              style: raisedButtonStyle,
               child: Icon(Icons.fast_forward_rounded),
               onPressed: () {
                 var forwardTo = _youTubeController.value.position.inSeconds + 10;

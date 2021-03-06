@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2_flutter_getx/views/shared/buttons_style.dart';
 import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
 import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/input_letter_dialog.dart';
@@ -87,8 +88,8 @@ class ScrambleGenSettingsView extends StatelessWidget {
     return Expanded(
       child: Container(
         padding: EdgeInsets.all(8.0),
-        child: RaisedButton(
-          color: Get.theme.primaryColor,
+        child: ElevatedButton(
+          style: raisedButtonStyle,
           onPressed: onPressed,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -98,7 +99,6 @@ class ScrambleGenSettingsView extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
           ),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),
     );

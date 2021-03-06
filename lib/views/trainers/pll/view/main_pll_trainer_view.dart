@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
+import 'package:rg2_flutter_getx/views/shared/buttons_style.dart';
 import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
 import 'package:rg2_flutter_getx/views/trainers/model/result_variants.dart';
 import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_trainer_controller.dart';
@@ -55,9 +56,8 @@ class MainPllTrainerView extends StatelessWidget {
 
   /// Кнопка Начать игру
   Widget startButton() {
-    return RaisedButton(
-      color: Get.theme.primaryColor,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    return ElevatedButton(
+      style: raisedButtonStyle,
       onPressed: () {
         _controller.startTrainer();
       },
@@ -255,16 +255,16 @@ class MainPllTrainerView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             /// Кнопка "Пауза/Прервать"
-            FlatButton(
-                color: Get.theme.primaryColor,
+            ElevatedButton(
+                style: raisedButtonStyleWithPadding,
                 onPressed: () {
                   _controller.pauseOrResetTrainer();
                 },
                 child: Text(_controller.cancelButtonText)),
 
             /// Кнопка "Далее"
-            FlatButton(
-                color: Get.theme.accentColor,
+            ElevatedButton(
+                style: raisedAccentButtonStyleWithPadding,
                 onPressed: () {
                   _controller.nextQuestion();
                 },
@@ -296,9 +296,12 @@ class MainPllTrainerView extends StatelessWidget {
 
   /// Маленькая кнопочка для международных вариантов ответов
   Widget buildSmallButton(String letter) {
-    return FlatButton(
-      color: Get.theme.primaryColor,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+    return ElevatedButton(
+      style: raisedButtonStyle.copyWith(
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+              const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              ))),
       child: Text("$letter"),
       onPressed: () {
         _controller.checkAnswerByString(letter);
@@ -315,9 +318,12 @@ class MainPllTrainerView extends StatelessWidget {
             children: row.map((text) =>
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: _horizontalBorder, vertical: _verticalBorder),
-                  child: FlatButton(
-                    color: Get.theme.primaryColor,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+                  child: ElevatedButton(
+                    style: raisedButtonStyle.copyWith(
+                        shape: MaterialStateProperty.all<OutlinedBorder>(
+                            const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    ))),
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 3.0),
                       child: Text("$text", softWrap: true, textAlign: TextAlign.center,)
