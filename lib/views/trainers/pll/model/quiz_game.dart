@@ -31,7 +31,7 @@ class QuizGame {
   }
 
   /// Список возможных вариантов
-  var answersList = List<QuizVariant>();
+  var answersList = <QuizVariant>[];
 
   /// Счетчик правильных ответов
   var _rightAnswerCount = 0.obs;

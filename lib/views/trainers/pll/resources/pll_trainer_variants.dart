@@ -6,7 +6,7 @@ class PllTrainerVariants {
   static Future initDb(PllTrainerDao dao) async {
     print("Заполняем таблицу PLL_Trainers данными");
     dao.clearTable();
-    var items = List<PllTrainerItem>();
+    var items = <PllTrainerItem>[];
     _internationalNames.asMap().forEach((index, intName) {
       var maximName = _maximNames[index];
       var imagePath = _images[index];

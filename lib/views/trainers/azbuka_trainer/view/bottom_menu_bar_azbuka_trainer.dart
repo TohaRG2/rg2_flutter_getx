@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/controller/azbuka_trainer_controller.dart';
 import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/view/settings_azbuka_trainer_view.dart';
 
 class AzbukaTrainerBottomMenuBar extends StatelessWidget {
-  final AzbukaTrainerController _controller = Get.find();
   AzbukaTrainerBottomMenuBar({Key key,}) : super(key: key);
 
   @override
@@ -19,15 +17,14 @@ class AzbukaTrainerBottomMenuBar extends StatelessWidget {
       type: BottomNavigationBarType.fixed,
       onTap: (tappedItemIndex) {
         switch (tappedItemIndex) {
-        // Нажата кнопка "Назад"
+        /// Нажата кнопка "Назад"
           case 0:
             //if (_controller.exitTrainer()) Get.back();
             Get.back();
             break;
-        // Нажата кнопка "Настройки"
+        /// Нажата кнопка "Настройки"
           case 1:
             Get.to(() => SettingsAzbukaTrainerView(), transition: Transition.rightToLeft);
-            //_controller.exitTrainer();
             break;
           default:
             print("WARNING!!! selected bottom item - $tappedItemIndex");

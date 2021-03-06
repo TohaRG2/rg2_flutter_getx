@@ -7,7 +7,7 @@ class AzbukaDialogController extends GetxController {
   Repository _repo = Get.find();
   String _currentType = "";
 
-  RxList<BasicMove> _movesItems = List<BasicMove>().obs;
+  RxList<BasicMove> _movesItems = <BasicMove>[].obs;
   get movesItems => _movesItems.toList();
 
   Future<void> loadMoves(String phase) async {

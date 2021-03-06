@@ -16,7 +16,7 @@ class Cube {
   List<int> get asList => _cube;
 
   /// Бэкап кубика
-  List<int> _backup = List();
+  List<int> _backup = [];
 
   /// Цвета сторон кубика
   /// 0 - синий, 1 - оранжевый, 2 - белый, 3 - красный, 4 - желтый, 5 - зеленый

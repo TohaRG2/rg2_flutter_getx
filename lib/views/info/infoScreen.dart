@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/info_controller.dart';
 import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
 import 'package:rg2_flutter_getx/res/string_values.dart';
 
@@ -10,7 +9,6 @@ import 'thanks/thanks_view.dart';
 
 class InfoScreen extends StatelessWidget {
   final SettingsController _settings = Get.find();
-  final InfoController _infoController = Get.find();
 
   @override
   Widget build(BuildContext context) {

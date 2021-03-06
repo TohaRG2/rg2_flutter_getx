@@ -23,7 +23,6 @@ class BottomNavBar extends StatelessWidget {
         width: size.width,
         height: 70,
         child: Stack(
-          overflow: Overflow.visible,
           children: [
             // Подложка
             CustomPaint(

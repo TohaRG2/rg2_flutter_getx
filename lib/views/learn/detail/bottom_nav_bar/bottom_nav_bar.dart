@@ -15,12 +15,12 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final width = Get.width;
-    final iconColor = Theme.of(context).scaffoldBackgroundColor;
+    final iconColor = Get.theme.scaffoldBackgroundColor;
     return Container(
       width: width,
       height: 70,
       child: Stack(
-        overflow: Overflow.visible,
+        clipBehavior: Clip.hardEdge,
         children: [
           /// Подложка
           CustomPaint(

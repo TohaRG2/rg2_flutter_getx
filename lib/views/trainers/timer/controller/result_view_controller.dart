@@ -14,7 +14,7 @@ class ResultViewController extends GetxController {
     super.onInit();
   }
 
-  RxList<TimeNoteItem> _timeNoteItems = List<TimeNoteItem>().obs;
+  RxList<TimeNoteItem> _timeNoteItems = <TimeNoteItem>[].obs;
   List<TimeNoteItem> get timeNoteItems => _timeNoteItems;
 
   updateTimeNoteItems() async {

@@ -22,7 +22,6 @@ class TimerView extends StatelessWidget {
   final double _borderThin = 10.0;
   // цвет кнопок нижней панели bottomNavBar
   final Color _primaryColor = Get.theme.primaryColor;
-  final Color _accentColor = Get.theme.accentColor;
   // цвет подложки
   final Color _backgroundColor = Color.fromARGB(255, 50, 50, 50);
   // цвет окошка в котором выводится время

@@ -68,7 +68,7 @@ class PllTrainerController extends TrainerController {
   /// Возвращаем список из нескольких случайных вариантов и правильного на случайном месте
   /// в виде списка списков по 2 элемента (2 столбца для ввода кнопок)
   List<List<String>> _getListOfVariants() {
-    List<List<String>> result = List();
+    List<List<String>> result = [];
     var variants = quizGame.getListOfVariants(_variantsCount).map((e) => e.value).toList();
     for (var i = 0; i < variants.length; i += 2) {
       var row = variants.getRange(i, i + 2).toList();

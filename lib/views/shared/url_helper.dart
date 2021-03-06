@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:rg2_flutter_getx/views/learn/detail/learn_detail_screen.dart';
+import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/main_scramble_gen_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UrlHelper {
@@ -31,7 +32,7 @@ class UrlHelper {
           uri.host.toLowerCase() == "scramble") {
         var scramble = uri.queryParameters["scram"] ?? "R_R\'";
         //TODO uncomment when ScrambleGenerator will be completed
-        //Get.to(ScrambleGenerator(scramble));
+        //Get.to(ScrambleGenView(scramble));
       }
       //rg2://pager?phase=BEGIN&item=1
       if (uri.host.toLowerCase() == "pager") {

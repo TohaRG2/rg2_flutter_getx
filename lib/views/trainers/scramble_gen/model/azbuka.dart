@@ -4,7 +4,7 @@ import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/azbuka_simple
 
 class Azbuka {
   var sp = GetStorage();
-  List<String> _currentAzbuka = List();
+  List<String> _currentAzbuka = [];
   List<int> _currentColorsSide = [0,1,2,3,4,5];
 
   /// Делаем класс синглетным, чтобы из любого места шло обращение к одному экземпляру
@@ -23,7 +23,7 @@ class Azbuka {
 
   /// Возвращаем список из 54 элементов (номер, цвет, буква)
   List<ColoredAzbukaItem> get currentColoredAzbuka {
-    List<ColoredAzbukaItem> coloredAzbuka = List();
+    List<ColoredAzbukaItem> coloredAzbuka = [];
     currentAzbuka.asMap().forEach((index, value) {
       coloredAzbuka.add(ColoredAzbukaItem(index: index, colorNumber: _currentColorsSide[index ~/ 9], letter: value));
     });

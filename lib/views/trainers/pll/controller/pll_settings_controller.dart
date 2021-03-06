@@ -22,7 +22,7 @@ class PllSettingsController extends GetxController {
   }
 
   /// Список названий PLL алгоритмов и их настроек (может ли быть загадан)
-  final RxList<PllTrainerItem> _pllTrainerItems = List<PllTrainerItem>().obs;
+  final RxList<PllTrainerItem> _pllTrainerItems = <PllTrainerItem>[].obs;
   List<PllTrainerItem> get pllTrainerItems => _pllTrainerItems;
   set pllTrainerItems(value) {
     _pllTrainerItems.assignAll(value);

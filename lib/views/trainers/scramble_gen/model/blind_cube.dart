@@ -23,7 +23,7 @@ class BlindCube extends Cube {
 
   /// берем два массива: цвета кубика и азбуку и делаем из них один
   List<ColoredAzbukaItem> getColoredAzbuka() {
-    var result = List<ColoredAzbukaItem>();
+    var result = <ColoredAzbukaItem>[];
     var colors = asList;
     colors.asMap().forEach((index, color) {
       result.add(ColoredAzbukaItem(index: index, colorNumber: color, letter: azbuka[index]));
@@ -210,7 +210,7 @@ class BlindCube extends Cube {
     //предположим что все на местах
     var result = true;
 
-    List<int> edgesListNotOnPlace = List();
+    List<int> edgesListNotOnPlace = [];
     dopEdge.forEach((mainPosition, slavePosition) {
       var mainColor = asList[mainPosition];
       var slaveColor = asList[slavePosition];
@@ -315,7 +315,7 @@ class BlindCube extends Cube {
     //предположим что все на местах
     var result = true;
     //Обнуляем список углов стоящих на своих местах
-    List<int> cornersListNotOnPlace = List();
+    List<int> cornersListNotOnPlace = [];
     dopCorner.forEach((mainPosition, slavePosition) {
       var mainColor = asList[mainPosition];
       var slaveColor = asList[slavePosition];

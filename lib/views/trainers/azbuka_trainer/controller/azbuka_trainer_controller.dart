@@ -107,7 +107,7 @@ class AzbukaTrainerController extends TrainerController {
   /// Возвращаем список из 24 вариантов (id, буква, true) для углов
   List<QuizVariant> get _quizCornerVariants {
     var listOf54Letters = _azbuka.currentAzbuka;
-    var result = List<QuizVariant>();
+    var result = <QuizVariant>[];
     _cornersNumbers.asMap().forEach((index, cornerNumber) {
       result.add(QuizVariant(index, listOf54Letters[cornerNumber], true));
     });
@@ -117,7 +117,7 @@ class AzbukaTrainerController extends TrainerController {
   /// Возвращаем список из 24 вариантов (id, буква, true) для ребер
   List<QuizVariant> get _quizEdgeVariants {
     var listOf54Letters = _azbuka.currentAzbuka;
-    var result = List<QuizVariant>();
+    var result = <QuizVariant>[];
     _edgeNumbers.asMap().forEach((index, edgeNumber) {
       result.add(QuizVariant(index, listOf54Letters[edgeNumber], true));
     });

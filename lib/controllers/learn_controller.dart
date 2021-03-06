@@ -23,7 +23,7 @@ class LearnController extends GetxController {
     super.onInit();
   }
 
-  RxList<PageProperties> pages = List<PageProperties>().obs;
+  RxList<PageProperties> pages = <PageProperties>[].obs;
   Map<String, double> phasesPositions = Map();
 
   Future<void> loadPages() async {

@@ -97,7 +97,7 @@ class ScrambleGenController extends GetxController {
   }
 
   // создаем observable азбуку, чтобы обновлять куб на экране, при изменении цветов или букв
-  RxList<ColoredAzbukaItem> _settingsColoredAzbuka = List<ColoredAzbukaItem>().obs;
+  RxList<ColoredAzbukaItem> _settingsColoredAzbuka = <ColoredAzbukaItem>[].obs;
   List<ColoredAzbukaItem> get settingsColoredAzbuka => _settingsColoredAzbuka;
   set settingsColoredAzbuka (List<ColoredAzbukaItem> coloredAzbuka) {
     _settingsColoredAzbuka.assignAll(coloredAzbuka);
@@ -105,7 +105,7 @@ class ScrambleGenController extends GetxController {
   }
 
   // создаем observable азбуку, чтобы обновлять куб на экране, при изменении цветов или букв
-  RxList<ColoredAzbukaItem> _mainColoredAzbuka = List<ColoredAzbukaItem>().obs;
+  RxList<ColoredAzbukaItem> _mainColoredAzbuka = <ColoredAzbukaItem>[].obs;
   List<ColoredAzbukaItem> get mainColoredAzbuka => _mainColoredAzbuka;
   set mainColoredAzbuka (List<ColoredAzbukaItem> value) {
     _mainColoredAzbuka.assignAll(value);
@@ -193,7 +193,7 @@ class ScrambleGenController extends GetxController {
 
   /// Представляем кубик в виде 9 строк по 12 элементов из списка элементов куба в 54 элемента
   List<List<ColoredAzbukaItem>> asTableRows(List<ColoredAzbukaItem> cube) {
-    List<List<ColoredAzbukaItem>> result = List();
+    List<List<ColoredAzbukaItem>> result = [];
 
     // заполняем табличку из 108 элементов прозрачными (7), пустыми ("") элементами с индексом 100
     var table = List.generate(108, (_) => ColoredAzbukaItem(index: 100, colorNumber: 7, letter: ""));
