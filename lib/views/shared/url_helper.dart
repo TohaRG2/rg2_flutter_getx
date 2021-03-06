@@ -18,9 +18,11 @@ class UrlHelper {
     }
   }
 
+  /// Переходы к нужному окну программы в зависимости от типа ссылки
   static _launchRG2url(Uri uri) {
     print("URI.parameters - ${uri.queryParameters}");
-    if (uri.host.toLowerCase() == "ytplay" || uri.host.toLowerCase() == "player") {
+    // окно просмотра видео для "ytplay" или "ytplay"
+    if (uri.host.toLowerCase() == "ytplay" || uri.host.toLowerCase() == "ytplay") {
       var _id = uri.queryParameters["link"] ?? "u1CA_35lRAI";
       var _time = uri.queryParameters["time"] ?? "0:00";
       var _alg = uri.queryParameters["alg"] ?? "";
@@ -28,12 +30,16 @@ class UrlHelper {
       //Get.to(YouTubeView(id: _id, time: _time, alg: _alg,));
       Get.toNamed("/youtube", arguments: {"id" : _id, "time": _time, "alg": _alg});
     } else {
+
+      // окно генератора скрамблов для "scrmbl" или "scramble"
       if (uri.host.toLowerCase() == "scrmbl" ||
           uri.host.toLowerCase() == "scramble") {
         var scramble = uri.queryParameters["scram"] ?? "R_R\'";
         //TODO uncomment when ScrambleGenerator will be completed
         //Get.to(ScrambleGenView(scramble));
       }
+
+      // окно детальной информации для ссылок типа "pager"
       //rg2://pager?phase=BEGIN&item=1
       if (uri.host.toLowerCase() == "pager") {
         var phase = uri.queryParameters["phase"] ?? "BEGIN";
@@ -45,6 +51,7 @@ class UrlHelper {
     }
   }
 
+  /// Запуск ссылки во внешнем приложении
   static _launchExternalURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -53,6 +60,7 @@ class UrlHelper {
     }
   }
 
+  /// нормализуем текст для отображения в html, заменяем пути к картинкам и центруем их отображение
   static getNormalHtmlTextFromDescription(String description, String assetPath){
     var htmlText = description;
     htmlText = htmlText.replaceAll('<img src=', '<img apath="$assetPath" src=');
