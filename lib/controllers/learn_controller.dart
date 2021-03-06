@@ -253,6 +253,11 @@ class LearnController extends GetxController {
     //saveCurrentPhasePosition(); - сохраняем текущую позицию
     var fromPhase = pages[curPageNumber].currentPhase;
     var toPhase = backFrom[fromPhase] ?? fromPhase;
+    if (curPageNumber == 0) {
+      if (fromPhase != Const.FAVOURITES) {
+        toPhase = Const.FAVOURITES;
+      }
+    }
     if (toPhase != fromPhase) {
       changeCurrentPhaseTo(toPhase);
       return false;
