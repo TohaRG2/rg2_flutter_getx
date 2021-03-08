@@ -1,9 +1,10 @@
 name: rg2_flutter_getx
-description: RG2 write with flutter and GetX plugin
+description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 4.20210308.1
+
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -34,7 +35,7 @@ dependencies:
   # video_player: ^1.0.1
   # chewie: ^0.12.2
   # Plugin for rendering the <iframe> tag.
-  webview_flutter: ^2.0.1
+  webview_flutter: ^2.0.2
   # Plugins for rendering the <audio> tag.
   # chewie_audio: ^1.1.1
 

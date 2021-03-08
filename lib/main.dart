@@ -22,6 +22,8 @@ import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_controlle
 import 'database/main_database.dart';
 import 'views/main_view.dart';
 import 'views/youtube_player/youtube_view.dart';
+import 'package:flutter/services.dart' ;
+
 
 void main() async {
   await GetStorage.init();
@@ -39,6 +41,8 @@ class RG2App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Зафиксируем ориентацию экрана в портретном режиме
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,]);
     return GetMaterialApp(
         title: 'RG2',
         theme: _getCurrentTheme(),
