@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
-import 'package:rg2_flutter_getx/database/daos/abstract_dao.dart';
-import 'package:rg2_flutter_getx/database/entitys/basic_move.dart';
+import 'package:rg2/database/daos/abstract_dao.dart';
+import 'package:rg2/database/entitys/basic_move.dart';
 
 
 @dao

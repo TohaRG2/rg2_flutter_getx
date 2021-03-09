@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
-import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
+import 'package:rg2/database/entitys/pll_trainer_item.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
 
 class PllAlgorithmSelectionItem extends StatelessWidget {
   final PllTrainerItem _pllTrainerItem;

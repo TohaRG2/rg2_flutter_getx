@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/shared/buttons_style.dart';
-import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
-import 'package:rg2_flutter_getx/views/trainers/model/result_variants.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_trainer_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/view/bottom_menu_bar_pll_trainer.dart';
+import 'package:rg2/controllers/settings_controller.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/shared/buttons_style.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
+import 'package:rg2/views/trainers/model/result_variants.dart';
+import 'package:rg2/views/trainers/pll/controller/pll_trainer_controller.dart';
+import 'package:rg2/views/trainers/pll/view/bottom_menu_bar_pll_trainer.dart';
 
 class MainPllTrainerView extends StatelessWidget {
   final PllTrainerController _controller = Get.find();

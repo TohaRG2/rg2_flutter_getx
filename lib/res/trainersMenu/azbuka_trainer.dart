@@ -1,5 +1,5 @@
-import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
+import 'package:rg2/models/trainer_menu_item.dart';
+import 'package:rg2/res/string_values.dart';
 
 final azbukaTrainer = TrainerMenuItem(
     id: StrRes.trainersAzbuka,

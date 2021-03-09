@@ -1,4 +1,4 @@
-name: rg2_flutter_getx
+name: rg2
 description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -35,7 +35,7 @@ dependencies:
   # video_player: ^1.0.1
   # chewie: ^0.12.2
   # Plugin for rendering the <iframe> tag.
-  webview_flutter: ^2.0.2
+  webview_flutter: ^2.0.1
   # Plugins for rendering the <audio> tag.
   # chewie_audio: ^1.1.1
 

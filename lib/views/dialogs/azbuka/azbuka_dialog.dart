@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/azbuka_dialog_controller.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/dialogs/azbuka/azbuka_item.dart';
+import 'package:rg2/controllers/azbuka_dialog_controller.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/dialogs/azbuka/azbuka_item.dart';
 
 class AzbukaDialog extends StatelessWidget {
   final _controller = Get.find<AzbukaDialogController>();

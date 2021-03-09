@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/view/icon_with_text_widget.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/view/timer_bottom_menu_bar.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/view/scramble_text_widget.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_settings_controller.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
+import 'package:rg2/views/trainers/timer/controller/timer_controller.dart';
+import 'package:rg2/views/trainers/timer/view/icon_with_text_widget.dart';
+import 'package:rg2/views/trainers/timer/view/timer_bottom_menu_bar.dart';
+import 'package:rg2/views/trainers/timer/view/scramble_text_widget.dart';
+import 'package:rg2/views/trainers/timer/controller/timer_settings_controller.dart';
 
 class TimerView extends StatelessWidget {
   final TimerController _controller = Get.find();

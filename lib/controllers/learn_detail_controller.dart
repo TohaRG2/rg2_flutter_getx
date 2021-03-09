@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/repository.dart';
-import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
+import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/database/entitys/main_db_item.dart';
 
 import 'learn_controller.dart';
 

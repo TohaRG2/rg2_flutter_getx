@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/dialogs/advices_images/advices_images_dialog.dart';
-import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/dialogs/advices_images/advices_images_dialog.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
 import 'dart:math';
 
 import 'advices.dart';

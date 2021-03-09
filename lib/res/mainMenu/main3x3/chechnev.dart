@@ -1,6 +1,6 @@
 
-import 'package:rg2_flutter_getx/models/phases.dart';
-import 'package:rg2_flutter_getx/res/mainMenu/main3x3/recomendation.dart';
+import 'package:rg2/models/phases.dart';
+import 'package:rg2/res/mainMenu/main3x3/recomendation.dart';
 
 import 'rozov.dart';
 

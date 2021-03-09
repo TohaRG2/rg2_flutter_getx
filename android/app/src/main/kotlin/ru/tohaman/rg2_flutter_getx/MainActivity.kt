@@ -1,4 +1,4 @@
-package ru.tohaman.rg2_flutter_getx
+package ru.tohaman.rg2
 
 import io.flutter.embedding.android.FlutterActivity
 

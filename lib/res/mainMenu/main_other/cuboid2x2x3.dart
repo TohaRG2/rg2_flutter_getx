@@ -1,5 +1,5 @@
 
-import 'package:rg2_flutter_getx/models/phases.dart';
+import 'package:rg2/models/phases.dart';
 
 class Cuboid2x2x3 implements Phase {
   @override

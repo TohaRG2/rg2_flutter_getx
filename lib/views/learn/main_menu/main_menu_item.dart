@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/learn_controller.dart';
-import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/dialogs/favourites/favourite_dialog.dart';
-import 'package:rg2_flutter_getx/views/learn/detail/learn_detail_screen.dart';
-import 'package:rg2_flutter_getx/views/settings/settings_screen.dart';
-import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
+import 'package:rg2/controllers/learn_controller.dart';
+import 'package:rg2/database/entitys/main_db_item.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/dialogs/favourites/favourite_dialog.dart';
+import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
+import 'package:rg2/views/settings/settings_screen.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
 
 class MainMenuItem extends StatelessWidget {
   final LearnController _learnController = Get.find();

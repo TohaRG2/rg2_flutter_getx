@@ -1,5 +1,5 @@
-import 'package:rg2_flutter_getx/database/daos/pll_trainer_dao.dart';
-import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
+import 'package:rg2/database/daos/pll_trainer_dao.dart';
+import 'package:rg2/database/entitys/pll_trainer_item.dart';
 
 class PllTrainerVariants {
 

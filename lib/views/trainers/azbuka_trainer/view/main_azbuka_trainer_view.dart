@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/shared/buttons_style.dart';
-import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
-import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/controller/azbuka_trainer_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/view/bottom_menu_bar_azbuka_trainer.dart';
-import 'package:rg2_flutter_getx/views/trainers/model/result_variants.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/model/quiz_variant.dart';
+import 'package:rg2/controllers/settings_controller.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/shared/buttons_style.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
+import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_trainer_controller.dart';
+import 'package:rg2/views/trainers/azbuka_trainer/view/bottom_menu_bar_azbuka_trainer.dart';
+import 'package:rg2/views/trainers/model/result_variants.dart';
+import 'package:rg2/views/trainers/pll/model/quiz_variant.dart';
 
 class MainAzbukaTrainerView extends StatelessWidget {
   final AzbukaTrainerController _controller = Get.find();

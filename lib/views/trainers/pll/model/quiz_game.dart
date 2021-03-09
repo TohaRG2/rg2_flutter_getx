@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'dart:math';
 
-import 'package:rg2_flutter_getx/views/trainers/pll/model/quiz_variant.dart';
+import 'package:rg2/views/trainers/pll/model/quiz_variant.dart';
 
 
 class QuizGame {

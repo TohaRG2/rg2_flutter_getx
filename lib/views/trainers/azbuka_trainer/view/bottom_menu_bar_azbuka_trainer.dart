@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/view/settings_azbuka_trainer_view.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/trainers/azbuka_trainer/view/settings_azbuka_trainer_view.dart';
 
 class AzbukaTrainerBottomMenuBar extends StatelessWidget {
   AzbukaTrainerBottomMenuBar({Key key,}) : super(key: key);

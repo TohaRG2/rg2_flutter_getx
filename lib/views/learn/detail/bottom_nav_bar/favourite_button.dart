@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/learn_detail_controller.dart';
-import 'package:rg2_flutter_getx/views/dialogs/favourites/favourite_dialog.dart';
+import 'package:rg2/controllers/learn_detail_controller.dart';
+import 'package:rg2/views/dialogs/favourites/favourite_dialog.dart';
 
 class FavouriteButton extends StatelessWidget {
 

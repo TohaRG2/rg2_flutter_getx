@@ -3,7 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/cube.dart';
+import 'package:rg2/views/trainers/scramble_gen/model/cube.dart';
 
 class PllCubeImage {
   int id;

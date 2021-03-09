@@ -1,16 +1,16 @@
 
 import 'dart:async';
 import 'package:floor/floor.dart';
-import 'package:rg2_flutter_getx/database/converters/date_time_converter.dart';
-import 'package:rg2_flutter_getx/database/daos/moves_dao.dart';
-import 'package:rg2_flutter_getx/database/daos/page_prop_dao.dart';
-import 'package:rg2_flutter_getx/database/daos/phase_position_dao.dart';
-import 'package:rg2_flutter_getx/database/daos/pll_trainer_dao.dart';
-import 'package:rg2_flutter_getx/database/daos/times_dao.dart';
-import 'package:rg2_flutter_getx/database/entitys/page_properties.dart';
-import 'package:rg2_flutter_getx/database/entitys/phase_position_item.dart';
-import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
-import 'package:rg2_flutter_getx/database/entitys/time_note_item.dart';
+import 'package:rg2/database/converters/date_time_converter.dart';
+import 'package:rg2/database/daos/moves_dao.dart';
+import 'package:rg2/database/daos/page_prop_dao.dart';
+import 'package:rg2/database/daos/phase_position_dao.dart';
+import 'package:rg2/database/daos/pll_trainer_dao.dart';
+import 'package:rg2/database/daos/times_dao.dart';
+import 'package:rg2/database/entitys/page_properties.dart';
+import 'package:rg2/database/entitys/phase_position_item.dart';
+import 'package:rg2/database/entitys/pll_trainer_item.dart';
+import 'package:rg2/database/entitys/time_note_item.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 import 'daos/main_dao.dart';

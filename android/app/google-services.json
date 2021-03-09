@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "59335744860",
+    "project_id": "rg2-flutter",
+    "storage_bucket": "rg2-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59335744860:android:3e716667932e2f7b5ff599",
+        "android_client_info": {
+          "package_name": "ru.tohaman.rg2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "59335744860-l932u56ap58f14lhn192o5i9c06s2ost.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCq_2uPUDnUE57TAaV_VUV13QunnZUxl8U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "59335744860-l932u56ap58f14lhn192o5i9c06s2ost.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

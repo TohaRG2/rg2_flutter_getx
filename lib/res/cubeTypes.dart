@@ -1,5 +1,5 @@
 
-import 'package:rg2_flutter_getx/database/entitys/page_properties.dart';
+import 'package:rg2/database/entitys/page_properties.dart';
 
 class CubeTypes {
 

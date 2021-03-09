@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/blind_cube_support_arrays.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/show_scramble_text.dart';
+import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
+import 'package:rg2/views/trainers/scramble_gen/model/blind_cube_support_arrays.dart';
+import 'package:rg2/views/trainers/scramble_gen/view/show_scramble_text.dart';
 
 import 'bottom_menu_bar.dart';
 import 'melting_checkboxes.dart';

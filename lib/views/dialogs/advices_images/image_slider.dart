@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/views/info/advice/advices.dart';
+import 'package:rg2/views/info/advice/advices.dart';
 
 class ComplicatedImageDemo extends StatelessWidget {
   final _position = 0.obs;

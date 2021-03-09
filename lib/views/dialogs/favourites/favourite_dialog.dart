@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/learn_controller.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/dialogs/favourites/favourite_dialog_list.dart';
+import 'package:rg2/controllers/learn_controller.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/dialogs/favourites/favourite_dialog_list.dart';
 
 class FavouriteDialog extends StatelessWidget {
   final _learnController = Get.find<LearnController>();

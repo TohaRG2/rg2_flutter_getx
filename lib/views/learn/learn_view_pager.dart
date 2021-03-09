@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/learn_controller.dart';
-import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
-import 'package:rg2_flutter_getx/database/entitys/page_properties.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
+import 'package:rg2/controllers/learn_controller.dart';
+import 'package:rg2/controllers/settings_controller.dart';
+import 'package:rg2/database/entitys/page_properties.dart';
+import 'package:rg2/res/string_values.dart';
 
 import 'main_menu/main_menu_list_view.dart';
 

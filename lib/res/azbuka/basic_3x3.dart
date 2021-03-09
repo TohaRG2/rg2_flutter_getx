@@ -1,6 +1,6 @@
 
 
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/moves.dart';
+import 'package:rg2/views/trainers/scramble_gen/model/moves.dart';
 
 class Basic3x3 implements Moves {
   @override

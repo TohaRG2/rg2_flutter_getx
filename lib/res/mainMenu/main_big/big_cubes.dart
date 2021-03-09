@@ -1,5 +1,5 @@
 
-import 'package:rg2_flutter_getx/models/phases.dart';
+import 'package:rg2/models/phases.dart';
 
 import 'begin_5x5.dart';
 

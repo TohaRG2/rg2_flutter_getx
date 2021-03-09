@@ -1,6 +1,6 @@
 import 'package:get_storage/get_storage.dart';
-import 'package:rg2_flutter_getx/res/constants.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
+import 'package:rg2/res/constants.dart';
+import 'package:rg2/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
 
 class Azbuka {
   var sp = GetStorage();

@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
+import 'package:rg2/controllers/settings_controller.dart';
 
 class InfoController extends GetxController {
   SettingsController _settings = Get.find();

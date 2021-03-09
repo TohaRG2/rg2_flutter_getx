@@ -1,16 +1,16 @@
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/database/daos/main_dao.dart';
-import 'package:rg2_flutter_getx/database/daos/moves_dao.dart';
-import 'package:rg2_flutter_getx/database/daos/page_prop_dao.dart';
-import 'package:rg2_flutter_getx/database/daos/phase_position_dao.dart';
-import 'package:rg2_flutter_getx/database/daos/pll_trainer_dao.dart';
-import 'package:rg2_flutter_getx/database/daos/times_dao.dart';
-import 'package:rg2_flutter_getx/database/entitys/basic_move.dart';
-import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
-import 'package:rg2_flutter_getx/database/entitys/page_properties.dart';
-import 'package:rg2_flutter_getx/database/entitys/phase_position_item.dart';
-import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
-import 'package:rg2_flutter_getx/database/entitys/time_note_item.dart';
+import 'package:rg2/database/daos/main_dao.dart';
+import 'package:rg2/database/daos/moves_dao.dart';
+import 'package:rg2/database/daos/page_prop_dao.dart';
+import 'package:rg2/database/daos/phase_position_dao.dart';
+import 'package:rg2/database/daos/pll_trainer_dao.dart';
+import 'package:rg2/database/daos/times_dao.dart';
+import 'package:rg2/database/entitys/basic_move.dart';
+import 'package:rg2/database/entitys/main_db_item.dart';
+import 'package:rg2/database/entitys/page_properties.dart';
+import 'package:rg2/database/entitys/phase_position_item.dart';
+import 'package:rg2/database/entitys/pll_trainer_item.dart';
+import 'package:rg2/database/entitys/time_note_item.dart';
 
 class Repository extends GetxController {
   MainDao _mainDao = Get.find();

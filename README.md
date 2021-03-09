@@ -1,4 +1,4 @@
-# rg2_flutter_getx
+# rg2
 
 multiplatform RG2 on flutter
 

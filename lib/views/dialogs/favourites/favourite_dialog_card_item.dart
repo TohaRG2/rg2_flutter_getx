@@ -5,10 +5,10 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
-import 'package:rg2_flutter_getx/controllers/learn_controller.dart';
-import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/learn/detail/learn_detail_screen.dart';
+import 'package:rg2/controllers/learn_controller.dart';
+import 'package:rg2/database/entitys/main_db_item.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 
 class FavouriteDialogCardItem extends StatelessWidget {
   final _learnController = Get.find<LearnController>();

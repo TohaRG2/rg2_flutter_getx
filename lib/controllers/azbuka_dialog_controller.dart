@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/repository.dart';
-import 'package:rg2_flutter_getx/database/entitys/basic_move.dart';
-import 'package:rg2_flutter_getx/res/azbuka/phase_types.dart';
+import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/database/entitys/basic_move.dart';
+import 'package:rg2/res/azbuka/phase_types.dart';
 
 class AzbukaDialogController extends GetxController {
   Repository _repo = Get.find();

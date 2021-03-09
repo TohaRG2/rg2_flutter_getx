@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/azbuka_dialog_controller.dart';
-import 'package:rg2_flutter_getx/database/entitys/basic_move.dart';
+import 'package:rg2/controllers/azbuka_dialog_controller.dart';
+import 'package:rg2/database/entitys/basic_move.dart';
 
 class AzbukaItem extends StatelessWidget {
   final BasicMove item;

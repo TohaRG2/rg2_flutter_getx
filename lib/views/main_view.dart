@@ -1,10 +1,10 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/learn_controller.dart';
-import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
-import 'package:rg2_flutter_getx/views/info/infoScreen.dart';
-import 'package:rg2_flutter_getx/views/learn/learn_menu_screen.dart';
-import 'package:rg2_flutter_getx/views/settings/settings_screen.dart';
+import 'package:rg2/controllers/learn_controller.dart';
+import 'package:rg2/controllers/settings_controller.dart';
+import 'package:rg2/views/info/infoScreen.dart';
+import 'package:rg2/views/learn/learn_menu_screen.dart';
+import 'package:rg2/views/settings/settings_screen.dart';
 
 import 'bottomNavBarItems.dart';
 import 'trainers/trainers_view/trainers_screen.dart';

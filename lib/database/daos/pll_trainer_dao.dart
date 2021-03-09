@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
-import 'package:rg2_flutter_getx/database/daos/abstract_dao.dart';
-import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
+import 'package:rg2/database/daos/abstract_dao.dart';
+import 'package:rg2/database/entitys/pll_trainer_item.dart';
 
 @dao
 abstract class PllTrainerDao extends AbstractDao<PllTrainerItem> {

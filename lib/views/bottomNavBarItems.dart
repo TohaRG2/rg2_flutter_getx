@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
+import 'package:rg2/res/string_values.dart';
 
 const List<BottomNavigationBarItem> bottomNavBarItem = [
   BottomNavigationBarItem(

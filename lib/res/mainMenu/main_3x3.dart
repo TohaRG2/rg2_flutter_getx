@@ -1,4 +1,4 @@
-import 'package:rg2_flutter_getx/models/phases.dart';
+import 'package:rg2/models/phases.dart';
 
 class Main3x3 implements Phase {
   @override

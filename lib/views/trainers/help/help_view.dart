@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/flutter_html/flutter_html.dart';
-import 'package:rg2_flutter_getx/flutter_html/style.dart';
-import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
-import 'package:rg2_flutter_getx/views/shared/url_helper.dart';
-import 'package:rg2_flutter_getx/views/trainers/help/bottom_bar_with_back_button.dart';
+import 'package:rg2/flutter_html/flutter_html.dart';
+import 'package:rg2/flutter_html/style.dart';
+import 'package:rg2/models/trainer_menu_item.dart';
+import 'package:rg2/views/shared/url_helper.dart';
+import 'package:rg2/views/trainers/help/bottom_bar_with_back_button.dart';
 
 class HelpView extends StatelessWidget {
   final TrainerMenuItem item;

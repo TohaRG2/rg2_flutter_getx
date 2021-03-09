@@ -1,5 +1,5 @@
 
-import 'package:rg2_flutter_getx/models/phases.dart';
+import 'package:rg2/models/phases.dart';
 
 class Pll implements Phase {
   @override
@@ -136,7 +136,7 @@ class Pll implements Phase {
     <p>Например первый алгоритм - <b>Окошки</b>, международное название <b>U Perm</b></p>
 
     <p><b>Как определить Окошки</b>:</p>
-    <p style="text-align:center"><img src="pll_1.xml"width="100"></p>
+    <p style="text-align:center"><img src="pll_1.xml" width="100"></p>
 
     <p>В первую очередь, если есть тройной блок и глазки, это уже 100% Окошки. Если тройной блок
     сразу не виден, то ситуация очень похожа на рельсы или шахматы. Но в отличие от рельс только
@@ -151,7 +151,7 @@ class Pll implements Phase {
     <p><b>Как решать:</b></p>
 
     <p>1. Тройным блоком слева:</p>
-    <p style="text-align:center"><img src="pll_1_1.xml"width="210"></p>
+    <p style="text-align:center"><img src="pll_1_1.xml" width="210"></p>
 
     <p>Фингертрикс: <a href="rg2://ytplay?time=11:30&link=P69UVywfz04">на видео 11:30</a><br/>
     Алгоритм: <b>R2 U\' S\' U2 S U\' R2</b></p>

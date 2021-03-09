@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rg2_flutter_getx/controllers/repository.dart';
-import 'package:rg2_flutter_getx/database/entitys/time_note_item.dart';
-import 'package:rg2_flutter_getx/res/constants.dart';
+import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/database/entitys/time_note_item.dart';
+import 'package:rg2/res/constants.dart';
 
 class ResultViewController extends GetxController {
   final Repository _repository = Get.find();

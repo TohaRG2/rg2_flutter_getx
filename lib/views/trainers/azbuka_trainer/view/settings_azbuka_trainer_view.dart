@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/res/trainersMenu/azbuka_trainer.dart';
-import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
-import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/controller/azbuka_settings_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/help/bottom_bar_with_back_button.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/settings_scramble_gen_view.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/res/trainersMenu/azbuka_trainer.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
+import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_settings_controller.dart';
+import 'package:rg2/views/trainers/help/bottom_bar_with_back_button.dart';
+import 'package:rg2/views/trainers/scramble_gen/view/settings_scramble_gen_view.dart';
 
 class SettingsAzbukaTrainerView extends StatelessWidget {
   final AzbukaSettingsController _controller = Get.find();

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/trainers_controller.dart';
-import 'package:rg2_flutter_getx/models/trainer_menu_item.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/view/main_azbuka_trainer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/azbuka_trainer/view/settings_azbuka_trainer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/view/main_pll_trainer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/view/settings_pll_trainer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/main_scramble_gen_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/view/main_timer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/view/settings_timer_view.dart';
-import 'package:rg2_flutter_getx/views/trainers/trainers_view/trainer_view_menu_item.dart';
+import 'package:rg2/controllers/trainers_controller.dart';
+import 'package:rg2/models/trainer_menu_item.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/trainers/azbuka_trainer/view/main_azbuka_trainer_view.dart';
+import 'package:rg2/views/trainers/azbuka_trainer/view/settings_azbuka_trainer_view.dart';
+import 'package:rg2/views/trainers/pll/view/main_pll_trainer_view.dart';
+import 'package:rg2/views/trainers/pll/view/settings_pll_trainer_view.dart';
+import 'package:rg2/views/trainers/scramble_gen/view/main_scramble_gen_view.dart';
+import 'package:rg2/views/trainers/timer/view/main_timer_view.dart';
+import 'package:rg2/views/trainers/timer/view/settings_timer_view.dart';
+import 'package:rg2/views/trainers/trainers_view/trainer_view_menu_item.dart';
 
 import '../help/help_view.dart';
 import '../scramble_gen/view/settings_scramble_gen_view.dart';

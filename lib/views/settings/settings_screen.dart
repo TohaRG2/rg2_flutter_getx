@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/views/settings/elements/purchase_settings.dart';
-import 'package:rg2_flutter_getx/views/settings/elements/swipe_settings.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/shared/ui_helpers.dart';
+import 'package:rg2/views/settings/elements/purchase_settings.dart';
+import 'package:rg2/views/settings/elements/swipe_settings.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
 
 import 'elements/helpSettings.dart';
 import 'elements/internetSettings.dart';

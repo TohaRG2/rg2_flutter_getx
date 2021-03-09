@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/repository.dart';
-import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
-import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
-import 'package:rg2_flutter_getx/database/entitys/page_properties.dart';
-import 'package:rg2_flutter_getx/database/entitys/phase_position_item.dart';
-import 'package:rg2_flutter_getx/res/constants.dart';
+import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/controllers/settings_controller.dart';
+import 'package:rg2/database/entitys/main_db_item.dart';
+import 'package:rg2/database/entitys/page_properties.dart';
+import 'package:rg2/database/entitys/phase_position_item.dart';
+import 'package:rg2/res/constants.dart';
 
 class LearnController extends GetxController {
   Repository _repo = Get.find();

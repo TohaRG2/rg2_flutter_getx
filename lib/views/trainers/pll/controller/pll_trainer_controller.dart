@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/trainers/model/result_variants.dart';
-import 'package:rg2_flutter_getx/views/trainers/model/trainer_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/model/trainer_state.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/controller/pll_settings_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/model/cube_image.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/model/quiz_game.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/trainers/model/result_variants.dart';
+import 'package:rg2/views/trainers/model/trainer_controller.dart';
+import 'package:rg2/views/trainers/model/trainer_state.dart';
+import 'package:rg2/views/trainers/pll/controller/pll_settings_controller.dart';
+import 'package:rg2/views/trainers/pll/model/cube_image.dart';
+import 'package:rg2/views/trainers/pll/model/quiz_game.dart';
 
 class PllTrainerController extends TrainerController {
   final PllSettingsController _settingsController = Get.find();

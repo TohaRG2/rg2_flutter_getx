@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/view/settings_scramble_gen_view.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
+import 'package:rg2/views/trainers/scramble_gen/view/settings_scramble_gen_view.dart';
 
 class BottomMenuBar extends StatelessWidget {
   BottomMenuBar({Key key,})  :  super(key: key);

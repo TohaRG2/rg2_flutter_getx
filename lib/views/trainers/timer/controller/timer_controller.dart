@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/repository.dart';
-import 'package:rg2_flutter_getx/database/entitys/time_note_item.dart';
+import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/database/entitys/time_note_item.dart';
 import 'package:audioplayers/audio_cache.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/model/timer.dart';
-import 'package:rg2_flutter_getx/views/trainers/timer/controller/timer_settings_controller.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
+import 'package:rg2/views/trainers/timer/model/timer.dart';
+import 'package:rg2/views/trainers/timer/controller/timer_settings_controller.dart';
+import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 
 class TimerController extends GetxController {
   final TimerSettingsController _settingsController = Get.find();

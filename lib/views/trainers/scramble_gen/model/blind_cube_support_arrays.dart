@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:rg2_flutter_getx/views/trainers/model/cube_element_types.dart';
+import 'package:rg2/views/trainers/model/cube_element_types.dart';
 
 /// Таблица для цветов кубика (используется для отображения кубика в генераторе и его настройках)
 List<Color> cubeColor = [

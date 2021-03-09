@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/learn_detail_controller.dart';
-import 'package:rg2_flutter_getx/controllers/settings_controller.dart';
-import 'package:rg2_flutter_getx/database/entitys/main_db_item.dart';
+import 'package:rg2/controllers/learn_detail_controller.dart';
+import 'package:rg2/controllers/settings_controller.dart';
+import 'package:rg2/database/entitys/main_db_item.dart';
 
 import 'learn_detail_page_item.dart';
 

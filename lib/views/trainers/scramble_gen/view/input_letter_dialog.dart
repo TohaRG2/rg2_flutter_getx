@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
+import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 
 class InputLetterDialog extends StatelessWidget {
   final ScrambleGenController _controller = Get.find();

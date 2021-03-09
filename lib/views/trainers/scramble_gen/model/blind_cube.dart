@@ -1,8 +1,8 @@
 import 'dart:core';
-import 'package:rg2_flutter_getx/views/trainers/model/cube_element_types.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/pair_for_melting.dart';
-import 'package:rg2_flutter_getx/views/trainers/scramble_gen/model/scramble_decision_condition.dart';
+import 'package:rg2/views/trainers/model/cube_element_types.dart';
+import 'package:rg2/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
+import 'package:rg2/views/trainers/scramble_gen/model/pair_for_melting.dart';
+import 'package:rg2/views/trainers/scramble_gen/model/scramble_decision_condition.dart';
 import 'blind_cube_support_arrays.dart';
 import 'cube.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/res/string_values.dart';
-import 'package:rg2_flutter_getx/views/shared/buttons_style.dart';
+import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/shared/buttons_style.dart';
 
 import 'image_slider.dart';
 

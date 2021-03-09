@@ -1,4 +1,4 @@
-import 'package:rg2_flutter_getx/models/advice_item.dart';
+import 'package:rg2/models/advice_item.dart';
 
 class Advices {
   static List<AdviceItem> advicesList = [

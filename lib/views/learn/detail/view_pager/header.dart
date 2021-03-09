@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:rg2_flutter_getx/controllers/learn_detail_controller.dart';
+import 'package:rg2/controllers/learn_detail_controller.dart';
 
 class Header extends StatelessWidget {
   const Header({

@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rg2_flutter_getx/controllers/repository.dart';
-import 'package:rg2_flutter_getx/database/entitys/pll_trainer_item.dart';
-import 'package:rg2_flutter_getx/res/constants.dart';
-import 'package:rg2_flutter_getx/views/trainers/pll/model/quiz_variant.dart';
+import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/database/entitys/pll_trainer_item.dart';
+import 'package:rg2/res/constants.dart';
+import 'package:rg2/views/trainers/pll/model/quiz_variant.dart';
 
 class PllSettingsController extends GetxController {
   final Repository _repository = Get.find();
