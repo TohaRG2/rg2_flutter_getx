@@ -121,7 +121,10 @@ class MainMenuItem extends StatelessWidget {
                     //TODO Сделать переход к настройкам, а не открытие в новом окне
                     Get.to(SettingsScreen());
                   },
-                  child: Text("Перейти")),
+                  child: Container(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text("Перейти"))
+              ),
             );
           }
         },
