@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:rg2/controllers/learn_controller.dart';
 import 'package:rg2/controllers/settings_controller.dart';
+import 'package:rg2/views/favourites/view/main_favourite.dart';
 import 'package:rg2/views/info/infoScreen.dart';
 import 'package:rg2/views/learn/learn_menu_screen.dart';
 import 'package:rg2/views/settings/settings_screen.dart';
@@ -16,14 +17,15 @@ class MainViewWithBottomBar extends StatelessWidget {
   static List<Widget> _widgetOptions = <Widget>[
     LearnScreen(),
     TrainersScreen(),
-    InfoScreen(),
+    //InfoScreen(),
+    MainFavourite(),
     SettingsScreen()
   ];
 
   @override
   Widget build(BuildContext context) {
-    var selectedColor = Theme.of(context).scaffoldBackgroundColor;
-    var unSelectedColor = Theme.of(context).scaffoldBackgroundColor.withAlpha(130);
+    var selectedColor = Get.theme.scaffoldBackgroundColor;
+    var unSelectedColor = Get.theme.scaffoldBackgroundColor.withAlpha(130);
     return Obx(
       () => Scaffold(
           body: Center(

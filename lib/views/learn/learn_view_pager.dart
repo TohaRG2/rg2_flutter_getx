@@ -4,6 +4,7 @@ import 'package:rg2/controllers/learn_controller.dart';
 import 'package:rg2/controllers/settings_controller.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/settings/settings_screen.dart';
 
 import 'main_menu/main_menu_list_view.dart';
 
@@ -29,8 +30,8 @@ class LearnViewPager extends StatelessWidget {
               _tabController.addListener(() {
                 if (!_tabController.indexIsChanging) {
                   print("$_tabController - $pageNum ");
-                  _lc.changeCurrentPageNumberTo(_tabController
-                      .index); //Обновляем номер текущей страницы в контроллере
+                  //Обновляем номер текущей страницы в контроллере
+                  _lc.changeCurrentPageNumberTo(_tabController.index);
                 }
               });
               _tabController.index = _lc.curPageNumber;
@@ -43,7 +44,17 @@ class LearnViewPager extends StatelessWidget {
                   style: TextStyle(color: Get.textTheme.headline5.color),
               )),
               //backgroundColor: Theme.of(context).primaryColor,
-                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                backgroundColor: Get.theme.scaffoldBackgroundColor,
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.settings_rounded),
+                    color: Get.textTheme.headline5.color,
+                    tooltip: 'Настройки',
+                    onPressed: () {
+                      Get.to(SettingsScreenWithBottomBar());
+                    },
+                  ),
+                ],
                 bottom: TabBar(
                   indicatorWeight: 3.0,
                   //По умолчанию берется из ThemeData.primaryTextTheme.bodyText1.textColor

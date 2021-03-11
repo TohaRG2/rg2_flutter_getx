@@ -4,6 +4,7 @@ import 'package:rg2/views/settings/elements/purchase_settings.dart';
 import 'package:rg2/views/settings/elements/swipe_settings.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
+import 'package:rg2/views/trainers/help/bottom_bar_with_back_button.dart';
 
 import 'elements/helpSettings.dart';
 import 'elements/internetSettings.dart';
@@ -14,13 +15,14 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Center(
           child: Text(StrRes.settingsTitle,
             style: TextStyle(
               color: Get.textTheme.headline5.color)
           ),
         ),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
       //ListView c выбором темы
       body: SingleChildScrollView(
@@ -42,6 +44,16 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class SettingsScreenWithBottomBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SettingsScreen(),
+      bottomNavigationBar: BottomBarWithBackButton(),
     );
   }
 }

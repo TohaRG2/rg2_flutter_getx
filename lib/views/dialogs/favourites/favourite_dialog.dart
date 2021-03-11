@@ -3,14 +3,13 @@ import 'package:get/get.dart';
 import 'package:rg2/controllers/learn_controller.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/dialogs/favourites/favourite_dialog_list.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
 
 class FavouriteDialog extends StatelessWidget {
-  final _learnController = Get.find<LearnController>();
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
-    var _primaryColor = theme.primaryColor;
+    var _primaryColor = Get.theme.primaryColor;
     return SafeArea(
       child: Center(
         child: Container(
@@ -18,30 +17,22 @@ class FavouriteDialog extends StatelessWidget {
           height: context.mediaQuerySize.height - 50,
           //GetX variant of MediaQuery.of(context).size.height - 50,
           decoration: BoxDecoration(
-            color: theme.scaffoldBackgroundColor,
+            color: Get.theme.scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Obx(
-            () => Container(
-              padding: EdgeInsets.all(8.0),
-              child: Column(children: <Widget>[
+          child: Container(
+            padding: EdgeInsets.all(UIHelper.SpaceSmall),
+            child: Column(
+              children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(StrRes.favouritesTitle, style: theme.textTheme.headline5),
+                  child: Text(StrRes.favouritesTitle, style: Get.textTheme.headline5),
                 ),
-                Expanded(
-                    child: (_learnController.pages[0].currentList.length == 0)
-                        ? Center(
-                            child: Text(
-                            StrRes.nothingInFavourites,
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.headline5,
-                          ))
-                        : FavouriteDialogList()),
+                FavouriteListView(),
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(left: UIHelper.SpaceSmall),
                       child: TextButton(
                           onPressed: () {
                             Get.back();
@@ -53,10 +44,10 @@ class FavouriteDialog extends StatelessWidget {
                     ),
                     Flexible(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
                         child: Text(
                           StrRes.favouriteDialogHint,
-                          style: theme.textTheme.headline6.copyWith(
+                          style: Get.textTheme.headline6.copyWith(
                             fontSize: 14,
                           ),
                         ),
@@ -64,11 +55,31 @@ class FavouriteDialog extends StatelessWidget {
                     )
                   ],
                 )
-              ]),
+              ]
             ),
           ),
         ),
       ),
+    );
+  }
+
+}
+
+class FavouriteListView extends StatelessWidget {
+  final _learnController = Get.find<LearnController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+          () => Expanded(
+          child: (_learnController.pages[0].currentList.length == 0)
+              ? Center(
+              child: Text(
+                StrRes.nothingInFavourites,
+                textAlign: TextAlign.center,
+                style: Get.textTheme.headline5,
+              ))
+              : FavouriteDialogList()),
     );
   }
 }
