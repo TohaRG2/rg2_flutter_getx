@@ -11,11 +11,11 @@ const List<BottomNavigationBarItem> bottomNavBarItem = [
     label: StrRes.trainersTitle,
   ),
   BottomNavigationBarItem(
-    icon: Icon(Icons.info_outline_rounded),
-    label: StrRes.infoTitle,
+    icon: Icon(Icons.favorite_border_rounded),
+    label: StrRes.favouritesTitle,
   ),
   BottomNavigationBarItem(
-    icon: Icon(Icons.settings_outlined),
-    label: StrRes.settingsTitle,
+    icon: Icon(Icons.info_outline_rounded),
+    label: StrRes.infoTitle,
   ),
 ];

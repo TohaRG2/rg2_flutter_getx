@@ -6,12 +6,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:rg2/controllers/learn_controller.dart';
+import 'package:rg2/controllers/settings_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 
 class FavouriteDialogCardItem extends StatelessWidget {
   final _learnController = Get.find<LearnController>();
+  final SettingsController _settings = Get.find();
   final MainDBItem _item;
 
   FavouriteDialogCardItem(this._item);
@@ -89,6 +91,7 @@ class FavouriteDialogCardItem extends StatelessWidget {
           ),
         ),
         onTap: () {
+          _settings.bottomItem = 0;
           if (_item.url == "submenu") {
             _learnController.changePageAndPhaseTo(_item.description);
             do
@@ -101,7 +104,6 @@ class FavouriteDialogCardItem extends StatelessWidget {
             while (Get.currentRoute != "/");
             Get.to(LearnDetailScreen(_item.phase, _item.id),
                 transition: Transition.fadeIn);
-
           }
         },
       ),

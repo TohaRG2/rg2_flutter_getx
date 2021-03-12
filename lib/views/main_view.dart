@@ -26,27 +26,29 @@ class MainViewWithBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     var selectedColor = Get.theme.scaffoldBackgroundColor;
     var unSelectedColor = Get.theme.scaffoldBackgroundColor.withAlpha(130);
-    return Obx(
-      () => Scaffold(
+    return Obx(() {
+      //print("BottomItem = ${_settings.bottomItem}");
+      return Scaffold(
           body: Center(
-            child: _widgetOptions.elementAt(_settings.bottomItem.value),
+            child: _widgetOptions.elementAt(_settings.bottomItem),
           ),
           bottomNavigationBar: BottomNavigationBar(
-              items: bottomNavBarItem,
-              currentIndex: _settings.bottomItem.value,
-              backgroundColor: Get.theme.primaryColor,
-              unselectedItemColor: unSelectedColor,
-              selectedItemColor: selectedColor,
-              type: BottomNavigationBarType.fixed,
-              onTap: (tappedItemIndex) {
-                if (_settings.bottomItem.value == tappedItemIndex && tappedItemIndex == 0) {
-                  _learnController.canReturnToOnePhaseBack();
-                } else {
-                  _settings.bottomItem.value = tappedItemIndex;
-                }
-              },
-         )
-      ),
+            items: bottomNavBarItem,
+            currentIndex: _settings.bottomItem,
+            backgroundColor: Get.theme.primaryColor,
+            unselectedItemColor: unSelectedColor,
+            selectedItemColor: selectedColor,
+            type: BottomNavigationBarType.fixed,
+            onTap: (tappedItemIndex) {
+              if (_settings.bottomItem == tappedItemIndex &&
+                  tappedItemIndex == 0) {
+                _learnController.canReturnToOnePhaseBack();
+              } else {
+                _settings.bottomItem = tappedItemIndex;
+              }
+            },
+          ));
+      },
     );
   }
 }

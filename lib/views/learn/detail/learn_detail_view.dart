@@ -42,13 +42,19 @@ class LearnDetailView extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             LearnDetailViewPager(),
-            Obx(() =>
-              AnimatedPositioned(
-                duration: _duration,
-                bottom: _controller.isBottomBarShowing ? 0 : -80,
-                child: BottomNavBar(),
-              ),
+            /// Закомментировать, чтобы сделать уезжающий при скролле bottomNavBar
+            Positioned(
+              bottom: 0,
+                child: BottomNavBar()
             ),
+            /// Раскомментировать, чтобы сделать уезжающий при скролле bottomNavBar
+            // Obx(() =>
+            //   AnimatedPositioned(
+            //     duration: _duration,
+            //     bottom: _controller.isBottomBarShowing ? 0 : -80,
+            //     child: BottomNavBar(),
+            //   ),
+            // ),
           ],
         ));
   }

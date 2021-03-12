@@ -10,8 +10,14 @@ class SettingsController extends GetxController {
   var isStartHelpEnabled = true.obs;
   var isSwipeEnabled = true.obs;
   var internetUsage = 0.obs;
-  var bottomItem = 1.obs;
   var currentPageNumber = 2.obs;
+
+  var _bottomItem = 1.obs;
+  int get bottomItem => _bottomItem.value;
+  set bottomItem(value) {
+    _bottomItem.value = value;
+    GetStorage().write(Const.BOTTOM_ITEM, value);
+  }
 
   var _primaryThemeColor = Colors.amber.shade700.obs;
   Color get primaryThemeColor => _primaryThemeColor.value;
@@ -72,8 +78,7 @@ class SettingsController extends GetxController {
     int _internetUsage = GetStorage().read(Const.INTERNET_USING) ?? 0;
     internetUsage.value = _internetUsage;
 
-    int _bottomItem = GetStorage().read(Const.BOTTOM_ITEM) ?? 0;
-    bottomItem.value = _bottomItem;
+    bottomItem = GetStorage().read(Const.BOTTOM_ITEM) ?? 0;
 
     int _currentPageNumber = GetStorage().read(Const.CURRENT_PAGE_NUMBER) ?? 2;
     currentPageNumber = _currentPageNumber.obs;
@@ -105,10 +110,6 @@ class SettingsController extends GetxController {
 
     ever(internetUsage, (v) {
       GetStorage().write(Const.INTERNET_USING, v);
-    });
-
-    ever(bottomItem, (v) {
-      GetStorage().write(Const.BOTTOM_ITEM, v);
     });
 
     ever(currentPageNumber, (v) {
