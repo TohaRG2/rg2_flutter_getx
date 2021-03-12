@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/favourites/view/favourite_dialog_card_item.dart';
 import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
-import 'package:rg2/controllers/learn_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
+import 'package:rg2/views/favourites/view/favourite_dialog_card_item.dart';
 
 class FavouriteDialogList extends StatelessWidget {
   final _favController = Get.find<FavouriteController>();
