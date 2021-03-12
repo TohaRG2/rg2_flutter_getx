@@ -25,7 +25,7 @@ class MyHtmlView extends StatelessWidget {
       data: htmlText,
       style: {
         "a": Style(
-          color: Theme.of(context).accentColor,
+          color: Get.theme.accentColor,
         ),
         "h5": Style(
           textAlign: TextAlign.center,

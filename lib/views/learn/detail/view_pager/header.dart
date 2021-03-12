@@ -26,11 +26,13 @@ class Header extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: isPngImg
                 ? Image.asset(
-                    _controller.getImagePathFromAssets(item.icon),
+                    //_controller.getImagePathFromAssets(item.icon),
+                    item.getAssetFilePath(),
                     height: 70,
                   )
                 : SvgPicture.asset(
-                    _controller.getImagePathFromAssets(item.icon),
+                    //_controller.getImagePathFromAssets(item.icon),
+                    item.getAssetFilePath(),
                     height: 70,
                   ),
           ),

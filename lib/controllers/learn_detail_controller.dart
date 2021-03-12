@@ -74,11 +74,11 @@ class LearnDetailController extends GetxController {
   }
 
   String getImagePathFromAssets(String shortPath) {
-    return _learnController.getAssetFilePath(shortPath, currentItem.value.phase);
+    return currentItem.value.getAssetFilePath(); //_learnController.getAssetFilePath(shortPath, currentItem.value.phase);
   }
 
   String getAssetPath(){
-    return _learnController.getAssetPath(currentItem.value.phase);
+    return currentItem.value.getAssetPath(); //_learnController.getAssetPath(currentItem.value.phase);
   }
 
 }

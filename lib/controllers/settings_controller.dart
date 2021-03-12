@@ -10,7 +10,7 @@ class SettingsController extends GetxController {
   var isStartHelpEnabled = true.obs;
   var isSwipeEnabled = true.obs;
   var internetUsage = 0.obs;
-  var currentPageNumber = 2.obs;
+  var currentPageNumber = 1.obs;
 
   var _bottomItem = 1.obs;
   int get bottomItem => _bottomItem.value;
@@ -80,7 +80,7 @@ class SettingsController extends GetxController {
 
     bottomItem = GetStorage().read(Const.BOTTOM_ITEM) ?? 0;
 
-    int _currentPageNumber = GetStorage().read(Const.CURRENT_PAGE_NUMBER) ?? 2;
+    int _currentPageNumber = GetStorage().read(Const.CURRENT_PAGE_NUMBER) ?? 1;
     currentPageNumber = _currentPageNumber.obs;
 
     _currentInfoPageNumber.value = GetStorage().read(Const.CURRENT_INFO_PAGE_NUMBER) ?? 0;

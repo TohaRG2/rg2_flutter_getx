@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:rg2/controllers/learn_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';
-import 'package:rg2/views/dialogs/favourites/favourite_dialog.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/favourites/dialog/favourite_dialog.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 import 'package:rg2/views/settings/settings_screen.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
@@ -19,7 +19,7 @@ class MainMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _primaryColor = Get.theme.primaryColor;
-    var _imagePath = _learnController.getAssetFilePath(item.icon, item.phase);
+    var _imagePath = item.getAssetFilePath(); // _learnController.getAssetFilePath(item.icon, item.phase);
     //TODO переделать на использование card
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),

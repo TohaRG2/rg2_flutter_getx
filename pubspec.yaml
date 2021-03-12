@@ -35,7 +35,7 @@ dependencies:
   # video_player: ^1.0.1
   # chewie: ^0.12.2
   # Plugin for rendering the <iframe> tag.
-  webview_flutter: ^2.0.1
+  webview_flutter: ^2.0.2
   # Plugins for rendering the <audio> tag.
   # chewie_audio: ^1.1.1
 
@@ -63,6 +63,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
 
+  # Автосоздание иконок для приложения
   flutter_launcher_icons: ^0.8.1
 
 dev_dependencies:

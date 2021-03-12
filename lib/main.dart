@@ -5,7 +5,8 @@ import 'package:rg2/controllers/azbuka_dialog_controller.dart';
 import 'package:rg2/controllers/learn_detail_controller.dart';
 import 'package:rg2/controllers/trainers_controller.dart';
 import 'package:rg2/controllers/youtube_controller.dart';
-import 'package:rg2/views/dialogs/favourites/favourite_dialog.dart';
+import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/favourites/dialog/favourite_dialog.dart';
+import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_settings_controller.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_trainer_controller.dart';
 import 'package:rg2/views/trainers/pll/controller/pll_settings_controller.dart';
@@ -107,6 +108,7 @@ class RG2App extends StatelessWidget {
     Get.put(db.timesDao);
     Get.put(db.pllTrainerDao);
     Get.put(Repository());
+    Get.put(FavouriteController());
     Get.put(LearnController());
     Get.put(InfoController());
     Get.put(LearnDetailController());

@@ -30,7 +30,7 @@ class DrawerMenuItem extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(
-                    _learnController.getAssetFilePath(item.icon, item.phase),
+                    item.getAssetFilePath(), // _learnController.getAssetFilePath(item.icon, item.phase),
                     height: 60,
                   ),
                 ),

@@ -9,6 +9,7 @@ import 'package:rg2/controllers/learn_controller.dart';
 import 'package:rg2/controllers/settings_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 
 class FavouriteDialogCardItem extends StatelessWidget {
@@ -21,7 +22,7 @@ class FavouriteDialogCardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Get.textTheme;
-    final _imagePath = _learnController.getAssetFilePath(_item.icon, _item.phase);
+    final _imagePath = _item.getAssetFilePath(); // _learnController.getAssetFilePath(_item.icon, _item.phase);
     final List<Widget> actions = [
       SlideAction(
         closeOnTap: true,
