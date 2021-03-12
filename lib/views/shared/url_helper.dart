@@ -46,7 +46,7 @@ class UrlHelper {
         var id = int.tryParse(uri.queryParameters["item"]) ?? 1;
         //Поскольку мы и так в LearnDetailScreen, то переходим не через Get.off()
         Get.back();
-        Get.to(LearnDetailScreen(phase, id), transition: Transition.fadeIn);
+        Get.to(() => LearnDetailScreen(phase, id), transition: Transition.fadeIn);
       }
     }
   }

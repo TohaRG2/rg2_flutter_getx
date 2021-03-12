@@ -42,7 +42,7 @@ class ButtonsContainer extends StatelessWidget {
             ),
             splashColor: Colors.white,
             onPressed: () {
-              Get.to(ScrambleGenSettingsView(), transition: Transition.rightToLeft);
+              Get.to(() => ScrambleGenSettingsView(), transition: Transition.rightToLeft);
             },
           )
           //SettingsButton(),

@@ -51,7 +51,7 @@ class LearnViewPager extends StatelessWidget {
                     color: Get.textTheme.headline5.color,
                     tooltip: 'Настройки',
                     onPressed: () {
-                      Get.to(SettingsScreenWithBottomBar());
+                      Get.to(() => SettingsScreenWithBottomBar());
                     },
                   ),
                 ],

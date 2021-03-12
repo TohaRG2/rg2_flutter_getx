@@ -60,7 +60,7 @@ class FavouriteController extends GetxController {
   /// Убираем элемент из Избранного
   removeElementFromFavourites(MainDBItem item) {
     favourites.removeAt(item.subId);
-    //_updateFavouritesSubIds();
+    _updateFavouritesSubIds();
     item.isFavourite = false;
     item.subId = 0;
   }

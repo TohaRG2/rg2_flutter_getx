@@ -103,7 +103,7 @@ class FavouriteDialogCardItem extends StatelessWidget {
             do
               Get.back();
             while (Get.currentRoute != "/");
-            Get.to(LearnDetailScreen(_item.phase, _item.id),
+            Get.to(() => LearnDetailScreen(_item.phase, _item.id),
                 transition: Transition.fadeIn);
           }
         },

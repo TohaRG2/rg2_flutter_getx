@@ -37,7 +37,7 @@ class AdviceView extends StatelessWidget {
               ),
               onTap: (){
                 print("Открываем диалог с просмотром советов по программе");
-                Get.to(AdvicesImagesDialog());
+                Get.to(() => AdvicesImagesDialog());
                 //Get.to(ComplicatedImageDemo());
               },
             ),

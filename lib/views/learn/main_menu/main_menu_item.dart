@@ -106,7 +106,7 @@ class MainMenuItem extends StatelessWidget {
               _learnController.changeCurrentPhaseWith(item);
             } else {
               _learnController.saveListPositionForPhase(item.phase);
-              Get.to(LearnDetailScreen(item.phase, item.id),
+              Get.to(() => LearnDetailScreen(item.phase, item.id),
                   transition: Transition.fadeIn);
             }
           } else {
@@ -119,7 +119,7 @@ class MainMenuItem extends StatelessWidget {
               mainButton: TextButton(
                   onPressed: (){
                     //TODO Сделать переход к настройкам, а не открытие в новом окне
-                    Get.to(SettingsScreen());
+                    Get.to(() => SettingsScreen());
                   },
                   child: Container(
                     padding: EdgeInsets.all(8.0),
