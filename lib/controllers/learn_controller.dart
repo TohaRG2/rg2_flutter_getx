@@ -77,7 +77,10 @@ class LearnController extends GetxController {
   /// Вызываем по тапу на сердечко и
   /// меняем статус избранного для указанного элемента
   changeFavStatus(MainDBItem item) {
-    print(item);
+    print("changeFavStatus - $item, curPage - $curPageNumber");
+    // сохраняем позицию скрола
+    saveListPositionForPhase(item.phase);
+
     var index = pages[curPageNumber].currentList.indexOf(item);
 
     if (index != -1) {
