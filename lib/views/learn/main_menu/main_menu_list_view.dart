@@ -37,7 +37,7 @@ class MenuList extends StatelessWidget {
         children: items.map((listItem) =>
           MainMenuItem(
               item: listItem,
-              isItemEnabled: (_isPurchaseEnabled || pageNumber < 3 || _godMode)
+              isItemEnabled: (_isPurchaseEnabled || pageNumber < 2 || _godMode)
           )
         ).toList(),
       );
