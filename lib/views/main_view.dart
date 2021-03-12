@@ -17,9 +17,9 @@ class MainViewWithBottomBar extends StatelessWidget {
   static List<Widget> _widgetOptions = <Widget>[
     LearnScreen(),
     TrainersScreen(),
-    //InfoScreen(),
     MainFavourite(),
-    SettingsScreen()
+    InfoScreen(),
+    //SettingsScreen()
   ];
 
   @override
