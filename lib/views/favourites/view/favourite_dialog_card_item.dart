@@ -94,17 +94,20 @@ class FavouriteDialogCardItem extends StatelessWidget {
         onTap: () {
           _settings.bottomItem = 0;
           if (_item.url == "submenu") {
+            print("onTap -> submenu -> change to ${_item.description}");
             _learnController.changePageAndPhaseTo(_item.description);
             do
               Get.back();
             while (Get.currentRoute != "/");
+            print("GetBack complete");
           } else {
+            print("onTap -> not submenu -> change to ${_item.phase}");
             _learnController.changePageAndPhaseTo(_item.phase);
             do
               Get.back();
             while (Get.currentRoute != "/");
-            Get.to(() => LearnDetailScreen(_item.phase, _item.id),
-                transition: Transition.fadeIn);
+            print("GetBack complete -> Get.to(LearnDetailScreen(${_item.phase}, ${_item.id})");
+            Get.to(() => LearnDetailScreen(_item.phase, _item.id), transition: Transition.fadeIn);
           }
         },
       ),

@@ -9,7 +9,6 @@ class FavouriteDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _primaryColor = Get.theme.primaryColor;
     return SafeArea(
       child: Center(
         child: Container(
@@ -38,7 +37,7 @@ class FavouriteDialog extends StatelessWidget {
                             Get.back();
                           },
                           style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(_primaryColor),
+                            foregroundColor: MaterialStateProperty.all<Color>(Get.theme.primaryColor),
                           ),
                           child: Text(StrRes.backButtonText)),
                     ),

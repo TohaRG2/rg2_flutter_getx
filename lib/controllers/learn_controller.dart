@@ -129,6 +129,7 @@ class LearnController extends GetxController {
 
   // По фазе узнаем страницу и меняем на ней фазу
   changePageAndPhaseTo(String phase){
+    print("changePageAndPhaseTo $phase");
     var rootPhase = MainDBItem.getRootPhaseFor(phase);
     var pageNumber = _getPageByRoot(rootPhase);
     curPageNumber = pageNumber;
@@ -150,11 +151,11 @@ class LearnController extends GetxController {
 
   ///Меняем текущую фазу на другую по ее имени
   changeCurrentPhaseTo(String phase) async {
-    print("Change phase to $phase");
+    print("Change phase to $phase, curPageN - $curPageNumber");
     saveListPositionForPhase(pages[curPageNumber].currentPhase);
 
     pages[curPageNumber].currentPhase = phase;
-    print("pages[curPageNumber].currentPhase - updated");
+    print("pages[$curPageNumber].currentPhase - updated");
     var list = await _getMenuItemsListFor(phase, curPageNumber);
     pages[curPageNumber].currentList.assignAll(list);
     _repo.updateCubeType(pages[curPageNumber]);
