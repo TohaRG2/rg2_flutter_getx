@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rg2/controllers/azbuka_dialog_controller.dart';
+import 'package:rg2/views/dialogs/azbuka/azbuka_dialog_controller.dart';
 import 'package:rg2/controllers/helpers/binding_controllers.dart';
 import 'package:rg2/controllers/learn_detail_controller.dart';
 import 'package:rg2/controllers/trainers_controller.dart';
