@@ -71,7 +71,6 @@ class RG2App extends StatelessWidget {
               if (data.hasData) {
                 print("DBController.fillDB отработал");
                 putDAOs(data.data);
-                return MainViewWithBottomBar();
                 return MainAuthView();
               } else if (data.hasError) {
                 return Center(child: Text("Can't create or open database"));
