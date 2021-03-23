@@ -1,6 +1,6 @@
 class StrRes {
   static const appTheme = "Внешний вид:";
-  static const darkTheme = "Темная тема";
+  static const darkTheme = "Тема приложения";
   static const primaryColor = "Основной цвет";
   static const accentColor = "Акцент";
   static const textSize = "Размер шрифта:";
@@ -142,5 +142,17 @@ class StrRes {
   static const azbukaTrainerSettingsTimeForAnswer = "Время на ответ (сек)";
   static const azbukaTrainerSettingsTimeForGoodAnswer = "Продолжение при удачном ответе (сек)";
   static const azbukaTrainerSettingsTimeForBadAnswer = "Продолжение при ошибочном ответе (сек)";
+
+  static const authTitle = "Добро пожаловать!";
+  static const authBodyText = "Для синхронизации между несколькими устройствами, а так же, чтобы не потерять при переустановке программы:\n"
+      "1. Персональные настройки;\n"
+      "2. Избранное;\n"
+      "3. Свои комментарии к этапам;\n"
+      "4. Время сборки в таймере.";
+  static const authSignInButtonText = "Войти при помощи Google аккаунта";
+  static const authSignInWhy = "Зачем мне это?";
+  static const authSignInBecause = "Google авторизация нужна:";
+  static const authLaterButtonText = "Сделаю это позже";
+  static const authNeverButtonText = "Больше не спрашивать";
 
 }

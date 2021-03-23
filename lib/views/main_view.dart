@@ -5,7 +5,7 @@ import 'package:rg2/controllers/settings_controller.dart';
 import 'package:rg2/views/favourites/view/main_favourite.dart';
 import 'package:rg2/views/info/infoScreen.dart';
 import 'package:rg2/views/learn/learn_menu_screen.dart';
-import 'package:rg2/views/settings/settings_screen.dart';
+import 'package:rg2/views/settings/settings_screen_view.dart';
 
 import 'bottomNavBarItems.dart';
 import 'trainers/trainers_view/trainers_screen.dart';

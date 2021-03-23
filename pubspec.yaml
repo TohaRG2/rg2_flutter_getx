@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.20210308.1
+version: 4.20210323.1
 
 
 environment:
@@ -13,17 +13,17 @@ dependencies:
   flutter:
     sdk: flutter
   # SQL Database
-  floor: ^0.19.1
+  floor: ^1.0.0
   # DI + StateManagement
-  get: ^3.26.0
+  get: ^4.0.0-nullsafety.2
   # Работаем с SharedPreferences
-  get_storage: ^1.4.0
+  get_storage: ^2.0.1
   # Окно выбора цвета
   flutter_material_color_picker: ^1.0.5
   # возможность смахивать элементы List
   flutter_slidable: ^0.5.7
   # Добавляем возможность работы с SVG
-  flutter_svg: ^0.19.3
+  flutter_svg: ^0.21.0-nullsafety.0
 
   # Отображаем текст в html
   # Plugin for parsing html
@@ -40,20 +40,21 @@ dependencies:
   # chewie_audio: ^1.1.1
 
   # Открываем ссылки во внешних программах (браузерах, почте и т.д.)
-  url_launcher: ^5.7.10
+  url_launcher: ^6.0.2
 
   # Плагин чтобы сделать элементы списка перемещаемыми и смахиваемыми (Reorderable & Slidable)
-  implicitly_animated_reorderable_list: ^0.3.2
+  implicitly_animated_reorderable_list: ^0.4.0-dev+4
 
   # YouTube Plugin
   youtube_player_flutter: ^7.0.0+7
+  # youtube_plyr_iframe: ^2.0.0
 
   #Слайдер для картинок списка советов по работе с программой
   carousel_slider: ^3.0.0
 
   # Поддержка звука, для метронома в таймере
   #assets_audio_player: ^2.0.14
-  audioplayers: ^0.17.4
+  audioplayers: ^0.18.0
 
   # Для удобной работы с датой/временем
   intl: ^0.17.0
@@ -61,16 +62,29 @@ dependencies:
   # Индикатор оставшегося времени на ответ
   percent_indicator: ^2.1.9+1
 
+  # Firebase
+  firebase_auth: ^1.0.1
+  cloud_firestore: ^1.0.2
+
+  # google sign in
+  google_sign_in: ^5.0.1
+
+  # красивый свитч для смены темы
+  flutter_switch: ^0.3.0
+
   cupertino_icons: ^1.0.2
 
+  # icon of google
+  flutter_vector_icons: ^1.0.0
+
   # Автосоздание иконок для приложения
-  flutter_launcher_icons: ^0.8.1
+  flutter_launcher_icons: ^0.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  # SQL генератор, т.к. нужна кодогенерация
-  floor_generator: ^0.19.1
+  # SQL генератор, т.к. нужна кодогенерация + build runner
+  floor_generator: ^1.0.0
   build_runner: ^1.11.5
 
 flutter_icons:

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rg2/controllers/azbuka_dialog_controller.dart';
+import 'package:rg2/controllers/helpers/binding_controllers.dart';
 import 'package:rg2/controllers/learn_detail_controller.dart';
 import 'package:rg2/controllers/trainers_controller.dart';
 import 'package:rg2/controllers/youtube_controller.dart';
+import 'package:rg2/views/auth/main_auth_view.dart';
 import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/favourites/dialog/favourite_dialog.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_settings_controller.dart';
@@ -24,9 +26,15 @@ import 'database/main_database.dart';
 import 'views/main_view.dart';
 import 'views/youtube_player/youtube_view.dart';
 import 'package:flutter/services.dart' ;
+import 'package:firebase_core/firebase_core.dart';
 
 
 void main() async {
+  // Для работы байндинга
+  WidgetsFlutterBinding.ensureInitialized();
+  // Инициализируем FireBase, нужен import 'package:firebase_core/firebase_core.dart';
+  await Firebase.initializeApp();
+  // Инициализируем SharedPreferences
   await GetStorage.init();
   runApp(RG2App());
 }
@@ -46,14 +54,15 @@ class RG2App extends StatelessWidget {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,]);
     return GetMaterialApp(
         title: 'RG2',
-        theme: _getCurrentTheme(),
+        theme: _settings.getCurrentTheme(),
         getPages: [
           GetPage(name: '/', page: () => MainViewWithBottomBar()),
           GetPage(name: '/youtube', page: () => YouTubeView()),
           GetPage(name: '/favourite', page: () => FavouriteDialog()),
         ],
         debugShowCheckedModeBanner: false,
-        // home: SettingsScreen(),
+        //TODO перенести инициализацию контроллеров в BindingControllers
+        initialBinding: BindingControllers(),
         home: FutureBuilder<MainDatabase>(
             future: dbFuture,
             builder: (context, data) {
@@ -61,7 +70,7 @@ class RG2App extends StatelessWidget {
               if (data.hasData) {
                 print("DBController.fillDB отработал");
                 putDAOs(data.data);
-                return MainViewWithBottomBar();
+                return MainAuthView();
               } else if (data.hasError) {
                 return Center(child: Text("Can't create or open database"));
               } else
@@ -72,31 +81,12 @@ class RG2App extends StatelessWidget {
           return Obx(
             () => MediaQuery(
               child: child,
+              //TODO поменять на Get.MediaQuery
               data: MediaQuery.of(context)
                   .copyWith(textScaleFactor: _settings.textScaleFactor.value),
             ),
           );
         });
-  }
-
-  ThemeData _getCurrentTheme() {
-    bool isDark = _settings.isDarkThemeSelect.value;
-    Color primaryColor = _settings.primaryThemeColor;
-    Color accentColor = _settings.accentThemeColor.value;
-
-    return ThemeData(
-      brightness: isDark ? Brightness.dark : Brightness.light,
-      primaryColor: primaryColor,
-      accentColor: accentColor,
-      toggleableActiveColor: accentColor,
-      textTheme: TextTheme().copyWith(
-        headline4: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-        headline5: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-        headline6: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-        bodyText1: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-        bodyText2: TextStyle(fontSize: 18, fontWeight: FontWeight.normal), //DefaultText для Text("")
-      ),
-    );
   }
 
   void putDAOs(MainDatabase db) {

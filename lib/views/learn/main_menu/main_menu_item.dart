@@ -6,7 +6,7 @@ import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';
 import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/favourites/dialog/favourite_dialog.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
-import 'package:rg2/views/settings/settings_screen.dart';
+import 'package:rg2/views/settings/settings_screen_view.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class MainMenuItem extends StatelessWidget {
@@ -118,8 +118,10 @@ class MainMenuItem extends StatelessWidget {
               duration: Duration(seconds: 6),
               mainButton: TextButton(
                   onPressed: (){
-                    //TODO Сделать переход к настройкам, а не открытие в новом окне
-                    Get.to(() => SettingsScreen());
+                    // закрываем снэкбар
+                    Get.back();
+                    //TODO сделать переход с прокруткой к определенному пункту в настройках
+                    Get.to(() => SettingsScreen(), transition: Transition.downToUp);
                   },
                   child: Container(
                     padding: EdgeInsets.all(8.0),

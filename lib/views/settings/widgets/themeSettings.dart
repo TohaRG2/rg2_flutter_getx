@@ -3,6 +3,7 @@ import 'package:flutter_material_color_picker/flutter_material_color_picker.dart
 import 'package:get/get.dart';
 import 'package:rg2/controllers/settings_controller.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/auth/widget/theme_switch.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class ThemeSettings extends StatelessWidget {
@@ -19,17 +20,17 @@ class ThemeSettings extends StatelessWidget {
               StrRes.appTheme,
               style: Get.textTheme.headline5,
             ),
+            SizedBox(height: UIHelper.SpaceSmall,),
             /// Свитч выбора темная или светлая схема
-            SwitchListTile(
-              contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-              title: Text(
-                StrRes.darkTheme,
-                style: Get.textTheme.headline6,
-              ),
-              value: _settings.isDarkThemeSelect.value,
-              onChanged: (v) {
-                _settings.isDarkThemeSelect.value = v;
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                  child: Text(StrRes.darkTheme, style: Get.textTheme.headline6,)
+                ),
+                ThemeSwitch(),
+              ],
             ),
             SizedBox(
               height: UIHelper.SpaceSmall,

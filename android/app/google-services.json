@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "59335744860-ccf866661s6uvdcor0slsmjr17n42cea.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.tohaman.rg2",
+            "certificate_hash": "9e9b56972e29ec10c043558fe7503e4d550dc689"
+          }
+        },
+        {
           "client_id": "59335744860-l932u56ap58f14lhn192o5i9c06s2ost.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,14 +1,15 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
-import 'package:rg2/views/settings/elements/purchase_settings.dart';
-import 'package:rg2/views/settings/elements/swipe_settings.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/trainers/help/bottom_bar_with_back_button.dart';
 
-import 'elements/helpSettings.dart';
-import 'elements/internetSettings.dart';
-import 'elements/themeSettings.dart';
+import 'widgets/helpSettings.dart';
+import 'widgets/internetSettings.dart';
+import 'widgets/purchase_settings.dart';
+import 'widgets/swipe_settings.dart';
+import 'widgets/themeSettings.dart';
+import 'widgets/user_auth_settings.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -30,6 +31,8 @@ class SettingsScreen extends StatelessWidget {
           padding: EdgeInsets.all(UIHelper.SpaceSmall),
           child: Column(
             children: [
+              UserAuthSettings(),
+              SizedBox(height: UIHelper.SpaceMedium,),
               ThemeSettings(),
               SizedBox(height: UIHelper.SpaceMedium,),
               HelpSettings(),
