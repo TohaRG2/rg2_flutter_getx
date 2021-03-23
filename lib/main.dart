@@ -91,26 +91,6 @@ class RG2App extends StatelessWidget {
         });
   }
 
-  ThemeData _getCurrentTheme() {
-    bool isDark = _settings.isDarkThemeSelect.value;
-    Color primaryColor = _settings.primaryThemeColor;
-    Color accentColor = _settings.accentThemeColor.value;
-
-    return ThemeData(
-      brightness: isDark ? Brightness.dark : Brightness.light,
-      primaryColor: primaryColor,
-      accentColor: accentColor,
-      toggleableActiveColor: accentColor,
-      textTheme: TextTheme().copyWith(
-        headline4: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-        headline5: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-        headline6: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-        bodyText1: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-        bodyText2: TextStyle(fontSize: 18, fontWeight: FontWeight.normal), //DefaultText для Text("")
-      ),
-    );
-  }
-
   void putDAOs(MainDatabase db) {
     print("putDAOs & put controllers");
     Get.put(db.mainDao);
