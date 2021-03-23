@@ -22,21 +22,20 @@ class LearnViewPager extends StatelessWidget {
           child: Builder(builder: (BuildContext context) {
             final TabController _tabController = DefaultTabController.of(context);
             var pageNum = _lc.curPageNumber;
-            print("pageNum = $pageNum");
 
-            //регистрируем листенер, только если его нет и переходим на страницу
-            //todo разобраться с hasListeners, почему подсвечивается
+            //регистрируем листенер, только если его нет, и переходим на страницу
+            //print("tabController has listeners? - ${_tabController.hasListeners}, curPage - $pageNum");
             if (!_tabController.hasListeners) {
               _tabController.addListener(() {
                 if (!_tabController.indexIsChanging) {
-                  print("$_tabController - $pageNum ");
+                  //print("$_tabController - $pageNum ");
                   //Обновляем номер текущей страницы в контроллере
                   _lc.changeCurrentPageNumberTo(_tabController.index);
                 }
               });
-              _tabController.index = _lc.curPageNumber;
             }
-            return Scaffold(
+            _tabController.index = pageNum;
+          return Scaffold(
               appBar: AppBar(
               title: Center(
                 child: Text(

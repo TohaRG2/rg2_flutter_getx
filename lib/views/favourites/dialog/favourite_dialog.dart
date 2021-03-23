@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/controllers/learn_controller.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
-import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/favourites/view/favourite_dialog_list.dart';
+import 'package:rg2/views/favourites/view/favourite_dialog_list.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class FavouriteDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _primaryColor = Get.theme.primaryColor;
     return SafeArea(
       child: Center(
         child: Container(
@@ -39,7 +37,7 @@ class FavouriteDialog extends StatelessWidget {
                             Get.back();
                           },
                           style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(_primaryColor),
+                            foregroundColor: MaterialStateProperty.all<Color>(Get.theme.primaryColor),
                           ),
                           child: Text(StrRes.backButtonText)),
                     ),
