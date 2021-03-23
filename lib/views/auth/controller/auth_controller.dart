@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/utils/my_logger.dart';
+import 'package:rg2/views/main_view.dart';
 
 class AuthController extends GetxController {
 
@@ -11,15 +12,23 @@ class AuthController extends GetxController {
 
   Rx<User> _firebaseUser = Rx<User>();
   get firebaseUser => _firebaseUser;
-
   User get user => _firebaseUser.value;
+
+  RxBool waitingSync = false.obs;
 
   @override
   onInit() {
     super.onInit();
     _firebaseUser.bindStream(_auth.authStateChanges());
+
   }
 
+  void googleSignInAndGoToStart() async {
+    await googleSignIn();
+    if (user != null) {
+      Get.offAll(() => MainView(), transition: Transition.downToUp);
+    }
+  }
 
   void googleSignIn() async {
 

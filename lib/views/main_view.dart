@@ -10,7 +10,7 @@ import 'package:rg2/views/settings/settings_screen_view.dart';
 import 'bottomNavBarItems.dart';
 import 'trainers/trainers_view/trainers_screen.dart';
 
-class MainViewWithBottomBar extends StatelessWidget {
+class MainView extends StatelessWidget {
   final SettingsController _settings = Get.find();
   final LearnController _learnController = Get.find();
 

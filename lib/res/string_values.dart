@@ -152,7 +152,7 @@ class StrRes {
   static const authSignInButtonText = "Войти при помощи Google аккаунта";
   static const authSignInWhy = "Зачем мне это?";
   static const authSignInBecause = "Google авторизация нужна:";
-  static const authLaterButtonText = "Сделаю это позже";
+  static const authLaterButtonText = "Войду позже";
   static const authNeverButtonText = "Больше не спрашивать";
 
 }

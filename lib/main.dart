@@ -5,10 +5,10 @@ import 'package:rg2/controllers/azbuka_dialog_controller.dart';
 import 'package:rg2/controllers/helpers/binding_controllers.dart';
 import 'package:rg2/controllers/learn_detail_controller.dart';
 import 'package:rg2/controllers/trainers_controller.dart';
-import 'package:rg2/controllers/youtube_controller.dart';
+import 'package:rg2/views/youtube_player/controller/youtube_controller.dart';
 import 'package:rg2/views/auth/main_auth_view.dart';
-import 'file:///C:/Users/rozov/AndroidStudioProjects/rg2_flutter_getx/lib/views/favourites/dialog/favourite_dialog.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
+import 'package:rg2/views/favourites/dialog/favourite_dialog.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_settings_controller.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_trainer_controller.dart';
 import 'package:rg2/views/trainers/pll/controller/pll_settings_controller.dart';
@@ -17,7 +17,7 @@ import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen
 import 'package:rg2/views/trainers/timer/controller/result_view_controller.dart';
 import 'package:rg2/views/trainers/timer/controller/timer_settings_controller.dart';
 import 'controllers/db_controller.dart';
-import 'controllers/info_controller.dart';
+import 'views/info/controller/info_controller.dart';
 import 'controllers/learn_controller.dart';
 import 'controllers/repository.dart';
 import 'controllers/settings_controller.dart';
@@ -56,9 +56,9 @@ class RG2App extends StatelessWidget {
         title: 'RG2',
         theme: _settings.getCurrentTheme(),
         getPages: [
-          GetPage(name: '/', page: () => MainViewWithBottomBar()),
-          GetPage(name: '/youtube', page: () => YouTubeView()),
-          GetPage(name: '/favourite', page: () => FavouriteDialog()),
+          GetPage(name: '/', page: () => MainView(), transition: Transition.leftToRight),
+          GetPage(name: '/youtube', page: () => YouTubeView(), transition: Transition.leftToRight),
+          GetPage(name: '/favourite', page: () => FavouriteDialog(), transition: Transition.upToDown),
         ],
         debugShowCheckedModeBanner: false,
         // home: SettingsScreen(),

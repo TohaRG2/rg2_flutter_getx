@@ -9,6 +9,7 @@ import 'package:rg2/controllers/learn_controller.dart';
 import 'package:rg2/controllers/settings_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 
@@ -96,16 +97,24 @@ class FavouriteDialogCardItem extends StatelessWidget {
           if (_item.url == "submenu") {
             print("onTap -> submenu -> change to ${_item.description}");
             _learnController.changePageAndPhaseTo(_item.description);
-            do
+            logPrint("rawRoute - ${Get.rawRoute}");
+            logPrint("currentRoute - ${Get.currentRoute}");
+            logPrint("previousRoute - ${Get.previousRoute}");
+            logPrint("isDialogOpen - ${Get.isDialogOpen}");
+            if (Get.isDialogOpen) { Get.back(); }
+            while (Get.currentRoute != "/() => MainView" && Get.currentRoute != "/") {
               Get.back();
-            while (Get.currentRoute != "/");
+              logPrint("CurRoute - ${Get.currentRoute}");
+            }
             print("GetBack complete");
           } else {
             print("onTap -> not submenu -> change to ${_item.phase}");
             _learnController.changePageAndPhaseTo(_item.phase);
-            do
+            if (Get.isDialogOpen) { Get.back(); }
+            while (Get.currentRoute != "/() => MainView"  && Get.currentRoute != "/") {
               Get.back();
-            while (Get.currentRoute != "/");
+              logPrint("CurRoute - ${Get.currentRoute}");
+            }
             print("GetBack complete -> Get.to(LearnDetailScreen(${_item.phase}, ${_item.id})");
             Get.to(() => LearnDetailScreen(_item.phase, _item.id), transition: Transition.fadeIn);
           }

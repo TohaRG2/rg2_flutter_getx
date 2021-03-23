@@ -11,6 +11,7 @@ import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/database/entitys/phase_position_item.dart';
 import 'package:rg2/database/entitys/pll_trainer_item.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
+import 'package:rg2/utils/my_logger.dart';
 
 class Repository extends GetxController {
   MainDao _mainDao = Get.find();
@@ -24,6 +25,7 @@ class Repository extends GetxController {
 
   Future<List<MainDBItem>> getMainDBItems(String phase) async {
     //if (_cache.isEmpty) { _cache = await _mainDao.getAllItems();}
+    logPrint("getMainDBItems $phase");
     var result = await _mainDao.getPhase(phase);
     return result;
   }

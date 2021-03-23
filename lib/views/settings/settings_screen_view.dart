@@ -8,7 +8,7 @@ import 'widgets/helpSettings.dart';
 import 'widgets/internetSettings.dart';
 import 'widgets/purchase_settings.dart';
 import 'widgets/swipe_settings.dart';
-import 'widgets/themeSettings.dart';
+import 'widgets/theme_settings.dart';
 import 'widgets/user_auth_settings.dart';
 
 class SettingsScreen extends StatelessWidget {

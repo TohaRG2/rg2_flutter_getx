@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
+import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/auth/controller/auth_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
@@ -38,12 +40,12 @@ class UserAuthSettings extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CircleAvatar(
-            maxRadius: 25,
+            maxRadius: 20,
             backgroundImage: NetworkImage(user.photoURL),
           ),
-          Flexible(
+          Expanded(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceMini),
+              padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
               child: Text(
                 "${user.displayName}",
                 overflow: TextOverflow.fade,
@@ -52,11 +54,24 @@ class UserAuthSettings extends StatelessWidget {
               ),
             ),
           ),
+          IconButton(
+              onPressed: (){
+                Get.snackbar(StrRes.authSignInBecause, StrRes.authBodyText,
+                  snackPosition: SnackPosition.BOTTOM,
+                  colorText: Colors.white,
+                  backgroundColor: Colors.grey[800],
+                  duration: Duration(seconds: 15),
+                  onTap: (_) { Get.back();},
+                );
+              },
+              icon: Icon(MaterialIcons.help_outline),
+          ),
           OutlinedButton(
               onPressed: () {
                 controller.googleSignOut();
               },
-              child: Text("Выйти")),
+              child: Text("Выйти")
+          ),
         ]),
       );
   }

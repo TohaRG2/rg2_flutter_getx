@@ -7,9 +7,10 @@ import 'package:rg2/views/main_view.dart';
 class MainAuthView extends GetWidget<AuthController> {
   @override
   Widget build(BuildContext context) {
+
     return (controller.user == null) ?
           SignInView() :
-          MainViewWithBottomBar();
+          MainView();
   }
 }
 

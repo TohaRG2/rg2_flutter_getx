@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/controllers/youtube_controller.dart';
+import 'package:rg2/views/youtube_player/controller/youtube_controller.dart';
 import 'package:rg2/views/shared/buttons_style.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:intl/intl.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_material_color_picker/flutter_material_color_picker.dart
 import 'package:get/get.dart';
 import 'package:rg2/controllers/settings_controller.dart';
 import 'package:rg2/res/string_values.dart';
-import 'package:rg2/views/auth/widget/theme_switch.dart';
+import 'package:rg2/views/settings/widgets/theme_switch.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class ThemeSettings extends StatelessWidget {

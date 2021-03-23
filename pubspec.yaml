@@ -54,7 +54,7 @@ dependencies:
 
   # Поддержка звука, для метронома в таймере
   #assets_audio_player: ^2.0.14
-  audioplayers: ^0.18.0
+  audioplayers: ^0.18.1
 
   # Для удобной работы с датой/временем
   intl: ^0.17.0

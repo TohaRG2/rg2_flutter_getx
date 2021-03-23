@@ -6,6 +6,7 @@ import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/database/entitys/phase_position_item.dart';
 import 'package:rg2/res/constants.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 
 class LearnController extends GetxController {
@@ -175,6 +176,7 @@ class LearnController extends GetxController {
 
   ///делаем список для отображения по имени фазы и номеру страницы. Номер нужен для определения необходимости добавления пункта "..."
   Future<List<MainDBItem>> _getMenuItemsListFor(String phase, int pageNumber) async {
+    logPrint("_getMenuItemsListFor phase:$phase pageN:$pageNumber");
     var rootPhase = pages[pageNumber].rootPhase;
     var list = <MainDBItem>[];
     if (phase == Const.FAVOURITES) {
@@ -182,6 +184,7 @@ class LearnController extends GetxController {
     } else {
       list = await _repo.getMainDBItems(phase);
     }
+    logPrint("_getMenuItemsListFor получили $list");
     //Если фаза не главная, то добавляем переход на один уровень выше "..."
     if (phase != rootPhase) {
       var icon = _backIconPath;
@@ -197,6 +200,7 @@ class LearnController extends GetxController {
           description: backPhase);
       list.insert(0, backItem);
     }
+    logPrint("_getMenuItemsListFor end");
     return list;
   }
 
