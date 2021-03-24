@@ -21,6 +21,12 @@ class Azbuka {
   static final Azbuka _instance = Azbuka._privateConstructor();
 
   Azbuka._privateConstructor() {
+    _initializeVariables();
+    _settingsController.callbacks.add(_initializeVariables);
+  }
+
+  /// Инициализируем основные переменные
+  void _initializeVariables() {
     _currentAzbuka = _loadAzbuka(Const.CURRENT_AZBUKA);
     _currentColorsSide = _loadColors(Const.CURRENT_AZBUKA_COLORS);
   }

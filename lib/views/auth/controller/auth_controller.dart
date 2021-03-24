@@ -10,28 +10,31 @@ class AuthController extends GetxController {
   FirebaseAuth _auth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
+  /// Observable переменная, в которой храним данные об авторизации пользователя
+  /// null - если не авторизован
   Rx<User> _firebaseUser = Rx<User>();
   get firebaseUser => _firebaseUser;
   User get user => _firebaseUser.value;
 
+  //TODO пока не используется
   RxBool waitingSync = false.obs;
 
   @override
   onInit() {
     super.onInit();
+    // Биндим стрим в Observable _firebaseUser
     _firebaseUser.bindStream(_auth.authStateChanges());
 
   }
 
-  void googleSignInAndGoToStart() async {
+  Future<void> googleSignInAndGoToStart() async {
     await googleSignIn();
     if (user != null) {
       Get.offAll(() => MainView(), transition: Transition.downToUp);
     }
   }
 
-  void googleSignIn() async {
-
+  Future<void> googleSignIn() async {
     try {
       //logPrint("вызываем окно входа гугл аккаунтом");
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
@@ -64,7 +67,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void googleSignOut() async {
+  Future<void> googleSignOut() async {
     logPrint("SignOut ${user.email}");
     try {
       await _auth.signOut();

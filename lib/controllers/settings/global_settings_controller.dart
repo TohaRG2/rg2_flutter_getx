@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -80,5 +82,15 @@ class GlobalSettingsController extends GetxController {
     _sp.write(property.key, property.value);
   }
 
+  /// список колбэков, которые будут вызваны после синхронизации данных с firebase
+  List<Function> callbacks = [];
+  /// запуск зареганных колбэков от settings контроллеров, чтобы обновить переменные из локального хранилища
+  void runCallbacks() {
+    logPrint("runCallbacks");
+    callbacks.forEach((callback) { callback();} );
+  }
 
+
+
+  
 }

@@ -4,6 +4,7 @@ import 'package:rg2/controllers/settings/global_settings_controller.dart';
 import 'package:rg2/database/entitys/pll_trainer_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/pll/model/quiz_variant.dart';
 
 class PllSettingsController extends GetxController {
@@ -12,7 +13,14 @@ class PllSettingsController extends GetxController {
 
   @override
   void onInit() {
-    print("PllSettingsController init");
+    super.onInit();
+    logPrint("PllSettingsController init");
+    _initializeRxVariables();
+    _settingsController.callbacks.add(_initializeRxVariables);
+  }
+
+  /// Инициализируем observable переменные
+  void _initializeRxVariables() {
     _randomFrontSide.value = _settingsController.getPropertyByKey(Const.RANDOM_FRONT_SIDE);
     _randomAUF.value = _settingsController.getPropertyByKey(Const.RANDOM_AUF);
     _twoSideRecognition.value = _settingsController.getPropertyByKey(Const.TWO_SIDE_RECOGNITION);
@@ -22,7 +30,6 @@ class PllSettingsController extends GetxController {
     _variantsCount.value = _settingsController.getPropertyByKey(Const.PLL_VARIANTS_COUNT);
     _goodAnswerWaiting.value = _settingsController.getPropertyByKey(Const.PLL_GOOD_ANSWER_WAITING);
     _badAnswerWaiting.value = _settingsController.getPropertyByKey(Const.PLL_BAD_ANSWER_WAITING);
-    super.onInit();
   }
 
   /// Список названий PLL алгоритмов и их настроек (может ли быть загадан)

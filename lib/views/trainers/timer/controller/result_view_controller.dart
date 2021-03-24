@@ -12,8 +12,14 @@ class ResultViewController extends GetxController {
 
   @override
   void onInit() {
-    _orderBy = _settingsController.getPropertyByKey(Const.RESULT_ORDER_BY) ?? "solvingTime";
     super.onInit();
+    _initializeVariables();
+    _settingsController.callbacks.add(_initializeVariables);
+  }
+
+  /// Инициализируем переменные
+  void _initializeVariables() {
+    _orderBy = _settingsController.getPropertyByKey(Const.RESULT_ORDER_BY) ?? "solvingTime";
   }
 
   RxList<TimeNoteItem> _timeNoteItems = <TimeNoteItem>[].obs;

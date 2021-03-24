@@ -56,7 +56,7 @@ class CloudDatabase{
     return refCol
         .doc(property.key)
         .set(property.toMap())
-        .then((value) => logPrint("Добавили $property в базу"))
+        .then((value) => logPrint("Добавили/обновили $property в базу"))
         .catchError((error) => logPrint("Не удалось добавить $property в firebase"));
   }
 

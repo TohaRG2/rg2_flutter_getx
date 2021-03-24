@@ -8,11 +8,18 @@ import 'package:rg2/views/trainers/scramble_gen/model/blind_cube.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/scramble_decision_condition.dart';
 
 class ScrambleGenController extends GetxController {
-  GlobalSettingsController _settingsController = Get.find();
+  final GlobalSettingsController _settingsController = Get.find();
 
   @override
   void onInit() {
+    super.onInit();
     print("onInit ScrambleGenerator Controller Start");
+    _initializeRxVariables();
+    _settingsController.callbacks.add(_initializeRxVariables);
+  }
+
+  /// Инициализируем observable переменные
+  void _initializeRxVariables() {
     _isEdgeEnabled.value = _settingsController.getPropertyByKey(Const.IS_EDGE_ENABLED);
     _isCornerEnabled.value = _settingsController.getPropertyByKey(Const.IS_CORNER_ENABLED);
     _scrambleLength.value = _settingsController.getPropertyByKey(Const.SCRAMBLE_LENGTH);
@@ -26,8 +33,8 @@ class ScrambleGenController extends GetxController {
     mainColoredAzbuka = mainCube.getColoredAzbuka();
 
     settingsCube = BlindCube.colored(colors: Azbuka().currentColorsSide, azbuka: Azbuka().currentAzbuka);
-    settingsColoredAzbuka = settingsCube.getColoredAzbuka();
-    super.onInit();
+    //TODO попробовать заменить на _settingsColoredAzbuka.value, чтобы не сохранять при инициализации
+    _settingsColoredAzbuka.value = settingsCube.getColoredAzbuka();
   }
 
   BlindCube settingsCube;
