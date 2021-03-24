@@ -96,16 +96,17 @@ class DBController extends GetxController {
       }
   );
 
+  /// Создаем базу данных, при необходимости заполняем содержимым
   Future<MainDatabase> fillDB() async {
     _mainBase = await $FloorMainDatabase
         .databaseBuilder('main.db')
         .addCallback(callback())
         .build();
     if (needInit) {
+      logPrint("Инициализируем базу данных");
       await _initCubeTypes();
       await _initPhases();
       await PllTrainerVariants.initDb(_mainBase.pllTrainerDao);
-      logPrint("Init DB with db.dao");
       needInit = false;
     } else {
       logPrint("not first start, db.init don't need");
@@ -117,6 +118,7 @@ class DBController extends GetxController {
     return _mainBase;
   }
 
+  /// Заполняем данными основную базу с текстовками обучалок/ссылками на видео/комментами
   Future _initPhases() async {
     // logPrint("initPhasePositions");
     // await _mainBase.phasePositionDao.clearTable();
@@ -228,7 +230,8 @@ class DBController extends GetxController {
       _mainBase.movesDao.insertItem(item);
     }
   }
-  
+
+  /// Инициализируем основные фазы (страницы для viewPager)
   Future _initCubeTypes() async {
     var list = CubeTypes().list();
     list.forEach((item) => _mainBase.pagePropertiesDao.insertOrReplace(item));

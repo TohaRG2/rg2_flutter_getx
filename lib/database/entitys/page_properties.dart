@@ -4,6 +4,7 @@ import 'package:floor/floor.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 
+/// Класс для БД, для ххранения свойств страницы ViewPager
 @Entity()
 class PageProperties {
   @PrimaryKey(autoGenerate: false)
@@ -11,9 +12,8 @@ class PageProperties {
   String title;
   String rootPhase;
   String currentPhase;
-
-  //TODO постараться разобраться с сохранением List<String> в базе
   String backTo;
+
   @ignore
   RxList<MainDBItem> currentList = <MainDBItem>[].obs;
 

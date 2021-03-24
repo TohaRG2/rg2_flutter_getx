@@ -18,6 +18,7 @@ class LearnController extends GetxController {
   double curPositionInList = 0.0;
   String _backIconPath = "assets/images/icons/back_arrow.svg";
 
+  // Список со свойствами страниц
   RxList<PageProperties> pages = <PageProperties>[].obs;
   Map<String, double> phasesPositions = Map();
 

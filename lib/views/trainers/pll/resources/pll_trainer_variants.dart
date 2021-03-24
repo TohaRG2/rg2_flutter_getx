@@ -1,10 +1,13 @@
 import 'package:rg2/database/daos/pll_trainer_dao.dart';
 import 'package:rg2/database/entitys/pll_trainer_item.dart';
+import 'package:rg2/utils/my_logger.dart';
 
+/// Заполняем таблицу PLL_Trainers данными
 class PllTrainerVariants {
 
+  /// Конструктор для заполнения таблицы PLL_Trainers данными
   static Future initDb(PllTrainerDao dao) async {
-    print("Заполняем таблицу PLL_Trainers данными");
+    logPrint("Заполняем таблицу PLL_Trainers данными");
     dao.clearTable();
     var items = <PllTrainerItem>[];
     _internationalNames.asMap().forEach((index, intName) {

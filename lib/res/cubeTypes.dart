@@ -1,6 +1,7 @@
 
 import 'package:rg2/database/entitys/page_properties.dart';
 
+/// Список основых фаз (страниц) для viewPager обучалок
 class CubeTypes {
 
   int count = ct_names.length;
@@ -23,7 +24,6 @@ class CubeTypes {
 ///==================================================
 
     static const ct_names = [
-        // "Избранное",
         "2X2",
         "3X3",
         "Модификации 3Х3",
@@ -33,7 +33,6 @@ class CubeTypes {
     ];
 
     static const ct_init_phases = [
-        // "FAVOURITES",
         "MAIN_2X2",
         "MAIN3X3",
         "MAIN_OTHER3X3",
@@ -43,7 +42,6 @@ class CubeTypes {
     ];
 
     static const ct_current_phases = [
-        // "FAVOURITES",
         "MAIN_2X2",
         "MAIN3X3",
         "MAIN_OTHER3X3",
