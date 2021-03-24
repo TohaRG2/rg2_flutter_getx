@@ -4,7 +4,6 @@ import 'package:rg2/views/auth/controller/auth_controller.dart';
 class BindingControllers extends Bindings {
   @override
   void dependencies() {
-    Get.put<AuthController>(AuthController(), permanent: true);
-    //Get.put<SettingsController>(SettingsController(), permanent: true);
+    //Get.put<AuthController>(AuthController(), permanent: true);
   }
 }

@@ -1,23 +1,27 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/controllers/settings/global_settings_controller.dart';
 import 'package:rg2/database/entitys/pll_trainer_item.dart';
+import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/views/trainers/pll/model/quiz_variant.dart';
 
 class PllSettingsController extends GetxController {
   final Repository _repository = Get.find();
+  final GlobalSettingsController _settingsController = Get.find();
 
   @override
   void onInit() {
     print("PllSettingsController init");
-    _randomFrontSide.value = GetStorage().read(Const.RANDOM_FRONT_SIDE) ?? false;
-    _randomAUF.value = GetStorage().read(Const.RANDOM_AUF) ?? false;
-    _twoSideRecognition.value = GetStorage().read(Const.TWO_SIDE_RECOGNITION) ?? false;
-    _isTimerEnabled.value = GetStorage().read(Const.IS_PLL_TIMER_ENABLED) ?? false;
-    _timeForAnswer.value = GetStorage().read(Const.PLL_TIME_FOR_ANSWER) ?? 6;
-    _showAllVariants.value = GetStorage().read(Const.PLL_SHOW_ALL_VARIANTS) ?? true;
-    _variantsCount.value = GetStorage().read(Const.PLL_VARIANTS_COUNT) ?? 6;
+    _randomFrontSide.value = _settingsController.getPropertyByKey(Const.RANDOM_FRONT_SIDE);
+    _randomAUF.value = _settingsController.getPropertyByKey(Const.RANDOM_AUF);
+    _twoSideRecognition.value = _settingsController.getPropertyByKey(Const.TWO_SIDE_RECOGNITION);
+    _isTimerEnabled.value = _settingsController.getPropertyByKey(Const.IS_PLL_TIMER_ENABLED);
+    _timeForAnswer.value = _settingsController.getPropertyByKey(Const.PLL_TIME_FOR_ANSWER);
+    _showAllVariants.value = _settingsController.getPropertyByKey(Const.PLL_SHOW_ALL_VARIANTS);
+    _variantsCount.value = _settingsController.getPropertyByKey(Const.PLL_VARIANTS_COUNT);
+    _goodAnswerWaiting.value = _settingsController.getPropertyByKey(Const.PLL_GOOD_ANSWER_WAITING);
+    _badAnswerWaiting.value = _settingsController.getPropertyByKey(Const.PLL_BAD_ANSWER_WAITING);
     super.onInit();
   }
 
@@ -33,7 +37,7 @@ class PllSettingsController extends GetxController {
   bool get randomFrontSide => _randomFrontSide.value;
   set randomFrontSide(value) {
     _randomFrontSide.value = value;
-    GetStorage().write(Const.RANDOM_FRONT_SIDE, value);
+    _settingsController.setPropertyByKey(Property(key: Const.RANDOM_FRONT_SIDE, value: value));
   }
 
   /// Случайная сторона PLL ситуации. Если false, то ситуации будет показана с "хорошей" стороны
@@ -41,7 +45,7 @@ class PllSettingsController extends GetxController {
   bool get randomAUF => _randomAUF.value;
   set randomAUF(value) {
     _randomAUF.value = value;
-    GetStorage().write(Const.RANDOM_AUF, value);
+    _settingsController.setPropertyByKey(Property(key: Const.RANDOM_AUF, value: value));
   }
 
   /// Определение ситуации по двум сторонам = true или по трем = false
@@ -49,7 +53,7 @@ class PllSettingsController extends GetxController {
   bool get twoSideRecognition => _twoSideRecognition.value;
   set twoSideRecognition(value) {
     _twoSideRecognition.value = value;
-    GetStorage().write(Const.TWO_SIDE_RECOGNITION, value);
+    _settingsController.setPropertyByKey(Property(key: Const.TWO_SIDE_RECOGNITION, value: value));
   }
 
   /// Будет ли ограничено время для ответа или нет
@@ -57,7 +61,7 @@ class PllSettingsController extends GetxController {
   bool get isTimerEnabled => _isTimerEnabled.value;
   set isTimerEnabled(value) {
     _isTimerEnabled.value = value;
-    GetStorage().write(Const.IS_PLL_TIMER_ENABLED, value);
+    _settingsController.setPropertyByKey(Property(key: Const.IS_PLL_TIMER_ENABLED, value: value));
   }
 
   /// Время для ответа на вопрос (если включена _isTimerEnabled)
@@ -65,7 +69,7 @@ class PllSettingsController extends GetxController {
   int get timeForAnswer => isTimerEnabled ? _timeForAnswer.value : 0;
   set timeForAnswer(value) {
     _timeForAnswer.value = value;
-    GetStorage().write(Const.PLL_TIME_FOR_ANSWER, value);
+    _settingsController.setPropertyByKey(Property(key: Const.PLL_TIME_FOR_ANSWER, value: value));
   }
 
   /// Показываем все варианты (21 кнопку) или ограниченное количество с кастомными ответами
@@ -73,7 +77,7 @@ class PllSettingsController extends GetxController {
   bool get showAllVariants => _showAllVariants.value;
   set showAllVariants(value) {
     _showAllVariants.value = value;
-    GetStorage().write(Const.PLL_SHOW_ALL_VARIANTS, value);
+    _settingsController.setPropertyByKey(Property(key: Const.PLL_SHOW_ALL_VARIANTS, value: value));
   }
 
   /// Количество вариантов для ответа, если выбран режим "отображать не 21 кнопку"
@@ -81,7 +85,7 @@ class PllSettingsController extends GetxController {
   int get variantsCount => _variantsCount.value;
   set variantsCount(value) {
     _variantsCount.value = value;
-    GetStorage().write(Const.PLL_VARIANTS_COUNT, value);
+    _settingsController.setPropertyByKey(Property(key: Const.PLL_VARIANTS_COUNT, value: value));
   }
 
 
@@ -90,7 +94,7 @@ class PllSettingsController extends GetxController {
   int get goodAnswerWaiting => _goodAnswerWaiting.value;
   set goodAnswerWaiting(value) {
     _goodAnswerWaiting.value = value;
-    GetStorage().write(Const.AZBUKA_GOOD_ANSWER_WAITING, value);
+    _settingsController.setPropertyByKey(Property(key: Const.PLL_GOOD_ANSWER_WAITING, value: value));
   }
 
   /// Время автонажатия кнопки далее при неуспешном ответе
@@ -98,7 +102,7 @@ class PllSettingsController extends GetxController {
   int get badAnswerWaiting => _badAnswerWaiting.value;
   set badAnswerWaiting(value) {
     _badAnswerWaiting.value = value;
-    GetStorage().write(Const.AZBUKA_BAD_ANSWER_WAITING, value);
+    _settingsController.setPropertyByKey(Property(key: Const.PLL_BAD_ANSWER_WAITING, value: value));
   }
 
 

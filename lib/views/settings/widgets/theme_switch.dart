@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
-import 'package:rg2/controllers/settings_controller.dart';
+import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 class ThemeSwitch extends GetWidget<SettingsController> {
   const ThemeSwitch({Key key,}) : super(key: key);

@@ -5,10 +5,10 @@ class Const {
   static const ACCENT_COLOR = 'accentColor';
   static const IS_THEME_DARK = 'isThemeDark';
   static const SCALE_FACTOR = 'scaleFactor';
+  static const IS_START_HELP_ENABLED = 'isStartHelpEnabled';
   static const IS_SWIPE_ENABLED = 'isSwipeEnabled';
   static const IS_PURCHASE_ENABLED = 'isPurchaseEnabled';
-  static const IS_START_HELP_ENABLED = 'isStartHelpEnabled';
-  static const INTERNET_USING = 'internetUsing';
+  static const INTERNET_USAGE = 'internetUsing';
   static const BOTTOM_ITEM = 'bottomItem';
   static const CURRENT_PAGE_NUMBER = 'currentPageNumber';
   static const CURRENT_INFO_PAGE_NUMBER = 'currentInfoPageNumber';
@@ -47,13 +47,16 @@ class Const {
   static const PLL_TIME_FOR_ANSWER = 'pllTimeForAnswer';
   static const PLL_SHOW_ALL_VARIANTS = 'pllShowAllVariants';
   static const PLL_VARIANTS_COUNT = 'pllVariantsCount';
+  static const PLL_GOOD_ANSWER_WAITING = 'pllGoodAnswerWaiting';
+  static const PLL_BAD_ANSWER_WAITING = 'pllBadAnswerWaiting';
+
 
   /// Настройки для тренажера азбуки блайндов
   static const IS_AZBUKA_CORNER_ENABLED = 'isAzbukaCornerEnabled';
   static const IS_AZBUKA_EDGE_ENABLED = 'isAzbukaEdgeEnabled';
   static const IS_AZBUKA_TIMER_ENABLED = 'isAzbukaTimerEnabled';
   static const AZBUKA_TIME_FOR_ANSWER = 'azbukaTimeForAnswer';
-  static const AZBUKA_GOOD_ANSWER_WAITING = 'goodAnswerWaiting';
-  static const AZBUKA_BAD_ANSWER_WAITING = 'badAnswerWaiting';
+  static const AZBUKA_GOOD_ANSWER_WAITING = 'azbukaGoodAnswerWaiting';
+  static const AZBUKA_BAD_ANSWER_WAITING = 'azbukaBadAnswerWaiting';
 
 }

@@ -6,12 +6,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:rg2/controllers/learn_controller.dart';
-import 'package:rg2/controllers/settings_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
-import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
+import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 class FavouriteDialogCardItem extends StatelessWidget {
   final _learnController = Get.find<LearnController>();

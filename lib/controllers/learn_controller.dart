@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository.dart';
-import 'package:rg2/controllers/settings_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/database/entitys/phase_position_item.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
+import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 class LearnController extends GetxController {
   Repository _repo = Get.find();
@@ -27,19 +27,18 @@ class LearnController extends GetxController {
   onInit() {
     super.onInit();
     print("Init LearnController");
-    curPageNumber = _settings.currentPageNumber.value;
+    curPageNumber = _settings.currentPageNumber;
   }
 
 
   Future<void> loadPages() async {
     await _loadBackPhases();
     await _getPagesFromBase();
-    //await _setFavouritesObsList();
     await _setCurrentPhasesObsLists();
     await _getPhasesPositions();
   }
 
-  /// Заполняем currentList для остальных фаз, кроме избранного
+  /// Заполняем currentList для всех фаз
   Future _setCurrentPhasesObsLists() async {
     for (int i = 0; i < pages.length; i++) {
       var phase = pages[i].currentPhase;
@@ -48,14 +47,6 @@ class LearnController extends GetxController {
       pages[i].currentList.assignAll(await _getMenuItemsListFor(phase, i));
     }
   }
-
-  // Считываем избранное из базы и заносим в pages[0].currentList
-  // Future _setFavouritesObsList() async {
-  //   var list = await _repo.getFavourites();
-  //   pages[0].currentList = <MainDBItem>[].obs;
-  //   pages[0].currentList.assignAll(list);
-  //   print("fav - $list");
-  // }
 
   /// Получаем pages из базы (без currentList)
   Future _getPagesFromBase() async {
@@ -66,13 +57,14 @@ class LearnController extends GetxController {
     }
   }
 
+  /// Инициализируем список позиций из базы
   Future _getPhasesPositions() async {
     List<PhasePositionItem> list = await _repo.getAllPositionsList();
     phasesPositions.clear();
     list.forEach((element) {
       phasesPositions[element.phase] = element.position;
     });
-    print("PhasesPositionsFromBase $list");
+    logPrint("Инициализация списка позиций завершена: $list");
   }
 
   /// Вызываем по тапу на сердечко и
@@ -96,39 +88,13 @@ class LearnController extends GetxController {
     }
   }
 
-  // /// Обновляем избранное у элемента
-  // _updateInFavourites(MainDBItem item) {
-  //   if (item.isFavourite) {
-  //     // добавляем в избранное
-  //     pages[0].currentList.insert(0, item);
-  //   } else {
-  //     // убираем из избранного
-  //     var index = pages[0].currentList.indexWhere((e) => (e.id == item.id && e.phase == item.phase));
-  //     if (index >= 0) pages[0].currentList.removeAt(index);
-  //     item.subId = 0;         // на всякий случай обнуляем индекс (не обязательно)
-  //     _repo.updateMainDBItem(item);
-  //   }
-  //   _updateFavouritesSubIds();
-  // }
-
   /// Убираем элемент из Избранного
   removeElementFromFavourites(MainDBItem item) {
     _favController.removeElementFromFavourites(item);
     updateItemInPages(item);
   }
 
-  // Обновлеем индексы порядка вывода для избранного в соответствии с тем, как расположены элементы в списке pages[0].currentList
-  // и сохраняем записи в базе
-  // _updateFavouritesSubIds() {
-  //   Map<int, MainDBItem> map = pages[0].currentList.asMap();
-  //   map.forEach((key, item) {
-  //     item.subId = key;
-  //   });
-  //   pages[0].currentList.assignAll(map.values.toList());
-  //   _repo.updateMainDBItems(map.values.toList());
-  // }
-
-  // По фазе узнаем страницу и меняем на ней фазу
+  /// По фазе узнаем страницу и меняем на ней фазу
   changePageAndPhaseTo(String phase){
     print("changePageAndPhaseTo $phase");
     var rootPhase = MainDBItem.getRootPhaseFor(phase);
@@ -142,7 +108,7 @@ class LearnController extends GetxController {
   changeCurrentPageNumberTo(int pageNumber) {
     print("changeCurrentPageNumberTo $pageNumber");
     curPageNumber = pageNumber;
-    _settings.currentPageNumber.value = pageNumber;
+    _settings.currentPageNumber = pageNumber;
   }
 
   /// Меняем текущую фазу по объекту MainDBItem
@@ -169,14 +135,9 @@ class LearnController extends GetxController {
     _repo.updatePhasePosition(phase, phasesPositions[phase]);
   }
 
-  // changeListPositionForCurrentPhase(int position){
-  //   print("savePosition for ${pages[curPageNumber].currentPhase} - $position");
-  //   phasesPositions[pages[curPageNumber].currentPhase] = position;
-  // }
-
   ///делаем список для отображения по имени фазы и номеру страницы. Номер нужен для определения необходимости добавления пункта "..."
   Future<List<MainDBItem>> _getMenuItemsListFor(String phase, int pageNumber) async {
-    logPrint("_getMenuItemsListFor phase:$phase pageN:$pageNumber");
+    //logPrint("_getMenuItemsListFor phase:$phase pageN:$pageNumber");
     var rootPhase = pages[pageNumber].rootPhase;
     var list = <MainDBItem>[];
     if (phase == Const.FAVOURITES) {
@@ -184,7 +145,6 @@ class LearnController extends GetxController {
     } else {
       list = await _repo.getMainDBItems(phase);
     }
-    logPrint("_getMenuItemsListFor получили $list");
     //Если фаза не главная, то добавляем переход на один уровень выше "..."
     if (phase != rootPhase) {
       var icon = _backIconPath;
@@ -200,19 +160,10 @@ class LearnController extends GetxController {
           description: backPhase);
       list.insert(0, backItem);
     }
-    logPrint("_getMenuItemsListFor end");
     return list;
   }
 
-  //Получаем название основной root фазы для любой фазы
-  // String _getRootPhaseFor(String phase){
-  //   var rootPhase = phase;
-  //   while (backFrom[rootPhase] != null) {
-  //     rootPhase = backFrom[rootPhase];
-  //   }
-  //   return rootPhase;
-  // }
-
+  /// Получаем номер страницы по названию рут фазы
   int _getPageByRoot(String rootPhase) {
     var page = 0;
     pages.asMap().forEach((key, value) {
@@ -237,33 +188,11 @@ class LearnController extends GetxController {
     _favController.updateInFavourites(item);
   }
 
-  // String getAssetFilePath(String iconName, String curPhase) {
-  //   String path;
-  //   iconName = iconName.replaceAll(".xml", "");
-  //   if (iconName.endsWith(".svg") || iconName.endsWith(".png")) {              //Если есть расширение, то считаем, что путь указан полностью
-  //     path = iconName;
-  //   } else {
-  //     var subDir = getAssetPath(curPhase);
-  //     path = "assets/images/$subDir/$iconName.svg";
-  //   }
-  //   return path;
-  // }
-
-  //
-  // String getAssetPath(String curPhase) {
-  //   var rootPhase = MainDBItem.getRootPhaseFor(curPhase);   //тест получения основной фазы по текущей
-  //   var subDir = curPhase.toLowerCase();
-  //   if (rootPhase != curPhase) {
-  //     subDir = rootPhase.toLowerCase() + "/$subDir";
-  //   }
-  //   return subDir;
-  // }
-
   ///Инициализируем список backFrom фазами на которые нужно возвращаться с текущей. типа backFrom['G2F'] = 'MAIN3X3'
   ///для корневых(основных) фаз backFrom будет возвращать null
   _loadBackPhases() async {
     var subMenusList = await _repo.getSubMenuList();
-    //print("subMenusList - $subMenusList");
+    //logPrint("subMenusList - $subMenusList");
     var backFrom = Map<String, String>();
     subMenusList.forEach((element) {
       backFrom[element.description] = element.phase;
@@ -289,6 +218,7 @@ class LearnController extends GetxController {
     }
   }
 
+  /// получаем позицию для прокрутки по номеру текущей страницы
   double getPositionForPage(int pageNumber) {
     var curPhase = pages[pageNumber].currentPhase;
     var position = phasesPositions[curPhase] ?? 0.0;

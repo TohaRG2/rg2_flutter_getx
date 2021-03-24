@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_material_color_picker/flutter_material_color_picker.dart';
 import 'package:get/get.dart';
-import 'package:rg2/controllers/settings_controller.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/settings/widgets/theme_switch.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
@@ -72,7 +72,7 @@ class ThemeSettings extends StatelessWidget {
                       style: Get.textTheme.headline6,
                     ),
                     CircleAvatar(
-                        backgroundColor: _settings.accentThemeColor.value,
+                        backgroundColor: _settings.accentThemeColor,
                         radius: UIHelper.SpaceMedium),
                   ],
                 ),
@@ -94,14 +94,14 @@ class ThemeSettings extends StatelessWidget {
             ),
             /// Слайдер выбора размера шрифта
             Slider(
-              value: _settings.textScaleFactor.value,
+              value: _settings.textScaleFactor,
               min: 0.7,
               max: 1.3,
               divisions: 6,
               activeColor: Theme.of(context).accentColor,
-              label: _settings.textScaleFactor.value.toStringAsFixed(2),
+              label: _settings.textScaleFactor.toStringAsFixed(2),
               onChanged: (value) {
-                _settings.textScaleFactor.value = value;
+                _settings.textScaleFactor = value;
               },
             ),
           ],
@@ -118,13 +118,13 @@ class ThemeSettings extends StatelessWidget {
           MaterialColorPicker(
             shrinkWrap: true,
             allowShades: true,
-            selectedColor: _settings.accentThemeColor.value,
+            selectedColor: _settings.accentThemeColor,
             onColorChange: (color) {
-              _settings.accentThemeColor.value = color;
+              _settings.accentThemeColor = color;
             },
           ),
           CloseButton(
-            color: _settings.accentThemeColor.value,
+            color: _settings.accentThemeColor,
             onPressed: () {
               Get.back();
             },
@@ -147,7 +147,7 @@ class ThemeSettings extends StatelessWidget {
             },
           ),
           CloseButton(
-            color: _settings.accentThemeColor.value,
+            color: _settings.accentThemeColor,
             onPressed: () {
               Get.back();
             },

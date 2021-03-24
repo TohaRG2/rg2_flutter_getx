@@ -2,6 +2,7 @@ import 'dart:core';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:rg2/utils/my_logger.dart';
 
 import 'blind_cube_support_arrays.dart';
 
@@ -67,7 +68,7 @@ class Cube {
 
   /// Обнуляем кубик (возвращаем в исходное состояние)
   void resetCube() {
-    print ("resetCube");
+    logPrint("resetCube");
     for(int i=0; i < _cube.length; i++){
       _cube[i] = _defaultColorsSide[i ~/ 9];
     }
@@ -75,7 +76,7 @@ class Cube {
 
   /// Генерируем случайный скрамбл заданной длины
   String generateScramble(int length) {
-    print("Генерируем новый скрамбл длинны $length");
+    logPrint("Генерируем новый скрамбл длинны $length");
     var random = Random();
     var scramble = "";
     //счетчик количества сгенерированных позиций в скрамбле

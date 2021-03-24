@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/learn_controller.dart';
-import 'package:rg2/controllers/settings_controller.dart';
-//import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 import 'main_menu_item.dart';
 

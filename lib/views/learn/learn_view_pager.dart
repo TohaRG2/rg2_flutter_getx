@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/learn_controller.dart';
-import 'package:rg2/controllers/settings_controller.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/settings/settings_screen_view.dart';
 
 import 'main_menu/main_menu_list_view.dart';
@@ -14,7 +14,7 @@ class LearnViewPager extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _isSwipeEnabled = _settings.isSwipeEnabled.value;
+    var _isSwipeEnabled = _settings.isSwipeEnabled;
     return GetBuilder<LearnController>(
       builder: (_lc) {
         return DefaultTabController(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/azbuka/azbuka_dialog_controller.dart';
 import 'package:rg2/controllers/helpers/binding_controllers.dart';
 import 'package:rg2/controllers/learn_detail_controller.dart';
@@ -20,7 +21,7 @@ import 'controllers/db_controller.dart';
 import 'views/info/controller/info_controller.dart';
 import 'controllers/learn_controller.dart';
 import 'controllers/repository.dart';
-import 'controllers/settings_controller.dart';
+import 'views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/trainers/timer/controller/timer_controller.dart';
 import 'database/main_database.dart';
 import 'views/main_view.dart';
@@ -64,12 +65,13 @@ class RG2App extends StatelessWidget {
         // home: SettingsScreen(),
         //TODO перенести инициализацию контроллеров в BindingControllers
         initialBinding: BindingControllers(),
+        //TODO Перенести FutureBuilder создания базы при первом входе в фон аутентификации
         home: FutureBuilder<MainDatabase>(
             future: dbFuture,
             builder: (context, data) {
-              print("FutureBuilder rebuild");
+              logPrint("FutureBuilder rebuild");
               if (data.hasData) {
-                print("DBController.fillDB отработал");
+                logPrint("DBController.fillDB отработал");
                 putDAOs(data.data);
                 return MainAuthView();
               } else if (data.hasError) {
@@ -84,14 +86,14 @@ class RG2App extends StatelessWidget {
               child: child,
               //TODO поменять на Get.MediaQuery
               data: MediaQuery.of(context)
-                  .copyWith(textScaleFactor: _settings.textScaleFactor.value),
+                  .copyWith(textScaleFactor: _settings.textScaleFactor),
             ),
           );
         });
   }
 
   void putDAOs(MainDatabase db) {
-    print("putDAOs & put controllers");
+    logPrint("putDAOs & put controllers");
     Get.put(db.mainDao);
     Get.put(db.pagePropertiesDao);
     Get.put(db.movesDao);
@@ -106,6 +108,8 @@ class RG2App extends StatelessWidget {
     Get.put(MyYouTubeController());
     Get.put(AzbukaDialogController());
     Get.put(TrainersController());
+    
+    //TODO подумать, куда перенести, или оставить тут через Lazy
     Get.put(ScrambleGenController());
     Get.put(TimerSettingsController());
     Get.put(TimerController());

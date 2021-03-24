@@ -75,6 +75,7 @@ import 'package:rg2/res/mainMenu/main_skewb/ivy.dart';
 import 'package:rg2/res/mainMenu/main_skewb/redi_cube.dart';
 import 'package:rg2/res/mainMenu/main_skewb/skewb.dart';
 import 'package:rg2/res/mainMenu/main_skewb/twisty_skewb.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/moves.dart';
 
 import '../views/trainers/pll/resources/pll_trainer_variants.dart';
@@ -85,11 +86,13 @@ class DBController extends GetxController {
 
   Callback callback() => Callback(
       onCreate: (database, version) async {
-        print("CreateDataBase callback called");
+        logPrint("CreateDataBase callback called");
         needInit = true;
       },
       onOpen: (database) {
-        print("OpenDatabase callback called");
+        logPrint("OpenDatabase callback called");
+        // поменять на true, если надо пересоздать уже существующую базу
+        needInit = false;
       }
   );
 
@@ -102,24 +105,23 @@ class DBController extends GetxController {
       await _initCubeTypes();
       await _initPhases();
       await PllTrainerVariants.initDb(_mainBase.pllTrainerDao);
-      //print("Init DB with db.dao");
+      logPrint("Init DB with db.dao");
       needInit = false;
     } else {
-      //print("not first start, db.init don't need");
-      //TODO Пока на время написания программы, будем пересоздавать базу каждый раз
-      await _initCubeTypes();
-      await _initPhases();
-      print("fillDB complete");
+      logPrint("not first start, db.init don't need");
+      // await _initCubeTypes();
+      // await _initPhases();
+      //logPrint("fillDB complete");
     }
 
     return _mainBase;
   }
 
   Future _initPhases() async {
-    // print("initPhasePositions");
+    // logPrint("initPhasePositions");
     // await _mainBase.phasePositionDao.clearTable();
     // await _loadSomePositions();
-    print("InitCubes");
+    logPrint("InitCubes");
     await _mainBase.mainDao.clearTable();
     await _initPhase(BigMain());
     await _initPhase(Cross());

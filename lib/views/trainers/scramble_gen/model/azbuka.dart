@@ -1,9 +1,13 @@
-import 'package:get_storage/get_storage.dart';
+import 'package:get/get.dart';
+import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
 
 class Azbuka {
-  var sp = GetStorage();
+  final GlobalSettingsController _settingsController = Get.find();
+  
   List<String> _currentAzbuka = [];
   List<int> _currentColorsSide = [0,1,2,3,4,5];
 
@@ -41,12 +45,7 @@ class Azbuka {
 
   /// Возвращаем список из 54 (6*9) букв
   List<String> get currentAzbuka => (_currentAzbuka.isNotEmpty) ? _currentAzbuka : myAzbuka;
-  set currentAzbuka(List<String> list) {
-    if (list.isNotEmpty) {
-      _currentAzbuka = list.toList();   //копируем по значению, а не по ссылке
-    }
-    _saveCurrentAzbuka();
-  }
+  // без публичного сеттера, задем через setCurrentColoredAzbuka
 
   /// Задаем параметры для моей азбуки, на выходе список из 54 элементов
   List<ColoredAzbukaItem> getMyColoredAzbuka() {
@@ -78,31 +77,36 @@ class Azbuka {
     const List<int> centersPositions = [4, 13, 22, 31, 40, 49];
 
     currentColorsSide = centersPositions.map((pos) => coloredAzbuka[pos].colorNumber).toList();
-    currentAzbuka = coloredAzbuka.map((v) => v.letter).toList();
+    var list = coloredAzbuka.map((v) => v.letter).toList();
+    if (list.isNotEmpty) {
+      _currentAzbuka = list;
+    }
+    _saveCurrentAzbuka();
   }
   
   
   /// Сохраняем текущую азбуку и цвета как кастомные
   saveCustomColoredAzbuka() {
+    //logPrint("saveCustomColoredAzbuka");
     _saveCustomAzbuka();
     _saveAsCustomColors();
   }
 
   _saveCustomAzbuka() {
     var savedString = currentAzbuka.join(",");
-    print("сохраняем custom в файл $savedString");
-    sp.write(Const.CUSTOM_AZBUKA, savedString);
+    logPrint("сохраняем custom в файл $savedString");
+    _settingsController.setPropertyByKey(Property(key: Const.CUSTOM_AZBUKA, value: savedString));
   }
 
 
   _saveCurrentAzbuka() {
     var savedString = currentAzbuka.join(",");
-    print("сохраняем current в файл $savedString");
-    sp.write(Const.CURRENT_AZBUKA, savedString);
+    logPrint("сохраняем current в файл $savedString");
+    _settingsController.setPropertyByKey(Property(key: Const.CURRENT_AZBUKA, value: savedString));
   }
 
   List<String> _loadAzbuka(String key) {
-    String loadedString = sp.read(key) ?? "";
+    String loadedString = _settingsController.getPropertyByKey(key);
     List<String> result = loadedString.split(",");
     if (loadedString.isEmpty) { result = myAzbuka; }
     return result;
@@ -110,12 +114,12 @@ class Azbuka {
   
   _saveCurrentColors() {
     var savedString = currentColorsSide.join(",");
-    sp.write(Const.CURRENT_AZBUKA_COLORS, savedString);
-    print("сохраняем current_colors в файл $savedString");
+    _settingsController.setPropertyByKey(Property(key: Const.CURRENT_AZBUKA_COLORS, value: savedString));
+    logPrint("сохраняем current_colors в файл $savedString");
   }
 
   List<int> _loadColors(String key) {
-    String loadedString = sp.read(key) ?? "";
+    String loadedString = _settingsController.getPropertyByKey(key);
     return _convertStringToListOfColors(loadedString);
   }
 
@@ -135,8 +139,8 @@ class Azbuka {
 
   _saveAsCustomColors() {
     var savedString = currentColorsSide.join(",");
-    sp.write(Const.CUSTOM_AZBUKA_COLORS, savedString);
-    print("сохраняем custom colors в файл $savedString");
+    _settingsController.setPropertyByKey(Property(key: Const.CUSTOM_AZBUKA_COLORS, value: savedString));
+    logPrint("сохраняем custom colors в файл $savedString");
   }
  
   static List<int> get defaultAzbukaColors => [0,1,2,3,4,5];

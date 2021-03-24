@@ -1,66 +1,70 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 
 class AzbukaSettingsController extends GetxController {
+  final GlobalSettingsController _settingsController = Get.find();
 
   /// При инициализации считываем переменные из Storage
   @override
   void onInit() {
     print("AzbukaSettingsController onInit");
-    _isEdgeEnabled.value = GetStorage().read(Const.IS_AZBUKA_EDGE_ENABLED) ?? true;
-    _isCornerEnabled.value = GetStorage().read(Const.IS_AZBUKA_CORNER_ENABLED) ?? true;
-    _isTimerEnabled.value = GetStorage().read(Const.IS_AZBUKA_TIMER_ENABLED) ?? false;
-    _timeForAnswer.value = GetStorage().read(Const.AZBUKA_TIME_FOR_ANSWER) ?? 6;
+    _isEdgeEnabled.value = _settingsController.getPropertyByKey(Const.IS_AZBUKA_EDGE_ENABLED);
+    _isCornerEnabled.value = _settingsController.getPropertyByKey(Const.IS_AZBUKA_CORNER_ENABLED);
+    _isTimerEnabled.value = _settingsController.getPropertyByKey(Const.IS_AZBUKA_TIMER_ENABLED);
+    _timeForAnswer.value = _settingsController.getPropertyByKey(Const.AZBUKA_TIME_FOR_ANSWER);
+    _goodAnswerWaiting.value = _settingsController.getPropertyByKey(Const.AZBUKA_GOOD_ANSWER_WAITING);
+    _badAnswerWaiting.value = _settingsController.getPropertyByKey(Const.AZBUKA_BAD_ANSWER_WAITING);
     super.onInit();
   }
 
   /// Возможность выбрать в загаданных вариантах ребра
-  final _isEdgeEnabled = true.obs;
+  final _isEdgeEnabled = RxBool();
   get isEdgeEnabled => _isEdgeEnabled.value;
   set isEdgeEnabled(value) {
     _isEdgeEnabled.value = value;
-    GetStorage().write(Const.IS_AZBUKA_EDGE_ENABLED, value);
+    _settingsController.setPropertyByKey(Property(key: Const.IS_AZBUKA_EDGE_ENABLED, value: value));
   }
 
   /// Возможность выбрать в загаданных вариантах углы
-  final _isCornerEnabled = true.obs;
+  final _isCornerEnabled = RxBool();
   get isCornerEnabled => _isCornerEnabled.value;
   set isCornerEnabled(value) {
     _isCornerEnabled.value = value;
-    GetStorage().write(Const.IS_AZBUKA_CORNER_ENABLED, value);
+    _settingsController.setPropertyByKey(Property(key: Const.IS_AZBUKA_CORNER_ENABLED, value: value));
   }
 
   /// Тренировка на время или нет (true - на время)
-  final _isTimerEnabled = true.obs;
+  final _isTimerEnabled = RxBool();
   get isTimerEnabled => _isTimerEnabled.value;
   set isTimerEnabled(value) {
     _isTimerEnabled.value = value;
-    GetStorage().write(Const.IS_AZBUKA_TIMER_ENABLED, value);
+    _settingsController.setPropertyByKey(Property(key: Const.IS_AZBUKA_TIMER_ENABLED, value: value));
   }
 
   /// Время ожидания ответа (0 если тренировка не на время)
-  final _timeForAnswer = 6.obs;
+  final _timeForAnswer = RxInt(0);
   int get timeForAnswer => isTimerEnabled ? _timeForAnswer.value : 0;
   set timeForAnswer(value) {
     _timeForAnswer.value = value;
-    GetStorage().write(Const.AZBUKA_TIME_FOR_ANSWER, value);
+    _settingsController.setPropertyByKey(Property(key: Const.AZBUKA_TIME_FOR_ANSWER, value: value));
   }
 
   /// Время автонажатия кнопки далее при успешном ответе
-  final _goodAnswerWaiting = 1.obs;
+  final _goodAnswerWaiting = RxInt(1);
   int get goodAnswerWaiting => _goodAnswerWaiting.value;
   set goodAnswerWaiting(value) {
     _goodAnswerWaiting.value = value;
-    GetStorage().write(Const.AZBUKA_GOOD_ANSWER_WAITING, value);
+    _settingsController.setPropertyByKey(Property(key: Const.AZBUKA_GOOD_ANSWER_WAITING, value: value));
   }
 
   /// Время автонажатия кнопки далее при неуспешном ответе
-  final _badAnswerWaiting = 5.obs;
+  final _badAnswerWaiting = RxInt(5);
   int get badAnswerWaiting => _badAnswerWaiting.value;
   set badAnswerWaiting(value) {
     _badAnswerWaiting.value = value;
-    GetStorage().write(Const.AZBUKA_BAD_ANSWER_WAITING, value);
+    _settingsController.setPropertyByKey(Property(key: Const.AZBUKA_BAD_ANSWER_WAITING, value: value));
   }
 
 

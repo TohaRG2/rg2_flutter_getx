@@ -1,16 +1,18 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/controllers/settings/global_settings_controller.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
+import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 
 class ResultViewController extends GetxController {
   final Repository _repository = Get.find();
+  final GlobalSettingsController _settingsController = Get.find();
   var _orderBy = "solvingTime";
 
   @override
   void onInit() {
-    _orderBy = GetStorage().read(Const.RESULT_ORDER_BY) ?? "solvingTime";
+    _orderBy = _settingsController.getPropertyByKey(Const.RESULT_ORDER_BY) ?? "solvingTime";
     super.onInit();
   }
 
@@ -25,13 +27,13 @@ class ResultViewController extends GetxController {
   sortTimeNoteItemsByDate() {
     _timeNoteItems.sort((item1, item2) => item1.dateTime.compareTo(item2.dateTime));
     _orderBy = "dateTime";
-    GetStorage().write(Const.RESULT_ORDER_BY, _orderBy);
+    _settingsController.setPropertyByKey(Property(key: Const.RESULT_ORDER_BY, value: _orderBy));
   }
 
   sortTimeNoteItemsBySolvingTime() {
     _timeNoteItems.sort((item1, item2) => item1.solvingTime.compareTo(item2.solvingTime));
     _orderBy = "solvingTime";
-    GetStorage().write(Const.RESULT_ORDER_BY, _orderBy);
+    _settingsController.setPropertyByKey(Property(key: Const.RESULT_ORDER_BY, value: _orderBy));
   }
 
   removeItem(TimeNoteItem item) {

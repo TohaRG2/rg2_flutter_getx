@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/azbuka.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
@@ -7,14 +8,16 @@ import 'package:rg2/views/trainers/scramble_gen/model/blind_cube.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/scramble_decision_condition.dart';
 
 class ScrambleGenController extends GetxController {
+  GlobalSettingsController _settingsController = Get.find();
 
   @override
   void onInit() {
     print("onInit ScrambleGenerator Controller Start");
-    _isEdgeEnabled.value = GetStorage().read(Const.IS_EDGE_ENABLED) ?? true;
-    _isCornerEnabled.value = GetStorage().read(Const.IS_CORNER_ENABLED) ?? true;
-    _scrambleLength.value = GetStorage().read(Const.SCRAMBLE_LENGTH) ?? 14;
-    _currentScramble.value = GetStorage().read(Const.CURRENT_SCRAMBLE) ?? "R F L B U2 L B' R F' D B R L F D R' D L";
+    _isEdgeEnabled.value = _settingsController.getPropertyByKey(Const.IS_EDGE_ENABLED);
+    _isCornerEnabled.value = _settingsController.getPropertyByKey(Const.IS_CORNER_ENABLED);
+    _scrambleLength.value = _settingsController.getPropertyByKey(Const.SCRAMBLE_LENGTH);
+    _currentScramble.value = _settingsController.getPropertyByKey(Const.CURRENT_SCRAMBLE);
+    _showDecision.value = _settingsController.getPropertyByKey(Const.SHOW_DECISION);
 
     mainCube = BlindCube.colored(colors: Azbuka().currentColorsSide, azbuka: Azbuka().currentAzbuka);
     mainCube.executeScrambleWithReset(currentScramble);
@@ -34,21 +37,21 @@ class ScrambleGenController extends GetxController {
   bool get isEdgeEnabled => _isEdgeEnabled.value;
   set isEdgeEnabled(bool value) {
     _isEdgeEnabled.value = value;
-    GetStorage().write(Const.IS_EDGE_ENABLED, value);
+    _settingsController.setPropertyByKey(Property(key: Const.IS_EDGE_ENABLED, value: value));
   }
 
   final _isCornerEnabled = true.obs;
   bool get isCornerEnabled => _isCornerEnabled.value;
   set isCornerEnabled(bool value) {
     _isCornerEnabled.value = value;
-    GetStorage().write(Const.IS_CORNER_ENABLED, value);
+    _settingsController.setPropertyByKey(Property(key: Const.IS_CORNER_ENABLED, value: value));
   }
 
   final _scrambleLength = 14.obs;
   int get scrambleLength => _scrambleLength.value;
   set scrambleLength(int value) {
     _scrambleLength.value = value;
-    GetStorage().write(Const.SCRAMBLE_LENGTH, value);
+    _settingsController.setPropertyByKey(Property(key: Const.SCRAMBLE_LENGTH, value: value));
   }
 
   final _currentScramble = "R F L B U2 L B' R F' D B R L F D R' D L".obs;
@@ -56,7 +59,7 @@ class ScrambleGenController extends GetxController {
   set currentScramble(String value) {
     _currentScramble.value = value;
     _inputScramble.value = value;
-    GetStorage().write(Const.CURRENT_SCRAMBLE, value);
+    _settingsController.setPropertyByKey(Property(key: Const.CURRENT_SCRAMBLE, value: value));
   }
 
   final _inputScramble = "".obs;
@@ -86,7 +89,7 @@ class ScrambleGenController extends GetxController {
   set showDecision(bool value) {
     currentDecision = value ? _conditions.decision : _conditions.decisionInfo;
     _showDecision.value = value;
-    GetStorage().write(Const.SHOW_DECISION, value);
+    _settingsController.setPropertyByKey(Property(key: Const.SHOW_DECISION, value: value));
   }
 
   ScrambleDecisionCondition _conditions;
