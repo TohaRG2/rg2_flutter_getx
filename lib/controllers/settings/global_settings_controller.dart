@@ -3,18 +3,22 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rg2/controllers/repository.dart';
 import 'package:rg2/controllers/settings/default_settings.dart';
 import 'package:rg2/database/cloud_database.dart';
+import 'package:rg2/database/fire_entitys/fav_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/auth/controller/auth_controller.dart';
 
 class GlobalSettingsController extends GetxController {
   final AuthController _auth = Get.put<AuthController>(AuthController(), permanent: true);
+  //final Repository _repo = Get.find();
 
   String _userId = "";
   final _sp = GetStorage("properties");
   final _db = CloudDatabase();
+  Function(List<FavItem> items) favouriteUpdateCallback;
 
   onInit() {
     super.onInit();
@@ -25,11 +29,20 @@ class GlobalSettingsController extends GetxController {
   }
 
   /// Что-то поменялось в аутентификации пользователя
-  _userAuthChanged(User user){
+  _userAuthChanged(User user) async{
     logPrint("_userAuthChanged to ${user?.uid}");
     _userId = (user == null) ? "" : user?.uid;
     if (_userId != "") {
       _updateAllParametersFromBase();
+
+      logPrint("_userAuthChanged - getFav");
+      var listFavItems = await _getFavourites();
+      logPrint("_userAuthChanged - fav $listFavItems");
+      // обновляем избранное, если задан колбэк и получили не null в listFavItems
+      if (favouriteUpdateCallback != null && listFavItems != null) {
+        favouriteUpdateCallback(listFavItems);
+      }
+      logPrint("_userAuthChanged - end");
     }
   }
 
@@ -91,6 +104,7 @@ class GlobalSettingsController extends GetxController {
   /// запуск зареганных колбэков от settings контроллеров, чтобы обновить переменные из локального хранилища
   void runCallbacks() {
     logPrint("runCallbacks");
+    // обновляем переменные
     callbacks.forEach((callback) { callback();} );
   }
 
@@ -106,6 +120,22 @@ class GlobalSettingsController extends GetxController {
       // обновить переменные в контроллерах
       runCallbacks();
     }
+  }
+
+  updateFavourites(List<FavItem> favourites) {
+    //logPrint("setFavourites - $favourites");
+    if (_userId != "") {
+      _db.addOrUpdateFavourites(_userId, favourites);
+    }
+  }
+
+
+  Future<List<FavItem>> _getFavourites() async {
+    //logPrint("_getFavourites - ");
+    if (_userId != "") {
+      return await _db.getFavourites(_userId);
+    }
+    return null;
   }
 
   

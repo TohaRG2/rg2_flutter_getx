@@ -31,7 +31,7 @@ class BottomMenuBar extends StatelessWidget {
             break;
         // Нажата кнопка "Настройки"
           case 2:
-            Get.to(ScrambleGenSettingsView(), transition: Transition.rightToLeft);
+            Get.to(() => ScrambleGenSettingsView(), transition: Transition.rightToLeft);
             break;
           default:
             print("WARNING!!! selected bottom item - $tappedItemIndex");

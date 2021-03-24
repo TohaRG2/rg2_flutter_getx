@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/utils/my_logger.dart';
+import 'package:rg2/database/fire_entitys/fav_item.dart';
 
 class CloudDatabase{
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
@@ -60,15 +61,21 @@ class CloudDatabase{
         .catchError((error) => logPrint("Не удалось добавить $property в firebase"));
   }
 
+  /// Получаем все сохраненные в FB свойства программы, по сути всю коллекцию properties
   Future<List<Property>> getAllUserProperties(String userId) async {
     logPrint("getAllUserProperties $userId");
-    var mainDocRef = _usersCollection.doc(userId);
-    var refCol = await mainDocRef.collection("properties").get();
-    var docs = refCol.docs;
-    return docs.map((doc) {
-      //logPrint("Doc: ${doc.id}, ${doc.data()["value"]}}");
-      return Property.fromDocSnapShot(doc);
-    }).toList();
+    try {
+      var mainDocRef = _usersCollection.doc(userId);
+      var refCol = await mainDocRef.collection("properties").get();
+      var docs = refCol.docs;
+      return docs.map((doc) {
+        //logPrint("Doc: ${doc.id}, ${doc.data()["value"]}}");
+        return Property.fromDocSnapShot(doc);
+      }).toList();
+    } catch (e) {
+      logPrint("ERROR! Ошибка получения свойств из базы\n $e");
+      return null;
+    }
   }
 
   disableNetwork() async {
@@ -79,6 +86,34 @@ class CloudDatabase{
   enableNetwork() async {
     logPrint("enableNetwork");
     await FirebaseFirestore.instance.enableNetwork();
+  }
+
+  /// Обновление Избранного
+  addOrUpdateFavourites(String userId, List<FavItem> favourites) async {
+    var mainDocRef = _usersCollection.doc(userId);
+    //var refCol = mainDocRef.collection("favourites");
+    mainDocRef.update({'favUpdate': DateTime.now()});
+    var items = favourites.map((fav) => fav.toMap()).toList();
+    mainDocRef.update({'favourites': items})
+      .then((value) => logPrint("Обновили избранное $items в базе"))
+      .catchError((error) => logPrint("Не удалось обновить избранное $items в firebase"));
+  }
+
+  Future<List<FavItem>> getFavourites(String userId) async{
+    try {
+      //logPrint("CloudDB.getFavourites - $userId");
+      DocumentSnapshot docSnapShot = await _usersCollection.doc(userId).get();
+      List<dynamic> favourites = docSnapShot.get(FieldPath(['favourites']));
+      //logPrint("getFavourites - a = $favourites");
+      List<Map<String, dynamic>> favMap = favourites.map((e) => e as Map<String, dynamic>).toList();
+      //logPrint("CloudDB.getFavourites - favMap is ${favMap.runtimeType} $favMap");
+      List<FavItem> list = favMap.map((map) => FavItem.fromMap(map)).toList();
+      //logPrint("CloudDB.getFavourites - $list");
+      return list;
+    } catch (e) {
+      logPrint("catch getFavourites - $e");
+      return null;
+    }
   }
 
 }

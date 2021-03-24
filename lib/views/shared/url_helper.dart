@@ -27,7 +27,7 @@ class UrlHelper {
       var _time = uri.queryParameters["time"] ?? "0:00";
       var _alg = uri.queryParameters["alg"] ?? "";
       _alg = _alg.replaceAll("_", " ").replaceAll("\\", "");
-      //Get.to(YouTubeView(id: _id, time: _time, alg: _alg,));
+      //Get.to(() => YouTubeView(id: _id, time: _time, alg: _alg,));
       Get.toNamed("/youtube", arguments: {"id" : _id, "time": _time, "alg": _alg});
     } else {
 
@@ -36,7 +36,7 @@ class UrlHelper {
           uri.host.toLowerCase() == "scramble") {
         var scramble = uri.queryParameters["scram"] ?? "R_R\'";
         //TODO uncomment when ScrambleGenerator will be completed
-        //Get.to(ScrambleGenView(scramble));
+        //Get.to(() => ScrambleGenView(scramble));
       }
 
       // окно детальной информации для ссылок типа "pager"

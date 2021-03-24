@@ -38,7 +38,7 @@ class BottomNavBar extends StatelessWidget {
                   child: Icon(Icons.repeat),
                   elevation: 0.1,
                   onPressed: () {
-                    Get.to(ScrambleGenView(title: item.title), transition: Transition.downToUp);
+                    Get.to(() => ScrambleGenView(title: item.title), transition: Transition.downToUp);
                   }),
             ),
             // Кнопки на подложке

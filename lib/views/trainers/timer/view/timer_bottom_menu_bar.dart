@@ -25,12 +25,12 @@ class TimerBottomMenuBar extends StatelessWidget {
         // Нажата кнопка "Результаты"
           case 1:
             //_controller.generateNewScramble();
-            Get.to(TimerResultsView(), transition: Transition.rightToLeft);
+            Get.to(() => TimerResultsView(), transition: Transition.rightToLeft);
             print("Нажали результаты");
             break;
         // Нажата кнопка "Настройки"
           case 2:
-            Get.to(SettingsTimerView(), transition: Transition.rightToLeft);
+            Get.to(() => SettingsTimerView(), transition: Transition.rightToLeft);
             print("Нажали настройки");
             break;
           default:

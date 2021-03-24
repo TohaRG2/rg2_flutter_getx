@@ -1,33 +1,47 @@
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/controllers/settings/global_settings_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
+import 'package:rg2/database/fire_entitys/fav_item.dart';
+import 'package:rg2/utils/my_logger.dart';
 
 class FavouriteController extends GetxController {
   Repository _repo = Get.find();
+  final GlobalSettingsController _settingsController = Get.find();
 
   @override
   void onInit() async {
     super.onInit();
     reloadFromBase();
+    _settingsController.favouriteUpdateCallback = _favCallback;
   }
 
-  final _favourites = <MainDBItem>[].obs;
-  List<MainDBItem> get favourites => _favourites;
-  set favourites(value) {
-    _favourites.assignAll(value);
+  final RxList<MainDBItem> __favourites = <MainDBItem>[].obs;
+  List<MainDBItem> get favourites => __favourites;
+  set _favourites(List<MainDBItem> dbItems) {
+    __favourites.assignAll(dbItems);
+    var favItems = dbItems.map((mainDBItem) =>
+        FavItem(id: mainDBItem.id, phase: mainDBItem.phase, subId: mainDBItem.subId)
+    ).toList();
+    _settingsController.updateFavourites(favItems);
+  }
+
+  _favCallback(List<FavItem> favourites) {
+    logPrint("_favCallback - получили список из firebase $favourites");
+    //TODO Обработать список из базы и обновить избранное
   }
 
   /// Перечитываем список избранного из базы
   reloadFromBase() async {
-    print("ReloadFavourites");
-    favourites = await _repo.getFavourites();
-    print("favourites - $favourites");
+    logPrint("ReloadFavourites");
+    _favourites = await _repo.getFavourites();
+    //logPrint("favourites - $favourites");
   }
 
   // меняем местами два элемента в списке избранного. Переписываем списком с новым порядком
   reorderFavouritesElements(List<MainDBItem> newList){
-    favourites = newList;
+    _favourites = newList;
     _updateFavouritesSubIds();
   }
 
@@ -38,7 +52,7 @@ class FavouriteController extends GetxController {
     map.forEach((index, item) {
       item.subId = index;
     });
-    favourites = map.values.toList();
+    _favourites = map.values.toList();
     _repo.updateMainDBItems(map.values.toList());
   }
 

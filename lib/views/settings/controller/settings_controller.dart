@@ -117,7 +117,16 @@ class SettingsController extends GetxController {
     _primaryThemeColor.value = Color(_primaryColor);
     int _accentColor = _settingsController.getPropertyByKey(Const.ACCENT_COLOR);
     _accentThemeColor.value = Color(_accentColor);
-    _isDarkThemeSelect.value = _settingsController.getPropertyByKey(Const.IS_THEME_DARK);
+
+    // Обновляем тему и если она поменялась, то запускаем процесс смены темы
+    var isDarkThemeNewValue = _settingsController.getPropertyByKey(Const.IS_THEME_DARK);
+    if (isDarkThemeSelect != null && isDarkThemeSelect != isDarkThemeNewValue) {
+      _isDarkThemeSelect.value = isDarkThemeNewValue;
+      _changeCurrentTheme();
+    } else {
+      _isDarkThemeSelect.value = isDarkThemeNewValue;
+    }
+
     _textScaleFactor.value = _settingsController.getPropertyByKey(Const.SCALE_FACTOR);
     _isStartHelpEnabled.value = _settingsController.getPropertyByKey(Const.IS_START_HELP_ENABLED);
     _isSwipeEnabled.value = _settingsController.getPropertyByKey(Const.IS_SWIPE_ENABLED);
