@@ -26,7 +26,7 @@ class GlobalSettingsController extends GetxController {
 
   /// Что-то поменялось в аутентификации пользователя
   _userAuthChanged(User user){
-    logPrint("_userAuthChanged to ${user?.uid} + waitingSync = ${_auth.waitingSync}");
+    logPrint("_userAuthChanged to ${user?.uid}");
     _userId = (user == null) ? "" : user?.uid;
     if (_userId != "") {
       _updateAllParametersFromBase();
