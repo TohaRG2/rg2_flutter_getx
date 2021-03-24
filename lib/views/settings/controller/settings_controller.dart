@@ -112,7 +112,7 @@ class SettingsController extends GetxController {
 
   /// Инициализируем observable переменные
   _initializeRxVariables() {
-    logPrint("_initializeRxVariables Start");
+    logPrint("Settings_controller _initializeRxVariables Start $isDarkThemeSelect");
     int _primaryColor = _settingsController.getPropertyByKey(Const.PRIMARY_COLOR);
     _primaryThemeColor.value = Color(_primaryColor);
     int _accentColor = _settingsController.getPropertyByKey(Const.ACCENT_COLOR);

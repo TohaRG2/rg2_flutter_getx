@@ -36,7 +36,6 @@ class SignInView extends GetWidget<AuthController> {
                 onPressed: () {
                   // Закрыть снэкбар, если он открыт
                   if (Get.isSnackbarOpen) { Get.back(); }
-                  controller.waitingSync.value = true;
                   controller.googleSignInAndGoToStart();
                 },
                 child: Text(StrRes.authSignInButtonText),

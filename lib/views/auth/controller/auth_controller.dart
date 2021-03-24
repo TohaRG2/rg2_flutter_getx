@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rg2/controllers/settings/global_settings_controller.dart';
 import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/main_view.dart';
@@ -16,22 +17,27 @@ class AuthController extends GetxController {
   get firebaseUser => _firebaseUser;
   User get user => _firebaseUser.value;
 
-  //TODO пока не используется
-  RxBool waitingSync = false.obs;
+  // bool _waitingSync = false;
+  //   get waitingSync => _waitingSync;
+    // set waitingSync(value) {
+    //
+    // }
 
   @override
   onInit() {
     super.onInit();
     // Биндим стрим в Observable _firebaseUser
     _firebaseUser.bindStream(_auth.authStateChanges());
-
   }
 
   Future<void> googleSignInAndGoToStart() async {
+    // _waitingSync = true;
     await googleSignIn();
     if (user != null) {
+      logPrint("googleSignInAndGoToStart - Переходим на основной экран");
       Get.offAll(() => MainView(), transition: Transition.downToUp);
     }
+    // _waitingSync = false;
   }
 
   Future<void> googleSignIn() async {
@@ -54,7 +60,7 @@ class AuthController extends GetxController {
 
       //logPrint("Проверяем, есть ли пользователь в базе fireStore");
       //var user = await Database().getUser(_authResult.user.uid);
-      logPrint("Создаем новую или перезапичываем по uid запись в таблице users");
+      logPrint("Создаем новую или перезаписываем по uid запись в таблице users");
       if (await CloudDatabase().createOrUpdateUser(_authResult.user)) {
         // Create success
       } else {

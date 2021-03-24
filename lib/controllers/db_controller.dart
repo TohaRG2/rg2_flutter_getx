@@ -92,7 +92,7 @@ class DBController extends GetxController {
       onOpen: (database) {
         logPrint("OpenDatabase callback called");
         // поменять на true, если надо пересоздать уже существующую базу
-        needInit = false;
+        //needInit = false;
       }
   );
 

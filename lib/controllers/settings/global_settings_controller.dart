@@ -18,15 +18,19 @@ class GlobalSettingsController extends GetxController {
 
   onInit() {
     super.onInit();
-    // подписываемся на получение изменений firebaseUser, при изменении вызываем _userAuthChanged
+    // подписываемся на получение изменений firebaseUser, при изменении вызываем _userAuthChanged не чаще, чем раз в 2 сек
     // более подробно в описании Workers для GetX (https://github.com/jonataslaw/getx/blob/master/documentation/en_US/state_management.md)
-    ever(_auth.firebaseUser, _userAuthChanged);
+    //ever(_auth.firebaseUser, _userAuthChanged);
+    debounce(_auth.firebaseUser, _userAuthChanged, time: Duration(seconds: 2));
   }
 
   /// Что-то поменялось в аутентификации пользователя
   _userAuthChanged(User user){
-    logPrint("_userAuthChanged to ${user?.uid}");
+    logPrint("_userAuthChanged to ${user?.uid} + waitingSync = ${_auth.waitingSync}");
     _userId = (user == null) ? "" : user?.uid;
+    if (_userId != "") {
+      _updateAllParametersFromBase();
+    }
   }
 
   /// Читаем параметр по ключу из локального хранилища или получаем из дефолтных значений, если в хранилище нет
@@ -70,7 +74,7 @@ class GlobalSettingsController extends GetxController {
   /// Добавить или обновить параметр в firebase, если пользователь залогинен
   void _addOrUpdatePropertyInBase(Property property) {
     logPrint("_addOrUpdatePropertyInBase = $property, userId = $_userId");
-    if (_userId != null) {
+    if (_userId != "") {
       _db.addOrUpdateProperty(_userId, property);
     }
   }
@@ -90,7 +94,19 @@ class GlobalSettingsController extends GetxController {
     callbacks.forEach((callback) { callback();} );
   }
 
-
+  _updateAllParametersFromBase() async {
+    logPrint("updateAllParametersFromBase - ");
+    if (_userId != "") {
+      // получить все параметры из базы
+      var list = await _db.getAllUserProperties(_userId);
+      // перезаписать полученные параметры в локальное хранилище
+      list?.forEach((property) {
+        _setPropertyToLocalStorage(property);
+      });
+      // обновить переменные в контроллерах
+      runCallbacks();
+    }
+  }
 
   
 }
