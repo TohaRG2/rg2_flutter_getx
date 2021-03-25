@@ -23,6 +23,12 @@ class Repository extends GetxController {
 
   List<MainDBItem> _cache = [];
 
+  Future<MainDBItem> getMainDBItem(String phase, int id) async {
+    logPrint("getMainDBItem $phase $id");
+    var result = await _mainDao.getItem(phase, id);
+    return result;
+  }
+
   Future<List<MainDBItem>> getMainDBItems(String phase) async {
     //if (_cache.isEmpty) { _cache = await _mainDao.getAllItems();}
     logPrint("getMainDBItems $phase");
@@ -35,6 +41,7 @@ class Repository extends GetxController {
     return result;
   }
 
+  /// Получаем список записей у которых isFavourite = 1
   Future<List<MainDBItem>> getFavourites() async {
     var result = await _mainDao.getFavourites();
     return result;
@@ -46,30 +53,33 @@ class Repository extends GetxController {
   }
 
   updateMainDBItem(MainDBItem item) async {
-    print("repo updateItem $item");
+    logPrint("repo updateItem $item");
     _mainDao.updateItem(item);
   }
 
   Future<int> updateMainDBItems(List<MainDBItem> items) async {
-    print("repo updateItems $items");
+    logPrint("repo updateItems $items");
     return await _mainDao.updateItems(items);
   }
 
   //----------------------------------------------
 
+  /// Получаем список типов (основных фаз) из базы
   Future<List<PageProperties>> getCubeTypes() async {
     var result = await _propertiesDao.getAllItems();
-    print("cubeTypes = $result");
+    logPrint("cubeTypes = $result");
     //await Future.delayed(const Duration(seconds: 1), () {});
     return result;
   }
 
+  /// Обновляем список типов головоломок (основных фаз)
   Future<int> updateCubeType(PageProperties item) async {
     return await _propertiesDao.updateItem(item);
   }
 
   //-----------------------------------------------
 
+  /// Получение из базы азбуки вращений для определенного типа головоломки
   Future<List<BasicMove>> getAzbukaForType(String eType) async {
     //await Future.delayed(const Duration(seconds: 3), () {});
     return await _movesDao.getTypeItems(eType);
@@ -101,7 +111,7 @@ class Repository extends GetxController {
       case "COMMENT": orderColumn = "comment"; result.sort((item1, item2) => item1.comment.compareTo(item2.comment)); break;
       default: orderColumn = "solvingTime"; result.sort((item1, item2) => item1.solvingTime.compareTo(item2.solvingTime));
     }
-    print("orderBy - $orderColumn");
+    logPrint("orderBy - $orderColumn");
     return result;
   }
 

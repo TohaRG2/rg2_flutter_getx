@@ -27,25 +27,38 @@ class FavouriteController extends GetxController {
     _settingsController.updateFavourites(favItems);
   }
 
-  _favCallback(List<FavItem> favourites) {
+  /// Колбэк вызываемый при получении данных от firebase
+  _favCallback(List<FavItem> favItems) async {
     logPrint("_favCallback - получили список из firebase $favourites");
+    // удалить все записи избранного в локальной базе
+    var delList = favourites.toList();
+    favourites.forEach((mainDBItem) {
+      mainDBItem.isFavourite = false;
+      mainDBItem.subId = 0;
+    });
+    _repo.updateMainDBItems(favourites);
+    reloadFromBase();
+    favItems.forEach((element) {
+
+    });
     //TODO Обработать список из базы и обновить избранное
+
   }
 
-  /// Перечитываем список избранного из базы
+  /// Перечитываем список избранного из базы и если надо апдейтим в FB
   reloadFromBase() async {
     logPrint("ReloadFavourites");
     _favourites = await _repo.getFavourites();
     //logPrint("favourites - $favourites");
   }
 
-  // меняем местами два элемента в списке избранного. Переписываем списком с новым порядком
+  /// меняем местами два элемента в списке избранного. Переписываем списком с новым порядком
   reorderFavouritesElements(List<MainDBItem> newList){
     _favourites = newList;
     _updateFavouritesSubIds();
   }
 
-  /// Обновлеем индексы порядка вывода для избранного в соответствии с тем, как расположены элементы в списке pages[0].currentList
+  /// Обновлеем индексы порядка вывода для избранного
   /// и сохраняем записи в базе
   _updateFavouritesSubIds() {
     Map<int, MainDBItem> map = favourites.asMap();

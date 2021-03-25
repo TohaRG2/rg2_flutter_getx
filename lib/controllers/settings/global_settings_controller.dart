@@ -35,9 +35,8 @@ class GlobalSettingsController extends GetxController {
     if (_userId != "") {
       _updateAllParametersFromBase();
 
-      logPrint("_userAuthChanged - getFav");
+      logPrint("_userAuthChanged - получаем избранное из firebase");
       var listFavItems = await _getFavourites();
-      logPrint("_userAuthChanged - fav $listFavItems");
       // обновляем избранное, если задан колбэк и получили не null в listFavItems
       if (favouriteUpdateCallback != null && listFavItems != null) {
         favouriteUpdateCallback(listFavItems);
