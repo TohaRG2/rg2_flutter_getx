@@ -9,6 +9,9 @@ abstract class MainDao extends AbstractDao<MainDBItem> {
   @Query('select * from main')
   Future<List<MainDBItem>> getAllItems();
 
+  @Query('SELECT * FROM main WHERE phase = :phase and id = :id ORDER BY id')
+  Future<MainDBItem> getItem(String phase, int id);
+
   @Query('SELECT * FROM main WHERE phase = :phase ORDER BY id')
   Future<List<MainDBItem>> getPhase(String phase);
 
