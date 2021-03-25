@@ -14,7 +14,13 @@ class LearnController extends GetxController {
   SettingsController _settings = Get.find();
   FavouriteController _favController = Get.find();
 
-  int curPageNumber = 2;
+  RxInt _curPageNumber =  1.obs;
+  int get curPageNumber => _curPageNumber.value;
+  set curPageNumber(value) {
+    _curPageNumber.value = value;
+    _settings.currentPageNumber = value;
+  }
+
   double curPositionInList = 0.0;
   String _backIconPath = "assets/images/icons/back_arrow.svg";
 
@@ -105,12 +111,12 @@ class LearnController extends GetxController {
     update();
   }
 
-  /// Меняем номер текущей (отображаемой) страницы
-  changeCurrentPageNumberTo(int pageNumber) {
-    print("changeCurrentPageNumberTo $pageNumber");
-    curPageNumber = pageNumber;
-    _settings.currentPageNumber = pageNumber;
-  }
+  // /// Меняем номер текущей (отображаемой) страницы
+  // changeCurrentPageNumberTo(int pageNumber) {
+  //   print("changeCurrentPageNumberTo $pageNumber");
+  //   curPageNumber = pageNumber;
+  //   _settings.currentPageNumber = pageNumber;
+  // }
 
   /// Меняем текущую фазу по объекту MainDBItem
   changeCurrentPhaseWith(MainDBItem item) {

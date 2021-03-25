@@ -23,11 +23,11 @@ class Repository extends GetxController {
 
   List<MainDBItem> _cache = [];
 
-  Future<MainDBItem> getMainDBItem(String phase, int id) async {
-    logPrint("getMainDBItem $phase $id");
-    var result = await _mainDao.getItem(phase, id);
-    return result;
-  }
+  // Future<MainDBItem> getMainDBItem(String phase, int id) async {
+  //   logPrint("getMainDBItem $phase $id");
+  //   var result = await _mainDao.getItem(phase, id);
+  //   return result;
+  // }
 
   Future<List<MainDBItem>> getMainDBItems(String phase) async {
     //if (_cache.isEmpty) { _cache = await _mainDao.getAllItems();}

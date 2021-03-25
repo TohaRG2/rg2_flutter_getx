@@ -21,6 +21,7 @@ class FavouriteController extends GetxController {
   List<MainDBItem> get favourites => __favourites;
   set _favourites(List<MainDBItem> dbItems) {
     __favourites.assignAll(dbItems);
+    // Обновляем избранное в firebase
     var favItems = dbItems.map((mainDBItem) =>
         FavItem(id: mainDBItem.id, phase: mainDBItem.phase, subId: mainDBItem.subId)
     ).toList();

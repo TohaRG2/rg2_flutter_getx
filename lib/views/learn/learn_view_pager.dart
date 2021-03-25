@@ -30,7 +30,7 @@ class LearnViewPager extends StatelessWidget {
                 if (!_tabController.indexIsChanging) {
                   //print("$_tabController - $pageNum ");
                   //Обновляем номер текущей страницы в контроллере
-                  _lc.changeCurrentPageNumberTo(_tabController.index);
+                  _lc.curPageNumber = _tabController.index;
                 }
               });
             }

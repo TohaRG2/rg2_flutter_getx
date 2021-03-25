@@ -92,6 +92,7 @@ class FavouriteDialogCardItem extends StatelessWidget {
           ),
         ),
         onTap: () {
+          // переходим на "Обучалки" в любом случае
           _settings.bottomItem = 0;
           if (_item.url == "submenu") {
             print("onTap -> submenu -> change to ${_item.description}");
