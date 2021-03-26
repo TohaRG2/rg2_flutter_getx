@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:rg2/controllers/trainers_controller.dart';
 import 'package:rg2/models/trainer_menu_item.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/settings/settings_screen_view.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/view/main_azbuka_trainer_view.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/view/settings_azbuka_trainer_view.dart';
 import 'package:rg2/views/trainers/pll/view/main_pll_trainer_view.dart';
@@ -28,6 +29,16 @@ class TrainersScreen extends StatelessWidget {
                     color: Get.textTheme.headline5.color)),
           ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.settings_rounded),
+              color: Get.textTheme.headline5.color,
+              tooltip: 'Настройки',
+              onPressed: () {
+                Get.to(() => SettingsScreenWithBottomBar());
+              },
+            ),
+          ],
         ),
         body: Obx(() {
           List<TrainerMenuItem> items = _controller.trainerItems;

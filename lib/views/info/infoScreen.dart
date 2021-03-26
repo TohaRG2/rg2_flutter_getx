@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
+import 'package:rg2/views/settings/settings_screen_view.dart';
 
 import 'about/about_programm_view.dart';
 import 'advice/advice_view.dart';
@@ -31,6 +32,16 @@ class InfoScreen extends StatelessWidget {
                         color: Get.textTheme.headline5.color)),
               ),
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.settings_rounded),
+                  color: Get.textTheme.headline5.color,
+                  tooltip: 'Настройки',
+                  onPressed: () {
+                    Get.to(() => SettingsScreenWithBottomBar());
+                  },
+                ),
+              ],
               bottom: TabBar(
                 indicatorWeight: 3.0,
                 labelColor: Get.textTheme.headline5.color,
