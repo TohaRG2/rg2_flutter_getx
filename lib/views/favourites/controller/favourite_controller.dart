@@ -18,10 +18,10 @@ class FavouriteController extends GetxController {
 
   final RxList<MainDBItem> __favourites = <MainDBItem>[].obs;
   List<MainDBItem> get favourites => __favourites;
-  set _favourites(List<MainDBItem> dbItems) {
-    __favourites.assignAll(dbItems);
+  set _favourites(List<MainDBItem> items) {
+    __favourites.assignAll(items);
     // Обновляем избранное в firebase
-    var favItems = dbItems.map((mainDBItem) =>
+    var favItems = items.map((mainDBItem) =>
         FavItem(id: mainDBItem.id, phase: mainDBItem.phase, subId: mainDBItem.subId)
     ).toList();
     _settingsController.updateFavourites(favItems);
@@ -72,5 +72,11 @@ class FavouriteController extends GetxController {
     _updateFavouritesSubIds();
     item.isFavourite = false;
     item.subId = 0;
+  }
+
+  /// Задаем новое избранное (из списка) без сохранения в firebase
+  setFavourites(List<MainDBItem> items) {
+    __favourites.assignAll(items);
+    _repo.updateMainDBItems(items);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/controllers/settings/global_settings_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/database/entitys/phase_position_item.dart';
@@ -11,9 +12,10 @@ import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 class LearnController extends GetxController {
-  Repository _repo = Get.find();
-  SettingsController _settings = Get.find();
-  FavouriteController _favController = Get.find();
+  final Repository _repo = Get.find();
+  final SettingsController _settings = Get.find();
+  final FavouriteController _favController = Get.find();
+  final GlobalSettingsController _globalSettings = Get.find();
 
   double curPositionInList = 0.0;
   String _backIconPath = "assets/images/icons/back_arrow.svg";
@@ -32,8 +34,9 @@ class LearnController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    print("Init LearnController");
+    logPrint("Init LearnController");
     curPageNumber = _settings.currentPageNumber;
+    _globalSettings.favouriteUpdateCallback = _favCallback;
   }
 
 
@@ -48,7 +51,7 @@ class LearnController extends GetxController {
   Future _setCurrentPhasesObsLists() async {
     for (int i = 0; i < pages.length; i++) {
       var phase = pages[i].currentPhase;
-      //print("i = $i, phase = $phase");
+      //logPrint("i = $i, phase = $phase");
       pages[i].currentList = <MainDBItem>[].obs;
       pages[i].currentList.assignAll(await _getMenuItemsListFor(phase, i));
     }
@@ -76,7 +79,7 @@ class LearnController extends GetxController {
   /// Вызываем по тапу на сердечко и
   /// меняем статус избранного для указанного элемента
   changeFavStatus(MainDBItem item) {
-    print("changeFavStatus - $item, curPage - $curPageNumber");
+    logPrint("changeFavStatus - $item, curPage - $curPageNumber");
     // сохраняем позицию скрола
     saveListPositionForPhase(item.phase);
 
@@ -87,7 +90,7 @@ class LearnController extends GetxController {
       pages[curPageNumber].currentList[index] = item;              // Обновляем элемент на текущей странице
       _favController.updateInFavourites(item);
     } else {
-      print("Error. Element $item not found in ${pages[curPageNumber].currentList}");
+      logPrint("Error. Element $item not found in ${pages[curPageNumber].currentList}");
       Get.snackbar("Что-то пошло не так!!!",
           "Can't add to Favourites. Element $item not found in ${pages[curPageNumber].currentList}",
           snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.red, duration: Duration(seconds: 8));
@@ -96,13 +99,14 @@ class LearnController extends GetxController {
 
   /// Убираем элемент из Избранного
   removeElementFromFavourites(MainDBItem item) {
+    logPrint("removeElementFromFavourites - $item");
     _favController.removeElementFromFavourites(item);
     updateItemInPages(item);
   }
 
   /// По фазе узнаем страницу и меняем на ней фазу
   changePageAndPhaseTo(String phase){
-    print("changePageAndPhaseTo $phase");
+    logPrint("changePageAndPhaseTo $phase");
     var rootPhase = MainDBItem.getRootPhaseFor(phase);
     var pageNumber = _getPageByRoot(rootPhase);
     curPageNumber = pageNumber;
@@ -112,7 +116,7 @@ class LearnController extends GetxController {
 
   // /// Меняем номер текущей (отображаемой) страницы
   // changeCurrentPageNumberTo(int pageNumber) {
-  //   print("changeCurrentPageNumberTo $pageNumber");
+  //   logPrint("changeCurrentPageNumberTo $pageNumber");
   //   curPageNumber = pageNumber;
   //   _settings.currentPageNumber = pageNumber;
   // }
@@ -124,11 +128,11 @@ class LearnController extends GetxController {
 
   ///Меняем текущую фазу на другую по ее имени
   changeCurrentPhaseTo(String phase) async {
-    print("Change phase to $phase, curPageN - $curPageNumber");
+    logPrint("Change phase to $phase, curPageN - $curPageNumber");
     saveListPositionForPhase(pages[curPageNumber].currentPhase);
 
     pages[curPageNumber].currentPhase = phase;
-    print("pages[$curPageNumber].currentPhase - updated");
+    logPrint("pages[$curPageNumber].currentPhase - updated");
     var list = await _getMenuItemsListFor(phase, curPageNumber);
     pages[curPageNumber].currentList.assignAll(list);
     _repo.updateCubeType(pages[curPageNumber]);
@@ -136,7 +140,7 @@ class LearnController extends GetxController {
 
   /// Сохраняем позицю скрола для фазы
   saveListPositionForPhase(String phase) {
-    print("savePositionFor $phase, $curPositionInList");
+    logPrint("savePositionFor $phase, $curPositionInList");
     phasesPositions[phase] = curPositionInList;
     _repo.updatePhasePosition(phase, phasesPositions[phase]);
   }
@@ -179,19 +183,24 @@ class LearnController extends GetxController {
   }
 
   ///Обновляем элемент если он есть в текущем кэше (pages) в каком-нибудь currentList
-  updateItemInPages(MainDBItem item) {
-    print("updateItemInPages - $item");
-    pages.asMap().forEach((pageNum, pageProp) {
+  void updateItemInPages(MainDBItem item) {
+    logPrint("updateItemInPages - $item");
+    _updateItemInCache(item);
+    _favController.updateInFavourites(item);
+  }
+
+  /// Проверяем есть ли item в pages (в кэше) и обновляем его, если есть
+  void _updateItemInCache(MainDBItem item) {
+    pages.forEach((pageProp) {
       List<MainDBItem> list = pageProp.currentList;
       var index = list.indexWhere((element) => element.phase == item.phase && element.id == item.id);
       if (index != -1) {
-        // print("find in page $pageNum with index = $index");
+        logPrint("find in page ${pageProp.number}");
         List<MainDBItem> list = pageProp.currentList.toList();
         list[index] = item;
-        pages[pageNum].currentList.assignAll(list);
+        pages[pageProp.number].currentList.assignAll(list);
       }
     });
-    _favController.updateInFavourites(item);
   }
 
   ///Инициализируем список backFrom фазами на которые нужно возвращаться с текущей. типа backFrom['G2F'] = 'MAIN3X3'
@@ -228,7 +237,7 @@ class LearnController extends GetxController {
   double getPositionForPage(int pageNumber) {
     var curPhase = pages[pageNumber].currentPhase;
     var position = phasesPositions[curPhase] ?? 0.0;
-    print("position for $curPhase - $position, page - $pageNumber, curPage = $curPageNumber, curPos = $curPositionInList");
+    logPrint("position for $curPhase - $position, page - $pageNumber, curPage = $curPageNumber, curPos = $curPositionInList");
     if (pageNumber != curPageNumber) {
       saveListPositionForPhase(pages[curPageNumber].currentPhase);
     }
@@ -239,21 +248,31 @@ class LearnController extends GetxController {
 
   /// Колбэк вызываемый при получении избранного от firebase
   _favCallback(List<FavItem> favItems) async {
-    var fav = _favController.favourites;
-    logPrint("_favCallback - получили список из firebase $fav");
+    logPrint("_favCallback - получили список из firebase $favItems");
     // удалить все записи избранного в локальной базе
-    var delList = fav.toList();
-    fav.forEach((mainDBItem) {
+    // сначала копируем из текущего избранного
+    var mainDBItems = _favController.favourites.toList();
+    // снимаем признак избранного
+    mainDBItems.forEach((mainDBItem) {
       mainDBItem.isFavourite = false;
       mainDBItem.subId = 0;
+      _updateItemInCache(mainDBItem);
     });
-    // _repo.updateMainDBItems(favourites);
-    // reloadFromBase();
-    favItems.forEach((element) {
-
+    // обновляем записи в базе
+    _repo.updateMainDBItems(mainDBItems);
+    // создаем новый список, на основе пришедшего из firebase
+    mainDBItems.clear();
+    // logPrint("_favCallback - очистили список");
+    // асинхронный цикл для всех записей в favItems, с ожидаем выполнения операции над каждым элементом
+    await Future.forEach(favItems,(favItem) async {
+      var mainDBItem = await _repo.getMainDBItem(favItem.phase, favItem.id);
+      mainDBItem.isFavourite = true;
+      mainDBItem.subId = favItem.subId;
+      mainDBItems.add(mainDBItem);
+      _updateItemInCache(mainDBItem);
     });
-    //TODO Обработать список из базы и обновить избранное
-
+    // logPrint("_favCallback - задаем новый список $tmpMainDBItems");
+    _favController.setFavourites(mainDBItems);
   }
 
 

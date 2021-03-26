@@ -24,7 +24,7 @@ class Repository extends GetxController {
   List<MainDBItem> _cache = [];
 
   Future<MainDBItem> getMainDBItem(String phase, int id) async {
-    logPrint("getMainDBItem $phase $id");
+    //logPrint("getMainDBItem $phase $id");
     var result = await _mainDao.getItem(phase, id);
     return result;
   }

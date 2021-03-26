@@ -68,7 +68,7 @@ class Cube {
 
   /// Обнуляем кубик (возвращаем в исходное состояние)
   void resetCube() {
-    logPrint("resetCube");
+    //logPrint("resetCube");
     for(int i=0; i < _cube.length; i++){
       _cube[i] = _defaultColorsSide[i ~/ 9];
     }
