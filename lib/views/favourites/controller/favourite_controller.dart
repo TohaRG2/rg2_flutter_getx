@@ -14,7 +14,6 @@ class FavouriteController extends GetxController {
   void onInit() async {
     super.onInit();
     reloadFromBase();
-    _settingsController.favouriteUpdateCallback = _favCallback;
   }
 
   final RxList<MainDBItem> __favourites = <MainDBItem>[].obs;
@@ -26,24 +25,6 @@ class FavouriteController extends GetxController {
         FavItem(id: mainDBItem.id, phase: mainDBItem.phase, subId: mainDBItem.subId)
     ).toList();
     _settingsController.updateFavourites(favItems);
-  }
-
-  /// Колбэк вызываемый при получении данных от firebase
-  _favCallback(List<FavItem> favItems) async {
-    logPrint("_favCallback - получили список из firebase $favourites");
-    // удалить все записи избранного в локальной базе
-    var delList = favourites.toList();
-    favourites.forEach((mainDBItem) {
-      mainDBItem.isFavourite = false;
-      mainDBItem.subId = 0;
-    });
-    _repo.updateMainDBItems(favourites);
-    reloadFromBase();
-    favItems.forEach((element) {
-
-    });
-    //TODO Обработать список из базы и обновить избранное
-
   }
 
   /// Перечитываем список избранного из базы и если надо апдейтим в FB

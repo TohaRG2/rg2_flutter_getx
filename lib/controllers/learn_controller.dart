@@ -4,6 +4,7 @@ import 'package:rg2/controllers/repository.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/database/entitys/phase_position_item.dart';
+import 'package:rg2/database/fire_entitys/fav_item.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
@@ -14,13 +15,6 @@ class LearnController extends GetxController {
   SettingsController _settings = Get.find();
   FavouriteController _favController = Get.find();
 
-  RxInt _curPageNumber =  1.obs;
-  int get curPageNumber => _curPageNumber.value;
-  set curPageNumber(value) {
-    _curPageNumber.value = value;
-    _settings.currentPageNumber = value;
-  }
-
   double curPositionInList = 0.0;
   String _backIconPath = "assets/images/icons/back_arrow.svg";
 
@@ -28,7 +22,12 @@ class LearnController extends GetxController {
   RxList<PageProperties> pages = <PageProperties>[].obs;
   Map<String, double> phasesPositions = Map();
 
-  //var backFrom = Map<String, String>(); //map для получения предыдущей фазы, по ее названию
+  RxInt _curPageNumber =  1.obs;
+  int get curPageNumber => _curPageNumber.value;
+  set curPageNumber(value) {
+    _curPageNumber.value = value;
+    _settings.currentPageNumber = value;
+  }
 
   @override
   onInit() {
@@ -235,6 +234,26 @@ class LearnController extends GetxController {
     }
     curPositionInList = position;
     return position;
+  }
+
+
+  /// Колбэк вызываемый при получении избранного от firebase
+  _favCallback(List<FavItem> favItems) async {
+    var fav = _favController.favourites;
+    logPrint("_favCallback - получили список из firebase $fav");
+    // удалить все записи избранного в локальной базе
+    var delList = fav.toList();
+    fav.forEach((mainDBItem) {
+      mainDBItem.isFavourite = false;
+      mainDBItem.subId = 0;
+    });
+    // _repo.updateMainDBItems(favourites);
+    // reloadFromBase();
+    favItems.forEach((element) {
+
+    });
+    //TODO Обработать список из базы и обновить избранное
+
   }
 
 
