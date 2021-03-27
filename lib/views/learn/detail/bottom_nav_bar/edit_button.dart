@@ -17,7 +17,7 @@ class EditButton extends StatelessWidget {
           color: iconColor,
         ),
         onPressed: () {
-          _textController.text = _controller.getCurrentComment();
+          _textController.text = _controller.currentComment;
           Get.defaultDialog(
               title: StrRes.learnEditComment,
               buttonColor: Get.theme.secondaryHeaderColor,

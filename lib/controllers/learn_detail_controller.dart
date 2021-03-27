@@ -8,8 +8,9 @@ class LearnDetailController extends GetxController {
   Repository _repo = Get.find();
   LearnController _learnController = Get.find();
 
-  RxInt curPageNumberObs = 0.obs;
-  int get curPageNumber => curPageNumberObs.value;
+  RxInt _curPageNumberObs = 0.obs;
+  int get curPageNumber => _curPageNumberObs.value;
+  set _curPageNumber(value) => _curPageNumberObs.value = value;
 
   RxBool _isBottomBarShowing = true.obs;
   bool get isBottomBarShowing => _isBottomBarShowing.value;
@@ -23,10 +24,17 @@ class LearnDetailController extends GetxController {
     _obsPhase.value = value;
   }
 
-
-  //TODO Переделать на _currentItem и сделать get/set
-  Rx<MainDBItem> currentItem = MainDBItem(id: 0, phase: "").obs;
-  RxList<MainDBItem> currentItems = <MainDBItem>[].obs;
+  Rx<MainDBItem> _currentItem = MainDBItem(id: 0, phase: "").obs;
+  MainDBItem get currentItem => _currentItem.value;
+  set currentItem(value) {
+    _currentItem.value = value;
+  }
+  
+  RxList<MainDBItem> _currentItems = <MainDBItem>[].obs;
+  List<MainDBItem> get currentItems => _currentItems;
+  set currentItems(items) {
+    _currentItems.assignAll(items);
+  }
 
   Future<void> loadPages(String phase, int id) async {
     obsPhase = phase;
@@ -34,7 +42,7 @@ class LearnDetailController extends GetxController {
     currentItems.assignAll(list);
     changeCurrentPageNumberTo(_getNumFromId(id));
 
-    //print("LoadPages Num = ${_getNumFromId(id)}. list = $list");
+    //logPrint("LoadPages Num = ${_getNumFromId(id)}. list = $list");
     //await Future.delayed(const Duration(seconds: 2), () {});
   }
 
@@ -45,15 +53,17 @@ class LearnDetailController extends GetxController {
     changeCurrentPageNumberTo(_getNumFromId(item.id));
   }
 
-
+  /// Меняем номер текущей страницы на num
   changeCurrentPageNumberTo(int num) {
-    //print("changeCurrentItemTo $num, ${currentItems.value}");
-    curPageNumberObs.value = num;
-    currentItem.value = currentItems[num];
+    //logPrint("changeCurrentItemTo $num, ${currentItems.value}");
+    _curPageNumber = num;
+    currentItem = currentItems[num];
   }
 
-  String getCurrentComment() => currentItems[curPageNumber].comment;
+  /// Комментарий для текущей страницы viewPager'a
+  String get currentComment => currentItems[curPageNumber].comment;
 
+  /// Устанавливаем коммент для текущего элемента
   setCurrentCommentTo(String text) {
     var item = currentItems[curPageNumber];
     item.comment = text;
@@ -62,23 +72,23 @@ class LearnDetailController extends GetxController {
     _repo.updateMainDBItem(item);
   }
 
+  /// Меняем статус избранного на противоположное и обновляем в кэше страниц и в списке избранного
   changeCurrentFavStatus() {
-    currentItem.value = null;
+    currentItem = null;
     var item = currentItems[curPageNumber];
     item.isFavourite = !item.isFavourite;
     currentItems[curPageNumber] = item;
-    currentItem.value = item;
-    //_learnController
+    currentItem = item;
     _learnController.updateItemInPages(item);
     _repo.updateMainDBItem(item);
   }
 
   String getImagePathFromAssets(String shortPath) {
-    return currentItem.value.getAssetFilePath(); //_learnController.getAssetFilePath(shortPath, currentItem.value.phase);
+    return currentItem.getAssetFilePath();
   }
 
   String getAssetPath(){
-    return currentItem.value.getAssetPath(); //_learnController.getAssetPath(currentItem.value.phase);
+    return currentItem.getAssetPath();
   }
 
 }

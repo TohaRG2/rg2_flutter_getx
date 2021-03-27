@@ -10,7 +10,7 @@ class FavouriteButton extends StatelessWidget {
     LearnDetailController _controller = Get.find();
     final _iconColor = Theme.of(context).scaffoldBackgroundColor;
     return Obx(() {
-        bool _isFavourite = _controller.currentItem.value.isFavourite;
+        bool _isFavourite = _controller.currentItem.isFavourite;
         return GestureDetector(
           child: Container(
             color: Colors.transparent,  // Выглядит странно, но без этого область нажатия на иконку не увеличивается на величину padding
