@@ -35,7 +35,7 @@ class MainView extends StatelessWidget {
           bottomNavigationBar: BottomNavigationBar(
             items: bottomNavBarItem,
             currentIndex: _settings.bottomItem,
-            backgroundColor: Get.theme.primaryColor,
+            backgroundColor: Theme.of(context).primaryColor,
             unselectedItemColor: unSelectedColor,
             selectedItemColor: selectedColor,
             type: BottomNavigationBarType.fixed,

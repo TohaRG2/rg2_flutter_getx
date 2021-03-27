@@ -112,20 +112,7 @@ class SettingsController extends GetxController {
 
   /// Инициализируем observable переменные
   _initializeRxVariables() {
-    logPrint("Settings_controller _initializeRxVariables Start $isDarkThemeSelect");
-    int _primaryColor = _settingsController.getPropertyByKey(Const.PRIMARY_COLOR);
-    _primaryThemeColor.value = Color(_primaryColor);
-    int _accentColor = _settingsController.getPropertyByKey(Const.ACCENT_COLOR);
-    _accentThemeColor.value = Color(_accentColor);
-
-    // Обновляем тему и если она поменялась, то запускаем процесс смены темы
-    var isDarkThemeNewValue = _settingsController.getPropertyByKey(Const.IS_THEME_DARK);
-    if (isDarkThemeSelect != null && isDarkThemeSelect != isDarkThemeNewValue) {
-      _isDarkThemeSelect.value = isDarkThemeNewValue;
-      _changeCurrentTheme();
-    } else {
-      _isDarkThemeSelect.value = isDarkThemeNewValue;
-    }
+    logPrint("_initializeRxVariables Start");
 
     _textScaleFactor.value = _settingsController.getPropertyByKey(Const.SCALE_FACTOR);
     _isStartHelpEnabled.value = _settingsController.getPropertyByKey(Const.IS_START_HELP_ENABLED);
@@ -136,6 +123,24 @@ class SettingsController extends GetxController {
     _currentPageNumber.value = _settingsController.getPropertyByKey(Const.CURRENT_PAGE_NUMBER);
     _currentInfoPageNumber.value = _settingsController.getPropertyByKey(Const.CURRENT_INFO_PAGE_NUMBER);
     _godMode.value = _settingsController.getPropertyByKey(Const.GOD_MODE);
+
+    logPrint("_initializeRxVariables - подгружаем тему");
+    int _primaryColor = _settingsController.getPropertyByKey(Const.PRIMARY_COLOR);
+    int _accentColor = _settingsController.getPropertyByKey(Const.ACCENT_COLOR);
+    bool isDarkThemeNewValue = _settingsController.getPropertyByKey(Const.IS_THEME_DARK);
+
+    var isPrimaryColorChange = _primaryThemeColor != null && primaryThemeColor != Color(_primaryColor);
+    var isAccentColorChange = _accentThemeColor != null && accentThemeColor != Color(_accentColor);
+    var isThemeChanged = isDarkThemeSelect != null && isDarkThemeSelect != isDarkThemeNewValue;
+
+    _primaryThemeColor.value = Color(_primaryColor);
+    _accentThemeColor.value = Color(_accentColor);
+    _isDarkThemeSelect.value = isDarkThemeNewValue;
+
+    // Если параметры темы поменялись, то запускаем процесс смены темы
+    if (isPrimaryColorChange || isAccentColorChange || isThemeChanged) {
+      _changeCurrentTheme();
+    }
   }
 
   /// Меняем настройки текущей темы
@@ -146,6 +151,7 @@ class SettingsController extends GetxController {
 
   /// получаем данные темы в соответствии с настройками программы
   ThemeData getCurrentTheme() {
+    logPrint("Настройки темы: $primaryThemeColor, $accentThemeColor, $isDarkThemeSelect");
     return ThemeData(
         brightness: isDarkThemeSelect ? Brightness.dark : Brightness.light,
         primaryColor: primaryThemeColor,
@@ -160,7 +166,7 @@ class SettingsController extends GetxController {
             }),
           ),
         ),
-        primarySwatch: Colors.orange,
+        //primarySwatch: Colors.orange,
         toggleableActiveColor: accentThemeColor,
         textTheme: TextTheme().copyWith(
           headline4: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),

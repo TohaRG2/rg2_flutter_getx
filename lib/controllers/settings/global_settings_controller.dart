@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rg2/controllers/repository.dart';
 import 'package:rg2/controllers/settings/default_settings.dart';
 import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/database/fire_entitys/fav_item.dart';
@@ -13,15 +12,15 @@ import 'package:rg2/views/auth/controller/auth_controller.dart';
 
 class GlobalSettingsController extends GetxController {
   final AuthController _auth = Get.put<AuthController>(AuthController(), permanent: true);
-  //final Repository _repo = Get.find();
 
   String _userId = "";
-  final _sp = GetStorage("properties");
+  final _sp = GetStorage();
   final _db = CloudDatabase();
   Function(List<FavItem> items) favouriteUpdateCallback;
 
-  onInit() {
+  onInit() async {
     super.onInit();
+    await _sp.initStorage;
     // подписываемся на получение изменений firebaseUser, при изменении вызываем _userAuthChanged не чаще, чем раз в 2 сек
     // более подробно в описании Workers для GetX (https://github.com/jonataslaw/getx/blob/master/documentation/en_US/state_management.md)
     //ever(_auth.firebaseUser, _userAuthChanged);
@@ -49,6 +48,7 @@ class GlobalSettingsController extends GetxController {
   /// вернем null если нет ни там и ни там
   T getPropertyByKey<T>(String key) {
     T value = _getPropertyByKeyFromLocalStorage<T>(key);
+    //logPrint("Запрошен из локалстора параметр $key - нашли $value");
     if (value == null) {
       value = defaultSettings[key];
       if (value == null) {
@@ -69,7 +69,7 @@ class GlobalSettingsController extends GetxController {
   /// получить значение параметра из локального хранилища
   T _getPropertyByKeyFromLocalStorage<T>(String key) {
     var result = _sp.read(key);
-    //logPrint("из локального хранилища по ключу $key получили - $result, типа ${result.runtimeType}, ожидаем типа- $T");
+    logPrint("из локального хранилища по ключу $key получили - $result, типа ${result.runtimeType}, ожидаем типа- $T");
     if (result?.runtimeType == T || T == dynamic) {
       return result;
     } else {
@@ -93,7 +93,7 @@ class GlobalSettingsController extends GetxController {
 
   /// сохранаяем параметр в локальное хранилище
   void _setPropertyToLocalStorage(Property property) {
-    logPrint("saveToLocalStorage $property");
+    logPrint("saveToLocalStorage ${property.key} ${property.value}");
     //_lastUpdateDate.val = property.changeDate.millisecondsSinceEpoch;
     _sp.write(property.key, property.value);
   }
