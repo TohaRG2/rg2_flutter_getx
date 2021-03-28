@@ -43,6 +43,7 @@ class GlobalStorageController extends GetxController {
       var listFavItems = await _getFavourites();
       // обновляем избранное, если задан колбэк и получили не null в listFavItems
       if (favouritesUpdateCallback != null && listFavItems != null) {
+        // вызываем колбэк, он находится в learnController
         favouritesUpdateCallback(listFavItems);
       }
 
@@ -50,6 +51,7 @@ class GlobalStorageController extends GetxController {
       var listCommentItems = await _getComments();
       // обновляем избранное, если задан колбэк и получили не null в listFavItems
       if (commentsUpdateCallback != null && listCommentItems != null) {
+        // вызываем колбэк, он находится в learnDetailController
         commentsUpdateCallback(listCommentItems);
       }
 
