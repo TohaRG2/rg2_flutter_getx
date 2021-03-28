@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
-import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 class AzbukaSettingsController extends GetxController {
-  final GlobalSettingsController _settingsController = Get.find();
+  final GlobalStorageController _settingsController = Get.find();
 
   @override
   void onInit() {

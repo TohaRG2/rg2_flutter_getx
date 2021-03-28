@@ -1,14 +1,14 @@
 import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 import 'package:rg2/controllers/repository.dart';
-import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/fire_entitys/fav_item.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 class FavouriteController extends GetxController {
   Repository _repo = Get.find();
-  final GlobalSettingsController _settingsController = Get.find();
+  final GlobalStorageController _settingsController = Get.find();
 
   @override
   void onInit() async {
@@ -57,11 +57,13 @@ class FavouriteController extends GetxController {
       // добавляем в избранное
       favourites.insert(0, item);
     } else {
-      // убираем из избранного
+      // убираем из избранного, если item там есть, но его там не должно быть
       var index = favourites.indexWhere((e) => (e.id == item.id && e.phase == item.phase));
-      if (index >= 0) favourites.removeAt(index);
-      item.subId = 0; // на всякий случай обнуляем индекс (не обязательно)
-      _repo.updateMainDBItem(item);
+      if (index >= 0) {
+        favourites.removeAt(index);
+        item.subId = 0; // на всякий случай обнуляем индекс (не обязательно)
+        _repo.updateMainDBItem(item);
+      }
     }
     _updateFavouritesSubIds();
   }

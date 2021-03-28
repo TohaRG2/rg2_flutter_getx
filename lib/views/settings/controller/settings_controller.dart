@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 class SettingsController extends GetxController {
-  final GlobalSettingsController _settingsController = Get.put(GlobalSettingsController());
+  final GlobalStorageController _settingsController = Get.put(GlobalStorageController());
 
   @override
   void onInit() {

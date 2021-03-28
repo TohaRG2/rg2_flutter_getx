@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/azbuka.dart';
@@ -8,7 +8,7 @@ import 'package:rg2/views/trainers/scramble_gen/model/blind_cube.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/scramble_decision_condition.dart';
 
 class ScrambleGenController extends GetxController {
-  final GlobalSettingsController _settingsController = Get.find();
+  final GlobalStorageController _settingsController = Get.find();
 
   @override
   void onInit() {

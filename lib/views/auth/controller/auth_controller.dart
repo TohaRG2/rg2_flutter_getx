@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/main_view.dart';

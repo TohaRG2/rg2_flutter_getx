@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
-import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
 
 class Azbuka {
-  final GlobalSettingsController _settingsController = Get.find();
+  final GlobalStorageController _settingsController = Get.find();
   
   List<String> _currentAzbuka = [];
   List<int> _currentColorsSide = [0,1,2,3,4,5];

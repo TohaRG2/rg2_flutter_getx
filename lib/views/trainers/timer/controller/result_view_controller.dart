@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository.dart';
-import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 
 class ResultViewController extends GetxController {
   final Repository _repository = Get.find();
-  final GlobalSettingsController _settingsController = Get.find();
+  final GlobalStorageController _settingsController = Get.find();
   var _orderBy = "solvingTime";
 
   @override

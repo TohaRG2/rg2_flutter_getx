@@ -13,7 +13,7 @@ class LearnDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> pages = Get.find<LearnDetailController>().loadPages(_phase, _startId);
+    Future<void> pages = Get.find<LearnDetailController>().reLoadPages(_phase, _startId);
     return FutureBuilder(
         future: pages,
         builder: (context, snapshot) {

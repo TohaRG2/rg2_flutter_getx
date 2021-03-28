@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository.dart';
-import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/entitys/pll_trainer_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
@@ -9,7 +9,7 @@ import 'package:rg2/views/trainers/pll/model/quiz_variant.dart';
 
 class PllSettingsController extends GetxController {
   final Repository _repository = Get.find();
-  final GlobalSettingsController _settingsController = Get.find();
+  final GlobalStorageController _settingsController = Get.find();
 
   @override
   void onInit() {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository.dart';
-import 'package:rg2/controllers/settings/global_settings_controller.dart';
+import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/database/entitys/phase_position_item.dart';
@@ -15,7 +15,7 @@ class LearnController extends GetxController {
   final Repository _repo = Get.find();
   final SettingsController _settings = Get.find();
   final FavouriteController _favController = Get.find();
-  final GlobalSettingsController _globalSettings = Get.find();
+  final GlobalStorageController _storage = Get.find();
 
   double curPositionInList = 0.0;
   String _backIconPath = "assets/images/icons/back_arrow.svg";
@@ -36,7 +36,7 @@ class LearnController extends GetxController {
     super.onInit();
     logPrint("Init LearnController");
     curPageNumber = _settings.currentPageNumber;
-    _globalSettings.favouriteUpdateCallback = _favCallback;
+    _storage.favouritesUpdateCallback = _favCallback;
   }
 
 
@@ -182,7 +182,7 @@ class LearnController extends GetxController {
     return page;
   }
 
-  ///Обновляем элемент если он есть в текущем кэше (pages) в каком-нибудь currentList
+  ///Обновляем элемент если он есть в текущем кэше страниц (pages) в каком-нибудь currentList страницы
   void updateItemInPages(MainDBItem item) {
     logPrint("updateItemInPages - $item");
     _updateItemInCache(item);
@@ -195,11 +195,18 @@ class LearnController extends GetxController {
       List<MainDBItem> list = pageProp.currentList;
       var index = list.indexWhere((element) => element.phase == item.phase && element.id == item.id);
       if (index != -1) {
-        logPrint("find in page ${pageProp.number}");
+        //logPrint("find in page ${pageProp.number}");
         List<MainDBItem> list = pageProp.currentList.toList();
         list[index] = item;
         pages[pageProp.number].currentList.assignAll(list);
       }
+    });
+  }
+
+  /// Проверяем есть ли элементы списка в кэше и обновляем при необходимости кэш
+  void updateItemsInCache(List<MainDBItem> items) {
+    items.forEach((item) { 
+      _updateItemInCache(item); 
     });
   }
 

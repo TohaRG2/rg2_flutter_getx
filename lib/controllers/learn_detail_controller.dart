@@ -1,12 +1,23 @@
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
+import 'package:rg2/database/fire_entitys/comment_item.dart';
+import 'package:rg2/utils/my_logger.dart';
 
 import 'learn_controller.dart';
 
 class LearnDetailController extends GetxController {
   Repository _repo = Get.find();
   LearnController _learnController = Get.find();
+  GlobalStorageController _storageController = Get.find();
+
+  @override
+  onInit() {
+    super.onInit();
+    logPrint("Init LearnDetailController");
+    _storageController.commentsUpdateCallback = _commentsCallback;
+  }
 
   RxInt _curPageNumberObs = 0.obs;
   int get curPageNumber => _curPageNumberObs.value;
@@ -36,7 +47,7 @@ class LearnDetailController extends GetxController {
     _currentItems.assignAll(items);
   }
 
-  Future<void> loadPages(String phase, int id) async {
+  Future<void> reLoadPages(String phase, int id) async {
     obsPhase = phase;
     var list = await _repo.getPhasePages(phase);
     currentItems.assignAll(list);
@@ -49,6 +60,7 @@ class LearnDetailController extends GetxController {
   int _getNumFromId(int id) =>
       currentItems.indexWhere((element) => element.id == id);
 
+  /// Меняем текущую страницу в зависимовсти от того элемента, который подан на вход
   changeCurrentPageByItem(MainDBItem item) {
     changeCurrentPageNumberTo(_getNumFromId(item.id));
   }
@@ -68,6 +80,8 @@ class LearnDetailController extends GetxController {
     var item = currentItems[curPageNumber];
     item.comment = text;
     currentItems[curPageNumber] = item;
+    var commentItem = CommentItem.fromMainDbItem(item);
+    _storageController.addOrUpdateCommentInFirebase(commentItem);
     _learnController.updateItemInPages(item);
     _repo.updateMainDBItem(item);
   }
@@ -83,12 +97,27 @@ class LearnDetailController extends GetxController {
     _repo.updateMainDBItem(item);
   }
 
-  String getImagePathFromAssets(String shortPath) {
-    return currentItem.getAssetFilePath();
-  }
-
+  /// Путь к папке головоломки в ассетах
   String getAssetPath(){
     return currentItem.getAssetPath();
+  }
+
+  /// Колбэк вызываемый при получении комментариев из firebase
+  /// обновляем данные в базе и кэше страниц
+  _commentsCallback(List<CommentItem> commentItems) async {
+    logPrint("_commentsCallback - $commentItems");
+    List<MainDBItem> mainDBItems = [];
+
+    // асинхронный цикл для всех записей в commentItems, с ожидаем выполнения операции над каждым элементом
+    await Future.forEach(commentItems,(CommentItem commentItem) async {
+      var mainDBItem = await _repo.getMainDBItem(commentItem.phase, commentItem.id);
+      mainDBItem.comment = commentItem.comment;
+      mainDBItems.add(mainDBItem);
+    });
+
+    // обновляем список в локальной базе и в кэше
+    _repo.updateMainDBItems(mainDBItems);
+    _learnController.updateItemsInCache(mainDBItems);
   }
 
 }
