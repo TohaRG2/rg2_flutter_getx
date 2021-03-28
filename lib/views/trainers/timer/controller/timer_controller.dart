@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:rg2/controllers/repository.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
 import 'package:audioplayers/audio_cache.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/timer/model/timer.dart';
 import 'package:rg2/views/trainers/timer/controller/timer_settings_controller.dart';
 import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
@@ -18,13 +19,13 @@ class TimerController extends GetxController {
 
   @override
   void onReady() {
-    print("TimerController onReady");
+    logPrint("TimerController onReady");
     super.onReady();
   }
 
   @override
   void onInit() async {
-    print("TimerController onInit");
+    logPrint("TimerController onInit");
     super.onInit();
     _showBars();
     // _repository.clearTimesTable();
@@ -32,7 +33,7 @@ class TimerController extends GetxController {
 
   @override
   void dispose() {
-    print("TimerController dispose");
+    logPrint("TimerController dispose");
     super.dispose();
   }
 
@@ -140,7 +141,7 @@ class TimerController extends GetxController {
       case TimerControllerState.running: _firstPadPressedToStop(); break;
       case TimerControllerState.onePadPressedToStop: _secondPadPressedToStop(); break;
       default:
-        print("Info! Нет обработчика для onPanelTouch in $_state state.");
+        logPrint("Info! Нет обработчика для onPanelTouch in $_state state.");
         break;
     }
   }
@@ -161,9 +162,9 @@ class TimerController extends GetxController {
       case TimerControllerState.twoPadPressedToStart: _backToOnlyOnePadPressed(); break;
       case TimerControllerState.ready: _startTimer(); break;
       case TimerControllerState.onePadPressedToStop: _onePadStopPressingCancel(); break;
-      case TimerControllerState.waitForCancelPressing: _tryToFullStopTimer(); break;
+      case TimerControllerState.waitForFullStop: _tryToFullStopTimer(); break;
       default:
-        print("Info! onPanelTouchCancel in $_state state.");
+        logPrint("Info! onPanelTouchCancel in $_state state.");
         break;
     }
   }
@@ -196,13 +197,6 @@ class TimerController extends GetxController {
       _changeStateToReady();
     }
   }
-
-  a() {
-    Duration _delay =  Duration();
-    _secondBarPressingTime.add(_delay);
-  }
-
-
 
   _changeStateToReady() {
     leftIndicatorState = 2; rightIndicatorState = 2;
@@ -243,7 +237,7 @@ class TimerController extends GetxController {
   }
 
   _startTimer() {
-    print("Start Timer");
+    logPrint("Start Timer");
     _state = TimerControllerState.running;
     _timer.start();
     _hideBars();
@@ -254,8 +248,8 @@ class TimerController extends GetxController {
   }
 
   _stopTimer() {
-    print("Stop Timer");
-    _state = TimerControllerState.waitForCancelPressing;
+    logPrint("Stop Timer");
+    _state = TimerControllerState.waitForFullStop;
     _timer.stop();
     _showBars();
     _updateIndicatorState(leftPadPressed: false, rightPadPressed: false);
@@ -264,7 +258,7 @@ class TimerController extends GetxController {
   _updateIndicatorState({bool leftPadPressed, bool rightPadPressed}) {
     _isLeftPadPressed = leftPadPressed ?? _isLeftPadPressed;
     _isRightPadPressed = rightPadPressed ?? _isRightPadPressed;
-    //print("updateIndicatorState: лев.- $_isLeftPadPressed пр.- $_isRightPadPressed, state = $_state");
+    //logPrint("updateIndicatorState: лев.- $_isLeftPadPressed пр.- $_isRightPadPressed, state = $_state");
     if (_isOneHanded) {
       leftIndicatorState = _isLeftPadPressed || _isRightPadPressed ? 1 : 0;
       rightIndicatorState = _isLeftPadPressed || _isRightPadPressed ? 1 : 0;
@@ -275,7 +269,7 @@ class TimerController extends GetxController {
   }
 
   _showAsyncTimerTime() async {
-    while ( _state != TimerControllerState.waitForCancelPressing && _state != TimerControllerState.stopped) {
+    while ( _state != TimerControllerState.waitForFullStop && _state != TimerControllerState.stopped) {
       currentTime = _timer.getFormattedCurrentTime();
       // обновляем с задержкой 16 мс, т.е. примерно 60 раз в секунду
       await Future.delayed(Duration(milliseconds: 16), () {});
@@ -288,7 +282,7 @@ class TimerController extends GetxController {
     var tikPause = Duration(milliseconds: 60000 ~/ _settingsController.metronomFrequency);
     var nextTikTime = DateTime.now();
     // выходим из цикла если таймер остановлен
-    while ( _state != TimerControllerState.waitForCancelPressing && _state != TimerControllerState.stopped) {
+    while ( _state != TimerControllerState.waitForFullStop && _state != TimerControllerState.stopped) {
       if (DateTime.now().isAfter(nextTikTime)) {
         //assetsAudioPlayer.open(sound);
         player.play(_metronomSound);
@@ -306,13 +300,13 @@ class TimerController extends GetxController {
   }
 
   _pauseTimer() {
-    print("Pause Timer");
+    logPrint("Pause Timer");
     _state = TimerControllerState.pause;
     _timer.pause();
   }
 
   _continueTimer() {
-    print("Continue Timer");
+    logPrint("Continue Timer");
     _state = TimerControllerState.running;
     _timer.resume();
   }
@@ -353,7 +347,7 @@ class TimerController extends GetxController {
     var _scramble = _settingsController.showScramble ? scramble : "";
     var timeNote = TimeNoteItem(solvingTime, DateTime.now(), _scramble, comment);
     _repository.addTimeNoteItem(timeNote);
-    print("$timeNote");
+    logPrint("$timeNote");
   }
 
   generateNewScramble() {
@@ -371,6 +365,6 @@ enum TimerControllerState {
   running,
   pause,
   onePadPressedToStop,
-  waitForCancelPressing,
+  waitForFullStop,
 }
 
