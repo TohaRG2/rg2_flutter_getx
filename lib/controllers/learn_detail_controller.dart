@@ -81,7 +81,7 @@ class LearnDetailController extends GetxController {
     item.comment = text;
     currentItems[curPageNumber] = item;
     var commentItem = CommentItem.fromMainDbItem(item);
-    _storageController.addOrUpdateCommentInFirebase(commentItem);
+    _storageController.addOrUpdateCommentInFBS(commentItem);
     _learnController.updateItemInPages(item);
     _repo.updateMainDBItem(item);
   }

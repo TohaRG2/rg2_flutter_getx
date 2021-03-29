@@ -24,7 +24,7 @@ class FavouriteController extends GetxController {
     var favItems = items.map((mainDBItem) =>
         FavItem(id: mainDBItem.id, phase: mainDBItem.phase, subId: mainDBItem.subId)
     ).toList();
-    _settingsController.updateFavourites(favItems);
+    _settingsController.updateFavouritesInFBS(favItems);
   }
 
   /// Перечитываем список избранного из базы и если надо апдейтим в FB

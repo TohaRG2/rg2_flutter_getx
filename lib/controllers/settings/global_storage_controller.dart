@@ -3,25 +3,28 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rg2/controllers/repository.dart';
 import 'package:rg2/controllers/settings/default_settings.dart';
 import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/database/fire_entitys/comment_item.dart';
 import 'package:rg2/database/fire_entitys/fav_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
+import 'package:rg2/database/fire_entitys/timer_time_item.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/auth/controller/auth_controller.dart';
 
 
 /// Контроллер, являющийся по сути repository для firebase + контроллер для локального хранилища
-/// Возможно стит переименовать в FireBaseLocalAndStorageController :)
 class GlobalStorageController extends GetxController {
   final AuthController _auth = Get.put<AuthController>(AuthController(), permanent: true);
 
   String _userId = "";
-  final _sp = GetStorage();
-  final _db = CloudDatabase();
+  final GetStorage _sp = GetStorage();
+  final CloudDatabase _cloudDB = CloudDatabase();
+  final Repository _localRepo = Get.find();
   Function(List<FavItem> items) favouritesUpdateCallback;
   Function(List<CommentItem> items) commentsUpdateCallback;
+  Function(List<TimerTimeItem> items) timerTimesUpdateCallback;
 
   onInit() async {
     super.onInit();
@@ -37,32 +40,18 @@ class GlobalStorageController extends GetxController {
     logPrint("_userAuthChanged to ${user?.uid}");
     _userId = (user == null) ? "" : user?.uid;
     if (_userId != "") {
-      _updateAllParameters();
-
-      logPrint("_userAuthChanged - получаем избранное из firebase");
-      var listFavItems = await _getFavourites();
-      // обновляем избранное, если задан колбэк и получили не null в listFavItems
-      if (favouritesUpdateCallback != null && listFavItems != null) {
-        // вызываем колбэк, он находится в learnController
-        favouritesUpdateCallback(listFavItems);
-      }
-
-      logPrint("_userAuthChanged - получаем комментарии из firebase");
-      var listCommentItems = await _getComments();
-      // обновляем избранное, если задан колбэк и получили не null в listFavItems
-      if (commentsUpdateCallback != null && listCommentItems != null) {
-        // вызываем колбэк, он находится в learnDetailController
-        commentsUpdateCallback(listCommentItems);
-      }
-
+      await _updateAllParameters();
+      await _updateFavourites();
+      await _updateComments();
+      await _updateTimerTimes();
       logPrint("_userAuthChanged - end");
     }
   }
 
   //------------------------- матоды для работы с параметрами программы ---------------------------------
 
-  /// Читаем параметр по ключу из локального хранилища или получаем из дефолтных значений, если в хранилище нет
-  /// вернем null если нет ни там и ни там
+  /// Читаем параметр по ключу из локального хранилища или получаем из дефолтных значений, если в хранилище нет.
+  /// Вернем null если нет ни там, и ни там
   T getPropertyByKey<T>(String key) {
     T value = _getPropertyByKeyFromLocalStorage<T>(key);
     //logPrint("Запрошен из локалстора параметр $key - нашли $value");
@@ -96,19 +85,19 @@ class GlobalStorageController extends GetxController {
 
   /// Сохраняем параметр в облако(если залогинены) и в локальное хранилище
   setPropertyByKey(Property property){
-    _addOrUpdatePropertyInBase(property);
+    _addOrUpdatePropertyInFBS(property);
     _setPropertyToLocalStorage(property);
   }
 
   /// Добавить или обновить параметр в firebase, если пользователь залогинен
-  void _addOrUpdatePropertyInBase(Property property) {
+  void _addOrUpdatePropertyInFBS(Property property) {
     logPrint("_addOrUpdatePropertyInBase = $property, userId = $_userId");
     if (_userId != "") {
-      _db.addOrUpdateProperty(_userId, property);
+      _cloudDB.addOrUpdateProperty(_userId, property);
     }
   }
 
-  /// сохранаяем параметр в локальное хранилище
+  /// Сохранаяем параметр в локальное хранилище
   void _setPropertyToLocalStorage(Property property) {
     logPrint("saveToLocalStorage ${property.key} ${property.value}");
     //_lastUpdateDate.val = property.changeDate.millisecondsSinceEpoch;
@@ -120,7 +109,7 @@ class GlobalStorageController extends GetxController {
     logPrint("updateAllParametersFromBase - ");
     if (_userId != "") {
       // получить все параметры из базы
-      var list = await _db.getAllUserProperties(_userId);
+      var list = await _cloudDB.getAllUserProperties(_userId);
       // перезаписать полученные параметры в локальное хранилище
       list?.forEach((property) {
         _setPropertyToLocalStorage(property);
@@ -130,7 +119,7 @@ class GlobalStorageController extends GetxController {
     }
   }
 
-  /// список колбэков, которые будут вызваны после синхронизации данных с firebase
+  /// список колбэков, которые будут вызваны после синхронизации данных с FBS
   List<Function> callbacks = [];
   /// запуск зареганных колбэков от settings контроллеров, чтобы обновить переменные из локального хранилища
   void runCallbacks() {
@@ -141,39 +130,92 @@ class GlobalStorageController extends GetxController {
 
   //-------------------- методы для работы с избранным --------------------------
 
-  /// Обновляем список избранного в firebase
-  updateFavourites(List<FavItem> favourites) {
-    //logPrint("setFavourites - $favourites");
-    if (_userId != "") {
-      _db.addOrUpdateFavourites(_userId, favourites);
+  /// Получаем список избранного из FBS и обновляем избранное полученным списком
+  Future _updateFavourites() async {
+    logPrint("_userAuthChanged - получаем избранное из firebase");
+    var listFavItems = await _getFavourites();
+    // обновляем избранное, если задан колбэк и получили не null в listFavItems
+    if (favouritesUpdateCallback != null && listFavItems != null) {
+      // вызываем колбэк, он находится в learnController
+      favouritesUpdateCallback(listFavItems);
     }
   }
 
-  /// получаем список избранного из firebase
+  /// Обновляем список избранного в FBS
+  updateFavouritesInFBS(List<FavItem> favourites) {
+    //logPrint("setFavourites - $favourites");
+    if (_userId != "") {
+      _cloudDB.addOrUpdateFavourites(_userId, favourites);
+    }
+  }
+
+  /// получаем список избранного из FBS
   Future<List<FavItem>> _getFavourites() async {
     //logPrint("_getFavourites - ");
     if (_userId != "") {
-      return await _db.getFavourites(_userId);
+      return await _cloudDB.getFavourites(_userId);
     }
     return null;
   }
 
   //------------------------ методы для работы с комментариями -----------------------
 
-  /// Добавить или обновить параметр в firebase, если пользователь залогинен
-  void addOrUpdateCommentInFirebase(CommentItem comment) {
-    logPrint("_addOrUpdatePropertyInBase = $comment, userId = $_userId");
+  /// Получаем комменты из FBS и обновляем их в локальной базе и на экране (кэше)
+  Future _updateComments() async {
+    logPrint("_updateComments - получаем комментарии из FBS");
+    var listCommentItems = await _getComments();
+    // обновляем комментарии, если задан колбэк и получили не null в listCommentItems
+    if (commentsUpdateCallback != null && listCommentItems != null) {
+      // вызываем колбэк, он находится в learnDetailController
+      commentsUpdateCallback(listCommentItems);
+    }
+  }
+
+  /// Добавить или обновить комментарий в FBS, если пользователь залогинен
+  void addOrUpdateCommentInFBS(CommentItem comment) {
+    logPrint("_addOrUpdateCommentInBase = $comment, userId = $_userId");
     if (_userId != "") {
-      _db.addOrUpdateComment(_userId, comment);
+      _cloudDB.addOrUpdateComment(_userId, comment);
       //TODO если коммент пустой, то сделать удаление коммента из firebase ???
     }
   }
 
-  /// получаем список всех сохраненных комментариев к этапам из firebase
+  /// получаем список всех сохраненных комментариев к этапам из FBS
   Future<List<CommentItem>> _getComments() async {
     //logPrint("_getComments - ");
     if (_userId != "") {
-      return await _db.getComments(_userId);
+      return await _cloudDB.getComments(_userId);
+    }
+    return null;
+  }
+
+  //------------------------ методы для работы с временами сборки в таймере -----------------------
+
+
+  /// Получаем время сборки из FBS и обновляем их в локальной базе и на экране (кэше)
+  Future _updateTimerTimes() async {
+    logPrint("_updateComments - получаем комментарии из FBS");
+    var listTimerTimesItems = await _getTimerTimes();
+    // обновляем комментарии, если задан колбэк и получили не null в listCommentItems
+    if (timerTimesUpdateCallback != null && listTimerTimesItems != null) {
+      // вызываем колбэк, он находится в learnDetailController
+      timerTimesUpdateCallback(listTimerTimesItems);
+    }
+  }
+
+  /// Добавить или обновить время сборки в FBS, если пользователь залогинен
+  void addOrUpdateTimerTimeInFBS(TimerTimeItem timerTimeItem) {
+    logPrint("_addOrUpdateTimerTimeInBase = $timerTimeItem, userId = $_userId");
+    if (_userId != "") {
+      _cloudDB.addOrUpdateTimerTime(_userId, timerTimeItem);
+    }
+  }
+
+  /// получаем список всех сборок в таймере из FBS
+  Future<List<TimerTimeItem>> _getTimerTimes() async {
+    //logPrint("_getTimerTimes - ");
+    if (_userId != "") {
+      return await _cloudDB.getTimerTimes(_userId);
     }
     return null;
   }

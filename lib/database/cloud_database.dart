@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rg2/database/fire_entitys/comment_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
+import 'package:rg2/database/fire_entitys/timer_time_item.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/database/fire_entitys/fav_item.dart';
 
@@ -17,6 +18,9 @@ class CloudDatabase{
   // название ключа для хранения избранного в коллекции userId
   static const FAVOURITES = "favourites";
   static const FAVOURITES_UPDATE_DATE = "lastFavouritesUpdate";
+  // название коллекции для хранения времени сборки кубика в коллекции userId
+  static const TIMER_TIMES = "timerTimes";
+  static const TIMER_TIMES_UPDATE_DATE = "lastTimerTimesUpdate";
 
 
   disableNetwork() async {
@@ -84,7 +88,7 @@ class CloudDatabase{
         .catchError((error) => logPrint("Не удалось добавить $property в firebase"));
   }
 
-  /// Получаем все сохраненные в FB свойства программы, по сути всю коллекцию properties
+  /// Получаем все сохраненные в FBS свойства программы, по сути всю коллекцию properties
   Future<List<Property>> getAllUserProperties(String userId) async {
     logPrint("getAllUserProperties $userId");
     try {
@@ -157,11 +161,41 @@ class CloudDatabase{
         return CommentItem.fromDocSnapShot(doc);
       }).toList();
     } catch (e) {
-      logPrint("ERROR! Ошибка получения свойств из базы\n $e");
+      logPrint("ERROR! Ошибка получения комментариев из базы\n $e");
       return null;
     }
   }
 
+  //----------- для работы с коллекцией времени сборки в таймере -----------------
+
+  /// Создаем или обновляем одну запись в коллекции TimerTimes в FBS
+  addOrUpdateTimerTime(String userId, TimerTimeItem timerItem) {
+    var mainDocRef = _usersCollection.doc(userId);
+    var refCol = mainDocRef.collection(TIMER_TIMES);
+    mainDocRef.update({COMMENTS_UPDATE_DATE: DateTime.now()});
+    return refCol
+        .doc("${timerItem.id}")
+        .set(timerItem.toMap())
+        .then((value) => logPrint("Добавили/обновили $timerItem в базу"))
+        .catchError((error) => logPrint("Не удалось добавить $timerItem в firebase\n $error"));
+  }
+
+  /// Возвращаем список всех записей сборок в таймере в usersId/timerTimes
+  Future<List<TimerTimeItem>> getTimerTimes(String userId) async{
+    logPrint("getTimerTimes - получаем список времени сборок");
+    try {
+      var mainDocRef = _usersCollection.doc(userId);
+      var refCol = await mainDocRef.collection(TIMER_TIMES).get();
+      var docs = refCol.docs;
+      return docs.map((doc) {
+        //logPrint("Doc: ${doc.id}, ${CommentItem.fromDocSnapShot(doc)}");
+        return TimerTimeItem.fromDocSnapShot(doc);
+      }).toList();
+    } catch (e) {
+      logPrint("ERROR! Ошибка получения списка сборок в таймере из базы\n $e");
+      return null;
+    }
+  }
 
 
 }
