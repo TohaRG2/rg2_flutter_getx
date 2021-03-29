@@ -50,7 +50,7 @@ class CloudDatabase{
     var mainDoc = await mainDocRef.get();
 
     //var dt = DateTime.fromMillisecondsSinceEpoch(mainDoc.data()["lastUpdate"].millisecondsSinceEpoch);
-    var dt = mainDoc.data()["lastUpdate"].toDate();
+    var dt = mainDoc.data()["lastPropertiesUpdate"].toDate();
     var refCol = mainDocRef.collection(PROPERTIES);
     logPrint("Date from base - $dt");
 
@@ -73,7 +73,7 @@ class CloudDatabase{
   Future<void> addOrUpdateProperty(String userId, Property property) async {
     var mainDocRef = _usersCollection.doc(userId);
     var refCol = mainDocRef.collection(PROPERTIES);
-    mainDocRef.update({'lastUpdate': property.changeDate});
+    mainDocRef.update({'lastPropertiesUpdate': property.changeDate});
     return refCol
         .doc(property.key)
         .set(property.toMap())
@@ -103,7 +103,7 @@ class CloudDatabase{
   addOrUpdateFavourites(String userId, List<FavItem> favourites) async {
     var mainDocRef = _usersCollection.doc(userId);
     //var refCol = mainDocRef.collection("favourites");
-    mainDocRef.update({'favUpdate': DateTime.now()});
+    mainDocRef.update({'lastFavouriteUpdate': DateTime.now()});
     var items = favourites.map((fav) => fav.toMap()).toList();
     mainDocRef.update({FAVOURITES: items})
       .then((value) => logPrint("Обновили избранное $items в базе"))
