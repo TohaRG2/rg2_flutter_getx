@@ -85,6 +85,12 @@ class TimerRepository extends GetxController {
       var timerTimesItem = TimerTimeItem.fromTimeNoteItem(timeNoteItem);
       //TODO додумать процесс синхронизации удаленной и локальной базы
     });
+    // Пройтись по списку FBS записей,
+    // если в локальной базе нет записи с временем создания как FBS.id.toDateTime,
+    // то конвертим FBS => локальную и добавляем в лок.базу
+
+    // перечитываем значение из локальной базы
+
 
     // обновляем список результатов сборок на экране, если задан колбэк
     if (timerTimesUpdateCallback != null) {
