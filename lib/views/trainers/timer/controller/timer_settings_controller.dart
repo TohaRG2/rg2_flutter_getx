@@ -26,28 +26,28 @@ class TimerSettingsController extends GetxController {
     _scrambleTextRatio.value = _settingsController.getPropertyByKey(Const.SCRAMBLE_TEXT_RATIO);
   }
 
-  final _isOneHanded = RxBool();
+  final _isOneHanded = RxBool(false);
     get isOneHanded => _isOneHanded.value;
     set isOneHanded(value) {
       _isOneHanded.value = value;
       _settingsController.setPropertyByKey(Property(key: Const.IS_ONE_HANDED, value: value));
     }
 
-  final _isIconsColored = RxBool();
+  final _isIconsColored = RxBool(false);
     get isIconsColored => _isIconsColored.value;
     set isIconsColored(value) {
       _isIconsColored.value = value;
       _settingsController.setPropertyByKey(Property(key: Const.IS_ICONS_COLORED, value: value));
     }
 
-  final _isDelayedStart = RxBool();
+  final _isDelayedStart = RxBool(false);
     get isDelayedStart => _isDelayedStart.value;
     set isDelayedStart(value) {
       _isDelayedStart.value = value;
       _settingsController.setPropertyByKey(Property(key: Const.IS_DELAYED_START, value: value));
     }
 
-  final _isMetronomEnabled = RxBool();
+  final _isMetronomEnabled = RxBool(false);
     get isMetronomEnabled => _isMetronomEnabled.value;
     set isMetronomEnabled(value) {
       _isMetronomEnabled.value = value;
@@ -61,14 +61,14 @@ class TimerSettingsController extends GetxController {
       _settingsController.setPropertyByKey(Property(key: Const.METRONOM_FREQUENCY, value: value));
     }
 
-  final _showScramble = RxBool();
+  final _showScramble = RxBool(false);
     bool get showScramble => _showScramble.value;
     set showScramble(value) {
       _showScramble.value = value;
       _settingsController.setPropertyByKey(Property(key: Const.SHOW_SCRAMBLE, value: value));
     }
 
-  final _scrambleTextRatio = RxDouble();
+  final _scrambleTextRatio = RxDouble(1.0);
     double get scrambleTextRatio => _scrambleTextRatio.value;
     set scrambleTextRatio(value) {
       _scrambleTextRatio.value = value;

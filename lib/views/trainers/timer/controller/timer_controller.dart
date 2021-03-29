@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
 import 'package:audioplayers/audio_cache.dart';
 import 'package:rg2/utils/my_logger.dart';
@@ -10,10 +10,8 @@ import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen
 class TimerController extends GetxController {
   final TimerSettingsController _settingsController = Get.find();
   final ScrambleGenController _genController = Get.find();
-  final Repository _repository = Get.find();
+  final TimerRepository _repository = Get.find();
 
-  // final assetsAudioPlayer = AssetsAudioPlayer();
-  // var sound = Audio("assets/sounds/metronom.mp3");
   final player = AudioCache(prefix: "assets/sounds/");
   final _metronomSound = "metronom.mp3";
 

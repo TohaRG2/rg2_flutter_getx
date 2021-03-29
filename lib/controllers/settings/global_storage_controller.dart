@@ -17,14 +17,13 @@ import 'package:rg2/views/auth/controller/auth_controller.dart';
 /// Контроллер, являющийся по сути repository для firebase + контроллер для локального хранилища
 class GlobalStorageController extends GetxController {
   final AuthController _auth = Get.put<AuthController>(AuthController(), permanent: true);
+  final CloudDatabase _cloudDB = Get.put<CloudDatabase>(CloudDatabase(), permanent: true);
 
   String _userId = "";
   final GetStorage _sp = GetStorage();
-  final CloudDatabase _cloudDB = CloudDatabase();
-  final Repository _localRepo = Get.find();
   Function(List<FavItem> items) favouritesUpdateCallback;
   Function(List<CommentItem> items) commentsUpdateCallback;
-  Function(List<TimerTimeItem> items) timerTimesUpdateCallback;
+
 
   onInit() async {
     super.onInit();
@@ -43,7 +42,6 @@ class GlobalStorageController extends GetxController {
       await _updateAllParameters();
       await _updateFavourites();
       await _updateComments();
-      await _updateTimerTimes();
       logPrint("_userAuthChanged - end");
     }
   }
@@ -185,37 +183,6 @@ class GlobalStorageController extends GetxController {
     //logPrint("_getComments - ");
     if (_userId != "") {
       return await _cloudDB.getComments(_userId);
-    }
-    return null;
-  }
-
-  //------------------------ методы для работы с временами сборки в таймере -----------------------
-
-
-  /// Получаем время сборки из FBS и обновляем их в локальной базе и на экране (кэше)
-  Future _updateTimerTimes() async {
-    logPrint("_updateComments - получаем комментарии из FBS");
-    var listTimerTimesItems = await _getTimerTimes();
-    // обновляем комментарии, если задан колбэк и получили не null в listCommentItems
-    if (timerTimesUpdateCallback != null && listTimerTimesItems != null) {
-      // вызываем колбэк, он находится в learnDetailController
-      timerTimesUpdateCallback(listTimerTimesItems);
-    }
-  }
-
-  /// Добавить или обновить время сборки в FBS, если пользователь залогинен
-  void addOrUpdateTimerTimeInFBS(TimerTimeItem timerTimeItem) {
-    logPrint("_addOrUpdateTimerTimeInBase = $timerTimeItem, userId = $_userId");
-    if (_userId != "") {
-      _cloudDB.addOrUpdateTimerTime(_userId, timerTimeItem);
-    }
-  }
-
-  /// получаем список всех сборок в таймере из FBS
-  Future<List<TimerTimeItem>> _getTimerTimes() async {
-    //logPrint("_getTimerTimes - ");
-    if (_userId != "") {
-      return await _cloudDB.getTimerTimes(_userId);
     }
     return null;
   }

@@ -13,9 +13,9 @@ dependencies:
   flutter:
     sdk: flutter
   # SQL Database
-  floor: ^1.0.0
+  floor: ^1.0.1
   # DI + StateManagement
-  get: ^4.0.0-nullsafety.2
+  get: ^4.1.1
   # Работаем с SharedPreferences
   get_storage: ^2.0.1
   # Окно выбора цвета
@@ -54,17 +54,17 @@ dependencies:
 
   # Поддержка звука, для метронома в таймере
   #assets_audio_player: ^2.0.14
-  audioplayers: ^0.18.1
+  audioplayers: ^0.18.2
 
   # Для удобной работы с датой/временем
   intl: ^0.17.0
 
   # Индикатор оставшегося времени на ответ
-  percent_indicator: ^2.1.9+1
+  percent_indicator: ^3.0.1
 
   # Firebase
   firebase_auth: ^1.0.1
-  cloud_firestore: ^1.0.2
+  cloud_firestore: ^1.0.3
 
   # google sign in
   google_sign_in: ^5.0.1
@@ -84,7 +84,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация + build runner
-  floor_generator: ^1.0.0
+  floor_generator: ^1.0.1
   build_runner: ^1.11.5
 
 flutter_icons:

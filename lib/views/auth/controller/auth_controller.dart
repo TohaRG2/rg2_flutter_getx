@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/main_view.dart';
@@ -13,7 +12,7 @@ class AuthController extends GetxController {
 
   /// Observable переменная, в которой храним данные об авторизации пользователя
   /// null - если не авторизован
-  Rx<User> _firebaseUser = Rx<User>();
+  Rx<User> _firebaseUser = Rx<User>(null);
   get firebaseUser => _firebaseUser;
   User get user => _firebaseUser.value;
 

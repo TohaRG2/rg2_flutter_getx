@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:rg2/database/fire_entitys/comment_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/database/fire_entitys/timer_time_item.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/database/fire_entitys/fav_item.dart';
 
-class CloudDatabase{
+class CloudDatabase extends GetxController {
 
   static final _usersCollection = FirebaseFirestore.instance.collection("users");
   // название коллекции для комментариев
@@ -37,7 +38,7 @@ class CloudDatabase{
   Future<bool> createOrUpdateUser(User user) async {
     try {
       logPrint("try createOrUpdateUser");
-      await _usersCollection.doc(user.uid).set({
+      await _usersCollection.doc(user.uid).update({
         "displayName": user.displayName,
         "email": user.email,
       });

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rg2/controllers/settings/global_storage_controller.dart';
+import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/azbuka/azbuka_dialog_controller.dart';
 import 'package:rg2/controllers/helpers/binding_controllers.dart';
@@ -47,6 +49,7 @@ void main() async {
 
 class RG2App extends StatelessWidget {
   final dbFuture = Get.put(DBController()).fillDB();
+  final GlobalStorageController _storageController = Get.put(GlobalStorageController());
   final SettingsController _settings = Get.put(SettingsController());
 
   @override
@@ -63,8 +66,7 @@ class RG2App extends StatelessWidget {
         ],
         debugShowCheckedModeBanner: false,
         // home: SettingsScreen(),
-        //TODO перенести инициализацию контроллеров в BindingControllers
-        initialBinding: BindingControllers(),
+        // initialBinding: BindingControllers(),
         //TODO Перенести FutureBuilder создания базы при первом входе в фон аутентификации
         home: FutureBuilder<MainDatabase>(
             future: dbFuture,
@@ -100,7 +102,9 @@ class RG2App extends StatelessWidget {
     Get.put(db.phasePositionDao);
     Get.put(db.timesDao);
     Get.put(db.pllTrainerDao);
+    logPrint("InitControllers in main.dart");
     Get.put(Repository());
+    Get.put(TimerRepository());
     Get.put(FavouriteController());
     Get.put(LearnController());
     Get.put(InfoController());

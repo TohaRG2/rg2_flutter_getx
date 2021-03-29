@@ -26,7 +26,7 @@ class AzbukaSettingsController extends GetxController {
   }
 
   /// Возможность выбрать в загаданных вариантах ребра
-  final _isEdgeEnabled = RxBool();
+  final _isEdgeEnabled = RxBool(false);
     get isEdgeEnabled => _isEdgeEnabled.value;
     set isEdgeEnabled(value) {
       _isEdgeEnabled.value = value;
@@ -34,7 +34,7 @@ class AzbukaSettingsController extends GetxController {
     }
 
   /// Возможность выбрать в загаданных вариантах углы
-  final _isCornerEnabled = RxBool();
+  final _isCornerEnabled = RxBool(false);
     get isCornerEnabled => _isCornerEnabled.value;
     set isCornerEnabled(value) {
       _isCornerEnabled.value = value;
@@ -42,7 +42,7 @@ class AzbukaSettingsController extends GetxController {
     }
 
   /// Тренировка на время или нет (true - на время)
-  final _isTimerEnabled = RxBool();
+  final _isTimerEnabled = RxBool(false);
     get isTimerEnabled => _isTimerEnabled.value;
     set isTimerEnabled(value) {
       _isTimerEnabled.value = value;

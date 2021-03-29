@@ -6,7 +6,7 @@ import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 class SettingsController extends GetxController {
-  final GlobalStorageController _settingsController = Get.put(GlobalStorageController());
+  final GlobalStorageController _settingsController = Get.find();
 
   @override
   void onInit() {
@@ -16,7 +16,7 @@ class SettingsController extends GetxController {
     _settingsController.callbacks.add(_initializeRxVariables);
   }
 
-  final _primaryThemeColor = Rx<Color>();
+  final _primaryThemeColor = Rx<Color>(Colors.orange);
     Color get primaryThemeColor => _primaryThemeColor.value;
     set primaryThemeColor (color) {
       _primaryThemeColor.value = color;
@@ -25,7 +25,7 @@ class SettingsController extends GetxController {
       _changeCurrentTheme();
     }
 
-  final _accentThemeColor = Rx<Color>();
+  final _accentThemeColor = Rx<Color>(Colors.green);
     Color get accentThemeColor => _accentThemeColor.value;
     set accentThemeColor (color) {
       _accentThemeColor.value = color;
@@ -34,7 +34,7 @@ class SettingsController extends GetxController {
       _changeCurrentTheme();
     }
 
-  final _isDarkThemeSelect = RxBool();
+  final _isDarkThemeSelect = RxBool(true);
     bool get isDarkThemeSelect => _isDarkThemeSelect.value;
     set isDarkThemeSelect(value) {
       _isDarkThemeSelect.value = value;
@@ -42,28 +42,28 @@ class SettingsController extends GetxController {
       _changeCurrentTheme();
     }
 
-  final _textScaleFactor = RxDouble();
+  final _textScaleFactor = RxDouble(1.0);
     double get textScaleFactor => _textScaleFactor.value;
     set textScaleFactor(value) {
       _textScaleFactor.value = value;
       _settingsController.setPropertyByKey(Property(key: Const.SCALE_FACTOR, value: value));
     }
 
-  final _isStartHelpEnabled = RxBool();
+  final _isStartHelpEnabled = RxBool(false);
     bool get isStartHelpEnabled => _isStartHelpEnabled.value;
     set isStartHelpEnabled(value) {
       _isStartHelpEnabled.value = value;
       _settingsController.setPropertyByKey(Property(key: Const.IS_START_HELP_ENABLED, value: value));
     }
 
-  final _isSwipeEnabled = RxBool();
+  final _isSwipeEnabled = RxBool(false);
     bool get isSwipeEnabled => _isSwipeEnabled.value;
     set isSwipeEnabled(value) {
       _isSwipeEnabled.value = value;
       _settingsController.setPropertyByKey(Property(key: Const.IS_SWIPE_ENABLED, value: value));
     }
 
-  final _isPurchaseEnabled = RxBool();
+  final _isPurchaseEnabled = RxBool(false);
     bool get isPurchaseEnabled => _isPurchaseEnabled.value;
     set isPurchaseEnabled(value) {
       _isPurchaseEnabled.value = value;
@@ -100,7 +100,7 @@ class SettingsController extends GetxController {
     }
 
   /// режим разработчика
-  final _godMode = RxBool();
+  final _godMode = RxBool(false);
     bool get godMode => _godMode.value;       // геттер public
     set __godMode(value) {                    // сеттер private
       _godMode.value = value;
