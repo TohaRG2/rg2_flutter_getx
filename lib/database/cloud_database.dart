@@ -10,10 +10,13 @@ class CloudDatabase{
   static final _usersCollection = FirebaseFirestore.instance.collection("users");
   // название коллекции для комментариев
   static const COMMENTS = "comments";
+  static const COMMENTS_UPDATE_DATE = "lastCommentsUpdate";
   // название коллекции для параметров программы
   static const PROPERTIES = "properties";
+  static const PROPERTIES_UPDATE_DATE = "lastPropertiesUpdate";
   // название ключа для хранения избранного в коллекции userId
   static const FAVOURITES = "favourites";
+  static const FAVOURITES_UPDATE_DATE = "lastFavouritesUpdate";
 
 
   disableNetwork() async {
@@ -50,7 +53,7 @@ class CloudDatabase{
     var mainDoc = await mainDocRef.get();
 
     //var dt = DateTime.fromMillisecondsSinceEpoch(mainDoc.data()["lastUpdate"].millisecondsSinceEpoch);
-    var dt = mainDoc.data()["lastPropertiesUpdate"].toDate();
+    var dt = mainDoc.data()[PROPERTIES_UPDATE_DATE].toDate();
     var refCol = mainDocRef.collection(PROPERTIES);
     logPrint("Date from base - $dt");
 
@@ -73,7 +76,7 @@ class CloudDatabase{
   Future<void> addOrUpdateProperty(String userId, Property property) async {
     var mainDocRef = _usersCollection.doc(userId);
     var refCol = mainDocRef.collection(PROPERTIES);
-    mainDocRef.update({'lastPropertiesUpdate': property.changeDate});
+    mainDocRef.update({PROPERTIES_UPDATE_DATE: property.changeDate});
     return refCol
         .doc(property.key)
         .set(property.toMap())
@@ -103,7 +106,7 @@ class CloudDatabase{
   addOrUpdateFavourites(String userId, List<FavItem> favourites) async {
     var mainDocRef = _usersCollection.doc(userId);
     //var refCol = mainDocRef.collection("favourites");
-    mainDocRef.update({'lastFavouriteUpdate': DateTime.now()});
+    mainDocRef.update({FAVOURITES_UPDATE_DATE: DateTime.now()});
     var items = favourites.map((fav) => fav.toMap()).toList();
     mainDocRef.update({FAVOURITES: items})
       .then((value) => logPrint("Обновили избранное $items в базе"))
@@ -134,7 +137,7 @@ class CloudDatabase{
   addOrUpdateComment(String userId, CommentItem comment) {
     var mainDocRef = _usersCollection.doc(userId);
     var refCol = mainDocRef.collection(COMMENTS);
-    mainDocRef.update({'lastCommentUpdate': DateTime.now()});
+    mainDocRef.update({COMMENTS_UPDATE_DATE: DateTime.now()});
     return refCol
         .doc("${comment.phase} - ${comment.id}")
         .set(comment.toMap())
