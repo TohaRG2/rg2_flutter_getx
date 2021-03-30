@@ -78,23 +78,32 @@ class TimerRepository extends GetxController {
   /// Получаем время сборки из FBS и обновляем их в локальной базе и на экране (кэше)
   Future _updateTimerTimes() async {
     logPrint("_updateTimerTimes - получаем время таймера из FBS");
-    var listTimerTimesItems = await _getTimerTimes();
-    List<TimeNoteItem> timeNoteItems = await getAllTimeNotes();
+    List<TimerTimeItem> fbsItems = await _getTimerTimes();
+    List<TimeNoteItem> dbItems = await getAllTimeNotes();
     // синхронизируем списки из локальной базы и FBS
-    timeNoteItems?.forEach((timeNoteItem) {
-      var timerTimesItem = TimerTimeItem.fromTimeNoteItem(timeNoteItem);
-      //TODO додумать процесс синхронизации удаленной и локальной базы
+    await Future.forEach(fbsItems,(TimerTimeItem fbsItem) async {
+      var index = dbItems.indexWhere((dbItem) => dbItem.dateTime.millisecondsSinceEpoch == fbsItem.id);
+      if (index == -1) {
+        var newTimeNote = TimeNoteItem(
+            fbsItem.solvingTime,
+            DateTime.fromMillisecondsSinceEpoch(fbsItem.id),
+            fbsItem.scramble,
+            fbsItem.comment
+        );
+        await _timesDao.insertOrReplace(newTimeNote);
+      }
     });
-    // Пройтись по списку FBS записей,
-    // если в локальной базе нет записи с временем создания как FBS.id.toDateTime,
-    // то конвертим FBS => локальную и добавляем в лок.базу
-
-    // перечитываем значение из локальной базы
-
-
+    dbItems = await getAllTimeNotes();
+    logPrint("_updateTimerTimes - список из fbs $fbsItems");
+    logPrint("_updateTimerTimes - список после синхронизации $dbItems");
+    if (dbItems.length != fbsItems.length) {
+      dbItems.forEach((dbItem) {
+        _addOrUpdateTimerTimeInFBS(dbItem);
+      });
+    }
     // обновляем список результатов сборок на экране, если задан колбэк
     if (timerTimesUpdateCallback != null) {
-      timerTimesUpdateCallback(timeNoteItems);
+      timerTimesUpdateCallback(dbItems);
     }
   }
 

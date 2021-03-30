@@ -173,7 +173,7 @@ class CloudDatabase extends GetxController {
   addOrUpdateTimerTime(String userId, TimerTimeItem timerItem) {
     var mainDocRef = _usersCollection.doc(userId);
     var refCol = mainDocRef.collection(TIMER_TIMES);
-    mainDocRef.update({COMMENTS_UPDATE_DATE: DateTime.now()});
+    mainDocRef.update({TIMER_TIMES_UPDATE_DATE: DateTime.now()});
     return refCol
         .doc("${timerItem.id}")
         .set(timerItem.toMap())

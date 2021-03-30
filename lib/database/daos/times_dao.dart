@@ -1,3 +1,4 @@
+// @dart=2.12
 import 'package:floor/floor.dart';
 import 'package:rg2/database/daos/abstract_dao.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
