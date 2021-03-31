@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/controllers/repository/repository.dart';
 import 'package:rg2/database/entitys/basic_move.dart';
 import 'package:rg2/res/azbuka/phase_types.dart';
 

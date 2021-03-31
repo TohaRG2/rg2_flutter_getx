@@ -22,7 +22,7 @@ import 'package:rg2/views/trainers/timer/controller/timer_settings_controller.da
 import 'controllers/db_controller.dart';
 import 'views/info/controller/info_controller.dart';
 import 'controllers/learn_controller.dart';
-import 'controllers/repository.dart';
+import 'controllers/repository/repository.dart';
 import 'views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/trainers/timer/controller/timer_controller.dart';
 import 'database/main_database.dart';

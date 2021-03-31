@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/controllers/repository.dart';
+import 'package:rg2/controllers/repository/repository.dart';
 import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
