@@ -13,7 +13,7 @@ class AuthController extends GetxController {
   /// Observable переменная, в которой храним данные об авторизации пользователя
   /// null - если не авторизован
   Rx<User> _firebaseUser = Rx<User>(null);
-  get firebaseUser => _firebaseUser;
+  Rx<User> get firebaseUser => _firebaseUser;
   User get user => _firebaseUser.value;
 
   // bool _waitingSync = false;
@@ -24,6 +24,7 @@ class AuthController extends GetxController {
 
   @override
   onInit() {
+    logPrint("onInit - AuthController");
     super.onInit();
     // Биндим стрим в Observable _firebaseUser
     _firebaseUser.bindStream(_auth.authStateChanges());

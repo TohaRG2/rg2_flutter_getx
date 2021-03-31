@@ -24,9 +24,10 @@ class GlobalStorageController extends GetxController {
   Function(List<FavItem> items) favouritesUpdateCallback;
   Function(List<CommentItem> items) commentsUpdateCallback;
 
-
+  @override
   onInit() async {
     super.onInit();
+    logPrint("onInit - GlobalStorageController ${_auth.firebaseUser.value.uid}");
     await _sp.initStorage;
     // подписываемся на получение изменений firebaseUser, при изменении вызываем _userAuthChanged не чаще, чем раз в 2 сек
     // более подробно в описании Workers для GetX (https://github.com/jonataslaw/getx/blob/master/documentation/en_US/state_management.md)

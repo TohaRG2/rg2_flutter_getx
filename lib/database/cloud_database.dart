@@ -175,10 +175,22 @@ class CloudDatabase extends GetxController {
     var refCol = mainDocRef.collection(TIMER_TIMES);
     mainDocRef.update({TIMER_TIMES_UPDATE_DATE: DateTime.now()});
     return refCol
-        .doc("${timerItem.id}")
+        .doc("${timerItem.date.millisecondsSinceEpoch}")
         .set(timerItem.toMap())
         .then((value) => logPrint("Добавили/обновили $timerItem в базу"))
         .catchError((error) => logPrint("Не удалось добавить $timerItem в firebase\n $error"));
+  }
+
+  /// Создаем или обновляем одну запись в коллекции TimerTimes в FBS
+  deleteTimerTime(String userId, TimerTimeItem timerItem) {
+    var mainDocRef = _usersCollection.doc(userId);
+    var refCol = mainDocRef.collection(TIMER_TIMES);
+    mainDocRef.update({TIMER_TIMES_UPDATE_DATE: DateTime.now()});
+    return refCol
+        .doc("${timerItem.date.millisecondsSinceEpoch}")
+        .delete()
+        .then((value) => logPrint("Удалили $timerItem из FBS"))
+        .catchError((error) => logPrint("Не удалось добавить $timerItem в FBS\n $error"));
   }
 
   /// Возвращаем список всех записей сборок в таймере в usersId/timerTimes

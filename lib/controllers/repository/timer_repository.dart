@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/cloud_database.dart';
@@ -17,26 +16,30 @@ class TimerRepository extends GetxController {
 
   Function(List<TimeNoteItem> timeNoteItems) timerTimesUpdateCallback;
 
+  @override
   onInit() async {
     super.onInit();
-    logPrint("onInit - TimerRepository");
+    logPrint("onInit - TimerRepository ${_auth.firebaseUser.value?.uid}");
     // подписываемся на получение изменений firebaseUser, при изменении вызываем _userAuthChanged не чаще, чем раз в 2 сек
     debounce(_auth.firebaseUser, _userAuthChanged, time: Duration(seconds: 2));
+    // если к моменту инициализации пользователь уже залогинен, то апдейтим данные из FBS
+    if (_auth.user != null) {
+      _userAuthChanged(_auth.user);
+    }
   }
 
   /// Что-то поменялось в аутентификации пользователя
   _userAuthChanged(User user) {
-    logPrint("TimerRepository._userAuthChanged - ${user.uid}");
+    logPrint("TimerRepository._userAuthChanged - ${user?.uid}");
     _userId = (user == null) ? "" : user?.uid;
     if (_userId != "") {
       _updateTimerTimes();
     }
   }
 
-
   //--------------------- методы для работы с RoomDb  -----------------------
 
-  /// Получаем список отсортированных по одному из полей записей
+  /// Получаем список отсортированных по одному из полей записей из локальной базы
   Future<List<TimeNoteItem>> getAllTimeNotes({String orderBy}) async {
     var result = await _timesDao.getAllItems();
     var orderColumn = orderBy ?? "SOLVINGTIME"; //если orderBy не NULL, иначе "SolvingTime"
@@ -52,21 +55,25 @@ class TimerRepository extends GetxController {
     return result;
   }
 
+  /// Обновить запись в локальной базе и в FBS
   updateTimeNoteItem(TimeNoteItem item) async {
     await _timesDao.updateItem(item);
     await _addOrUpdateTimerTimeInFBS(item);
   }
 
-
+  /// Добавить запись времени сборки в локальную базу и в FBS
   addTimeNoteItem(TimeNoteItem item) async {
     await _timesDao.insertItem(item);
     await _addOrUpdateTimerTimeInFBS(item);
   }
 
+  /// Удалить запись времени сборк в локальной базе и в FBS
   deleteTimeNoteItem(TimeNoteItem item) async {
     await _timesDao.deleteItem(item);
+    await _deleteTimerTimeInFBS(item);
   }
-  
+
+  /// Очищаем табличку с временами сборки в локальной базе (пока не используется)
   clearTimesTable() async {
     await _timesDao.clearTable();
   }
@@ -82,20 +89,27 @@ class TimerRepository extends GetxController {
     List<TimeNoteItem> dbItems = await getAllTimeNotes();
     // синхронизируем списки из локальной базы и FBS
     await Future.forEach(fbsItems,(TimerTimeItem fbsItem) async {
-      var index = dbItems.indexWhere((dbItem) => dbItem.dateTime.millisecondsSinceEpoch == fbsItem.id);
+      // ищем запись с таким же временем создания в локальной базе
+      var index = dbItems.indexWhere((dbItem) => dbItem.dateTime.isAtSameMomentAs(fbsItem.date));
+      // если не находим, то добавляем
       if (index == -1) {
-        var newTimeNote = TimeNoteItem(
+        var newItem = TimeNoteItem(
             fbsItem.solvingTime,
-            DateTime.fromMillisecondsSinceEpoch(fbsItem.id),
+            fbsItem.date,
             fbsItem.scramble,
             fbsItem.comment
         );
-        await _timesDao.insertOrReplace(newTimeNote);
+        await _timesDao.insertOrReplace(newItem);
+      } else {
+        // если находим, то обновляем у нее комментарий из FBS
+        var upItem = dbItems[index];
+        upItem.comment = fbsItem.comment;
+        await _timesDao.updateItem(upItem);
       }
     });
     dbItems = await getAllTimeNotes();
-    logPrint("_updateTimerTimes - список из fbs $fbsItems");
-    logPrint("_updateTimerTimes - список после синхронизации $dbItems");
+    // logPrint("_updateTimerTimes - список из fbs $fbsItems");
+    // logPrint("_updateTimerTimes - список после синхронизации $dbItems");
     if (dbItems.length != fbsItems.length) {
       dbItems.forEach((dbItem) {
         _addOrUpdateTimerTimeInFBS(dbItem);
@@ -124,5 +138,13 @@ class TimerRepository extends GetxController {
     return null;
   }
 
+  /// Удалить время сборки в FBS
+  _deleteTimerTimeInFBS(TimeNoteItem item) async {
+    if (_userId != "") {
+      var timerTimeItem = TimerTimeItem.fromTimeNoteItem(item);
+      await _cloudDB.deleteTimerTime(_userId, timerTimeItem);
+    }
+
+  }
 
 }

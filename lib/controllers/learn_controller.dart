@@ -271,7 +271,7 @@ class LearnController extends GetxController {
     mainDBItems.clear();
     // logPrint("_favCallback - очистили список");
     // асинхронный цикл для всех записей в favItems, с ожидаем выполнения операции над каждым элементом
-    await Future.forEach(favItems,(favItem) async {
+    await Future.forEach(favItems,(FavItem favItem) async {
       var mainDBItem = await _repo.getMainDBItem(favItem.phase, favItem.id);
       mainDBItem.isFavourite = true;
       mainDBItem.subId = favItem.subId;
