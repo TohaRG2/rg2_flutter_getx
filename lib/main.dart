@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/utils/my_logger.dart';
@@ -104,6 +105,7 @@ class RG2App extends StatelessWidget {
     Get.put(db.pllTrainerDao);
     logPrint("InitControllers in main.dart");
     Get.put(Repository());
+    Get.put(MainRepository());
     Get.put(TimerRepository());
     Get.put(FavouriteController());
     Get.put(LearnController());

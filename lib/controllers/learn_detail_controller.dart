@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
-import 'package:rg2/controllers/repository/repository.dart';
-import 'package:rg2/controllers/settings/global_storage_controller.dart';
+import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/fire_entitys/comment_item.dart';
 import 'package:rg2/utils/my_logger.dart';
@@ -8,15 +7,14 @@ import 'package:rg2/utils/my_logger.dart';
 import 'learn_controller.dart';
 
 class LearnDetailController extends GetxController {
-  Repository _repo = Get.find();
+  MainRepository _mainRepo = Get.find();
   LearnController _learnController = Get.find();
-  GlobalStorageController _storageController = Get.find();
 
   @override
   onInit() {
     super.onInit();
     logPrint("Init LearnDetailController");
-    _storageController.commentsUpdateCallback = _commentsCallback;
+    _mainRepo.detailUpdateCacheCallback = _commentsCallback;
   }
 
   RxInt _curPageNumberObs = 0.obs;
@@ -49,7 +47,7 @@ class LearnDetailController extends GetxController {
 
   Future<void> reLoadPages(String phase, int id) async {
     obsPhase = phase;
-    var list = await _repo.getPhasePages(phase);
+    var list = await _mainRepo.getPhasePages(phase);
     currentItems.assignAll(list);
     changeCurrentPageNumberTo(_getNumFromId(id));
 
@@ -80,10 +78,9 @@ class LearnDetailController extends GetxController {
     var item = currentItems[curPageNumber];
     item.comment = text;
     currentItems[curPageNumber] = item;
-    var commentItem = CommentItem.fromMainDbItem(item);
-    _storageController.addOrUpdateCommentInFBS(commentItem);
+
+    _mainRepo.addOrUpdateComment(item);
     _learnController.updateItemInPages(item);
-    _repo.updateMainDBItem(item);
   }
 
   /// Меняем статус избранного на противоположное и обновляем в кэше страниц и в списке избранного
@@ -94,7 +91,7 @@ class LearnDetailController extends GetxController {
     currentItems[curPageNumber] = item;
     currentItem = item;
     _learnController.updateItemInPages(item);
-    _repo.updateMainDBItem(item);
+    _mainRepo.updateMainDBItem(item);
   }
 
   /// Путь к папке головоломки в ассетах
@@ -104,20 +101,15 @@ class LearnDetailController extends GetxController {
 
   /// Колбэк вызываемый при получении комментариев из firebase
   /// обновляем данные в базе и кэше страниц
-  _commentsCallback(List<CommentItem> commentItems) async {
-    logPrint("_commentsCallback - $commentItems");
-    List<MainDBItem> mainDBItems = [];
-
-    // асинхронный цикл для всех записей в commentItems, с ожидаем выполнения операции над каждым элементом
-    await Future.forEach(commentItems,(CommentItem commentItem) async {
-      var mainDBItem = await _repo.getMainDBItem(commentItem.phase, commentItem.id);
-      mainDBItem.comment = commentItem.comment;
-      mainDBItems.add(mainDBItem);
+  _commentsCallback(List<MainDBItem> items) async {
+    logPrint("_commentsCallback - $items");
+    // обновляем в кэше детальной инфы
+    items.forEach((mainDBItem) {
+      var index = currentItems.indexWhere((element) => element.phase == mainDBItem.phase && element.id == mainDBItem.id);
+      if (index >= 0) {
+        currentItems[index] = mainDBItem;
+      }
     });
-
-    // обновляем список в локальной базе и в кэше
-    _repo.updateMainDBItems(mainDBItems);
-    _learnController.updateItemsInCache(mainDBItems);
   }
 
 }

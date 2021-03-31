@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/repository/repository.dart';
 import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
@@ -12,10 +13,10 @@ import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 class LearnController extends GetxController {
+  final MainRepository _mainRepo = Get.find();
   final Repository _repo = Get.find();
   final SettingsController _settings = Get.find();
   final FavouriteController _favController = Get.find();
-  final GlobalStorageController _storage = Get.find();
 
   double curPositionInList = 0.0;
   String _backIconPath = "assets/images/icons/back_arrow.svg";
@@ -36,7 +37,7 @@ class LearnController extends GetxController {
     super.onInit();
     logPrint("Init LearnController");
     curPageNumber = _settings.currentPageNumber;
-    _storage.favouritesUpdateCallback = _favCallback;
+    _mainRepo.learnUpdateMainCacheCallback = _updateItemsInCache;
   }
 
 
@@ -151,9 +152,9 @@ class LearnController extends GetxController {
     var rootPhase = pages[pageNumber].rootPhase;
     var list = <MainDBItem>[];
     if (phase == Const.FAVOURITES) {
-      list = await _repo.getFavourites();
+      list = await _mainRepo.getFavourites();
     } else {
-      list = await _repo.getMainDBItems(phase);
+      list = await _mainRepo.getMainDBItems(phase);
     }
     //Если фаза не главная, то добавляем переход на один уровень выше "..."
     if (phase != rootPhase) {
@@ -193,8 +194,8 @@ class LearnController extends GetxController {
   void _updateItemInCache(MainDBItem item) {
     pages.forEach((pageProp) {
       List<MainDBItem> list = pageProp.currentList;
-      var index = list.indexWhere((element) => element.phase == item.phase && element.id == item.id);
-      if (index != -1) {
+      var index = list?.indexWhere((element) => element.phase == item.phase && element.id == item.id) ?? -1;
+      if (index >= 0) {
         //logPrint("find in page ${pageProp.number}");
         List<MainDBItem> list = pageProp.currentList.toList();
         list[index] = item;
@@ -204,7 +205,8 @@ class LearnController extends GetxController {
   }
 
   /// Проверяем есть ли элементы списка в кэше и обновляем при необходимости кэш
-  void updateItemsInCache(List<MainDBItem> items) {
+  void _updateItemsInCache(List<MainDBItem> items) {
+    logPrint("_updateItemsInCache - $items");
     items.forEach((item) { 
       _updateItemInCache(item); 
     });
@@ -213,7 +215,7 @@ class LearnController extends GetxController {
   ///Инициализируем список backFrom фазами на которые нужно возвращаться с текущей. типа backFrom['G2F'] = 'MAIN3X3'
   ///для корневых(основных) фаз backFrom будет возвращать null
   _loadBackPhases() async {
-    var subMenusList = await _repo.getSubMenuList();
+    var subMenusList = await _mainRepo.getSubMenuList();
     //logPrint("subMenusList - $subMenusList");
     var backFrom = Map<String, String>();
     subMenusList.forEach((element) {
@@ -251,36 +253,5 @@ class LearnController extends GetxController {
     curPositionInList = position;
     return position;
   }
-
-
-  /// Колбэк вызываемый при получении избранного от firebase
-  _favCallback(List<FavItem> favItems) async {
-    logPrint("_favCallback - получили список из firebase $favItems");
-    // удалить все записи избранного в локальной базе
-    // сначала копируем из текущего избранного
-    var mainDBItems = _favController.favourites.toList();
-    // снимаем признак избранного
-    mainDBItems.forEach((mainDBItem) {
-      mainDBItem.isFavourite = false;
-      mainDBItem.subId = 0;
-      _updateItemInCache(mainDBItem);
-    });
-    // обновляем записи в базе
-    _repo.updateMainDBItems(mainDBItems);
-    // создаем новый список, на основе пришедшего из firebase
-    mainDBItems.clear();
-    // logPrint("_favCallback - очистили список");
-    // асинхронный цикл для всех записей в favItems, с ожидаем выполнения операции над каждым элементом
-    await Future.forEach(favItems,(FavItem favItem) async {
-      var mainDBItem = await _repo.getMainDBItem(favItem.phase, favItem.id);
-      mainDBItem.isFavourite = true;
-      mainDBItem.subId = favItem.subId;
-      mainDBItems.add(mainDBItem);
-      _updateItemInCache(mainDBItem);
-    });
-    // logPrint("_favCallback - задаем новый список $tmpMainDBItems");
-    _favController.setFavourites(mainDBItems);
-  }
-
 
 }

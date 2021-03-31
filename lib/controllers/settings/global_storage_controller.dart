@@ -21,13 +21,11 @@ class GlobalStorageController extends GetxController {
 
   String _userId = "";
   final GetStorage _sp = GetStorage();
-  Function(List<FavItem> items) favouritesUpdateCallback;
-  Function(List<CommentItem> items) commentsUpdateCallback;
 
   @override
   onInit() async {
     super.onInit();
-    logPrint("onInit - GlobalStorageController ${_auth.firebaseUser.value.uid}");
+    logPrint("onInit - GlobalStorageController ${_auth.user?.uid}");
     await _sp.initStorage;
     // подписываемся на получение изменений firebaseUser, при изменении вызываем _userAuthChanged не чаще, чем раз в 2 сек
     // более подробно в описании Workers для GetX (https://github.com/jonataslaw/getx/blob/master/documentation/en_US/state_management.md)
@@ -41,9 +39,6 @@ class GlobalStorageController extends GetxController {
     _userId = (user == null) ? "" : user?.uid;
     if (_userId != "") {
       await _updateAllParameters();
-      await _updateFavourites();
-      await _updateComments();
-      logPrint("_userAuthChanged - end");
     }
   }
 
@@ -126,67 +121,5 @@ class GlobalStorageController extends GetxController {
     // обновляем переменные
     callbacks.forEach((callback) { callback();} );
   }
-
-  //-------------------- методы для работы с избранным --------------------------
-
-  /// Получаем список избранного из FBS и обновляем избранное полученным списком
-  Future _updateFavourites() async {
-    logPrint("_userAuthChanged - получаем избранное из firebase");
-    var listFavItems = await _getFavourites();
-    // обновляем избранное, если задан колбэк и получили не null в listFavItems
-    if (favouritesUpdateCallback != null && listFavItems != null) {
-      // вызываем колбэк, он находится в learnController
-      favouritesUpdateCallback(listFavItems);
-    }
-  }
-
-  /// Обновляем список избранного в FBS
-  updateFavouritesInFBS(List<FavItem> favourites) {
-    //logPrint("setFavourites - $favourites");
-    if (_userId != "") {
-      _cloudDB.addOrUpdateFavourites(_userId, favourites);
-    }
-  }
-
-  /// получаем список избранного из FBS
-  Future<List<FavItem>> _getFavourites() async {
-    //logPrint("_getFavourites - ");
-    if (_userId != "") {
-      return await _cloudDB.getFavourites(_userId);
-    }
-    return null;
-  }
-
-  //------------------------ методы для работы с комментариями -----------------------
-
-  /// Получаем комменты из FBS и обновляем их в локальной базе и на экране (кэше)
-  Future _updateComments() async {
-    logPrint("_updateComments - получаем комментарии из FBS");
-    var listCommentItems = await _getComments();
-    // обновляем комментарии, если задан колбэк и получили не null в listCommentItems
-    if (commentsUpdateCallback != null && listCommentItems != null) {
-      // вызываем колбэк, он находится в learnDetailController
-      commentsUpdateCallback(listCommentItems);
-    }
-  }
-
-  /// Добавить или обновить комментарий в FBS, если пользователь залогинен
-  void addOrUpdateCommentInFBS(CommentItem comment) {
-    logPrint("_addOrUpdateCommentInBase = $comment, userId = $_userId");
-    if (_userId != "") {
-      _cloudDB.addOrUpdateComment(_userId, comment);
-      //TODO если коммент пустой, то сделать удаление коммента из firebase ???
-    }
-  }
-
-  /// получаем список всех сохраненных комментариев к этапам из FBS
-  Future<List<CommentItem>> _getComments() async {
-    //logPrint("_getComments - ");
-    if (_userId != "") {
-      return await _cloudDB.getComments(_userId);
-    }
-    return null;
-  }
-
 
 }

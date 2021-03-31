@@ -12,52 +12,12 @@ import 'package:rg2/database/entitys/pll_trainer_item.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 class Repository extends GetxController {
-  MainDao _mainDao = Get.find();
   PagePropertiesDao _propertiesDao = Get.find();
   MovesDao _movesDao = Get.find();
   PhasePositionDao _positionsDao = Get.find();
   PllTrainerDao _pllTrainerDao = Get.find();
 
   List<MainDBItem> _cache = [];
-
-  Future<MainDBItem> getMainDBItem(String phase, int id) async {
-    //logPrint("getMainDBItem $phase $id");
-    var result = await _mainDao.getItem(phase, id);
-    return result;
-  }
-
-  Future<List<MainDBItem>> getMainDBItems(String phase) async {
-    //if (_cache.isEmpty) { _cache = await _mainDao.getAllItems();}
-    logPrint("getMainDBItems $phase");
-    var result = await _mainDao.getPhase(phase);
-    return result;
-  }
-
-  Future<List<MainDBItem>> getSubMenuList() async {
-    var result = await _mainDao.getSubMenuList("submenu");
-    return result;
-  }
-
-  /// Получаем список записей у которых isFavourite = 1
-  Future<List<MainDBItem>> getFavourites() async {
-    var result = await _mainDao.getFavourites();
-    return result;
-  }
-
-  Future<List<MainDBItem>> getPhasePages(String phase) async {
-    var result = await _mainDao.getPhasePages(phase, "submenu");
-    return result;
-  }
-
-  updateMainDBItem(MainDBItem item) async {
-    logPrint("repo updateItem $item");
-    _mainDao.updateItem(item);
-  }
-
-  Future<int> updateMainDBItems(List<MainDBItem> items) async {
-    logPrint("repo updateItems $items");
-    return await _mainDao.updateItems(items);
-  }
 
   //----------------------------------------------
 

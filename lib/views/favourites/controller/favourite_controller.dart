@@ -1,19 +1,19 @@
 import 'package:get/get.dart';
-import 'package:meta/meta.dart';
-import 'package:rg2/controllers/repository/repository.dart';
+import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/settings/global_storage_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/fire_entitys/fav_item.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 class FavouriteController extends GetxController {
-  Repository _repo = Get.find();
-  final GlobalStorageController _settingsController = Get.find();
+  MainRepository _mainRepo = Get.find();
 
   @override
   void onInit() async {
     super.onInit();
+    logPrint("onInit - FavouriteController");
     reloadFromBase();
+    _mainRepo.favouritesUpdateCallback = _setFavourites;
   }
 
   final RxList<MainDBItem> __favourites = <MainDBItem>[].obs;
@@ -24,13 +24,13 @@ class FavouriteController extends GetxController {
     var favItems = items.map((mainDBItem) =>
         FavItem(id: mainDBItem.id, phase: mainDBItem.phase, subId: mainDBItem.subId)
     ).toList();
-    _settingsController.updateFavouritesInFBS(favItems);
+    _mainRepo.addOrUpdateFavourites(favItems);
   }
 
   /// Перечитываем список избранного из базы и если надо апдейтим в FB
   reloadFromBase() async {
     logPrint("ReloadFavourites");
-    _favourites = await _repo.getFavourites();
+    _favourites = await _mainRepo.getFavourites();
     //logPrint("favourites - $favourites");
   }
 
@@ -48,7 +48,7 @@ class FavouriteController extends GetxController {
       item.subId = index;
     });
     _favourites = map.values.toList();
-    _repo.updateMainDBItems(map.values.toList());
+    _mainRepo.updateMainDBItems(map.values.toList());
   }
 
   /// Обновляем избранное у элемента
@@ -62,7 +62,7 @@ class FavouriteController extends GetxController {
       if (index >= 0) {
         favourites.removeAt(index);
         item.subId = 0; // на всякий случай обнуляем индекс (не обязательно)
-        _repo.updateMainDBItem(item);
+        _mainRepo.updateMainDBItem(item);
       }
     }
     _updateFavouritesSubIds();
@@ -77,8 +77,8 @@ class FavouriteController extends GetxController {
   }
 
   /// Задаем новое избранное (из списка) без сохранения в firebase
-  setFavourites(List<MainDBItem> items) {
+  _setFavourites(List<MainDBItem> items) {
+    logPrint("_updateCallBackForFavourites - $items");
     __favourites.assignAll(items);
-    _repo.updateMainDBItems(items);
   }
 }
