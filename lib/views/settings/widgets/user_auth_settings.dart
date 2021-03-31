@@ -56,13 +56,19 @@ class UserAuthSettings extends StatelessWidget {
           ),
           IconButton(
               onPressed: (){
-                Get.snackbar(StrRes.authSignInBecause, StrRes.authBodyText,
-                  snackPosition: SnackPosition.BOTTOM,
-                  colorText: Colors.white,
-                  backgroundColor: Colors.grey[800],
-                  duration: Duration(seconds: 15),
-                  onTap: (_) { Get.back();},
-                );
+                if (Get.isSnackbarOpen) {
+                  Get.back();
+                } else {
+                  Get.snackbar(StrRes.authSignInBecause, StrRes.authBodyText,
+                    snackPosition: SnackPosition.BOTTOM,
+                    colorText: Colors.white,
+                    backgroundColor: Colors.grey[800],
+                    duration: Duration(seconds: 15),
+                    onTap: (_) {
+                      Get.back();
+                    },
+                  );
+                }
               },
               icon: Icon(MaterialIcons.help_outline),
           ),
