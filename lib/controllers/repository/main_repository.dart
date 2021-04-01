@@ -103,7 +103,7 @@ class MainRepository extends GetxController {
     //logPrint("_updateFavourites - получаем избранное из firebase");
     List<FavItem> favItems = await _getFavourites() ?? [];
 
-    // асинхронный цикл для всех записей в commentItems, с ожидаем выполнения операции над каждым элементом
+    // асинхронный цикл для всех записей в favItems, с ожиданием выполнения операции над каждым элементом
     mainDBItems.clear();
     logPrint("_updateFavourites - reset $mainDBItems");
     await Future.forEach(favItems,(FavItem favItem) async {
@@ -140,7 +140,7 @@ class MainRepository extends GetxController {
     logPrint("_updateComments - получаем комментарии из FBS");
     List<CommentItem> commentItems = await _getComments() ?? [];
 
-    // асинхронный цикл для всех записей в commentItems, с ожидаем выполнения операции над каждым элементом
+    // асинхронный цикл для всех записей в commentItems, с ожиданием выполнения операции над каждым элементом
     List<MainDBItem> mainDBItems = [];
     await Future.forEach(commentItems,(CommentItem commentItem) async {
       var mainDBItem = await getMainDBItem(commentItem.phase, commentItem.id);
@@ -165,13 +165,18 @@ class MainRepository extends GetxController {
     logPrint("_addOrUpdateCommentInBase = $item, userId = $_userId");
     if (_userId != "") {
       var commentItem = CommentItem.fromMainDbItem(item);
-      _cloudDB.addOrUpdateComment(_userId, commentItem);
-      //TODO если коммент пустой, то сделать удаление коммента из firebase ???
+      // удаляем или добавляем/апдейтим коммент
+      if (commentItem.comment == "") {
+        _cloudDB.deleteComment(_userId, commentItem);
+      } else {
+        _cloudDB.addOrUpdateComment(_userId, commentItem);
+      }
     }
     // обновляем в локальной базе
     updateMainDBItem(item);
   }
 
+  //------------------
 
   /// Обновляем список в локальной базе и кэшах: обучалок, деталки и избранного
   Future updateListInLocalDBAndCaches(List<MainDBItem> mainDBItems) async {

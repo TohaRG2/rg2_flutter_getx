@@ -138,7 +138,7 @@ class CloudDatabase extends GetxController {
 
   //----------- для работы с коллекцией комментариев -----------------
 
-  /// Создаем или обновляем один комментарий в firebase
+  /// Создаем или обновляем один комментарий в FBS
   addOrUpdateComment(String userId, CommentItem comment) {
     var mainDocRef = _usersCollection.doc(userId);
     var refCol = mainDocRef.collection(COMMENTS);
@@ -147,8 +147,21 @@ class CloudDatabase extends GetxController {
         .doc("${comment.phase} - ${comment.id}")
         .set(comment.toMap())
         .then((value) => logPrint("Добавили/обновили $comment в базу"))
-        .catchError((error) => logPrint("Не удалось добавить $comment в firebase\n $error"));
+        .catchError((error) => logPrint("Не удалось добавить $comment в FBS\n $error"));
   }
+
+  /// Создаем или обновляем один комментарий в FBS
+  deleteComment(String userId, CommentItem comment) {
+    var mainDocRef = _usersCollection.doc(userId);
+    var refCol = mainDocRef.collection(COMMENTS);
+    mainDocRef.update({COMMENTS_UPDATE_DATE: DateTime.now()});
+    return refCol
+        .doc("${comment.phase} - ${comment.id}")
+        .delete()
+        .then((value) => logPrint("Удалили $comment из базы"))
+        .catchError((error) => logPrint("Не удалось удалить $comment в FBS\n $error"));
+  }
+
 
   /// Возвращаем список всех комментариев к этапам из коллеккции в usersId/comments
   Future<List<CommentItem>> getComments(String userId) async{
