@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/youtube_player/controller/youtube_controller.dart';
 import 'package:rg2/views/shared/buttons_style.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:intl/intl.dart';
 
-class YouTubeView extends StatelessWidget {
+// GetView + Get.put = один и тот же контроллер
+// GetView + Get.create = разные контроллеры
+// GetWidget + Get.create = один и тот же контроллер
+
+class YouTubeView extends GetView<MyYouTubeController> {
   final String _id = Get.arguments["id"];
   final String _time = Get.arguments["time"];
   final String _alg = Get.arguments["alg"];
 
   @override
   Widget build(BuildContext context) {
-    print("arg = $_id, $_time, $_alg");
+    logPrint("arg = $_id, $_time, $_alg");
+    // т.к. в других местах контроллер не нужен, то инициализируем его только на время работы плеера
+    Get.put(MyYouTubeController());
     YoutubePlayerController _youTubeController = YoutubePlayerController(
       initialVideoId: _id,
       flags: YoutubePlayerFlags(
@@ -22,11 +29,9 @@ class YouTubeView extends StatelessWidget {
         hideThumbnail: true,
         controlsVisibleAtStart: false,
         enableCaption: true,
-
       ),
     );
     var _playerState = PlayerState.unknown;
-    MyYouTubeController _controller = Get.find();
     return SafeArea(
       child: Container(
         child: Column(
@@ -54,21 +59,21 @@ class YouTubeView extends StatelessWidget {
                         PlaybackSpeedButton()
                       ],
                       onReady: () {
-                        //print("Player Ready");
+                        //logPrint("Player Ready");
                         _youTubeController.addListener(() {
                           if (_youTubeController.value.playerState != _playerState) {
                             _playerState = _youTubeController.value.playerState;
                             if ((_playerState == PlayerState.playing) || (_playerState == PlayerState.cued)) {
-                              _youTubeController.setPlaybackRate(_controller.playbackRate);
-                              if (_controller.playbackRate < 0.75) {
+                              _youTubeController.setPlaybackRate(controller.playbackRate);
+                              if (controller.playbackRate < 0.75) {
                                 _youTubeController.mute();
                               } else {
                                 _youTubeController.unMute();
                               }
                             }
-                            _controller.setPlayerState(_playerState.index);
+                            controller.setPlayerState(_playerState.index);
                           }
-                          //print("${_youTubeController.value.position.inSeconds}");
+                          //logPrint("${_youTubeController.value.position.inSeconds}");
                         });
                       },
                     ),
@@ -79,15 +84,15 @@ class YouTubeView extends StatelessWidget {
             Material(
               child: Obx(
                 () => Slider(
-                  value: _controller.playbackRate,
+                  value: controller.playbackRate,
                   activeColor: Get.theme.primaryColor,
                   min: 0.25,
                   max: 1.75,
                   divisions: 6,
-                  label: _controller.playbackRate.toString(),
+                  label: controller.playbackRate.toString(),
                   onChanged: (value) {
                     _youTubeController.setPlaybackRate(value);
-                    _controller.playbackRate = value;
+                    controller.playbackRate = value;
                     if (value < 0.75) {
                       _youTubeController.mute();
                     } else {
@@ -97,14 +102,14 @@ class YouTubeView extends StatelessWidget {
                 ),
               ),
             ),
-            playerNavigation(_youTubeController, _controller),
+            playerNavigation(_youTubeController),
           ],
         ),
       ),
     );
   }
 
-  Center playerNavigation(YoutubePlayerController _youTubeController, MyYouTubeController _controller) {
+  Center playerNavigation(YoutubePlayerController _youTubeController) {
     return Center(
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -144,9 +149,9 @@ class YouTubeView extends StatelessWidget {
             () => Flexible(
               child: ElevatedButton(
                 style: raisedButtonStyle,
-                child: (_controller.getPlayerState() == 4) ? Icon(Icons.play_arrow_rounded) : Icon(Icons.pause_rounded),
+                child: (controller.getPlayerState() == 4) ? Icon(Icons.play_arrow_rounded) : Icon(Icons.pause_rounded),
                 onPressed: () {
-                  if (_controller.getPlayerState() == PlayerState.paused.index) {
+                  if (controller.getPlayerState() == PlayerState.paused.index) {
                     _youTubeController.play();
                   } else {
                     _youTubeController.pause();
@@ -179,7 +184,7 @@ class YouTubeView extends StatelessWidget {
       dt = format.parse(stTime);
     } catch (e) {
       //если ошибка преобразования времени, то считаем, что начинаем видео с начала
-      print("Ошибка при преобразовании даты $stTime. Ошибка $e");
+      logPrint("Ошибка при преобразовании даты $stTime. Ошибка $e");
       return 0;
     }
     var seconds = dt.second;

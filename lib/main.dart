@@ -111,7 +111,7 @@ class RG2App extends StatelessWidget {
     Get.put(LearnController());
     Get.put(InfoController());
     Get.put(LearnDetailController());
-    Get.put(MyYouTubeController());
+    //Get.lazyPut(() => MyYouTubeController());
     Get.put(AzbukaDialogController());
     Get.put(TrainersController());
     

@@ -59,4 +59,7 @@ class Const {
   static const AZBUKA_GOOD_ANSWER_WAITING = 'azbukaGoodAnswerWaiting';
   static const AZBUKA_BAD_ANSWER_WAITING = 'azbukaBadAnswerWaiting';
 
+  /// Настройки для youtube плеера
+  static const YOU_TUBE_PLAYER_SPEED = 'youTubePlayerSpeed';
+
 }

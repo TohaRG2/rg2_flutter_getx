@@ -101,5 +101,8 @@ Map<String, dynamic> defaultSettings = {
   Const.AZBUKA_GOOD_ANSWER_WAITING : 1,
   // задержка после неудачной попытки (сек)
   Const.AZBUKA_BAD_ANSWER_WAITING : 5,
-  
+
+  /// Настройки для ютубплеера
+  Const.YOU_TUBE_PLAYER_SPEED : 1.0,
+
 };
