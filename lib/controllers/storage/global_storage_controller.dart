@@ -1,15 +1,9 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rg2/controllers/repository/repository.dart';
-import 'package:rg2/controllers/settings/default_settings.dart';
+import 'package:rg2/controllers/storage/default_settings.dart';
 import 'package:rg2/database/cloud_database.dart';
-import 'package:rg2/database/fire_entitys/comment_item.dart';
-import 'package:rg2/database/fire_entitys/fav_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
-import 'package:rg2/database/fire_entitys/timer_time_item.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/auth/controller/auth_controller.dart';
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:rg2/controllers/settings/global_storage_controller.dart';
+import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
@@ -145,6 +146,8 @@ class SettingsController extends GetxController {
 
   /// Меняем настройки текущей темы
   _changeCurrentTheme() {
+    SystemUiOverlayStyle _currentStyle = SystemUiOverlayStyle.dark;
+    SystemChrome.setSystemUIOverlayStyle(_currentStyle);
     ThemeData theme = getCurrentTheme();
     Get.changeTheme(theme);
   }
@@ -154,6 +157,7 @@ class SettingsController extends GetxController {
     logPrint("Настройки темы: $primaryThemeColor, $accentThemeColor, $isDarkThemeSelect");
     return ThemeData(
         brightness: isDarkThemeSelect ? Brightness.dark : Brightness.light,
+
         primaryColor: primaryThemeColor,
         accentColor: accentThemeColor,
         elevatedButtonTheme: ElevatedButtonThemeData(

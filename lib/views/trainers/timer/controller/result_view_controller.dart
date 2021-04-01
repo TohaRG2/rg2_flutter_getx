@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:rg2/controllers/settings/global_storage_controller.dart';
+import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';

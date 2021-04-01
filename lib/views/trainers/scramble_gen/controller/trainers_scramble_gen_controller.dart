@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:rg2/controllers/settings/global_storage_controller.dart';
+import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/azbuka.dart';

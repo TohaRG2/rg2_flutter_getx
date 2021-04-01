@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository/repository.dart';
-import 'package:rg2/controllers/settings/global_storage_controller.dart';
+import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/database/entitys/pll_trainer_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
