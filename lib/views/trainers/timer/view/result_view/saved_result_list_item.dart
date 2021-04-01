@@ -15,7 +15,7 @@ class SavedResultListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String formattedDate = DateFormat('yyyy-MM-dd hh:mm').format(_item.dateTime);
+    String formattedDate = DateFormat('yyyy-MM-dd HH:mm').format(_item.dateTime);
     return Slidable(
       actionPane: const SlidableBehindActionPane(),
       actions: actions(),
