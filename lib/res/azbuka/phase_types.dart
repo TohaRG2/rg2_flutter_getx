@@ -1,8 +1,8 @@
 const Map<String, String> phaseTypes = {
-  "BEGIN4X4" : "BASIC4X4",
-  "BEGIN5X5" : "BASIC5X5",
-  "BIG_CUBES" : "BASIC5X5",
-  "BLIND4X4" : "BASIC4X4",
+  "BEGIN_4X4" : "BASIC_4X4",
+  "BEGIN_5X5" : "BASIC_5X5",
+  "BIG_CUBES" : "BASIC_5X5",
+  "BLIND_4X4" : "BASIC_4X4",
   "CLOVER" : "BASIC_CLOVER",
   "CONTAINER" : "BASIC_CONTAINER",
   "IVY" : "BASIC_IVY",
@@ -14,5 +14,5 @@ const Map<String, String> phaseTypes = {
   "SQUARE" : "BASIC_SQUARE",
   "SQ_STAR" : "BASIC_SQUARE",
   "TW_SKEWB" : "BASIC_SKEWB",
-  "YAU4X4" : "BASIC4X4",
+  "YAU_4X4" : "BASIC_4X4",
 };
