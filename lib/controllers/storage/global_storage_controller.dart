@@ -109,7 +109,7 @@ class GlobalStorageController extends GetxController {
 
   /// список колбэков, которые будут вызваны после синхронизации данных с FBS
   List<Function> callbacks = [];
-  /// запуск зареганных колбэков от settings контроллеров, чтобы обновить переменные из локального хранилища
+  /// запуск зареганных колбэков от settings контроллеров, чтобы обновить переменные в локальном хранилище
   void runCallbacks() {
     logPrint("runCallbacks");
     // обновляем переменные

@@ -1,26 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rg2/database/cloud_database.dart';
+import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/main_view.dart';
 
 class AuthController extends GetxController {
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
+  final _sp = GetStorage();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
 
   /// Observable переменная, в которой храним данные об авторизации пользователя
   /// null - если не авторизован
-  Rx<User> _firebaseUser = Rx<User>(null);
+  final Rx<User> _firebaseUser = Rx<User>(null);
   Rx<User> get firebaseUser => _firebaseUser;
   User get user => _firebaseUser.value;
 
-  // bool _waitingSync = false;
-  //   get waitingSync => _waitingSync;
-    // set waitingSync(value) {
-    //
-    // }
+  bool _needShowSignInView = true;
+
+  get showSignInDialog => _needShowSignInView && (user == null);
 
   @override
   onInit() {
@@ -28,6 +29,7 @@ class AuthController extends GetxController {
     super.onInit();
     // Биндим стрим в Observable _firebaseUser
     _firebaseUser.bindStream(_auth.authStateChanges());
+    _needShowSignInView = _sp.read(Const.IS_FIREBASE_ENTER_ENABLED) ?? true;
   }
 
   Future<void> googleSignInAndGoToStart() async {
@@ -76,11 +78,22 @@ class AuthController extends GetxController {
   Future<void> googleSignOut() async {
     logPrint("SignOut ${user.email}");
     try {
+      _enableShowSignInView();
       await _auth.signOut();
       await _googleSignIn.signOut();
     } catch (e) {
       logPrint("Не смогли выйти из аккаунта:\n $e");
     }
+  }
+
+  disableShowSignInView() {
+    _needShowSignInView = false;
+    _sp.write(Const.IS_FIREBASE_ENTER_ENABLED, false);
+  }
+
+  _enableShowSignInView() {
+    _needShowSignInView = true;
+    _sp.write(Const.IS_FIREBASE_ENTER_ENABLED, true);
   }
 
 }

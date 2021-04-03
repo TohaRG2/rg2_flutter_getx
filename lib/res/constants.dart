@@ -62,4 +62,10 @@ class Const {
   /// Настройки для youtube плеера
   static const YOU_TUBE_PLAYER_SPEED = 'youTubePlayerSpeed';
 
+
+  /// Настройки для локального хранилища
+  static const LOCAL_STARTS_COUNT = 'localStartsCount';
+  static const IS_FIREBASE_ENTER_ENABLED = 'isFirebaseEnterEnabled';
+
+
 }

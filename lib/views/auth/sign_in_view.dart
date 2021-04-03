@@ -82,6 +82,7 @@ class SignInView extends GetWidget<AuthController> {
                     ),
                     TextButton(
                       onPressed: () {
+                        controller.disableShowSignInView();
                         Get.offAll(() => MainView(), transition: Transition.rightToLeft);
                       },
                       child: Text(StrRes.authNeverButtonText),
