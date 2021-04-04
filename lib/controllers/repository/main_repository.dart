@@ -38,8 +38,11 @@ class MainRepository extends GetxController {
     if (_userId != "") {
       await _updateFavourites();
       await _updateComments();
+      await _cloudDB.updateGlobalEntersCount(_userId);
     }
   }
+
+
 
   //--------------- методы для работы с локальной базой room ----------------
 

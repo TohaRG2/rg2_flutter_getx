@@ -22,6 +22,10 @@ class CloudDatabase extends GetxController {
   // название коллекции для хранения времени сборки кубика в коллекции userId
   static const TIMER_TIMES = "timerTimes";
   static const TIMER_TIMES_UPDATE_DATE = "lastTimerTimesUpdate";
+  // название парметров для хранения счетчика входов
+  static const ENTERS_COUNT = "entersCount";
+  static const LAST_ENTER_DATE = "lastEnterDate";
+
 
 
   disableNetwork() async {
@@ -223,5 +227,20 @@ class CloudDatabase extends GetxController {
     }
   }
 
+  //------------------------------------------------------------------
+
+  /// Обновляем глобальный счетчик входов в FBS по id пользователя
+  updateGlobalEntersCount(String userId) async {
+    try {
+      var mainDocRef = _usersCollection.doc(userId);
+      DocumentSnapshot docSnapShot = await mainDocRef.get();
+      int currentCount = docSnapShot.data()[ENTERS_COUNT] ?? 0;
+      currentCount++;
+      mainDocRef.update({ENTERS_COUNT: currentCount});
+      mainDocRef.update({LAST_ENTER_DATE: DateTime.now()});
+    } catch (e) {
+      logPrint("ERROR! Ошибка обновления счетчика входов\n $e");
+    }
+  }
 
 }

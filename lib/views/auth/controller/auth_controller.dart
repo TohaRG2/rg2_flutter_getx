@@ -21,15 +21,25 @@ class AuthController extends GetxController {
 
   bool _needShowSignInView = true;
 
+  int localEnterCounts = 0;
+
   get showSignInDialog => _needShowSignInView && (user == null);
 
   @override
   onInit() {
     logPrint("onInit - AuthController");
     super.onInit();
-    // Биндим стрим в Observable _firebaseUser
+    // Биндим стрим в Observable _firebaseUser и подписываемся на его изменения
     _firebaseUser.bindStream(_auth.authStateChanges());
+
     _needShowSignInView = _sp.read(Const.IS_FIREBASE_ENTER_ENABLED) ?? true;
+    _updateLocalEnterCounts();
+  }
+
+  _updateLocalEnterCounts() {
+    localEnterCounts = _sp.read(Const.LOCAL_STARTS_COUNT) ?? 0;
+    localEnterCounts++;
+    _sp.write(Const.LOCAL_STARTS_COUNT, localEnterCounts);
   }
 
   Future<void> googleSignInAndGoToStart() async {
