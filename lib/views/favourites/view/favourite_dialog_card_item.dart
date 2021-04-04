@@ -95,7 +95,7 @@ class FavouriteDialogCardItem extends StatelessWidget {
           // переходим на "Обучалки" в любом случае
           _settings.bottomItem = 0;
           if (_item.url == "submenu") {
-            print("onTap -> submenu -> change to ${_item.description}");
+            logPrint("onTap -> submenu -> change to ${_item.description}");
             _learnController.changePageAndPhaseTo(_item.description);
             logPrint("rawRoute - ${Get.rawRoute}");
             logPrint("currentRoute - ${Get.currentRoute}");
@@ -106,16 +106,16 @@ class FavouriteDialogCardItem extends StatelessWidget {
               Get.back();
               logPrint("CurRoute - ${Get.currentRoute}");
             }
-            print("GetBack complete");
+            logPrint("GetBack complete");
           } else {
-            print("onTap -> not submenu -> change to ${_item.phase}");
+            logPrint("onTap -> not submenu -> change to ${_item.phase}");
             _learnController.changePageAndPhaseTo(_item.phase);
             if (Get.isDialogOpen) { Get.back(); }
             while (Get.currentRoute != "/() => MainView"  && Get.currentRoute != "/") {
               Get.back();
               logPrint("CurRoute - ${Get.currentRoute}");
             }
-            print("GetBack complete -> Get.to(LearnDetailScreen(${_item.phase}, ${_item.id})");
+            logPrint("GetBack complete -> Get.to(LearnDetailScreen(${_item.phase}, ${_item.id})");
             Get.to(() => LearnDetailScreen(_item.phase, _item.id), transition: Transition.fadeIn);
           }
         },

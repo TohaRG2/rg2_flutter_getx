@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/timer/controller/result_view_controller.dart';
 
 class ResultBottomMenuBar extends StatelessWidget {
@@ -26,15 +27,15 @@ class ResultBottomMenuBar extends StatelessWidget {
         // Нажата кнопка "Результаты"
           case 1:
             _controller.sortTimeNoteItemsByDate();
-            print("Нажали сортировка по дате");
+            logPrint("Нажали сортировка по дате");
             break;
         // Нажата кнопка "Настройки"
           case 2:
             _controller.sortTimeNoteItemsBySolvingTime();
-            print("Нажали сортировка по результатам");
+            logPrint("Нажали сортировка по результатам");
             break;
           default:
-            print("WARNING!!! selected bottom item - $tappedItemIndex");
+            logPrint("WARNING!!! selected bottom item - $tappedItemIndex");
             Get.back();
         }
       },

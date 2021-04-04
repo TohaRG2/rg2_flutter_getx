@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:rg2/database/daos/main_dao.dart';
 import 'package:rg2/database/daos/moves_dao.dart';
 import 'package:rg2/database/daos/page_prop_dao.dart';
 import 'package:rg2/database/daos/phase_position_dao.dart';

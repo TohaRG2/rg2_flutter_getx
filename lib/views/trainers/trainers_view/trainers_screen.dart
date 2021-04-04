@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:rg2/controllers/trainers_controller.dart';
 import 'package:rg2/models/trainer_menu_item.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/settings/settings_screen_view.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/view/main_azbuka_trainer_view.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/view/settings_azbuka_trainer_view.dart';
@@ -58,28 +59,28 @@ class TrainersScreen extends StatelessWidget {
   _onItemSelected (TrainerMenuItem item) {
     switch(item.id) {
       case StrRes.trainersScrambleGen:
-        print("Start Scramble Generator");
+        logPrint("Start Scramble Generator");
         Get.to(() => ScrambleGenView(title: item.title), transition: Transition.fadeIn);
         break;
       case StrRes.trainersTimer:
-        print("Start Timer");
+        logPrint("Start Timer");
         Get.to(() => TimerView(), transition: Transition.fadeIn);
         break;
       case StrRes.trainersPll:
-        print("Start PLL trainer");
+        logPrint("Start PLL trainer");
         Get.to(() => MainPllTrainerView(), transition: Transition.fadeIn);
         break;
       case StrRes.trainersAzbuka:
-        print("Start AZBUKA trainer");
+        logPrint("Start AZBUKA trainer");
         Get.to(() => MainAzbukaTrainerView(), transition: Transition.fadeIn);
         break;
       default:
-        print("Warning!!! Pressed on ${item.title}");
+        logPrint("Warning!!! Pressed on ${item.title}");
     }
   }
 
   _onHelpSelected (TrainerMenuItem item) {
-    //print("Pressed on ${item.title} - help");
+    //logPrint("Pressed on ${item.title} - help");
     Get.to(() => HelpView(item: item), transition: Transition.fadeIn);
   }
 
@@ -98,7 +99,7 @@ class TrainersScreen extends StatelessWidget {
         Get.to(() => SettingsAzbukaTrainerView(), transition: Transition.rightToLeft);
         break;
       default:
-        print("Warning!!! Pressed on settings on ${item.title}");
+        logPrint("Warning!!! Pressed on settings on ${item.title}");
     }
   }
 

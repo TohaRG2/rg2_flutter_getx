@@ -24,11 +24,11 @@ class LearnViewPager extends StatelessWidget {
             var pageNum = _lc.curPageNumber;
 
             //регистрируем листенер, только если его нет, и переходим на страницу
-            //print("tabController has listeners? - ${_tabController.hasListeners}, curPage - $pageNum");
+            //logPrint("tabController has listeners? - ${_tabController.hasListeners}, curPage - $pageNum");
             if (!_tabController.hasListeners) {
               _tabController.addListener(() {
                 if (!_tabController.indexIsChanging) {
-                  //print("$_tabController - $pageNum ");
+                  //logPrint("$_tabController - $pageNum ");
                   //Обновляем номер текущей страницы в контроллере
                   _lc.curPageNumber = _tabController.index;
                 }
@@ -83,7 +83,7 @@ class LearnViewPager extends StatelessWidget {
 
   //Возвращаем true, если надо дальше продолжать обрабатывать нажатие, т.е. выход из программы
   Future<bool> _onWillPop() async {
-    //print("Back pressed");
+    //logPrint("Back pressed");
     return _learnController.canReturnToOnePhaseBack();
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/advices_images/advices_images_dialog.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'dart:math';
@@ -36,7 +37,7 @@ class AdviceView extends StatelessWidget {
                 child: Image.asset(Advices.advicesList[index].adviceImagePath)
               ),
               onTap: (){
-                print("Открываем диалог с просмотром советов по программе");
+                logPrint("Открываем диалог с просмотром советов по программе");
                 Get.to(() => AdvicesImagesDialog());
                 //Get.to(() => ComplicatedImageDemo());
               },

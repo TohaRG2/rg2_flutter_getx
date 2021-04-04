@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/utils/my_logger.dart';
 
 import 'edit_button.dart';
 import 'favourite_button.dart';
@@ -28,7 +29,7 @@ class ButtonsContainer extends StatelessWidget {
             ),
             splashColor: Colors.white,
             onPressed: () {
-              print("back_pressed");
+              logPrint("back_pressed");
               Get.back();
             },
           ),
@@ -38,7 +39,7 @@ class ButtonsContainer extends StatelessWidget {
                 color: iconColor,
               ),
               onPressed: () {
-                print("Shared pressed");
+                logPrint("Shared pressed");
                 Scaffold.of(context).openDrawer();
               }),
           Container(

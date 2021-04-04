@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/blind_cube_support_arrays.dart';
 import 'package:rg2/views/trainers/scramble_gen/view/show_scramble_text.dart';
@@ -22,7 +23,7 @@ class ScrambleGenView extends StatelessWidget {
     const padding = 8.0;
     var cellHeight = (Get.width - padding * 2) / 12;
     var border = 2.0;
-    print("ScrambleGenView");
+    logPrint("ScrambleGenView");
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -35,7 +36,7 @@ class ScrambleGenView extends StatelessWidget {
           backgroundColor: backgroundColor,
         ),
         body: Obx( () {
-          //print("Update scrambleGen Obx View");
+          //logPrint("Update scrambleGen Obx View");
           var coloredAzbuka = _controller.mainColoredAzbuka;
           var tableRows = _controller.asTableRows(coloredAzbuka);
           var scrambleLength = _controller.scrambleLength.toString();

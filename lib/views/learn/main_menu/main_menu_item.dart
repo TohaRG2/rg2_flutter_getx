@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:rg2/controllers/learn_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/favourites/dialog/favourite_dialog.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 import 'package:rg2/views/settings/settings_screen_view.dart';
@@ -100,7 +101,7 @@ class MainMenuItem extends StatelessWidget {
           ),
         ),
         onTap: () {
-          print("Tap on mainMenu $item");
+          logPrint("Tap on mainMenu $item");
           if (isItemEnabled) {
             if (item.url == "submenu") {
               _learnController.changeCurrentPhaseWith(item);

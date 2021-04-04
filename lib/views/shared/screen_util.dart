@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rg2/utils/my_logger.dart';
 
 /// https://stackoverflow.com/questions/57337154/how-to-set-mediaquery-textscalefactor-of-fontsize-in-materialapp-theme
 
@@ -54,9 +55,9 @@ class ScreenUtil {
   setWidth(double width) => width * scaleWidth;
   setHeight(double height) => height * scaleHeight;
   setSp(double fontSize) {
-    print("Scale 10 ${setWidth(fontSize)}");
-    print("Scale 12 $_textScaleFactor");
-    print("Scale 11 ${setWidth(fontSize) / _textScaleFactor}");
+    logPrint("Scale 10 ${setWidth(fontSize)}");
+    logPrint("Scale 12 $_textScaleFactor");
+    logPrint("Scale 11 ${setWidth(fontSize) / _textScaleFactor}");
     return allowFontScaling
         ? setWidth(fontSize)
         : setWidth(fontSize) / _textScaleFactor;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/learn_detail_controller.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/drawer_menu_item.dart';
 
 import 'bottom_nav_bar/bottom_nav_bar.dart';
@@ -20,14 +21,14 @@ class LearnDetailView extends StatelessWidget {
             // высчитаем смещение в пикселях для заданной позиции
             var offset = intPosition.toDouble() * 88;
             var _scrollController = ScrollController(initialScrollOffset: offset);
-            print("Offset $intPosition - $offset");
+            logPrint("Offset $intPosition - $offset");
             return ListView(
               controller: _scrollController,
               children: items.map((listItem) =>
                 DrawerMenuItem(
                   item: listItem,
                   onItemSelected: (selectedItem) {
-                    print("DrawerPressed on ${selectedItem.title}");
+                    logPrint("DrawerPressed on ${selectedItem.title}");
                     _controller.changeCurrentPageByItem(selectedItem);
                     Get.back();
                   },

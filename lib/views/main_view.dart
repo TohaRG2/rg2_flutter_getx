@@ -27,7 +27,7 @@ class MainView extends StatelessWidget {
     var selectedColor = Get.theme.scaffoldBackgroundColor;
     var unSelectedColor = Get.theme.scaffoldBackgroundColor.withAlpha(130);
     return Obx(() {
-      //print("BottomItem = ${_settings.bottomItem}");
+      //logPrint("BottomItem = ${_settings.bottomItem}");
       return Scaffold(
           body: Center(
             child: _widgetOptions.elementAt(_settings.bottomItem),

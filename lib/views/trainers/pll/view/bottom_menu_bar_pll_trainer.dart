@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/pll/controller/pll_trainer_controller.dart';
 import 'package:rg2/views/trainers/pll/view/settings_pll_trainer_view.dart';
 
@@ -29,7 +30,7 @@ class PllTrainerBottomMenuBar extends StatelessWidget {
             _controller.exitTrainer();
             break;
           default:
-            print("WARNING!!! selected bottom item - $tappedItemIndex");
+            logPrint("WARNING!!! selected bottom item - $tappedItemIndex");
             Get.back();
         }
       },

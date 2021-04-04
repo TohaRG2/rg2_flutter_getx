@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:rg2/models/pair.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_settings_controller.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/model/azbuka_cube_image.dart';
 import 'package:rg2/views/trainers/model/cube_element_types.dart';
@@ -40,7 +41,7 @@ class AzbukaTrainerController extends TrainerController {
   /// Создаем новую игру используя параметры из настроек
   _createNewGame() {
     _blindCube = BlindCube.colored(colors: Azbuka().currentColorsSide, azbuka: Azbuka().currentAzbuka);
-    //print("$_blindCube");
+    //logPrint("$_blindCube");
     quizGame = QuizGame(
         answersList: _quizCornerVariants,
         onTimeIsOverCallback: _onTimeIsOverCallback,
@@ -51,7 +52,7 @@ class AzbukaTrainerController extends TrainerController {
   /// Колбэк обработки TimeOver
   _onTimeIsOverCallback() {
     if (_state == TrainerState.WAIT_ANSWER && quizGame.timerProgress == 0.0) {
-      print("Time is over :(");
+      logPrint("Time is over :(");
       // Выводим диалог окончания времени
       _stateShowTimeIsOver();
       // Переводим в режим без автонажатия кнопки
@@ -164,7 +165,7 @@ class AzbukaTrainerController extends TrainerController {
   /// Переводы по статусам тренажера
 
   _stateStartScreen() {
-    print("state azbuka StartScreen");
+    logPrint("state azbuka StartScreen");
     _state = TrainerState.START_SCREEN;
     showStartScreen = true;
     isShowResultEnabled = false;
@@ -172,7 +173,7 @@ class AzbukaTrainerController extends TrainerController {
   }
 
   _stateWaitAnswer() {
-    print("state azbuka WaitAnswer");
+    logPrint("state azbuka WaitAnswer");
     _state = TrainerState.WAIT_ANSWER;
     showStartScreen = false;
     isShowResultEnabled = false;
@@ -180,7 +181,7 @@ class AzbukaTrainerController extends TrainerController {
   }
 
   _stateShowRightResult() {
-    print("state azbuka ShowRightResult");
+    logPrint("state azbuka ShowRightResult");
     _state = TrainerState.SHOW_RESULT;
     showStartScreen = false;
     isShowResultEnabled = true;
@@ -189,7 +190,7 @@ class AzbukaTrainerController extends TrainerController {
   }
 
   _stateShowWrongResult() {
-    print("state azbuka ShowWrongResult");
+    logPrint("state azbuka ShowWrongResult");
     _state = TrainerState.SHOW_RESULT;
     showStartScreen = false;
     isShowResultEnabled = true;
@@ -198,7 +199,7 @@ class AzbukaTrainerController extends TrainerController {
   }
 
   _stateShowTimeIsOver() {
-    print("state azbuka ShowTimeIsOver");
+    logPrint("state azbuka ShowTimeIsOver");
     _state = TrainerState.SHOW_RESULT;
     showStartScreen = false;
     isShowResultEnabled = true;
@@ -207,7 +208,7 @@ class AzbukaTrainerController extends TrainerController {
   }
 
   _delayedWaitAnswer(Duration delay) async {
-    print("delayedWaitAnswer");
+    logPrint("delayedWaitAnswer");
     var endTime = DateTime.now().add(delay);
     var curState = _state;
     while ( DateTime.now().isBefore(endTime) && _state == curState) {
@@ -224,7 +225,7 @@ class AzbukaTrainerController extends TrainerController {
   }
 
   _statePaused() {
-    print("state Paused");
+    logPrint("state Paused");
     _state = TrainerState.PAUSED;
     showStartScreen = false;
     isShowResultEnabled = true;

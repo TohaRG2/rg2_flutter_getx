@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/scramble_gen/view/settings_scramble_gen_view.dart';
 
 //TODO Проверить, нужен ли этот класс? Удалить?
@@ -28,7 +29,7 @@ class ButtonsContainer extends StatelessWidget {
             ),
             splashColor: Colors.white,
             onPressed: () {
-              print("back_pressed");
+              logPrint("back_pressed");
               Get.back();
             },
           ),

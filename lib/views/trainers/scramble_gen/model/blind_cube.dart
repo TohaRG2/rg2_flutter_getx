@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/model/cube_element_types.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/pair_for_melting.dart';
@@ -48,7 +49,7 @@ class BlindCube extends Cube {
 
   /// Возвращаем подходящий под условия переплавки скрамбл и перемешиваем по нему кубик
   ScrambleDecisionCondition generateScrambleWithParam({bool checkEdge, bool checkCorner, int lenScramble}) {
-    //print("Ищем скрамбл подходящий по параметрам переплавок буфера и длине");
+    //logPrint("Ищем скрамбл подходящий по параметрам переплавок буфера и длине");
     ScrambleDecisionCondition condition;
     var scramble = "";
     var result = true;
@@ -387,7 +388,7 @@ class BlindCube extends Cube {
         return azbuka[mainEdge[defaultColor]];
         break;
       default:
-        print("У центра нет буквы в азбуке");
+        logPrintErr("У центра нет буквы в азбуке");
         return "-";
     }
   }

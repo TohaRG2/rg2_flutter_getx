@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'dart:math';
 
 import 'package:rg2/views/trainers/pll/model/quiz_variant.dart';
@@ -97,7 +98,7 @@ class QuizGame {
   /// Вход: Count - количество вариантов
   /// Выход: Список из Count элементов, и номер правильного ответа
   List<QuizVariant> getListOfVariants(int count) {
-    print("start ListOfVariants - $count");
+    logPrint("start ListOfVariants - $count");
     // создаем список из копии всех возможых ответов
     var tmpList = answersList.toList();
     // перемешиваем массив ответов без правильного и ставим правильный ответ в
@@ -119,7 +120,7 @@ class QuizGame {
     } else {
       _wrongAnswerCount++;
     }
-    //print("Counts = $rightAnswerCount, $wrongAnswerCount");
+    //logPrint("Counts = $rightAnswerCount, $wrongAnswerCount");
     return result;
   }
 
@@ -167,7 +168,7 @@ class QuizGame {
     // Если ответа нет в списке, устанавливаем правильным первый элемент из списка и пишем в лог
     if (id == -1) {
       id = 0;
-      print("Попытка задать правильным отсутствующий в списке вариант! Установлен 0 вариант");
+      logPrint("Попытка задать правильным отсутствующий в списке вариант! Установлен 0 вариант");
     }
     _setCorrectAnswerById(id);
   }

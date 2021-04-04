@@ -59,7 +59,7 @@ class AzbukaDialog extends StatelessWidget {
                   child: ListView.builder(
                   itemCount: _controller.movesItems.length,
                   itemBuilder: (_, index) {
-                    //print("Создаем элемент сиска $pageNumber - $index");
+                    //logPrint("Создаем элемент сиска $pageNumber - $index");
                     return AzbukaItem(
                         _controller.movesItems[index]);
                   },

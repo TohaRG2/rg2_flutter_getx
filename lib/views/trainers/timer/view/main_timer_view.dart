@@ -62,7 +62,7 @@ class TimerView extends StatelessWidget {
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Obx(() {
-        //print("bottomHeight - ${_controller.bottomBarHeight}");
+        //logPrint("bottomHeight - ${_controller.bottomBarHeight}");
         return Stack(
           children: [
             //Фон для верхней части экрана, для телефонов с загнутыми краями (
@@ -216,7 +216,7 @@ class TimerView extends StatelessWidget {
 
   //Возвращаем true, если надо дальше продолжать обрабатывать нажатие, т.е. выход из таймера
   Future<bool> _onWillPop() async {
-    //print("Back pressed");
+    //logPrint("Back pressed");
     return _controller.onBackButtonPressed();
   }
 

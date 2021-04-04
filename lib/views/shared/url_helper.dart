@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 import 'package:rg2/views/trainers/scramble_gen/view/main_scramble_gen_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -9,7 +10,7 @@ class UrlHelper {
   //"rg2://ytplay?time=2:36&link=rzGqTZKG74o"
   //rg2://pager?phase=BEGIN&item=1
   static onUrlTap(String url) {
-    print("Opening url - $url");
+    logPrint("Opening url - $url");
     var uri = Uri.parse(url);
     if (uri.scheme == "rg2") {
       _launchRG2url(uri);
@@ -20,7 +21,7 @@ class UrlHelper {
 
   /// Переходы к нужному окну программы в зависимости от типа ссылки
   static _launchRG2url(Uri uri) {
-    print("URI.parameters - ${uri.queryParameters}");
+    logPrint("URI.parameters - ${uri.queryParameters}");
     // окно просмотра видео для "ytplay" или "ytplay"
     if (uri.host.toLowerCase() == "ytplay" || uri.host.toLowerCase() == "ytplay") {
       var _id = uri.queryParameters["link"] ?? "u1CA_35lRAI";

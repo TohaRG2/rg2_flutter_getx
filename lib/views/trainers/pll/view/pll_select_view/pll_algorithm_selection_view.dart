@@ -72,7 +72,7 @@ class PllAlgorithmSelectionView extends StatelessWidget {
 
   ///Колбэк вызваемый при нажатии на саму запись (изменяем текущее название)
   _onTapItem(PllTrainerItem pllTrainerItem){
-    //print(pllTrainerItem);
+    //logPrint(pllTrainerItem);
     showEditCommentDialog(pllTrainerItem);
   }
 

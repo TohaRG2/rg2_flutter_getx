@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/model/result_variants.dart';
 import 'package:rg2/views/trainers/model/trainer_controller.dart';
 import 'package:rg2/views/trainers/model/trainer_state.dart';
@@ -61,7 +62,7 @@ class PllTrainerController extends TrainerController {
     _pllCubeImage = PllCubeImage(id: correctAnswer.id, randomAUF: _randomAUF, randomFrontSide: _randomFS);
     hint = correctAnswer.value;
     textForButtons = _getListOfVariants();
-    print("Загадали $correctAnswer, rndFS - $_randomFS, AUF - $_randomAUF");
+    logPrint("Загадали $correctAnswer, rndFS - $_randomFS, AUF - $_randomAUF");
     _stateWaitAnswer();
   }
 
@@ -135,7 +136,7 @@ class PllTrainerController extends TrainerController {
   /// Переводы по статусам тренажера
 
   _stateInit() {
-    print("state Init");
+    logPrint("state Init");
     _state = TrainerState.INIT;
     isStartButtonEnabled = false;
     showStartScreen = true;
@@ -144,7 +145,7 @@ class PllTrainerController extends TrainerController {
   }
 
   _stateStartScreen() {
-    print("state StartScreen");
+    logPrint("state StartScreen");
     _state = TrainerState.START_SCREEN;
     isStartButtonEnabled = true;
     showStartScreen = true;
@@ -153,7 +154,7 @@ class PllTrainerController extends TrainerController {
   }
 
   _stateWaitAnswer() {
-    print("state WaitAnswer");
+    logPrint("state WaitAnswer");
     _state = TrainerState.WAIT_ANSWER;
     isStartButtonEnabled = false;
     showStartScreen = false;
@@ -162,7 +163,7 @@ class PllTrainerController extends TrainerController {
   }
 
   _stateShowRightResult() {
-    print("state ShowRightResult");
+    logPrint("state ShowRightResult");
     _state = TrainerState.SHOW_RESULT;
     isStartButtonEnabled = false;
     showStartScreen = false;
@@ -172,7 +173,7 @@ class PllTrainerController extends TrainerController {
   }
 
   _stateShowWrongResult() {
-    print("state ShowWrongResult");
+    logPrint("state ShowWrongResult");
     _state = TrainerState.SHOW_RESULT;
     isStartButtonEnabled = false;
     showStartScreen = false;
@@ -182,7 +183,7 @@ class PllTrainerController extends TrainerController {
   }
 
   _stateShowTimeIsOver() {
-    print("state ShowTimeIsOver");
+    logPrint("state ShowTimeIsOver");
     _state = TrainerState.SHOW_RESULT;
     isStartButtonEnabled = false;
     showStartScreen = false;
@@ -192,7 +193,7 @@ class PllTrainerController extends TrainerController {
   }
 
   _delayedWaitAnswer(Duration delay) async {
-    print("delayedWaitAnswer");
+    logPrint("delayedWaitAnswer");
     var endTime = DateTime.now().add(delay);
     var curState = _state;
     while ( DateTime.now().isBefore(endTime) && _state == curState) {
@@ -209,7 +210,7 @@ class PllTrainerController extends TrainerController {
   }
 
   _statePaused() {
-    print("state Paused");
+    logPrint("state Paused");
     _state = TrainerState.PAUSED;
     isStartButtonEnabled = false;
     showStartScreen = false;

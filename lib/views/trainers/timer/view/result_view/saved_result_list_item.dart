@@ -82,7 +82,7 @@ class SavedResultListItem extends StatelessWidget {
             ),
           ),
           onTap: () {
-            //print("Нажали на элемент $_item");
+            //logPrint("Нажали на элемент $_item");
             showEditCommentDialog();
           },
         ),

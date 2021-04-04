@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/timer/view/settings_timer_view.dart';
 import 'package:rg2/views/trainers/timer/view/result_view/results_view.dart';
 
@@ -26,15 +27,15 @@ class TimerBottomMenuBar extends StatelessWidget {
           case 1:
             //_controller.generateNewScramble();
             Get.to(() => TimerResultsView(), transition: Transition.rightToLeft);
-            print("Нажали результаты");
+            logPrint("Нажали результаты");
             break;
         // Нажата кнопка "Настройки"
           case 2:
             Get.to(() => SettingsTimerView(), transition: Transition.rightToLeft);
-            print("Нажали настройки");
+            logPrint("Нажали настройки");
             break;
           default:
-            print("WARNING!!! selected bottom item - $tappedItemIndex");
+            logPrint("WARNING!!! selected bottom item - $tappedItemIndex");
             Get.back();
         }
       },

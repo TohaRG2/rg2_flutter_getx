@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/view/settings_azbuka_trainer_view.dart';
 
 class AzbukaTrainerBottomMenuBar extends StatelessWidget {
@@ -27,7 +28,7 @@ class AzbukaTrainerBottomMenuBar extends StatelessWidget {
             Get.to(() => SettingsAzbukaTrainerView(), transition: Transition.rightToLeft);
             break;
           default:
-            print("WARNING!!! selected bottom item - $tappedItemIndex");
+            logPrint("WARNING!!! selected bottom item - $tappedItemIndex");
             Get.back();
         }
       },

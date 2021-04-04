@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/azbuka.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/blind_cube.dart';
@@ -13,7 +14,7 @@ class ScrambleGenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print("onInit ScrambleGenerator Controller Start");
+    logPrint("onInit ScrambleGenerator Controller Start");
     _initializeRxVariables();
     _settingsController.callbacks.add(_initializeRxVariables);
   }
@@ -175,7 +176,7 @@ class ScrambleGenController extends GetxController {
         break;
 
       default:
-        print("Default value $letter");
+        logPrint("Default value $letter");
         inputScramble += " $letter";
     }
 
@@ -183,7 +184,7 @@ class ScrambleGenController extends GetxController {
 
   /// Нажатие на модификатор хода в диалоге ввода скрамбла (' 2 w)
   void inputModifier(String modifier) {
-    print("input modifier $modifier");
+    logPrint("input modifier $modifier");
     inputScramble = inputScramble.trim();
     var lastSymbol = inputScramble[inputScramble.length - 1];
     if (lastSymbol != "" && lastSymbol != "'" && lastSymbol != "2") {

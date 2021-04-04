@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/learn_controller.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 import 'main_menu_item.dart';
@@ -24,12 +25,12 @@ class MenuList extends StatelessWidget {
       _learnController.curPositionInList = _scrollController.offset;
     });
     return Obx(() {
-      //print("Update menu for page $pageNumber");
+      //logPrint("Update menu for page $pageNumber");
       var items = _learnController.pages[pageNumber].currentList;
       if (_scrollController.hasClients) {
         position = _learnController.getPositionForPage(pageNumber);
         _scrollController.jumpTo(position);
-        print("jumpTo $position in ${_learnController.pages[pageNumber].currentPhase}");
+        logPrint("jumpTo $position in ${_learnController.pages[pageNumber].currentPhase}");
       }
       return ListView(
         controller: _scrollController,

@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/cube.dart';
 
 class PllCubeImage {
@@ -12,7 +13,7 @@ class PllCubeImage {
   PllCubeImage({this.id, bool randomAUF = false, bool randomFrontSide = false}){
     if (id < 0 || id > 20) {
       id = 0;
-      print("Задан некорректный id pll алгоритма, будет равен 0");
+      logPrint("Задан некорректный id pll алгоритма, будет равен 0");
     }
     // генерируем случайный поворот верхней грани и применяем если нужно
     var rndStrAUF = "";

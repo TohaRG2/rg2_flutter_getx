@@ -128,7 +128,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
               ),
               onTap: () {
                 if (tableItem.letter != "" && tableItem.letter != "-") {
-                  //print("Нажата буква ${tableItem.letter} ${tableItem.index} ");
+                  //logPrint("Нажата буква ${tableItem.letter} ${tableItem.index} ");
                   showSelectLetterDialog(tableItem);
                 }
               },
