@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/controllers/learn_detail_controller.dart';
+import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
 import 'package:rg2/flutter_html/flutter_html.dart';
 import 'package:rg2/flutter_html/style.dart';
 import 'package:rg2/views/shared/url_helper.dart';

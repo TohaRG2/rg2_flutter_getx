@@ -4,7 +4,7 @@ import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/fire_entitys/comment_item.dart';
 import 'package:rg2/utils/my_logger.dart';
 
-import 'learn_controller.dart';
+import '../../controller/learn_controller.dart';
 
 class LearnDetailController extends GetxController {
   MainRepository _mainRepo = Get.find();

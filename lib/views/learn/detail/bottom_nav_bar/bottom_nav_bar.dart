@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rg2/controllers/learn_detail_controller.dart';
+import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
 import 'package:rg2/views/dialogs/azbuka/azbuka_dialog.dart';
 import 'buttons_container.dart';
 import 'package:get/get.dart';
