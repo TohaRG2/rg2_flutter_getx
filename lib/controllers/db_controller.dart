@@ -2,6 +2,8 @@ import 'package:floor/floor.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/entitys/basic_move.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
+import 'package:rg2/database/fire_entitys/comment_item.dart';
+import 'package:rg2/database/fire_entitys/fav_item.dart';
 import 'package:rg2/database/main_database.dart';
 import 'package:rg2/models/phases.dart';
 import 'package:rg2/res/azbuka/basic_3x3.dart';
@@ -15,7 +17,9 @@ import 'package:rg2/res/azbuka/basic_pyraminx_4x4.dart';
 import 'package:rg2/res/azbuka/basic_redi.dart';
 import 'package:rg2/res/azbuka/basic_skewb.dart';
 import 'package:rg2/res/azbuka/basic_square.dart';
+import 'package:rg2/res/comments/initial_comments.dart';
 import 'package:rg2/res/cubeTypes.dart';
+import 'package:rg2/res/favourites/initial_favourites.dart';
 import 'package:rg2/res/mainMenu/main2x2/advanced2x2.dart';
 import 'package:rg2/res/mainMenu/main2x2/begin2x2.dart';
 import 'package:rg2/res/mainMenu/main2x2/cll.dart';
@@ -107,6 +111,8 @@ class DBController extends GetxController {
       await _initCubeTypes();
       await _initPhases();
       await PllTrainerVariants.initDb(_mainBase.pllTrainerDao);
+      await _initFavourites();
+      await _initComments();
       needInit = false;
     } else {
       logPrint("not first start, db.init don't need");
@@ -122,7 +128,6 @@ class DBController extends GetxController {
   Future _initPhases() async {
     // logPrint("initPhasePositions");
     // await _mainBase.phasePositionDao.clearTable();
-    // await _loadSomePositions();
     logPrint("InitCubes");
     await _mainBase.mainDao.clearTable();
     await _initPhase(BigMain());
@@ -222,11 +227,11 @@ class DBController extends GetxController {
   Future _initBasicMoves(Moves moves) async {
     for (var i = 0; i < moves.count; i++) {
       var item = BasicMove(
-        eType: moves.eType,
-        id: i,
-        move: moves.moves()[i],
-        icon: moves.icons()[i],
-        toast: moves.toasts()[i]);
+          eType: moves.eType,
+          id: i,
+          move: moves.moves()[i],
+          icon: moves.icons()[i],
+          toast: moves.toasts()[i]);
       _mainBase.movesDao.insertItem(item);
     }
   }
@@ -237,4 +242,35 @@ class DBController extends GetxController {
     list.forEach((item) => _mainBase.pagePropertiesDao.insertOrReplace(item));
   }
 
+  /// Задаем начальные значения для Избранного
+  _initFavourites() async {
+    logPrint("_initialFavourites");
+    List<FavItem> favItems = InitialFavourites.favItems;
+    List<MainDBItem> mainDBItems = [];
+    // асинхронный цикл для всех записей в favItems, с ожиданием выполнения операции над каждым элементом
+    await Future.forEach(favItems,(FavItem favItem) async {
+      var mainDBItem = await _mainBase.mainDao.getItem(favItem.phase, favItem.id);
+      mainDBItem.isFavourite = true;
+      mainDBItem.subId = favItem.subId;
+      mainDBItems.add(mainDBItem);
+    });
+    // обновляем записи для которых указали избранное
+    _mainBase.mainDao.updateItems(mainDBItems);
+  }
+
+
+  /// Задаем начальные комментарии для некоторых этапов
+  _initComments() async {
+    logPrint("_initialComments");
+    List<CommentItem> commentItem = InitialComments.commentItems;
+    List<MainDBItem> mainDBItems = [];
+    // асинхронный цикл для всех записей в commentItem, с ожиданием выполнения операции над каждым элементом
+    await Future.forEach(commentItem,(CommentItem commentItem) async {
+      var mainDBItem = await _mainBase.mainDao.getItem(commentItem.phase, commentItem.id);
+      mainDBItem.comment = commentItem.comment;
+      mainDBItems.add(mainDBItem);
+    });
+    // обновляем записи для которых указали избранное
+    _mainBase.mainDao.updateItems(mainDBItems);
+  }
 }
