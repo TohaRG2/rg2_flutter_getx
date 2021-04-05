@@ -271,6 +271,7 @@ class DBController extends GetxController {
       mainDBItems.add(mainDBItem);
     });
     // обновляем записи для которых указали избранное
+    logPrint("_initComments - $mainDBItems");
     _mainBase.mainDao.updateItems(mainDBItems);
   }
 }
