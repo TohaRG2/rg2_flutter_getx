@@ -12,7 +12,7 @@ logPrint(dynamic string){
 }
 
 logPrintErr(dynamic string){
-  var tag = "FAPP Error";
+  var tag = "FAPP Error!";
   if (kReleaseMode) { // is Release Mode ??
     print("$tag $string");
   } else {

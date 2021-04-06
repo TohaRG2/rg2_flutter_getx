@@ -20,11 +20,7 @@ class FavouriteController extends GetxController {
   List<MainDBItem> get favourites => __favourites;
   set _favourites(List<MainDBItem> items) {
     __favourites.assignAll(items);
-    // Обновляем избранное в firebase
-    var favItems = items.map((mainDBItem) =>
-        FavItem(id: mainDBItem.id, phase: mainDBItem.phase, subId: mainDBItem.subId)
-    ).toList();
-    _mainRepo.addOrUpdateFavourites(favItems);
+    _mainRepo.addOrUpdateFavourites(items);
   }
 
   /// Перечитываем список избранного из базы и если надо апдейтим в FB

@@ -95,29 +95,35 @@ class MainRepository extends GetxController {
 
   /// Получаем список избранного из FBS и обновляем избранное и кэши полученным списком
   Future _updateFavourites() async {
-    logPrint("_updateFavourites - снимаем признак избранного у текущих записей и обновляем в базе и кэшах");
+    //logPrint("_updateFavourites - если в FBS есть избранное, то снимаем признак избранного у текущих записей и обновляем в базе и кэшах");
+
+    List<FavItem> favItems = await _getFavourites();
     var mainDBItems = await getFavourites();
-    mainDBItems.forEach((mainDBItem) {
-      mainDBItem.isFavourite = false;
-      mainDBItem.subId = 0;
-    });
-    await updateFavouritesInLocalDBAndCaches(mainDBItems);
 
-    logPrint("_updateFavourites - получаем избранное из firebase");
-    List<FavItem> favItems = await _getFavourites() ?? [];
-    logPrint("получили favItems = $favItems");
+    // Если в FBS есть избранное и оно не пустое
+    if (favItems != null && favItems.length != 0) {
+      // снимаем признак избранного у всех текущих записей
+      mainDBItems.forEach((mainDBItem) {
+        mainDBItem.isFavourite = false;
+        mainDBItem.subId = 0;
+      });
+      // по уму, не надо обновлять список в кэше избранного, но чуть ниже его все равно перезапишем
+      await updateFavouritesInLocalDBAndCaches(mainDBItems);
 
-    // асинхронный цикл для всех записей в favItems, с ожиданием выполнения операции над каждым элементом
-    mainDBItems.clear();
-    logPrint("_updateFavourites - reset $mainDBItems");
-    await Future.forEach(favItems,(FavItem favItem) async {
-      var mainDBItem = await getMainDBItem(favItem.phase, favItem.id);
-      mainDBItem.isFavourite = true;
-      mainDBItem.subId = favItem.subId;
-      mainDBItems.add(mainDBItem);
-    });
-
-    await updateFavouritesInLocalDBAndCaches(mainDBItems);
+      mainDBItems.clear();
+      // асинхронный цикл для всех записей в favItems, с ожиданием выполнения операции над каждым элементом
+      await Future.forEach(favItems,(FavItem favItem) async {
+        var mainDBItem = await getMainDBItem(favItem.phase, favItem.id);
+        mainDBItem.isFavourite = true;
+        mainDBItem.subId = favItem.subId;
+        mainDBItems.add(mainDBItem);
+      });
+      // обновляем кэши уже списком созданным из записей FBS
+      await updateFavouritesInLocalDBAndCaches(mainDBItems);
+    } else {
+      logPrint("_updateFavourites - в FBS нет избранного, перезаписываем локальным $mainDBItems");
+      addOrUpdateFavourites(mainDBItems);
+    }
   }
 
   /// получаем список избранного из FBS
@@ -130,10 +136,13 @@ class MainRepository extends GetxController {
   }
 
   /// Обновляем список избранного в FBS
-  addOrUpdateFavourites(List<FavItem> favourites) {
+  addOrUpdateFavourites(List<MainDBItem> items) {
     //logPrint("setFavourites - $favourites");
     if (_userId != "") {
-      _cloudDB.addOrUpdateFavourites(_userId, favourites);
+      var favItems = items.map((mainDBItem) =>
+          FavItem(id: mainDBItem.id, phase: mainDBItem.phase, subId: mainDBItem.subId)
+      ).toList();
+      _cloudDB.addOrUpdateFavourites(_userId, favItems);
     }
   }
 
