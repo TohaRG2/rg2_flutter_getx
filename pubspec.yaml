@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.20210323.1
+version: 4.20210406.1
 
 
 environment:
@@ -46,7 +46,7 @@ dependencies:
   implicitly_animated_reorderable_list: ^0.4.0-dev+4
 
   # YouTube Plugin
-  youtube_player_flutter: ^7.0.0+7
+  youtube_player_flutter: ^8.0.0
   # youtube_plyr_iframe: ^2.0.0
 
   #Слайдер для картинок списка советов по работе с программой
@@ -54,7 +54,7 @@ dependencies:
 
   # Поддержка звука, для метронома в таймере
   #assets_audio_player: ^2.0.14
-  audioplayers: ^0.18.2
+  audioplayers: ^0.18.3
 
   # Для удобной работы с датой/временем
   intl: ^0.17.0
@@ -62,12 +62,13 @@ dependencies:
   # Индикатор оставшегося времени на ответ
   percent_indicator: ^3.0.1
 
-  # Firebase
-  firebase_auth: ^1.0.1
-  cloud_firestore: ^1.0.3
-
-  # google sign in
+  # Firebase + google sign in
+  firebase_auth: ^1.0.2
+  cloud_firestore: ^1.0.4
   google_sign_in: ^5.0.1
+
+  # Покупки в приложении
+  in_app_purchase: ^0.5.1+2
 
   # красивый свитч для смены темы
   flutter_switch: ^0.3.0
