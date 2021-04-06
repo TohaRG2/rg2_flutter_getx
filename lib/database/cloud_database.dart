@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/fire_entitys/comment_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
@@ -41,14 +42,26 @@ class CloudDatabase extends GetxController {
   /// Создать или обновить данные пользователя в firebase
   Future<bool> createOrUpdateUser(User user) async {
     try {
-      logPrint("try createOrUpdateUser");
-      await _usersCollection.doc(user.uid).update({
-        "displayName": user.displayName,
-        "email": user.email,
-      });
+      logPrint("try createOrUpdateUser ${user.uid}");
+      DocumentReference docRef = _usersCollection.doc(user.uid);
+      DocumentSnapshot docSnapShot = await docRef.get();
+      if (docSnapShot.exists) {
+        logPrint("updateUser");
+        await docRef.update({
+          "displayName": user.displayName,
+          "email": user.email,
+        });
+      } else {
+        logPrint("createUser");
+        await docRef.set({
+          "displayName": user.displayName,
+          "email": user.email,
+        });
+      }
+
       return true;
     } catch(e) {
-      logPrint("Ошибка создания пользователя: $e");
+      logPrintErr("Ошибка создания пользователя: $e");
       return false;
     }
   }
@@ -75,7 +88,7 @@ class CloudDatabase extends GetxController {
         return Property.fromDocSnapShot(propDocSnapShot);
       }
     } catch (e) {
-      logPrint("catch get propSnapShot $e");
+      logPrintErr("catch get propSnapShot $e");
       return null;
     }
     return null;
@@ -105,7 +118,7 @@ class CloudDatabase extends GetxController {
         return Property.fromDocSnapShot(doc);
       }).toList();
     } catch (e) {
-      logPrint("ERROR! Ошибка получения свойств из базы\n $e");
+      logPrintErr("Ошибка получения свойств из базы\n $e");
       return null;
     }
   }
@@ -119,7 +132,7 @@ class CloudDatabase extends GetxController {
     var items = favourites.map((fav) => fav.toMap()).toList();
     mainDocRef.update({FAVOURITES: items})
       .then((value) => logPrint("Обновили избранное $items в базе"))
-      .catchError((error) => logPrint("Не удалось обновить избранное $items в firebase"));
+      .catchError((error) => logPrintErr("Не удалось обновить избранное $items в firebase"));
   }
 
   /// Возвращаем список избранного из документа в usersId/favourites
@@ -151,7 +164,7 @@ class CloudDatabase extends GetxController {
         .doc("${comment.phase} - ${comment.id}")
         .set(comment.toMap())
         .then((value) => logPrint("Добавили/обновили $comment в базу"))
-        .catchError((error) => logPrint("Не удалось добавить $comment в FBS\n $error"));
+        .catchError((error) => logPrintErr("Не удалось добавить $comment в FBS\n $error"));
   }
 
   /// Создаем или обновляем один комментарий в FBS
@@ -163,7 +176,7 @@ class CloudDatabase extends GetxController {
         .doc("${comment.phase} - ${comment.id}")
         .delete()
         .then((value) => logPrint("Удалили $comment из базы"))
-        .catchError((error) => logPrint("Не удалось удалить $comment в FBS\n $error"));
+        .catchError((error) => logPrintErr("Не удалось удалить $comment в FBS\n $error"));
   }
 
 
@@ -179,7 +192,7 @@ class CloudDatabase extends GetxController {
         return CommentItem.fromDocSnapShot(doc);
       }).toList();
     } catch (e) {
-      logPrint("ERROR! Ошибка получения комментариев из базы\n $e");
+      logPrintErr("Ошибка получения комментариев из базы\n $e");
       return null;
     }
   }
@@ -195,7 +208,7 @@ class CloudDatabase extends GetxController {
         .doc("${timerItem.date.millisecondsSinceEpoch}")
         .set(timerItem.toMap())
         .then((value) => logPrint("Добавили/обновили $timerItem в базу"))
-        .catchError((error) => logPrint("Не удалось добавить $timerItem в firebase\n $error"));
+        .catchError((error) => logPrintErr("Не удалось добавить $timerItem в firebase\n $error"));
   }
 
   /// Создаем или обновляем одну запись в коллекции TimerTimes в FBS
@@ -207,7 +220,7 @@ class CloudDatabase extends GetxController {
         .doc("${timerItem.date.millisecondsSinceEpoch}")
         .delete()
         .then((value) => logPrint("Удалили $timerItem из FBS"))
-        .catchError((error) => logPrint("Не удалось добавить $timerItem в FBS\n $error"));
+        .catchError((error) => logPrintErr("Не удалось добавить $timerItem в FBS\n $error"));
   }
 
   /// Возвращаем список всех записей сборок в таймере в usersId/timerTimes
@@ -222,7 +235,7 @@ class CloudDatabase extends GetxController {
         return TimerTimeItem.fromDocSnapShot(doc);
       }).toList();
     } catch (e) {
-      logPrint("ERROR! Ошибка получения списка сборок в таймере из базы\n $e");
+      logPrintErr("Ошибка получения списка сборок в таймере из базы\n $e");
       return null;
     }
   }
@@ -239,7 +252,7 @@ class CloudDatabase extends GetxController {
       mainDocRef.update({ENTERS_COUNT: currentCount});
       mainDocRef.update({LAST_ENTER_DATE: DateTime.now()});
     } catch (e) {
-      logPrint("ERROR! Ошибка обновления счетчика входов\n $e");
+      logPrintErr("ERROR! Ошибка обновления счетчика входов\n $e");
     }
   }
 
