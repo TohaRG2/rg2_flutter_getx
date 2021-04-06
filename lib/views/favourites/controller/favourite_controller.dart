@@ -53,6 +53,7 @@ class FavouriteController extends GetxController {
 
   /// Обновляем избранное у элемента
   updateInFavourites(MainDBItem item) {
+    logPrint("updateInFavourites - $item, \n curFav = $favourites");
     if (item.isFavourite) {
       // добавляем в избранное
       favourites.insert(0, item);

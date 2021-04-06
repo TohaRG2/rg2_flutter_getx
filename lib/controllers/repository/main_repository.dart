@@ -95,16 +95,17 @@ class MainRepository extends GetxController {
 
   /// Получаем список избранного из FBS и обновляем избранное и кэши полученным списком
   Future _updateFavourites() async {
-    //logPrint("_updateFavourites - снимаем признак избранного у текущих записей и обновляем в базе и кэшах");
+    logPrint("_updateFavourites - снимаем признак избранного у текущих записей и обновляем в базе и кэшах");
     var mainDBItems = await getFavourites();
     mainDBItems.forEach((mainDBItem) {
       mainDBItem.isFavourite = false;
       mainDBItem.subId = 0;
     });
-    await updateListInLocalDBAndCaches(mainDBItems);
+    await updateFavouritesInLocalDBAndCaches(mainDBItems);
 
-    //logPrint("_updateFavourites - получаем избранное из firebase");
+    logPrint("_updateFavourites - получаем избранное из firebase");
     List<FavItem> favItems = await _getFavourites() ?? [];
+    logPrint("получили favItems = $favItems");
 
     // асинхронный цикл для всех записей в favItems, с ожиданием выполнения операции над каждым элементом
     mainDBItems.clear();
@@ -116,7 +117,7 @@ class MainRepository extends GetxController {
       mainDBItems.add(mainDBItem);
     });
 
-    await updateListInLocalDBAndCaches(mainDBItems);
+    await updateFavouritesInLocalDBAndCaches(mainDBItems);
   }
 
   /// получаем список избранного из FBS
@@ -136,13 +137,30 @@ class MainRepository extends GetxController {
     }
   }
 
+
+  /// Обновляем список избранного в локальной базе и кэшах: обучалок, деталки и избранного
+  Future updateFavouritesInLocalDBAndCaches(List<MainDBItem> mainDBItems) async {
+    logPrint("обновляем список в локальной базе $mainDBItems");
+    await updateMainDBItems(mainDBItems);
+
+    // обновляем данные в кэше основного меню обучалок
+    if (learnUpdateMainCacheCallback != null) {
+      learnUpdateMainCacheCallback(mainDBItems);
+    }
+
+    // обновляем данные в кэше избранного
+    if (favouritesUpdateCallback != null) {
+      favouritesUpdateCallback(mainDBItems);
+    }
+  }
+
+
   //------------------------ методы для работы с комментариями -----------------------
 
   /// Получаем комменты из FBS и обновляем их в локальной базе и на экране (кэше)
   Future _updateComments() async {
     logPrint("_updateComments - получаем комментарии из FBS");
     List<CommentItem> commentItems = await _getComments() ?? [];
-
     // асинхронный цикл для всех записей в commentItems, с ожиданием выполнения операции над каждым элементом
     List<MainDBItem> mainDBItems = [];
     await Future.forEach(commentItems,(CommentItem commentItem) async {
@@ -151,7 +169,7 @@ class MainRepository extends GetxController {
       mainDBItems.add(mainDBItem);
     });
 
-    await updateListInLocalDBAndCaches(mainDBItems);
+    await updateCommentsInLocalDBAndCaches(mainDBItems);
   }
 
   /// получаем список всех сохраненных комментариев к этапам из FBS
@@ -179,21 +197,14 @@ class MainRepository extends GetxController {
     updateMainDBItem(item);
   }
 
-  //------------------
-
-  /// Обновляем список в локальной базе и кэшах: обучалок, деталки и избранного
-  Future updateListInLocalDBAndCaches(List<MainDBItem> mainDBItems) async {
-    // обновляем список в локальной базе
+  /// Обновляем список комментов в локальной базе и кэшах: обучалок, деталки и избранного
+  Future updateCommentsInLocalDBAndCaches(List<MainDBItem> mainDBItems) async {
+    logPrint("обновляем список в локальной базе $mainDBItems");
     await updateMainDBItems(mainDBItems);
 
     // обновляем данные в кэше основного меню обучалок
     if (learnUpdateMainCacheCallback != null) {
       learnUpdateMainCacheCallback(mainDBItems);
-    }
-
-    // обновляем данные в кэше избранного
-    if (favouritesUpdateCallback != null) {
-      favouritesUpdateCallback(mainDBItems);
     }
 
     // обновляем комментарии, если задан колбэк и получили не null в listCommentItems
@@ -202,5 +213,6 @@ class MainRepository extends GetxController {
       detailUpdateCacheCallback(mainDBItems);
     }
   }
+
 
 }

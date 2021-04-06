@@ -81,11 +81,13 @@ class LearnController extends GetxController {
   /// меняем статус избранного для указанного элемента
   changeFavStatus(MainDBItem item) {
     logPrint("changeFavStatus - $item, curPage - $curPageNumber");
+    logPrint("fav - ${_favController.favourites}");
     // сохраняем позицию скрола
     saveListPositionForPhase(item.phase);
 
     var index = pages[curPageNumber].currentList.indexOf(item);
 
+    logPrint("index = $index, fav - ${_favController.favourites}");
     if (index != -1) {
       item.isFavourite = !item.isFavourite;
       pages[curPageNumber].currentList[index] = item;              // Обновляем элемент на текущей странице
