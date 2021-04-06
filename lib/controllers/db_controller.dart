@@ -262,10 +262,10 @@ class DBController extends GetxController {
   /// Задаем начальные комментарии для некоторых этапов
   _initComments() async {
     logPrint("_initialComments");
-    List<CommentItem> commentItem = InitialComments.commentItems;
+    List<CommentItem> commentItems = InitialComments.commentItems;
     List<MainDBItem> mainDBItems = [];
     // асинхронный цикл для всех записей в commentItem, с ожиданием выполнения операции над каждым элементом
-    await Future.forEach(commentItem,(CommentItem commentItem) async {
+    await Future.forEach(commentItems,(CommentItem commentItem) async {
       var mainDBItem = await _mainBase.mainDao.getItem(commentItem.phase, commentItem.id);
       mainDBItem.comment = commentItem.comment;
       mainDBItems.add(mainDBItem);
