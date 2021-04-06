@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/controllers/trainers_controller.dart';
+import 'package:rg2/views/trainers/controller/trainers_controller.dart';
 import 'package:rg2/models/trainer_menu_item.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';

@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
-import 'package:rg2/controllers/learn_controller.dart';
+import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/views/favourites/view/main_favourite.dart';
 import 'package:rg2/views/info/infoScreen.dart';
 import 'package:rg2/views/learn/learn_menu_screen.dart';

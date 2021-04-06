@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/controllers/learn_controller.dart';
+import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 
