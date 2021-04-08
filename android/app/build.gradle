@@ -21,6 +21,8 @@ if (flutterVersionName == null) {
     flutterVersionName = '4.20210306.1'
 }
 
+def Versions = new Properties()
+
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
@@ -78,6 +80,7 @@ flutter {
 }
 
 dependencies {
+    implementation 'com.android.billingclient:billing:3.0.3'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:multidex:1.0.3'
     implementation platform('com.google.firebase:firebase-bom:26.6.0')

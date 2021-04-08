@@ -9,6 +9,8 @@
 
     <!--    to use minSDK = 19 with audioplayers-->
     <uses-sdk tools:overrideLibrary="xyz.luan.audioplayers"/>
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="io.flutter.app.FlutterApplication"

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
@@ -40,6 +41,8 @@ void main() async {
   await Firebase.initializeApp();
   // Инициализируем SharedPreferences
   await GetStorage.init();
+  // Инициализируем внутренние покупки
+  InAppPurchaseConnection.enablePendingPurchases();
   runApp(RG2App());
 }
 
