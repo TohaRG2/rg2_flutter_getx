@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:rg2/controllers/in_app_purchase_controller.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
@@ -112,13 +113,12 @@ class RG2App extends StatelessWidget {
     Get.put(TimerRepository());
     Get.put(FavouriteController());
     Get.put(LearnController());
-    Get.put(InfoController());
     Get.put(LearnDetailController());
-    //Get.lazyPut(() => MyYouTubeController());
     Get.put(AzbukaDialogController());
     Get.put(TrainersController());
-    
+
     //TODO подумать, куда перенести, или оставить тут через Lazy
+    Get.put(InfoController());
     Get.put(ScrambleGenController());
     Get.put(TimerSettingsController());
     Get.put(TimerController());
@@ -127,6 +127,10 @@ class RG2App extends StatelessWidget {
     Get.put(PllTrainerController());
     Get.put(AzbukaSettingsController());
     Get.put(AzbukaTrainerController());
+
+    //TODO после тестирования поменять на lazy
+    //Get.lazyPut(() => InAppPurchaseController());
+    Get.put(InAppPurchaseController());
   }
 }
 
