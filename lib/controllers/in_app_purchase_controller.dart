@@ -14,11 +14,16 @@ class InAppPurchaseController extends GetxController {
   bool isAvailable = false;
   RxList<PurchaseDetails> _subscription = <PurchaseDetails>[].obs;
   final String myProductID = 'medium_donation';
-  List<String> googleProducts = [
+  List<String> allRG2Products = [
     'small_donation',
     'medium_donation',
     'big_donation',
     'very_big_donation',
+    'g_ad_off',
+    'g_ad_off_and_open_all',
+    'g_ad_off_and_open_all_plus_coffee'
+  ];
+  List<String> newRg2Products = [
     'g_ad_off',
     'g_ad_off_and_open_all',
     'g_ad_off_and_open_all_plus_coffee'
@@ -110,7 +115,7 @@ class InAppPurchaseController extends GetxController {
 
   /// Получаем список доступных для покупок продуктов
   Future<void> _getProducts() async {
-    Set<String> ids = Set.from(googleProducts);
+    Set<String> ids = Set.from(allRG2Products);
     ProductDetailsResponse response = await _iap.queryProductDetails(ids);
     products = response.productDetails;
     logPrint("IAP _getProducts - ${products.length} ${products.map((e) => e.id)}");
