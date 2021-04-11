@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:rg2/models/trainer_menu_item.dart';
+import 'package:rg2/views/trainers/model/trainer_menu_item.dart';
 import 'package:rg2/res/trainersMenu/azbuka_trainer.dart';
 import 'package:rg2/res/trainersMenu/pll_trainer.dart';
 import 'package:rg2/res/trainersMenu/scramble_generator.dart';

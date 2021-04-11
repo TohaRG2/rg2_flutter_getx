@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:meta/meta.dart';
+import 'package:rg2/res/get_money/get_money.dart';
 import 'package:rg2/utils/my_logger.dart';
+import 'package:rg2/views/dialogs/get_money/model/get_money_item.dart';
 
 class InAppPurchaseController extends GetxController {
 
@@ -12,7 +14,15 @@ class InAppPurchaseController extends GetxController {
   bool isAvailable = false;
   RxList<PurchaseDetails> _subscription = <PurchaseDetails>[].obs;
   final String myProductID = 'medium_donation';
-  List<String> googleProducts = ['small_donation', 'medium_donation', 'big_donation', 'very_big_donation'];
+  List<String> googleProducts = [
+    'small_donation',
+    'medium_donation',
+    'big_donation',
+    'very_big_donation',
+    'g_ad_off',
+    'g_ad_off_and_open_all',
+    'g_ad_off_and_open_all_plus_coffee'
+  ];
 
   RxList<PurchaseDetails> _purchases = <PurchaseDetails>[].obs;
   List<PurchaseDetails> get purchases => _purchases;
@@ -33,6 +43,14 @@ class InAppPurchaseController extends GetxController {
     _isPurchased.value = value;
   }
 
+  RxInt _coins = 0.obs;
+  int get coins => _coins.value;
+  set coins(value) {
+    _coins.value = value;
+  }
+
+  final List<GetMoneyItem> listItems = getMoneyItems;
+
   @override
   onInit() {
     super.onInit();
@@ -45,11 +63,12 @@ class InAppPurchaseController extends GetxController {
 
   /// Инициализруем покупки
   Future<void> initStoreInfo() async {
+    // Проверка подключения к базовому магазину (AppStore или PlayMarket)
     isAvailable = await _iap.isAvailable();
     // Если нет соединения
     if (isAvailable) {
       await _getProducts();
-      await _getPastPurchases();
+      await _getPreviousPurchases();
       verifyPurchase(myProductID);
     }
 
@@ -61,7 +80,7 @@ class InAppPurchaseController extends GetxController {
     logPrint("_listenToPurchaseUpdated - ");
     purchases = purchaseDetailsList;
     purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
-      logPrint("IAP _listenToPurchaseUpdated - $purchaseDetails");
+      logPrint("IAP _listenToPurchaseUpdated - ${purchaseDetails.status}");
     });
     verifyPurchase(myProductID);
   }
@@ -91,22 +110,38 @@ class InAppPurchaseController extends GetxController {
 
   /// Получаем список доступных для покупок продуктов
   Future<void> _getProducts() async {
-    Set<String> ids = Set.from([myProductID]);
+    Set<String> ids = Set.from(googleProducts);
     ProductDetailsResponse response = await _iap.queryProductDetails(ids);
     products = response.productDetails;
-    logPrint("IAP _getProducts - $products");
+    logPrint("IAP _getProducts - ${products.length} ${products.map((e) => e.id)}");
   }
 
   /// Получаем список покупок
-  Future<void> _getPastPurchases() async {
+  Future<void> _getPreviousPurchases() async {
     QueryPurchaseDetailsResponse response = await _iap.queryPastPurchases();
+    if (response.error != null) {
+      logPrintErr("Error getPreviousPurchases - ${response.error}");
+    }
     for (PurchaseDetails purchase in response.pastPurchases) {
+      //TODO verify the purchase following best practices for each underlying store.
+      //   _verifyPurchase(purchase);
+      //   // Deliver the purchase to the user in your app.
+      //   _deliverPurchase(purchase);
+      //   if (purchase.pendingCompletePurchase) {
+      //     // Mark that you've delivered the purchase. This is mandatory.
+      //     InAppPurchaseConnection.instance.completePurchase(purchase);
+      //   }
       if (Platform.isIOS) {
         _iap.consumePurchase(purchase);
       }
     }
     purchases = response.pastPurchases;
     logPrint("IAP _getPastPurchases - $purchases");
+  }
+
+  /// Выполняем покупку пользователем, который еще не покупал ничего
+  onTapBySimpleUser(int index) {
+
   }
 
 }

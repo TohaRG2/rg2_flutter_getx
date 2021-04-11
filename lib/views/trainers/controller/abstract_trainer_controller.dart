@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:rg2/views/trainers/model/result_variants.dart';
 import 'package:rg2/views/trainers/pll/model/quiz_game.dart';
 
-class TrainerController extends GetxController {
+abstract class TrainerController extends GetxController {
 
   final _showStartScreen = true.obs;
   set showStartScreen(value) => _showStartScreen.value = value;

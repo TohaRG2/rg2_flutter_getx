@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/utils/my_logger.dart';
+import 'package:rg2/views/dialogs/get_money/get_money_dialog.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/res/string_values.dart';
@@ -45,13 +47,34 @@ class LearnViewPager extends StatelessWidget {
               //backgroundColor: Theme.of(context).primaryColor,
                 backgroundColor: Get.theme.scaffoldBackgroundColor,
                 actions: [
+                  Stack(children: [
+                    Center(
+                      child: IconButton(
+                        icon: const Icon(Icons.monetization_on_outlined),
+                        color: Get.textTheme.headline5.color,
+                        tooltip: 'Монетки',
+                        onPressed: () {
+                          Get.dialog(GetMoneyDialog());
+                        },
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Text("100",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 14.0, color: Get.textTheme.headline5.color),
+                      ),
+                    )
+                  ]),
                   IconButton(
-                    icon: const Icon(Icons.settings_rounded),
-                    color: Get.textTheme.headline5.color,
-                    tooltip: 'Настройки',
                     onPressed: () {
                       Get.to(() => SettingsScreenWithBottomBar());
                     },
+                    icon: const Icon(Icons.settings_rounded),
+                    color: Get.textTheme.headline5.color,
+                    tooltip: 'Настройки',
                   ),
                 ],
                 bottom: TabBar(

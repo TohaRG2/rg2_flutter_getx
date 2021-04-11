@@ -6,6 +6,7 @@ logPrint(dynamic string){
   var tag = "FAPP";
   if (kReleaseMode) { // is Release Mode ??
     //print('release mode');
+    //print("$tag $string");
   } else {
     print("$tag $string");
   }

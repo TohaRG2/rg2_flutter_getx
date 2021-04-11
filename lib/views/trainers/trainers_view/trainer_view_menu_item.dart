@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/models/trainer_menu_item.dart';
+import 'package:rg2/views/trainers/model/trainer_menu_item.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class TrainerViewMenuItem extends StatelessWidget {

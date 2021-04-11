@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/views/trainers/controller/trainers_controller.dart';
-import 'package:rg2/models/trainer_menu_item.dart';
+import 'package:rg2/views/trainers/model/trainer_menu_item.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/settings/settings_screen_view.dart';
@@ -18,7 +18,7 @@ import '../help/help_view.dart';
 import '../scramble_gen/view/settings_scramble_gen_view.dart';
 
 class TrainersScreen extends StatelessWidget {
-  final TrainersController _controller = Get.find();
+  final TrainersController _controller = Get.put(TrainersController());
 
   @override
   Widget build(BuildContext context) {

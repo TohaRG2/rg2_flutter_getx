@@ -1,4 +1,4 @@
-import 'package:rg2/models/trainer_menu_item.dart';
+import 'package:rg2/views/trainers/model/trainer_menu_item.dart';
 import 'package:rg2/res/string_values.dart';
 
 final scrambleGen = TrainerMenuItem(

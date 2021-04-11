@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/model/result_variants.dart';
-import 'package:rg2/views/trainers/model/trainer_controller.dart';
+import 'package:rg2/views/trainers/controller/abstract_trainer_controller.dart';
 import 'package:rg2/views/trainers/model/trainer_state.dart';
 import 'package:rg2/views/trainers/pll/controller/pll_settings_controller.dart';
 import 'package:rg2/views/trainers/pll/model/cube_image.dart';

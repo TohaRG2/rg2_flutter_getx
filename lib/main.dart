@@ -115,7 +115,6 @@ class RG2App extends StatelessWidget {
     Get.put(LearnController());
     Get.put(LearnDetailController());
     Get.put(AzbukaDialogController());
-    Get.put(TrainersController());
 
     //TODO подумать, куда перенести, или оставить тут через Lazy
     Get.put(InfoController());
