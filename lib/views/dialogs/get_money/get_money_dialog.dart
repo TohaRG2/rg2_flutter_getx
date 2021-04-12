@@ -24,58 +24,90 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
             color: Get.theme.scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(20),
           ),
-          child: Container(
-            padding: EdgeInsets.all(UIHelper.SpaceSmall),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Flexible(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
-                        child: Text("У вас 100 монеток",
-                          style: Get.textTheme.headline5.copyWith(fontSize: 18),
-                          softWrap: true,
+          child: Obx(()=>
+            Container(
+              padding: EdgeInsets.all(UIHelper.SpaceSmall),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
+                          child: Obx(() =>
+                              Text("У вас ${controller.getCoins()} монеток",
+                                style: Get.textTheme.headline5.copyWith(fontSize: 18),
+                                softWrap: true,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                    Image.asset("assets/images/icons/coins.png", width: 80,),
-                  ],
-                ),
-                //Spacer(),
-                Expanded(
-                  child: Material(
-                    child: ListView.builder(
-                      itemCount: controller.listItems.length,
-                      itemBuilder: (_, index) {
-                        return GetMoneyViewItem(index: index);
-                      },
-                    ),
+                      Image.asset("assets/images/icons/coins.png", width: 80,),
+                    ],
                   ),
-                ),
-                Text("isAvailable ${controller.isAvailable}",
-                    style: Get.textTheme.headline4.copyWith(fontSize: 20.0, color: Get.textTheme.headline5.color),),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: TextButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(_primaryColor),
-                          ),
-                          child: Text(StrRes.backButtonText)),
-                    ),
-                  ],
-                ),
-              ],
+                  //Spacer(),
+                  ExpansionPanelList(
+                    animationDuration: Duration(seconds: 1),
+                    elevation: 1,
+                    //expandedHeaderPadding: EdgeInsets.all(10),
+                    children: [
+                      ExpansionPanel(
+                        headerBuilder: (context, isOpen) {
+                          return Text(controller.listItems[0].title, softWrap: true,
+                            style: Get.textTheme.headline5.copyWith(fontSize: 18),
+                          );
+                        },
+                        body: Text(controller.listItems[0].help),
+                        isExpanded: controller.openItems[0].value,
+                      ),
+                      ExpansionPanel(
+                        headerBuilder: (context, isOpen) {
+                          return Text(controller.listItems[1].title, softWrap: true,
+                            style: Get.textTheme.headline5.copyWith(fontSize: 18),
+                          );
+                        },
+                        body: Text(controller.listItems[1].help),
+                        isExpanded: controller.openItems[1].value,
+                      ),
+                    ],
+                    expansionCallback: (i, isOpen) {
+                      controller.openItems[i].value = !controller.openItems[i].value;
+                    },
+                  ),
+                  Spacer(),
+                  Text("isAvailable ${controller.isAvailable}",
+                      style: Get.textTheme.headline4.copyWith(fontSize: 20.0, color: Get.textTheme.headline5.color),),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: TextButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(_primaryColor),
+                            ),
+                            child: Text(StrRes.backButtonText)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       )
   );
+  }
+
+  ListView listView() {
+    return ListView.builder(
+      itemCount: controller.listItems.length,
+      itemBuilder: (_, index) {
+        return GetMoneyViewItem(index: index);
+      },
+    );
   }
 }

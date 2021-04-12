@@ -53,6 +53,11 @@ class InAppPurchaseController extends GetxController {
   }
 
   RxInt _coins = 0.obs;
+  get coins => _coins.value;
+  set coins(int value) {
+    _coins.value = value;
+    _storage.setPropertyByKey(Property(key: Const.CURRENT_COINS, value: value));
+  }
   String getCoins() {
     if (_coins.value >= 0) {
       return _coins.value.toString();
@@ -60,12 +65,9 @@ class InAppPurchaseController extends GetxController {
       return "∞";
     }
   }
-  set coins(int value) {
-    _coins.value = value;
-    _storage.setPropertyByKey(Property(key: Const.CURRENT_COINS, value: value));
-  }
 
   final List<GetMoneyItem> listItems = getMoneyItems;
+  final List<RxBool> openItems = [false.obs, false.obs, false.obs, false.obs];
 
   @override
   onInit() {
@@ -158,7 +160,11 @@ class InAppPurchaseController extends GetxController {
 
   /// Выполняем покупку пользователем, который еще не покупал ничего
   onTapBySimpleUser(int index) {
-
+    logPrint("onTapBySimpleUser - $index");
+    switch (index) {
+      case 0: coins++; break;
+      case 1:
+    }
   }
 
 }

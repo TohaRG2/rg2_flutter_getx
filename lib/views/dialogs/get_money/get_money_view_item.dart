@@ -16,55 +16,60 @@ class GetMoneyViewItem extends GetWidget<InAppPurchaseController> {
         elevation: 10.0,
         borderRadius: BorderRadius.circular(10.0),
         shadowColor: Colors.black54,
-        child: Row(
-          children: [
-            /// Примерная стоимость покупки
-            // Container(
-            //   padding: const EdgeInsets.all(10.0),
-            //   child: Text(controller.listItems[index].price,
-            //     style: Get.textTheme.headline5,
-            //   )
-            // ),
-            /// Основной текст
+        child: buildRow()
+      ),
+    );
+  }
+
+  Row buildRow() {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          /// Примерная стоимость покупки
+          // Container(
+          //   padding: const EdgeInsets.all(10.0),
+          //   child: Text(controller.listItems[index].price,
+          //     style: Get.textTheme.headline5,
+          //   )
+          // ),
+          /// Основной текст
+          Expanded(child:
             GestureDetector(
-              child: Expanded(child:
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: UIHelper.SpaceSmall),
-                  child: Text(controller.listItems[index].title, softWrap: true,
-                    style: Get.textTheme.headline5.copyWith(fontSize: 18),
-                  )
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: UIHelper.SpaceSmall, horizontal: UIHelper.SpaceSmall),
+                child: Text(controller.listItems[index].title, softWrap: true,
+                  style: Get.textTheme.headline5.copyWith(fontSize: 18),
                 )
               ),
               onTap: (){
-
+                controller.onTapBySimpleUser(index);
               },
-            ),
-            /// Иконка хелпа
-            IconButton(icon: Icon(Icons.help_outline),
-              onPressed: () {
-                if (Get.isSnackbarOpen) {
-                  Get.back();
-                }
-                Get.snackbar(
-                  controller.listItems[index].help,
-                  "",
-                  snackPosition: SnackPosition.BOTTOM,
-                  colorText: Colors.white,
-                  backgroundColor: Colors.grey[800],
-                  duration: Duration(seconds: 10),
-                  onTap: (_) {
-                    Get.back();
-                  },
-                );
+            )
+          ),
+          /// Иконка хелпа
+          IconButton(icon: Icon(Icons.help_outline),
+            onPressed: () {
+              if (Get.isSnackbarOpen) {
+                Get.back();
               }
-            ),
-            // Container(
-            //   padding: const EdgeInsets.all(10.0),
-            //   child: Text("?", style: Get.textTheme.headline5,)
-            // ),
-          ],
-        ),
-      ),
-    );
+              Get.snackbar(
+                controller.listItems[index].help,
+                "",
+                snackPosition: SnackPosition.BOTTOM,
+                colorText: Colors.white,
+                backgroundColor: Colors.grey[800],
+                duration: Duration(seconds: 10),
+                onTap: (_) {
+                  Get.back();
+                },
+              );
+            }
+          ),
+          // Container(
+          //   padding: const EdgeInsets.all(10.0),
+          //   child: Text("?", style: Get.textTheme.headline5,)
+          // ),
+        ],
+      );
   }
 }
