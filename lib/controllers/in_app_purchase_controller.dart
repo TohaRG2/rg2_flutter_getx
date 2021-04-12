@@ -4,12 +4,16 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:meta/meta.dart';
+import 'package:rg2/controllers/storage/global_storage_controller.dart';
+import 'package:rg2/database/fire_entitys/property.dart';
+import 'package:rg2/res/constants.dart';
 import 'package:rg2/res/get_money/get_money.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/get_money/model/get_money_item.dart';
 
 class InAppPurchaseController extends GetxController {
 
+  final GlobalStorageController _storage = Get.find();
   final InAppPurchaseConnection _iap = InAppPurchaseConnection.instance;
   bool isAvailable = false;
   RxList<PurchaseDetails> _subscription = <PurchaseDetails>[].obs;
@@ -49,15 +53,16 @@ class InAppPurchaseController extends GetxController {
   }
 
   RxInt _coins = 0.obs;
-  String get coins {
+  String getCoins() {
     if (_coins.value >= 0) {
       return _coins.value.toString();
     } else {
       return "∞";
     }
   }
-  set coins(value) {
+  set coins(int value) {
     _coins.value = value;
+    _storage.setPropertyByKey(Property(key: Const.CURRENT_COINS, value: value));
   }
 
   final List<GetMoneyItem> listItems = getMoneyItems;
@@ -66,6 +71,7 @@ class InAppPurchaseController extends GetxController {
   onInit() {
     super.onInit();
     logPrint("onInit - InAppPurchaseController");
+    _coins.value = _storage.getPropertyByKey(Const.CURRENT_COINS);
     // Биндим стрим в Observable _subscription и подписываемся на его изменения
     _subscription.bindStream(_iap.purchaseUpdatedStream);
     ever(_subscription, _listenToPurchaseUpdated);

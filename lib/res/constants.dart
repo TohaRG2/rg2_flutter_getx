@@ -62,6 +62,9 @@ class Const {
   /// Настройки для youtube плеера
   static const YOU_TUBE_PLAYER_SPEED = 'youTubePlayerSpeed';
 
+  /// Настройки для покупок в приложении
+  static const CURRENT_COINS = 'currentCoins';
+  static const INITIAL_COINS = 'initialCoins';
 
   /// Настройки для локального хранилища
   static const LOCAL_STARTS_COUNT = 'localStartsCount';

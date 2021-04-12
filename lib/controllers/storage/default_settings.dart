@@ -105,4 +105,8 @@ Map<String, dynamic> defaultSettings = {
   /// Настройки для ютубплеера
   Const.YOU_TUBE_PLAYER_SPEED : 1.0,
 
+  /// Настройки для покупок
+  Const.CURRENT_COINS : 15,
+  Const.INITIAL_COINS : 15,
+
 };
