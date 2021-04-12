@@ -55,13 +55,10 @@ class InAppPurchaseController extends GetxController {
     } else {
       return "∞";
     }
-
   }
   set coins(value) {
     _coins.value = value;
   }
-
-
 
   final List<GetMoneyItem> listItems = getMoneyItems;
 
