@@ -49,10 +49,19 @@ class InAppPurchaseController extends GetxController {
   }
 
   RxInt _coins = 0.obs;
-  int get coins => _coins.value;
+  String get coins {
+    if (_coins.value >= 0) {
+      return _coins.value.toString();
+    } else {
+      return "∞";
+    }
+
+  }
   set coins(value) {
     _coins.value = value;
   }
+
+
 
   final List<GetMoneyItem> listItems = getMoneyItems;
 
