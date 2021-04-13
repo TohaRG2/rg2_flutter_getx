@@ -66,8 +66,8 @@ class InAppPurchaseController extends GetxController {
     }
   }
 
-  final List<GetMoneyItem> listItems = getMoneyItems;
-  final List<RxBool> openItems = [false.obs, false.obs, false.obs, false.obs];
+  final RxList<GetMoneyItem> _listItems = getMoneyItems.obs;
+  List<GetMoneyItem> get listItems => _listItems;
 
   @override
   onInit() {
@@ -163,8 +163,16 @@ class InAppPurchaseController extends GetxController {
     logPrint("onTapBySimpleUser - $index");
     switch (index) {
       case 0: coins++; break;
-      case 1:
+      case 1: break;
     }
+  }
+
+  onTapExpansion(int index, bool isExpanded) {
+    logPrint("onTapExpansion - $index => $isExpanded");
+    // нельзя поменять сразу _listItems[index].isExpanded, т.к. в этом случае список не обновится и Obx не сработает
+    var item = _listItems[index];
+    item.isExpanded = !isExpanded;
+    _listItems[index] = item;
   }
 
 }

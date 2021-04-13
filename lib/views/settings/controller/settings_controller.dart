@@ -183,6 +183,7 @@ class SettingsController extends GetxController {
         primaryColor: primaryThemeColor,
         accentColor: accentThemeColor,
         primarySwatch: materialColorFrom(primaryThemeColor),
+        toggleableActiveColor: accentThemeColor,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             // side: MaterialStateProperty.resolveWith<BorderSide>(
@@ -194,13 +195,12 @@ class SettingsController extends GetxController {
           ),
         ),
         //primarySwatch: Colors.orange,
-        toggleableActiveColor: accentThemeColor,
         textTheme: TextTheme().copyWith(
           headline4: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
           headline5: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
           headline6: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-          bodyText1: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-          bodyText2: TextStyle(fontSize: 18, fontWeight: FontWeight.normal), //DefaultText для Text("")
+          bodyText1: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+          bodyText2: TextStyle(fontSize: 16, fontWeight: FontWeight.normal), //DefaultText для Text("")
         ));
   }
 

@@ -64,6 +64,8 @@ class RG2App extends StatelessWidget {
     return GetMaterialApp(
         title: 'RG2',
         theme: _settings.getCurrentTheme(),
+        defaultTransition: Transition.cupertino,
+        transitionDuration: Duration(milliseconds: 230),
         getPages: [
           GetPage(name: '/', page: () => MainView(), transition: Transition.leftToRight),
           GetPage(name: '/youtube', page: () => YouTubeView(), transition: Transition.leftToRight),

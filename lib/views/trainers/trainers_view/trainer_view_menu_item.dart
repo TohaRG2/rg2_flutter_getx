@@ -49,7 +49,7 @@ class TrainerViewMenuItem extends StatelessWidget {
                             item.title,
                             softWrap: true,
                             maxLines: 2,
-                            style: Get.textTheme.bodyText2,
+                            style: Get.textTheme.bodyText1,
                           ),
                         ],
                       ),
