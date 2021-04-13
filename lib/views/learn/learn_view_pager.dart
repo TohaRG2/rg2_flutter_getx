@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/controllers/in_app_purchase_controller.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/get_money/get_money_dialog.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
@@ -13,6 +14,7 @@ import 'main_menu/main_menu_list_view.dart';
 class LearnViewPager extends StatelessWidget {
   final LearnController _learnController = Get.find();
   final SettingsController _settings = Get.find();
+  final InAppPurchaseController _purchaseController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class LearnViewPager extends StatelessWidget {
                       bottom: 0,
                       left: 0,
                       right: 0,
-                      child: Text("100",
+                      child: Text(_purchaseController.getCoins(),
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 14.0, color: Get.textTheme.headline5.color),
                       ),

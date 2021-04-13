@@ -10,47 +10,40 @@ import 'package:rg2/res/constants.dart';
 import 'package:rg2/res/get_money/get_money.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/get_money/model/get_money_item.dart';
+import 'package:rg2/views/dialogs/get_money/model/purchaserState.dart';
 
 class InAppPurchaseController extends GetxController {
-
   final GlobalStorageController _storage = Get.find();
   final InAppPurchaseConnection _iap = InAppPurchaseConnection.instance;
-  bool isAvailable = false;
-  RxList<PurchaseDetails> _subscription = <PurchaseDetails>[].obs;
-  final String myProductID = 'medium_donation';
-  List<String> allRG2Products = [
-    'small_donation',
-    'medium_donation',
-    'big_donation',
-    'very_big_donation',
-    'g_ad_off',
-    'g_ad_off_and_open_all',
-    'g_ad_off_and_open_all_plus_coffee'
-  ];
-  List<String> newRg2Products = [
-    'g_ad_off',
-    'g_ad_off_and_open_all',
-    'g_ad_off_and_open_all_plus_coffee'
-  ];
 
+  /// Доступность магазина покупок
+  bool isAvailable = false;
+
+  /// RxList в который биндим стрим изменений списка купленных товаров
+  RxList<PurchaseDetails> _subscription = <PurchaseDetails>[].obs;
+
+  //TODO непонятный продукт, надо убрать
+  final String myProductID = 'medium_donation';
+
+  /// Список купленных продуктов
   RxList<PurchaseDetails> _purchases = <PurchaseDetails>[].obs;
   List<PurchaseDetails> get purchases => _purchases;
   set purchases(List<PurchaseDetails> value) {
     _purchases.assignAll(value);
   }
 
-
+  /// Список продуктов доступных для покупки
   RxList<ProductDetails> _products = <ProductDetails>[].obs;
   List<ProductDetails> get products => _products;
   set products(List<ProductDetails> value) {
     _products.assignAll(value);
   }
 
-  RxBool _isPurchased = false.obs;
-  bool get isPurchased => _isPurchased.value;
-  set isPurchased(value) {
-    _isPurchased.value = value;
-  }
+  // RxBool _isPurchased = false.obs;
+  // bool get isPurchased => _isPurchased.value;
+  // set isPurchased(value) {
+  //   _isPurchased.value = value;
+  // }
 
   RxInt _coins = 0.obs;
   get coins => _coins.value;
@@ -68,6 +61,8 @@ class InAppPurchaseController extends GetxController {
 
   final RxList<GetMoneyItem> _listItems = getMoneyItems.obs;
   List<GetMoneyItem> get listItems => _listItems;
+
+  PurchaserState _state = PurchaserState.SIMPLE_USER;
 
   @override
   onInit() {
@@ -96,27 +91,28 @@ class InAppPurchaseController extends GetxController {
 
   /// Слушатель обновления в потоке покупок
   void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
-    logPrint("_listenToPurchaseUpdated - ");
-    purchases = purchaseDetailsList;
-    purchaseDetailsList.forEach((PurchaseDetails purchaseDetails) async {
-      logPrint("IAP _listenToPurchaseUpdated - ${purchaseDetails.status}");
+    logPrint("IAP новая покупка ${purchaseDetailsList.first?.productID}");
+    purchases.addAll(purchaseDetailsList);
+    purchases.forEach((PurchaseDetails purchaseDetails) async {
+      logPrint("IAP _listenToPurchaseUpdated - ${purchaseDetails.productID}");
     });
     verifyPurchase(myProductID);
   }
 
-  /// Проверяем, куплен ли уже продукт по его ID
-  void verifyPurchase(String productID) {
+  /// Бизнес логика для проверки покупки расходных материалов (consumable товаров)
+  bool verifyPurchase(String productID) {
     PurchaseDetails purchase = hasPurchased(productID);
     logPrint("IAP verifyPurchase - $productID, $purchase");
+    var result = false;
     if (purchase?.status == PurchaseStatus.purchased) {
 
       if (purchase.pendingCompletePurchase) {
         _iap.completePurchase(purchase);
-        isPurchased = true;
+        result = true;
       }
-
     }
-    logPrint("IAP verifyPurchase - $isPurchased");
+    logPrint("IAP verifyPurchase - $result");
+    return result;
   }
 
   /// Проверяем, есть ли в списке [purchases] продукт с [productID]
@@ -155,16 +151,39 @@ class InAppPurchaseController extends GetxController {
       }
     }
     purchases = response.pastPurchases;
-    logPrint("IAP _getPastPurchases - $purchases");
+    logPrint("IAP _getPreviousPurchases - ${purchases.map((e) => e.productID)}");
   }
 
   /// Выполняем покупку пользователем, который еще не покупал ничего
-  onTapBySimpleUser(int index) {
-    logPrint("onTapBySimpleUser - $index");
-    switch (index) {
-      case 0: coins++; break;
-      case 1: break;
+  onTapBySimpleUser(GetMoneyItem item) {
+    logPrint("onTapBySimpleUser - $item");
+    switch (item.id) {
+      case 0:
+        coins++;
+        break;
+      case 1:
+        var productID = newRg2Products[0];
+        final PurchaseParam purchaseParam = PurchaseParam(productDetails: getProduct(productID));
+        _iap.buyNonConsumable(purchaseParam: purchaseParam);
+        break;
+      case 2:
+        var productID = newRg2Products[1];
+        final PurchaseParam purchaseParam = PurchaseParam(productDetails: getProduct(productID));
+        _iap.buyNonConsumable(purchaseParam: purchaseParam);
+        break;
+      case 3:
+        var productID = newRg2Products[2];
+        final PurchaseParam purchaseParam = PurchaseParam(productDetails: getProduct(productID));
+        _iap.buyNonConsumable(purchaseParam: purchaseParam);
+        break;
+
     }
+  }
+
+  ProductDetails getProduct(String productId) {
+    return products.firstWhere(
+            (product) => product.id == productId,
+        orElse: () => null);
   }
 
   onTapExpansion(int index, bool isExpanded) {
@@ -174,5 +193,35 @@ class InAppPurchaseController extends GetxController {
     item.isExpanded = !isExpanded;
     _listItems[index] = item;
   }
+
+
+
+  //------------------- Константы (списки продуктов) ----------------------------
+
+  /// Полный список продуктов
+  static const List<String> allRG2Products = [
+    'small_donation',
+    'medium_donation',
+    'big_donation',
+    'very_big_donation',
+    'g_ad_off',
+    'g_ad_off_and_open_all',
+    'g_ad_off_and_open_all_plus_coffee'
+  ];
+
+  /// Список продуктов для старого андроид приложения (котлин версии)
+  static const List<String> oldRg2Products = [
+    'small_donation',
+    'medium_donation',
+    'big_donation',
+    'very_big_donation',
+  ];
+
+  /// Список продуктов доступных для покупки во флаттер версии RG2
+  static const List<String> newRg2Products = [
+    'g_ad_off',
+    'g_ad_off_and_open_all',
+    'g_ad_off_and_open_all_plus_coffee'
+  ];
 
 }

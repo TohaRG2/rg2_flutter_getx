@@ -7,23 +7,47 @@ final getMoneyItems = <GetMoneyItem>[
   adOffAndOpenAllPlus,
 ];
 
-final getFreeMoney = GetMoneyItem(title: getFreeMoneyTitle, price: getFreeMoneyPrice, help: getFreeMoneyHelp);
-final adOff = GetMoneyItem(title: adOffTitle, price: adOffPrice, help: adOffHelp);
-final adOffAndOpenAll = GetMoneyItem(title: adOffAndOpenAllTitle, price: adOffAndOpenAllPrice, help: adOffAndOpenAllHelp);
-final adOffAndOpenAllPlus = GetMoneyItem(title: adOffAndOpenAllPlusTitle, price: adOffAndOpenAllPlusPrice, help: adOffAndOpenAllPlusHelp);
+final getFreeMoney = GetMoneyItem(
+    id: getFreeMoneyID,
+    title: getFreeMoneyTitle,
+    price: getFreeMoneyPrice,
+    help: getFreeMoneyHelp
+);
+final adOff = GetMoneyItem(
+    id: adOffID,
+    title: adOffTitle,
+    price: adOffPrice,
+    help: adOffHelp
+);
+final adOffAndOpenAll = GetMoneyItem(
+    id: adOffAndOpenAllID,
+    title: adOffAndOpenAllTitle,
+    price: adOffAndOpenAllPrice,
+    help: adOffAndOpenAllHelp
+);
+final adOffAndOpenAllPlus = GetMoneyItem(
+    id: adOffAndOpenAllPlusID,
+    title: adOffAndOpenAllPlusTitle,
+    price: adOffAndOpenAllPlusPrice,
+    help: adOffAndOpenAllPlusHelp
+);
 
+const getFreeMoneyID = 0;
 const getFreeMoneyTitle = "Получить бесплатные монетки";
 const getFreeMoneyPrice = "0\$";
 const getFreeMoneyHelp = "Получите монетки за просмотр рекламы";
 
+const adOffID = 1;
 const adOffTitle = "Отключить рекламу";
 const adOffPrice = "1\$";
-const adOffHelp = "Монетки не будут тратиться на просмотр обучалок. Но чтобы открыть новые обучалки придется их заработать";
+const adOffHelp = "Монетки не будут тратиться на просмотр обучалок, но чтобы открыть все обучалки, придется посмотреть реклмные ролики";
 
-const adOffAndOpenAllTitle = "Отключить рекламу и открыть все обучалки";
+const adOffAndOpenAllID = 2;
+const adOffAndOpenAllTitle = "Отключить рекламу +";
 const adOffAndOpenAllPrice = "2\$";
-const adOffAndOpenAllHelp = "Монетки больше не расходуются, все обучалки становятся доступны";
+const adOffAndOpenAllHelp = "Монетки больше не расходуются и все обучалки становятся доступны";
 
-const adOffAndOpenAllPlusTitle = "Отключить рекламу, открыть все обучалки + кофе автору";
+const adOffAndOpenAllPlusID = 3;
+const adOffAndOpenAllPlusTitle = "Отключить рекламу ++";
 const adOffAndOpenAllPlusPrice = "4\$";
-const adOffAndOpenAllPlusHelp = "Монетки не расходуются, все обучалки доступны + отдельное спасибо автору программы";
+const adOffAndOpenAllPlusHelp = "Монетки больше не расходуются, все обучалки становятся доступны + кофе автору программы";
