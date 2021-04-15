@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rg2/models/trainer_menu_item.dart';
+import 'package:rg2/views/trainers/model/trainer_menu_item.dart';
 import 'package:get/get.dart';
 import 'package:rg2/views/shared/bottom_nav_bar_painter.dart';
 import 'package:rg2/views/trainers/scramble_gen/view/main_scramble_gen_view.dart';

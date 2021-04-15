@@ -11,7 +11,6 @@ class AzbukaItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _theme = Theme.of(context);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: GestureDetector(
@@ -23,7 +22,7 @@ class AzbukaItem extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children:[
-                Text(item.move, style: _theme.textTheme.headline4.copyWith(
+                Text(item.move, style: Get.textTheme.headline4.copyWith(
                   fontWeight: FontWeight.bold,
                 )),
                 Container(

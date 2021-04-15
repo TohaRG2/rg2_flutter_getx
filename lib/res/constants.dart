@@ -7,7 +7,6 @@ class Const {
   static const SCALE_FACTOR = 'scaleFactor';
   static const IS_START_HELP_ENABLED = 'isStartHelpEnabled';
   static const IS_SWIPE_ENABLED = 'isSwipeEnabled';
-  static const IS_PURCHASE_ENABLED = 'isPurchaseEnabled';
   static const INTERNET_USAGE = 'internetUsing';
   static const BOTTOM_ITEM = 'bottomItem';
   static const CURRENT_PAGE_NUMBER = 'currentPageNumber';
@@ -62,6 +61,12 @@ class Const {
   /// Настройки для youtube плеера
   static const YOU_TUBE_PLAYER_SPEED = 'youTubePlayerSpeed';
 
+  /// Настройки для покупок в приложении
+  static const CURRENT_COINS = 'currentCoins';
+  static const INITIAL_COINS = 'initialCoins';
+  static const IS_AD_ENABLED = 'isAdEnabled';
+  static const PURCHASER_STATE = 'purchaserState';
+  static const IS_ALL_PUZZLES_ENABLED = 'isAllPuzzlesEnabled';
 
   /// Настройки для локального хранилища
   static const LOCAL_STARTS_COUNT = 'localStartsCount';

@@ -68,7 +68,7 @@ class SettingsController extends GetxController {
     bool get isPurchaseEnabled => _isPurchaseEnabled.value;
     set isPurchaseEnabled(value) {
       _isPurchaseEnabled.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.IS_PURCHASE_ENABLED, value: value));
+      _settingsController.setPropertyByKey(Property(key: Const.IS_ALL_PUZZLES_ENABLED, value: value));
     }
 
   final _internetUsage = RxInt(0);
@@ -108,6 +108,21 @@ class SettingsController extends GetxController {
       _settingsController.setPropertyByKey(Property(key: Const.GOD_MODE, value: value));
     }
 
+  /// Уменьшаем ли количество монеток за просмотр обучалок
+  final _isAdEnabled = RxBool(true);
+    bool get isAdEnabled => _isAdEnabled.value;
+    set isAdEnabled(value) {
+      _isAdEnabled.value = value;
+      _settingsController.setPropertyByKey(Property(key: Const.IS_AD_ENABLED, value: value));
+    }
+
+  final _isAllPuzzlesEnabled = RxBool(false);
+    bool get isAllPuzzlesEnabled => _isAllPuzzlesEnabled.value;
+    set isAllPuzzlesEnabled(value) {
+      _isAllPuzzlesEnabled.value = value;
+      _settingsController.setPropertyByKey(Property(key: Const.IS_ALL_PUZZLES_ENABLED, value: value));
+    }
+
   /// Счетчик нажатий на плашку
   var _godCount = 0;
 
@@ -118,12 +133,14 @@ class SettingsController extends GetxController {
     _textScaleFactor.value = _settingsController.getPropertyByKey(Const.SCALE_FACTOR);
     _isStartHelpEnabled.value = _settingsController.getPropertyByKey(Const.IS_START_HELP_ENABLED);
     _isSwipeEnabled.value = _settingsController.getPropertyByKey(Const.IS_SWIPE_ENABLED);
-    _isPurchaseEnabled.value = _settingsController.getPropertyByKey(Const.IS_PURCHASE_ENABLED);
+    _isPurchaseEnabled.value = _settingsController.getPropertyByKey(Const.IS_ALL_PUZZLES_ENABLED);
     _internetUsage.value = _settingsController.getPropertyByKey(Const.INTERNET_USAGE);
     _bottomItem.value = _settingsController.getPropertyByKey(Const.BOTTOM_ITEM);
     _currentPageNumber.value = _settingsController.getPropertyByKey(Const.CURRENT_PAGE_NUMBER);
     _currentInfoPageNumber.value = _settingsController.getPropertyByKey(Const.CURRENT_INFO_PAGE_NUMBER);
     _godMode.value = _settingsController.getPropertyByKey(Const.GOD_MODE);
+    _isAdEnabled.value = _settingsController.getPropertyByKey(Const.IS_AD_ENABLED);
+    _isAllPuzzlesEnabled.value = _settingsController.getPropertyByKey(Const.IS_ALL_PUZZLES_ENABLED);
 
     logPrint("_initializeRxVariables - подгружаем тему");
     int _primaryColor = _settingsController.getPropertyByKey(Const.PRIMARY_COLOR);
@@ -183,6 +200,7 @@ class SettingsController extends GetxController {
         primaryColor: primaryThemeColor,
         accentColor: accentThemeColor,
         primarySwatch: materialColorFrom(primaryThemeColor),
+        toggleableActiveColor: accentThemeColor,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
             // side: MaterialStateProperty.resolveWith<BorderSide>(
@@ -194,13 +212,12 @@ class SettingsController extends GetxController {
           ),
         ),
         //primarySwatch: Colors.orange,
-        toggleableActiveColor: accentThemeColor,
         textTheme: TextTheme().copyWith(
           headline4: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
           headline5: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
           headline6: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-          bodyText1: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-          bodyText2: TextStyle(fontSize: 18, fontWeight: FontWeight.normal), //DefaultText для Text("")
+          bodyText1: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+          bodyText2: TextStyle(fontSize: 16, fontWeight: FontWeight.normal), //DefaultText для Text("")
         ));
   }
 
