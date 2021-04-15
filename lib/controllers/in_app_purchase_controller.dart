@@ -64,24 +64,29 @@ class InAppPurchaseController extends GetxController {
   Rx<PurchaserState> _state = PurchaserState.SIMPLE_USER.obs;
   PurchaserState get state => _state.value;
   set state(PurchaserState value) {
+    logPrint("IAP state - $value");
     _state.value = value;
     switch(value) {
       case PurchaserState.SIMPLE_USER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 0));
+        logPrint("IAP state - SIMPLE_USER");
         break;
       case PurchaserState.AD_OFF_USER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 1));
         _settings.isAdEnabled = false;
+        logPrint("IAP state - AD_OFF_USER");
         break;
       case PurchaserState.PURCHASER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 2));
         _settings.isAdEnabled = false;
         _settings.isAllPuzzlesEnabled = true;
+        logPrint("IAP state - PURCHASER");
         break;
       case PurchaserState.VIP_USER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 3));
         _settings.isAdEnabled = false;
         _settings.isAllPuzzlesEnabled = true;
+        logPrint("IAP state - VIP_USER");
         break;
     }
   }
@@ -218,7 +223,7 @@ class InAppPurchaseController extends GetxController {
     } else if (purchase.productID == G_AD_OFF && state == PurchaserState.SIMPLE_USER) {
       state = PurchaserState.AD_OFF_USER;
     }
-    logPrint("_getPreviousPurchases - PurchaserState = $state");
+    logPrint("IAP _getPreviousPurchases - PurchaserState = $state");
   }
 
   /// Выполняем покупку пользователем, который еще не покупал ничего
@@ -232,6 +237,10 @@ class InAppPurchaseController extends GetxController {
         var productID = newRg2Products[0];
         final PurchaseParam purchaseParam = PurchaseParam(productDetails: _getProduct(productID));
         _iap.buyNonConsumable(purchaseParam: purchaseParam);
+        // Для расходных (consumable) товаров, нужно поставить autoConsume: false
+        // и обработать покупку (добавить товар в свой базе)
+        // https://fireship.io/lessons/flutter-inapp-purchases/
+        //_iap.buyNonConsumable(purchaseParam: purchaseParam, autoConsume: false);
         break;
       case 2:
         var productID = newRg2Products[1];
