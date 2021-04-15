@@ -8,7 +8,7 @@ import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_settings_con
 import 'package:rg2/views/trainers/azbuka_trainer/model/azbuka_cube_image.dart';
 import 'package:rg2/views/trainers/model/cube_element_types.dart';
 import 'package:rg2/views/trainers/model/result_variants.dart';
-import 'package:rg2/views/trainers/model/trainer_controller.dart';
+import 'package:rg2/views/trainers/controller/abstract_trainer_controller.dart';
 import 'package:rg2/views/trainers/model/trainer_state.dart';
 import 'package:rg2/views/trainers/pll/model/quiz_game.dart';
 import 'package:rg2/views/trainers/pll/model/quiz_variant.dart';
