@@ -163,6 +163,7 @@ class SettingsController extends GetxController {
 
   /// Меняем настройки текущей темы
   _changeCurrentTheme() {
+    logPrint("_changeCurrentTheme - меняем тему");
     SystemUiOverlayStyle _currentStyle = SystemUiOverlayStyle.dark;
     SystemChrome.setSystemUIOverlayStyle(_currentStyle);
     ThemeData theme = getCurrentTheme();
