@@ -13,8 +13,6 @@ Map<String, dynamic> defaultSettings = {
   Const.SCALE_FACTOR : 1.0,
   // свайпы во viewPager
   Const.IS_SWIPE_ENABLED : true,
-  // куплены ли доп.головоломки (разрешен их просмотр)
-  Const.IS_PURCHASE_ENABLED : false,
   // включено ли отображение подсказок при старте программы
   Const.IS_START_HELP_ENABLED : true,
   // режим использования интернета
@@ -106,7 +104,15 @@ Map<String, dynamic> defaultSettings = {
   Const.YOU_TUBE_PLAYER_SPEED : 1.0,
 
   /// Настройки для покупок
+  // Текущее количество монеток
   Const.CURRENT_COINS : 15,
+  // Количество монеток при первом входе и покупке при 0
   Const.INITIAL_COINS : 15,
+  // Трятятся ли монетки на просмотр обучалок
+  Const.IS_AD_ENABLED : true,
+  // Куплены ли доп.головоломки (разрешен их просмотр)
+  Const.IS_ALL_PUZZLES_ENABLED : false,
+  // Уровень покупателя 0 - ничего не куплено ... 3 - ВИП
+  Const.PURCHASER_STATE : 0,
 
 };
