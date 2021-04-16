@@ -111,6 +111,7 @@ class MainMenuItem extends StatelessWidget {
                   transition: Transition.fadeIn);
             }
           } else {
+            if (Get.isSnackbarOpen) { Get.back(); }
             Get.snackbar(StrRes.snackTextWarning, "",
               icon: Icon(Icons.warning_amber_outlined),
               messageText: Center(child: Text(StrRes.snackTextItemDisabled)),
