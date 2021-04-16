@@ -3,19 +3,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
-import 'package:rg2/res/string_values.dart';
-import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/favourites/dialog/favourite_dialog.dart';
-import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
-import 'package:rg2/views/settings/settings_screen_view.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
+typedef FunctionForCallback = Function(MainDBItem, bool);
 
 class MainMenuItem extends StatelessWidget {
   final LearnController _learnController = Get.find();
   final MainDBItem item;
   final bool isItemEnabled;
+  final FunctionForCallback onTapCallback;
 
-  MainMenuItem({this.item, this.isItemEnabled});
+  MainMenuItem({this.item, this.isItemEnabled, this.onTapCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -101,36 +99,7 @@ class MainMenuItem extends StatelessWidget {
           ),
         ),
         onTap: () {
-          logPrint("Tap on mainMenu $item");
-          if (isItemEnabled) {
-            if (item.url == "submenu") {
-              _learnController.changeCurrentPhaseWith(item);
-            } else {
-              _learnController.saveListPositionForPhase(item.phase);
-              Get.to(() => LearnDetailScreen(item.phase, item.id),
-                  transition: Transition.fadeIn);
-            }
-          } else {
-            if (Get.isSnackbarOpen) { Get.back(); }
-            Get.snackbar(StrRes.snackTextWarning, "",
-              icon: Icon(Icons.warning_amber_outlined),
-              messageText: Center(child: Text(StrRes.snackTextItemDisabled)),
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.black54,
-              duration: Duration(seconds: 6),
-              mainButton: TextButton(
-                  onPressed: (){
-                    // закрываем снэкбар
-                    Get.back();
-                    //TODO сделать переход с прокруткой к определенному пункту в настройках
-                    Get.to(() => SettingsScreen(), transition: Transition.downToUp);
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text("Перейти"))
-              ),
-            );
-          }
+          onTapCallback(item, isItemEnabled);
         },
       ),
     );
