@@ -21,10 +21,11 @@ class GlobalStorageController extends GetxController {
     super.onInit();
     logPrint("onInit - GlobalStorageController ${_auth.user?.uid}");
     await _sp.initStorage;
-    // подписываемся на получение изменений firebaseUser, при изменении вызываем _userAuthChanged не чаще, чем раз в 2 сек
+    // подписываемся на получение изменений firebaseUser, при изменении вызываем _userAuthChanged не чаще,
+    // чем раз в 2 сек (debounce) или каждый раз (ever)
     // более подробно в описании Workers для GetX (https://github.com/jonataslaw/getx/blob/master/documentation/en_US/state_management.md)
-    //ever(_auth.firebaseUser, _userAuthChanged);
-    debounce(_auth.firebaseUser, _userAuthChanged, time: Duration(seconds: 2));
+    //debounce(_auth.firebaseUser, _userAuthChanged, time: Duration(seconds: 2));
+    ever(_auth.firebaseUser, _userAuthChanged);
   }
 
   /// Что-то поменялось в аутентификации пользователя

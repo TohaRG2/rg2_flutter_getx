@@ -70,27 +70,27 @@ class InAppPurchaseController extends GetxController {
       case PurchaserState.SIMPLE_USER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 0));
         _listItems.value = getAllMoneyItems;
-        logPrint("IAP state - SIMPLE_USER");
+        logPrint("IAP state - SIMPLE_USER complete");
         break;
       case PurchaserState.AD_OFF_USER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 1));
         _settings.isAdDisabled = true;
         _listItems.value = getMoneyItemsWithoutAdOff;
-        logPrint("IAP state - AD_OFF_USER");
+        logPrint("IAP state - AD_OFF_USER complete");
         break;
       case PurchaserState.PURCHASER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 2));
         _settings.isAdDisabled = true;
         _settings.isAllPuzzlesEnabled = true;
         coins = -1;
-        logPrint("IAP state - PURCHASER");
+        logPrint("IAP state - PURCHASER complete");
         break;
       case PurchaserState.VIP_USER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 3));
         _settings.isAdDisabled = true;
         _settings.isAllPuzzlesEnabled = true;
         coins = -1;
-        logPrint("IAP state - VIP_USER");
+        logPrint("IAP state - VIP_USER complete");
         break;
     }
   }
@@ -98,18 +98,16 @@ class InAppPurchaseController extends GetxController {
     int intState = _storage.getPropertyByKey(Const.PURCHASER_STATE);
     switch(intState) {
       case 0:
-        _state.value = PurchaserState.SIMPLE_USER;
-        _listItems.value = getAllMoneyItems;
+        state = PurchaserState.SIMPLE_USER;
         break;
       case 1:
-        _state.value = PurchaserState.AD_OFF_USER;
-        _listItems.value = getMoneyItemsWithoutAdOff;
+        state = PurchaserState.AD_OFF_USER;
         break;
       case 2:
-        _state.value = PurchaserState.PURCHASER;
+        state = PurchaserState.PURCHASER;
         break;
       case 3:
-        _state.value = PurchaserState.VIP_USER;
+        state = PurchaserState.VIP_USER;
         break;
     }
   }
@@ -218,6 +216,7 @@ class InAppPurchaseController extends GetxController {
   }
 
   void _setStateByPurchase(PurchaseDetails purchase) {
+    logPrint("_setStateByPurchase - ${purchase.productID}");
     // Проверяем список уже купленных товаров и выставляем статус пользователя
     // Если покупал что-то в старой версии или купил кофе в новой, то VIP
     if (oldRg2Products.contains(purchase.productID) || purchase.productID == G_AD_OFF_AND_OPEN_ALL_PLUS) {
@@ -229,7 +228,7 @@ class InAppPurchaseController extends GetxController {
     } else if (purchase.productID == G_AD_OFF && state == PurchaserState.SIMPLE_USER) {
       state = PurchaserState.AD_OFF_USER;
     }
-    logPrint("IAP _getPreviousPurchases - PurchaserState = $state");
+    logPrint("IAP _setStateByPurchase - PurchaserState = $state");
   }
 
   /// Выполняем покупку пользователем, который еще не покупал ничего

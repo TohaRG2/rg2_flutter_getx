@@ -44,16 +44,16 @@ const getFreeMoneyPrice = "0\$";
 const getFreeMoneyHelp = "Получите монетки за просмотр рекламы";
 
 const adOffID = 1;
-const adOffTitle = "Отключить рекламу";
+const adOffTitle = "Отключить расход монеток";
 const adOffPrice = "1\$";
-const adOffHelp = "Монетки не будут тратиться на просмотр обучалок, но чтобы открыть все обучалки, придется посмотреть реклмные ролики";
+const adOffHelp = "Монетки не будут тратиться на просмотр обучалок, но чтобы открыть все обучалки, придется их поднакопить и посмотреть реклмные ролики";
 
 const adOffAndOpenAllID = 2;
 const adOffAndOpenAllTitle = "Отключить рекламу +";
 const adOffAndOpenAllPrice = "2\$";
-const adOffAndOpenAllHelp = "Монетки больше не расходуются и все обучалки становятся доступны";
+const adOffAndOpenAllHelp = "Неограниченный запас монеток и все обучалки становятся доступны";
 
 const adOffAndOpenAllPlusID = 3;
 const adOffAndOpenAllPlusTitle = "Отключить рекламу ++";
 const adOffAndOpenAllPlusPrice = "4\$";
-const adOffAndOpenAllPlusHelp = "Монетки больше не расходуются, все обучалки становятся доступны + кофе автору программы";
+const adOffAndOpenAllPlusHelp = "Неограниченный запас монеток, все обучалки становятся доступны + кофе автору программы";
