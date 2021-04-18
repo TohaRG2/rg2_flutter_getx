@@ -82,12 +82,14 @@ class InAppPurchaseController extends GetxController {
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 2));
         _settings.isAdDisabled = true;
         _settings.isAllPuzzlesEnabled = true;
+        coins = -1;
         logPrint("IAP state - PURCHASER");
         break;
       case PurchaserState.VIP_USER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 3));
         _settings.isAdDisabled = true;
         _settings.isAllPuzzlesEnabled = true;
+        coins = -1;
         logPrint("IAP state - VIP_USER");
         break;
     }
