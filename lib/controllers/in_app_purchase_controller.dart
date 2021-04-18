@@ -58,7 +58,7 @@ class InAppPurchaseController extends GetxController {
     }
   }
 
-  final RxList<GetMoneyItem> _listItems = getMoneyItems.obs;
+  final RxList<GetMoneyItem> _listItems = getAllMoneyItems.obs;
   List<GetMoneyItem> get listItems => _listItems;
 
   Rx<PurchaserState> _state = PurchaserState.SIMPLE_USER.obs;
@@ -69,22 +69,24 @@ class InAppPurchaseController extends GetxController {
     switch(value) {
       case PurchaserState.SIMPLE_USER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 0));
+        _listItems.value = getAllMoneyItems;
         logPrint("IAP state - SIMPLE_USER");
         break;
       case PurchaserState.AD_OFF_USER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 1));
-        _settings.isAdEnabled = false;
+        _settings.isAdDisabled = true;
+        _listItems.value = getMoneyItemsWithoutAdOff;
         logPrint("IAP state - AD_OFF_USER");
         break;
       case PurchaserState.PURCHASER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 2));
-        _settings.isAdEnabled = false;
+        _settings.isAdDisabled = true;
         _settings.isAllPuzzlesEnabled = true;
         logPrint("IAP state - PURCHASER");
         break;
       case PurchaserState.VIP_USER:
         _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 3));
-        _settings.isAdEnabled = false;
+        _settings.isAdDisabled = true;
         _settings.isAllPuzzlesEnabled = true;
         logPrint("IAP state - VIP_USER");
         break;
@@ -95,9 +97,11 @@ class InAppPurchaseController extends GetxController {
     switch(intState) {
       case 0:
         _state.value = PurchaserState.SIMPLE_USER;
+        _listItems.value = getAllMoneyItems;
         break;
       case 1:
         _state.value = PurchaserState.AD_OFF_USER;
+        _listItems.value = getMoneyItemsWithoutAdOff;
         break;
       case 2:
         _state.value = PurchaserState.PURCHASER;

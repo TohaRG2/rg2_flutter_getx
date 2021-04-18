@@ -108,14 +108,15 @@ class SettingsController extends GetxController {
       _settingsController.setPropertyByKey(Property(key: Const.GOD_MODE, value: value));
     }
 
-  /// Уменьшаем ли количество монеток за просмотр обучалок
-  final _isAdEnabled = RxBool(true);
-    bool get isAdEnabled => _isAdEnabled.value;
-    set isAdEnabled(value) {
-      _isAdEnabled.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.IS_AD_ENABLED, value: value));
+  /// Куплен ли бесконечный просмотр обучалок
+  final _isAdDisabled = RxBool(true);
+    bool get isAdDisabled => _isAdDisabled.value;
+    set isAdDisabled(value) {
+      _isAdDisabled.value = value;
+      _settingsController.setPropertyByKey(Property(key: Const.IS_AD_DISABLED, value: value));
     }
 
+  /// Все ли головоломки разблокированы
   final _isAllPuzzlesEnabled = RxBool(false);
     bool get isAllPuzzlesEnabled => _isAllPuzzlesEnabled.value;
     set isAllPuzzlesEnabled(value) {
@@ -139,7 +140,7 @@ class SettingsController extends GetxController {
     _currentPageNumber.value = _settingsController.getPropertyByKey(Const.CURRENT_PAGE_NUMBER);
     _currentInfoPageNumber.value = _settingsController.getPropertyByKey(Const.CURRENT_INFO_PAGE_NUMBER);
     _godMode.value = _settingsController.getPropertyByKey(Const.GOD_MODE);
-    _isAdEnabled.value = _settingsController.getPropertyByKey(Const.IS_AD_ENABLED);
+    _isAdDisabled.value = _settingsController.getPropertyByKey(Const.IS_AD_DISABLED);
     _isAllPuzzlesEnabled.value = _settingsController.getPropertyByKey(Const.IS_ALL_PUZZLES_ENABLED);
 
     logPrint("_initializeRxVariables - подгружаем тему");

@@ -64,7 +64,7 @@ class Const {
   /// Настройки для покупок в приложении
   static const CURRENT_COINS = 'currentCoins';
   static const INITIAL_COINS = 'initialCoins';
-  static const IS_AD_ENABLED = 'isAdEnabled';
+  static const IS_AD_DISABLED = 'isAdDisabled';
   static const PURCHASER_STATE = 'purchaserState';
   static const IS_ALL_PUZZLES_ENABLED = 'isAllPuzzlesEnabled';
 

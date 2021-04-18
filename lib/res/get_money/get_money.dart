@@ -1,8 +1,14 @@
 import 'package:rg2/views/dialogs/get_money/model/get_money_item.dart';
 
-final getMoneyItems = <GetMoneyItem>[
+final getAllMoneyItems = <GetMoneyItem>[
   getFreeMoney,
   adOff,
+  adOffAndOpenAll,
+  adOffAndOpenAllPlus,
+];
+
+final getMoneyItemsWithoutAdOff = <GetMoneyItem>[
+  getFreeMoney,
   adOffAndOpenAll,
   adOffAndOpenAllPlus,
 ];

@@ -13,12 +13,13 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
 
   @override
   Widget build(BuildContext context) {
-    return _showDialog2(context);
+    return _showDialog(context);
   }
 
-  Widget _showDialog2(BuildContext context) {
+  Widget _showDialog(BuildContext context) {
     return SafeArea(
       child: Center(
+        // Чтобы Scaffold не спрямил закругленные углы, засовываем его в контейнер с полями (margin)
         child: Container(
           width: context.mediaQuerySize.width - 50,
           height: context.mediaQuerySize.height - 50,
@@ -39,7 +40,49 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
     );
   }
 
-  SingleChildScrollView _body() {
+  /// В зависимости от статуса покупок выводим  "Спасибо за покупку" или "варианты покупок"
+  Widget _body() {
+    Widget body1 = _showOnlyAdVariant();
+    Widget body2 = _showVariants();
+    return (_settings.isAdDisabled && _settings.isAllPuzzlesEnabled) ? body1 : body2;
+  }
+
+  /// "Сасибо за покупку" - Предлагаем подписаться на канал и посмотреть доп.рекламу
+  Widget _showOnlyAdVariant() {
+    return  Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("Спасибо, за покупку приложения!", style: Get.textTheme.headline5,),
+            SizedBox(height: UIHelper.SpaceMedium,),
+            Text("Надеюсь, что вы уже подписались на мой YouTube канал. А если, еще этого не сделали, то можете это сделать прямо сейчас."),
+            SizedBox(height: UIHelper.SpaceSmall,),
+            ElevatedButton(
+                onPressed: () {
+
+                },
+                style: ElevatedButton.styleFrom(
+                    minimumSize: Size(Get.width, 40)
+                ) ,
+                child: Text("Подписаться на канал")),
+            SizedBox(height: UIHelper.SpaceMedium,),
+            Text("Буду очень признателен, если вы продолжите поддерживать приложение, периодически просматривая рекламные ролики."),
+            SizedBox(height: UIHelper.SpaceSmall,),
+            ElevatedButton(
+              onPressed: () {
+
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(Get.width, 40)
+              ) ,
+              child: Text("Посмотреть ролики"))
+          ],
+        )
+    );
+  }
+
+  /// Предлагаем варианты покупок приложения
+  Widget _showVariants() {
     return SingleChildScrollView(
       child: Obx(
         () => Column(
@@ -60,6 +103,7 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
     );
   }
 
+  /// Раскрывающаяся панель с вариантами покупок
   ExpansionPanel _expansionPanel(GetMoneyItem item) {
     return ExpansionPanel(
       canTapOnHeader: true,
