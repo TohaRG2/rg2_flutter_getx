@@ -47,7 +47,8 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
     Widget body2 = _showVariants();
     Widget storeDisabled = _storeDisabled();
     Widget storeEnabled = (_settings.isAdDisabled && _settings.isAllPuzzlesEnabled) ? body1 : body2;
-    return (controller.isAvailable) ? storeEnabled : storeDisabled;
+    // return (controller.isAvailable) ? storeEnabled : storeDisabled;
+    return (false) ? storeEnabled : storeDisabled;
   }
 
   /// "Сасибо за покупку" - Предлагаем подписаться на канал и посмотреть доп.рекламу
@@ -94,15 +95,15 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
                 visible: (_settings.isAdDisabled && !_settings.isAllPuzzlesEnabled),
                 child: Text("Чтобы открыть все головоломки, осталось получить ${_settings.coinsToEnableAllPuzzle - _settings.coins} бесплатных монеток")),
             SizedBox(height: UIHelper.SpaceLarge),
-            ExpansionPanelList(
-              expansionCallback: (int index, bool isExpanded) {
-                controller.onTapExpansion(index, isExpanded);
-              },
-              animationDuration: Duration(milliseconds: 600),
-              children: controller.listItems
-                  .map((item) => _expansionPanel(item))
-                  .toList(),
-            ),
+            // ExpansionPanelList(
+            //   expansionCallback: (int index, bool isExpanded) {
+            //     controller.onTapExpansion(index, isExpanded);
+            //   },
+            //   animationDuration: Duration(milliseconds: 600),
+            //   children: controller.listItems
+            //       .map((item) => _expansionPanel(item))
+            //       .toList(),
+            // ),
           ],
         ),
       ),
@@ -131,7 +132,7 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
           ),
           trailing: Text(item.price),
           onTap: () {
-            controller.onTapBySimpleUser(item);
+            // controller.onTapBySimpleUser(item);
           },
         ),
       ),
@@ -161,7 +162,8 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
             padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
             child: Obx(
               () => Text(
-                "У вас ${controller.getCoins()} монеток",
+                // "У вас ${controller.getCoins()} монеток",
+                "У вас 100 монеток",
                 style: Get.textTheme.headline5.copyWith(fontSize: 18),
                 softWrap: true,
               ),
@@ -192,7 +194,7 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
             Text(StrRes.backButtonText),
             Visibility(
               visible: _settings.godMode,
-              child: Text( (controller.isAvailable) ?
+              child: Text( true ? //(controller.isAvailable) ?
                 "Магазин доступен" : "Магазин недоступен",
                 style: Get.textTheme.headline6.copyWith(fontSize: 16),
               ),

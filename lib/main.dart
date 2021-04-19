@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:rg2/controllers/in_app_purchase_controller.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/storage/global_storage_controller.dart';
@@ -40,10 +39,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Инициализируем FireBase, нужен import 'package:firebase_core/firebase_core.dart';
   await Firebase.initializeApp();
+  // инициализируем adMob
+  // await MobileAds.instance.initialize();
   // Инициализируем SharedPreferences
   await GetStorage.init();
   // Инициализируем внутренние покупки
-  InAppPurchaseConnection.enablePendingPurchases();
+  // InAppPurchaseConnection.enablePendingPurchases();
   runApp(RG2App());
 }
 

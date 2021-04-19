@@ -62,15 +62,16 @@ dependencies:
   percent_indicator: ^3.0.1
 
   # Firebase + google sign in
+#  firebase_core: ^1.0.3
   firebase_auth: ^1.1.0
   cloud_firestore: ^1.0.5
   google_sign_in: ^5.0.2
 
   # Покупки в приложении
-  in_app_purchase: ^0.5.2
+#  in_app_purchase: ^0.5.2
 
   # Реклама в приложении
-  google_mobile_ads: ^0.12.1+1
+#  google_mobile_ads: ^0.12.1+1
 
   # красивый свитч для смены темы
   flutter_switch: ^0.3.1
