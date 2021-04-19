@@ -69,6 +69,9 @@ dependencies:
   # Покупки в приложении
   in_app_purchase: ^0.5.2
 
+  # Реклама в приложении
+  google_mobile_ads: ^0.12.1+1
+
   # красивый свитч для смены темы
   flutter_switch: ^0.3.1
 

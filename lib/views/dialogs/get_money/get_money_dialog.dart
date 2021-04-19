@@ -41,11 +41,13 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
     );
   }
 
-  /// В зависимости от статуса покупок выводим  "Спасибо за покупку" или "варианты покупок"
+  /// В зависимости от статуса покупок выводим  "Спасибо за покупку", "варианты покупок" или магазин временно недоступен
   Widget _body() {
     Widget body1 = _showOnlyAdVariant();
     Widget body2 = _showVariants();
-    return (_settings.isAdDisabled && _settings.isAllPuzzlesEnabled) ? body1 : body2;
+    Widget storeDisabled = _storeDisabled();
+    Widget storeEnabled = (_settings.isAdDisabled && _settings.isAllPuzzlesEnabled) ? body1 : body2;
+    return (controller.isAvailable) ? storeEnabled : storeDisabled;
   }
 
   /// "Сасибо за покупку" - Предлагаем подписаться на канал и посмотреть доп.рекламу
@@ -134,6 +136,11 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
         ),
       ),
     );
+  }
+
+  /// Сообщение о временной недоступности магазина покупок
+  Widget _storeDisabled() {
+    return Text("Магазин временно недоступен");
   }
 
   AppBar _appBar() {
