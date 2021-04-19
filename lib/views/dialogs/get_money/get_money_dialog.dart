@@ -87,6 +87,9 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
       child: Obx(
         () => Column(
           children: [
+            Visibility(
+                visible: (_settings.isAdDisabled && !_settings.isAllPuzzlesEnabled),
+                child: Text("Чтобы открыть все головоломки, осталось получить ${_settings.coinsToEnableAllPuzzle - controller.coins} бесплатных монеток")),
             SizedBox(height: UIHelper.SpaceLarge),
             ExpansionPanelList(
               expansionCallback: (int index, bool isExpanded) {
@@ -136,28 +139,32 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
     return AppBar(
       elevation: 0,
       automaticallyImplyLeading: false,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
-              child: Obx(
-                () => Text(
-                  "У вас ${controller.getCoins()} монеток",
-                  style: Get.textTheme.headline5.copyWith(fontSize: 18),
-                  softWrap: true,
-                ),
+      title: _currentCoinsRow(),
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
+    );
+  }
+
+  Row _currentCoinsRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
+            child: Obx(
+              () => Text(
+                "У вас ${controller.getCoins()} монеток",
+                style: Get.textTheme.headline5.copyWith(fontSize: 18),
+                softWrap: true,
               ),
             ),
           ),
-          Image.asset(
-            "assets/images/icons/coins.png",
-            width: 50,
-          ),
-        ],
-      ),
-      backgroundColor: Get.theme.scaffoldBackgroundColor,
+        ),
+        Image.asset(
+          "assets/images/icons/coins.png",
+          width: 50,
+        ),
+      ],
     );
   }
 

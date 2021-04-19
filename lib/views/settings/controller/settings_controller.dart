@@ -124,6 +124,17 @@ class SettingsController extends GetxController {
       _settingsController.setPropertyByKey(Property(key: Const.IS_ALL_PUZZLES_ENABLED, value: value));
     }
 
+
+  // -------------------------  Глобальные настройки (доступны только на чтение из базы) ------------------------------
+  /// Количество монеток, необходимых для открытия всех головоломок
+  final _coinsToEnableAllPuzzle = RxInt(900);
+    int get coinsToEnableAllPuzzle => _coinsToEnableAllPuzzle.value;
+
+  /// Количество монеток доступных изначально. При чтении глобальных настроек, значение должно сохраниться в currentCoins
+  final _initialCoins = RxInt(15);
+    int get initialCoins => _initialCoins.value;
+  //-------------------------------------------------------------------------------------------------------------------
+
   /// Счетчик нажатий на плашку
   var _godCount = 0;
 
@@ -142,6 +153,7 @@ class SettingsController extends GetxController {
     _godMode.value = _settingsController.getPropertyByKey(Const.GOD_MODE);
     _isAdDisabled.value = _settingsController.getPropertyByKey(Const.IS_AD_DISABLED);
     _isAllPuzzlesEnabled.value = _settingsController.getPropertyByKey(Const.IS_ALL_PUZZLES_ENABLED);
+    _coinsToEnableAllPuzzle.value = _settingsController.getPropertyByKey(Const.COINS_TO_ENABLE_ALL_PUZZLE);
 
     logPrint("_initializeRxVariables - подгружаем тему");
     int _primaryColor = _settingsController.getPropertyByKey(Const.PRIMARY_COLOR);

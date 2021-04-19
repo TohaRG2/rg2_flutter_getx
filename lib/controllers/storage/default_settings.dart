@@ -104,10 +104,13 @@ Map<String, dynamic> defaultSettings = {
   Const.YOU_TUBE_PLAYER_SPEED : 1.0,
 
   /// Настройки для покупок
-  // Текущее количество монеток
-  Const.CURRENT_COINS : 15,
   // Количество монеток при первом входе и покупке при 0
   Const.INITIAL_COINS : 15,
+  // Сколько нужно монеток, чтобы открыть все головоломки
+  Const.COINS_TO_ENABLE_ALL_PUZZLE : 900,
+
+  // Текущее количество монеток
+  Const.CURRENT_COINS : 15,
   // Трятятся ли монетки на просмотр обучалок
   Const.IS_AD_DISABLED : false,
   // Куплены ли доп.головоломки (разрешен их просмотр)

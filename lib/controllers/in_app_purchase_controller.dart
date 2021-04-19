@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:meta/meta.dart';
 import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';

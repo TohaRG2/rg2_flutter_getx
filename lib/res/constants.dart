@@ -62,11 +62,15 @@ class Const {
   static const YOU_TUBE_PLAYER_SPEED = 'youTubePlayerSpeed';
 
   /// Настройки для покупок в приложении
-  static const CURRENT_COINS = 'currentCoins';
+  // глобальные
   static const INITIAL_COINS = 'initialCoins';
+  static const COINS_TO_ENABLE_ALL_PUZZLE = 'coinsToEnableAllPuzzle';
+  // пользователя
+  static const CURRENT_COINS = 'currentCoins';
   static const IS_AD_DISABLED = 'isAdDisabled';
   static const PURCHASER_STATE = 'purchaserState';
   static const IS_ALL_PUZZLES_ENABLED = 'isAllPuzzlesEnabled';
+
 
   /// Настройки для локального хранилища
   static const LOCAL_STARTS_COUNT = 'localStartsCount';
