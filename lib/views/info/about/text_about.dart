@@ -1,7 +1,7 @@
 class TextAbout {
   static const infoAppDescription = "RubicsGuide 2 - обучение сборке кубика Рубика";
 
-  static const version = "ver. 3.20210301.1";
+  static const version = "ver. 4.20210419.1";
 
   static const text = """
     <p>Эта программа поможет вам научиться собирать кубик Рубика и многие другие шарнирные головоломки

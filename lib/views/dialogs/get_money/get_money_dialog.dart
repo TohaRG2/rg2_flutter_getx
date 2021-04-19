@@ -7,6 +7,7 @@ import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/get_money/model/get_money_item.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
+import 'package:rg2/views/shared/url_helper.dart';
 
 class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
   final SettingsController _settings = Get.find();
@@ -59,7 +60,7 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
             SizedBox(height: UIHelper.SpaceSmall,),
             ElevatedButton(
                 onPressed: () {
-
+                  UrlHelper.onUrlTap("https://www.youtube.com/channel/UCpSUF7w376aCRRvzkoNoAfQ");
                 },
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size(Get.width, 40)
