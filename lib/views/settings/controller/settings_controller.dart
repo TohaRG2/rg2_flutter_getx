@@ -17,6 +17,7 @@ class SettingsController extends GetxController {
     _storage.callbacks.add(_initializeRxVariables);
   }
 
+  /// Основной цвет
   final _primaryThemeColor = Rx<Color>(Colors.orange);
     Color get primaryThemeColor => _primaryThemeColor.value;
     set primaryThemeColor (color) {
@@ -26,6 +27,7 @@ class SettingsController extends GetxController {
       _changeCurrentTheme();
     }
 
+  /// Цвет выделенных элементов (акцент)
   final _accentThemeColor = Rx<Color>(Colors.green);
     Color get accentThemeColor => _accentThemeColor.value;
     set accentThemeColor (color) {
@@ -35,6 +37,7 @@ class SettingsController extends GetxController {
       _changeCurrentTheme();
     }
 
+  /// Включена ли темная тема
   final _isDarkThemeSelect = RxBool(true);
     bool get isDarkThemeSelect => _isDarkThemeSelect.value;
     set isDarkThemeSelect(value) {
@@ -43,6 +46,7 @@ class SettingsController extends GetxController {
       _changeCurrentTheme();
     }
 
+  /// Коэффициент масштабирования текста
   final _textScaleFactor = RxDouble(1.0);
     double get textScaleFactor => _textScaleFactor.value;
     set textScaleFactor(value) {
@@ -50,6 +54,7 @@ class SettingsController extends GetxController {
       _storage.setPropertyByKey(Property(key: Const.SCALE_FACTOR, value: value));
     }
 
+  /// Открывать ли окно с подсказками при старте программы
   final _isStartHelpEnabled = RxBool(false);
     bool get isStartHelpEnabled => _isStartHelpEnabled.value;
     set isStartHelpEnabled(value) {
@@ -57,6 +62,7 @@ class SettingsController extends GetxController {
       _storage.setPropertyByKey(Property(key: Const.IS_START_HELP_ENABLED, value: value));
     }
 
+  /// Возможно ли прокуртка свайпами во ViewPager, лучше отключать если используется жест смахивания для "назад"
   final _isSwipeEnabled = RxBool(false);
     bool get isSwipeEnabled => _isSwipeEnabled.value;
     set isSwipeEnabled(value) {
@@ -64,13 +70,7 @@ class SettingsController extends GetxController {
       _storage.setPropertyByKey(Property(key: Const.IS_SWIPE_ENABLED, value: value));
     }
 
-  final _isPurchaseEnabled = RxBool(false);
-    bool get isPurchaseEnabled => _isPurchaseEnabled.value;
-    set isPurchaseEnabled(value) {
-      _isPurchaseEnabled.value = value;
-      _storage.setPropertyByKey(Property(key: Const.IS_ALL_PUZZLES_ENABLED, value: value));
-    }
-
+  /// Настройки доступа в интернет (0 - любой,  2 - только Wi-Fi, 3 - инетернет недоступен)
   final _internetUsage = RxInt(0);
     int get internetUsage => _internetUsage.value;
     set internetUsage(value) {
@@ -78,6 +78,7 @@ class SettingsController extends GetxController {
       _storage.setPropertyByKey(Property(key: Const.INTERNET_USAGE, value: value));
     }
 
+  /// Номер открытой закладки в bottomBar (Обучалки, тренажеры, избранное, инфо)
   final _bottomItem = RxInt(0);
     int get bottomItem => _bottomItem.value;
     set bottomItem(value) {
@@ -85,6 +86,7 @@ class SettingsController extends GetxController {
       _storage.setPropertyByKey(Property(key: Const.BOTTOM_ITEM, value: value));
     }
 
+  /// Номер текущей открытой страницы в обучалках
   final _currentPageNumber = RxInt(0);
     int get currentPageNumber => _currentPageNumber.value;
     set currentPageNumber(value) {
@@ -92,7 +94,7 @@ class SettingsController extends GetxController {
       _storage.setPropertyByKey(Property(key: Const.CURRENT_PAGE_NUMBER, value: value));
     }
 
-  /// номер текущей страницы на закладке info
+  /// Номер текущей страницы на закладке info
   final _currentInfoPageNumber = RxInt(0);
     int get currentInfoPageNumber => _currentInfoPageNumber.value;
     set currentInfoPageNumber (value) {
@@ -100,7 +102,7 @@ class SettingsController extends GetxController {
       _storage.setPropertyByKey(Property(key: Const.CURRENT_INFO_PAGE_NUMBER, value: value));
     }
 
-  /// режим разработчика
+  /// Режим разработчика
   final _godMode = RxBool(false);
     bool get godMode => _godMode.value;       // геттер public
     set __godMode(value) {                    // сеттер private
@@ -161,7 +163,6 @@ class SettingsController extends GetxController {
     _textScaleFactor.value = _storage.getPropertyByKey(Const.SCALE_FACTOR);
     _isStartHelpEnabled.value = _storage.getPropertyByKey(Const.IS_START_HELP_ENABLED);
     _isSwipeEnabled.value = _storage.getPropertyByKey(Const.IS_SWIPE_ENABLED);
-    _isPurchaseEnabled.value = _storage.getPropertyByKey(Const.IS_ALL_PUZZLES_ENABLED);
     _internetUsage.value = _storage.getPropertyByKey(Const.INTERNET_USAGE);
     _bottomItem.value = _storage.getPropertyByKey(Const.BOTTOM_ITEM);
     _currentPageNumber.value = _storage.getPropertyByKey(Const.CURRENT_PAGE_NUMBER);

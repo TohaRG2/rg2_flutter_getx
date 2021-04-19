@@ -24,7 +24,7 @@ class MenuList extends StatelessWidget {
   Widget build(BuildContext context) {
     var position = _learnController.getPositionForPage(pageNumber);
     var _scrollController = ScrollController(initialScrollOffset: position);
-    var _isPurchaseEnabled = _settingsController.isPurchaseEnabled;
+    var _isPurchaseEnabled = _settingsController.isAllPuzzlesEnabled;
     var _isGodModeEnabled = _settingsController.godMode;
 
     _scrollController.addListener(() {

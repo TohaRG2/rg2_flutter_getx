@@ -31,9 +31,9 @@ class PurchaseSettings extends StatelessWidget {
                 StrRes.settingsPurchaseMenuText,
                 style: Get.textTheme.headline6,
               ),
-              value: _settings.isPurchaseEnabled,
+              value: _settings.isAllPuzzlesEnabled,
               onChanged: (v) {
-                _settings.isPurchaseEnabled = v;
+                _settings.isAllPuzzlesEnabled = v;
               },
             ),
           ]),
