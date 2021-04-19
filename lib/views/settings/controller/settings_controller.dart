@@ -7,14 +7,14 @@ import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 class SettingsController extends GetxController {
-  final GlobalStorageController _settingsController = Get.find();
+  final GlobalStorageController _storage = Get.find();
 
   @override
   void onInit() {
     super.onInit();
     logPrint("SettingsController onInit");
     _initializeRxVariables();
-    _settingsController.callbacks.add(_initializeRxVariables);
+    _storage.callbacks.add(_initializeRxVariables);
   }
 
   final _primaryThemeColor = Rx<Color>(Colors.orange);
@@ -22,7 +22,7 @@ class SettingsController extends GetxController {
     set primaryThemeColor (color) {
       _primaryThemeColor.value = color;
       int value = color.value;
-      _settingsController.setPropertyByKey(Property(key: Const.PRIMARY_COLOR, value: value));
+      _storage.setPropertyByKey(Property(key: Const.PRIMARY_COLOR, value: value));
       _changeCurrentTheme();
     }
 
@@ -31,7 +31,7 @@ class SettingsController extends GetxController {
     set accentThemeColor (color) {
       _accentThemeColor.value = color;
       int value = color.value;
-      _settingsController.setPropertyByKey(Property(key: Const.ACCENT_COLOR, value: value));
+      _storage.setPropertyByKey(Property(key: Const.ACCENT_COLOR, value: value));
       _changeCurrentTheme();
     }
 
@@ -39,7 +39,7 @@ class SettingsController extends GetxController {
     bool get isDarkThemeSelect => _isDarkThemeSelect.value;
     set isDarkThemeSelect(value) {
       _isDarkThemeSelect.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.IS_THEME_DARK, value: value));
+      _storage.setPropertyByKey(Property(key: Const.IS_THEME_DARK, value: value));
       _changeCurrentTheme();
     }
 
@@ -47,49 +47,49 @@ class SettingsController extends GetxController {
     double get textScaleFactor => _textScaleFactor.value;
     set textScaleFactor(value) {
       _textScaleFactor.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.SCALE_FACTOR, value: value));
+      _storage.setPropertyByKey(Property(key: Const.SCALE_FACTOR, value: value));
     }
 
   final _isStartHelpEnabled = RxBool(false);
     bool get isStartHelpEnabled => _isStartHelpEnabled.value;
     set isStartHelpEnabled(value) {
       _isStartHelpEnabled.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.IS_START_HELP_ENABLED, value: value));
+      _storage.setPropertyByKey(Property(key: Const.IS_START_HELP_ENABLED, value: value));
     }
 
   final _isSwipeEnabled = RxBool(false);
     bool get isSwipeEnabled => _isSwipeEnabled.value;
     set isSwipeEnabled(value) {
       _isSwipeEnabled.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.IS_SWIPE_ENABLED, value: value));
+      _storage.setPropertyByKey(Property(key: Const.IS_SWIPE_ENABLED, value: value));
     }
 
   final _isPurchaseEnabled = RxBool(false);
     bool get isPurchaseEnabled => _isPurchaseEnabled.value;
     set isPurchaseEnabled(value) {
       _isPurchaseEnabled.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.IS_ALL_PUZZLES_ENABLED, value: value));
+      _storage.setPropertyByKey(Property(key: Const.IS_ALL_PUZZLES_ENABLED, value: value));
     }
 
   final _internetUsage = RxInt(0);
     int get internetUsage => _internetUsage.value;
     set internetUsage(value) {
       _internetUsage.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.INTERNET_USAGE, value: value));
+      _storage.setPropertyByKey(Property(key: Const.INTERNET_USAGE, value: value));
     }
 
   final _bottomItem = RxInt(0);
     int get bottomItem => _bottomItem.value;
     set bottomItem(value) {
       _bottomItem.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.BOTTOM_ITEM, value: value));
+      _storage.setPropertyByKey(Property(key: Const.BOTTOM_ITEM, value: value));
     }
 
   final _currentPageNumber = RxInt(0);
     int get currentPageNumber => _currentPageNumber.value;
     set currentPageNumber(value) {
       _currentPageNumber.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.CURRENT_PAGE_NUMBER, value: value));
+      _storage.setPropertyByKey(Property(key: Const.CURRENT_PAGE_NUMBER, value: value));
     }
 
   /// номер текущей страницы на закладке info
@@ -97,7 +97,7 @@ class SettingsController extends GetxController {
     int get currentInfoPageNumber => _currentInfoPageNumber.value;
     set currentInfoPageNumber (value) {
       _currentInfoPageNumber.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.CURRENT_INFO_PAGE_NUMBER, value: value));
+      _storage.setPropertyByKey(Property(key: Const.CURRENT_INFO_PAGE_NUMBER, value: value));
     }
 
   /// режим разработчика
@@ -105,7 +105,7 @@ class SettingsController extends GetxController {
     bool get godMode => _godMode.value;       // геттер public
     set __godMode(value) {                    // сеттер private
       _godMode.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.GOD_MODE, value: value));
+      _storage.setPropertyByKey(Property(key: Const.GOD_MODE, value: value));
     }
 
   /// Куплен ли бесконечный просмотр обучалок
@@ -113,7 +113,7 @@ class SettingsController extends GetxController {
     bool get isAdDisabled => _isAdDisabled.value;
     set isAdDisabled(value) {
       _isAdDisabled.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.IS_AD_DISABLED, value: value));
+      _storage.setPropertyByKey(Property(key: Const.IS_AD_DISABLED, value: value));
     }
 
   /// Все ли головоломки разблокированы
@@ -121,9 +121,25 @@ class SettingsController extends GetxController {
     bool get isAllPuzzlesEnabled => _isAllPuzzlesEnabled.value;
     set isAllPuzzlesEnabled(value) {
       _isAllPuzzlesEnabled.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.IS_ALL_PUZZLES_ENABLED, value: value));
+      _storage.setPropertyByKey(Property(key: Const.IS_ALL_PUZZLES_ENABLED, value: value));
     }
 
+  /// Текущее количество монеток у пользователя (если меньше 0, значит неограниченно)
+  final RxInt _coins = 0.obs;
+    get coins => _coins.value;
+    set coins(int value) {
+      _coins.value = value;
+      _storage.setPropertyByKey(Property(key: Const.CURRENT_COINS, value: value));
+    }
+
+  /// Тип пользователя, как покупателя inAppPurchase (0-ничего не покупал, 1 - купил чтобы не тратились монетки,
+  /// 2 - купил все, 3 - купил все + кофе автору :)
+  RxInt _purchaserState = RxInt(0);
+    get purchaserState => _purchaserState.value;
+    set purchaserState(int value) {
+      _purchaserState.value = value;
+      _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: value));
+    }
 
   // -------------------------  Глобальные настройки (доступны только на чтение из базы) ------------------------------
   /// Количество монеток, необходимых для открытия всех головоломок
@@ -142,23 +158,24 @@ class SettingsController extends GetxController {
   _initializeRxVariables() {
     logPrint("_initializeRxVariables Start");
 
-    _textScaleFactor.value = _settingsController.getPropertyByKey(Const.SCALE_FACTOR);
-    _isStartHelpEnabled.value = _settingsController.getPropertyByKey(Const.IS_START_HELP_ENABLED);
-    _isSwipeEnabled.value = _settingsController.getPropertyByKey(Const.IS_SWIPE_ENABLED);
-    _isPurchaseEnabled.value = _settingsController.getPropertyByKey(Const.IS_ALL_PUZZLES_ENABLED);
-    _internetUsage.value = _settingsController.getPropertyByKey(Const.INTERNET_USAGE);
-    _bottomItem.value = _settingsController.getPropertyByKey(Const.BOTTOM_ITEM);
-    _currentPageNumber.value = _settingsController.getPropertyByKey(Const.CURRENT_PAGE_NUMBER);
-    _currentInfoPageNumber.value = _settingsController.getPropertyByKey(Const.CURRENT_INFO_PAGE_NUMBER);
-    _godMode.value = _settingsController.getPropertyByKey(Const.GOD_MODE);
-    _isAdDisabled.value = _settingsController.getPropertyByKey(Const.IS_AD_DISABLED);
-    _isAllPuzzlesEnabled.value = _settingsController.getPropertyByKey(Const.IS_ALL_PUZZLES_ENABLED);
-    _coinsToEnableAllPuzzle.value = _settingsController.getPropertyByKey(Const.COINS_TO_ENABLE_ALL_PUZZLE);
+    _textScaleFactor.value = _storage.getPropertyByKey(Const.SCALE_FACTOR);
+    _isStartHelpEnabled.value = _storage.getPropertyByKey(Const.IS_START_HELP_ENABLED);
+    _isSwipeEnabled.value = _storage.getPropertyByKey(Const.IS_SWIPE_ENABLED);
+    _isPurchaseEnabled.value = _storage.getPropertyByKey(Const.IS_ALL_PUZZLES_ENABLED);
+    _internetUsage.value = _storage.getPropertyByKey(Const.INTERNET_USAGE);
+    _bottomItem.value = _storage.getPropertyByKey(Const.BOTTOM_ITEM);
+    _currentPageNumber.value = _storage.getPropertyByKey(Const.CURRENT_PAGE_NUMBER);
+    _currentInfoPageNumber.value = _storage.getPropertyByKey(Const.CURRENT_INFO_PAGE_NUMBER);
+    _godMode.value = _storage.getPropertyByKey(Const.GOD_MODE);
+    _isAdDisabled.value = _storage.getPropertyByKey(Const.IS_AD_DISABLED);
+    _isAllPuzzlesEnabled.value = _storage.getPropertyByKey(Const.IS_ALL_PUZZLES_ENABLED);
+    _coins.value = _storage.getPropertyByKey(Const.CURRENT_COINS);
+    _coinsToEnableAllPuzzle.value = _storage.getPropertyByKey(Const.COINS_TO_ENABLE_ALL_PUZZLE);
 
     logPrint("_initializeRxVariables - подгружаем тему");
-    int _primaryColor = _settingsController.getPropertyByKey(Const.PRIMARY_COLOR);
-    int _accentColor = _settingsController.getPropertyByKey(Const.ACCENT_COLOR);
-    bool isDarkThemeNewValue = _settingsController.getPropertyByKey(Const.IS_THEME_DARK);
+    int _primaryColor = _storage.getPropertyByKey(Const.PRIMARY_COLOR);
+    int _accentColor = _storage.getPropertyByKey(Const.ACCENT_COLOR);
+    bool isDarkThemeNewValue = _storage.getPropertyByKey(Const.IS_THEME_DARK);
 
     var isPrimaryColorChange = _primaryThemeColor != null && primaryThemeColor != Color(_primaryColor);
     var isAccentColorChange = _accentThemeColor != null && accentThemeColor != Color(_accentColor);

@@ -37,21 +37,9 @@ class InAppPurchaseController extends GetxController {
     _products.assignAll(value);
   }
 
-  // RxBool _isPurchased = false.obs;
-  // bool get isPurchased => _isPurchased.value;
-  // set isPurchased(value) {
-  //   _isPurchased.value = value;
-  // }
-
-  RxInt _coins = 0.obs;
-  get coins => _coins.value;
-  set coins(int value) {
-    _coins.value = value;
-    _storage.setPropertyByKey(Property(key: Const.CURRENT_COINS, value: value));
-  }
   String getCoins() {
-    if (_coins.value >= 0) {
-      return _coins.value.toString();
+    if (_settings.coins >= 0) {
+      return _settings.coins.toString();
     } else {
       return "∞";
     }
@@ -65,57 +53,40 @@ class InAppPurchaseController extends GetxController {
   set state(PurchaserState value) {
     logPrint("IAP state - $value");
     _state.value = value;
+    _settings.purchaserState = value.index;
     switch(value) {
       case PurchaserState.SIMPLE_USER:
-        _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 0));
         _listItems.value = getAllMoneyItems;
         logPrint("IAP state - SIMPLE_USER complete");
         break;
       case PurchaserState.AD_OFF_USER:
-        _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 1));
         _settings.isAdDisabled = true;
         _listItems.value = getMoneyItemsWithoutAdOff;
         logPrint("IAP state - AD_OFF_USER complete");
         break;
       case PurchaserState.PURCHASER:
-        _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 2));
         _settings.isAdDisabled = true;
         _settings.isAllPuzzlesEnabled = true;
-        coins = -1;
+        _settings.coins = -1;
         logPrint("IAP state - PURCHASER complete");
         break;
       case PurchaserState.VIP_USER:
-        _storage.setPropertyByKey(Property(key: Const.PURCHASER_STATE, value: 3));
         _settings.isAdDisabled = true;
         _settings.isAllPuzzlesEnabled = true;
-        coins = -1;
+        _settings.coins = -1;
         logPrint("IAP state - VIP_USER complete");
         break;
     }
   }
   _getPurchaserStateFromStorage() {
-    int intState = _storage.getPropertyByKey(Const.PURCHASER_STATE);
-    switch(intState) {
-      case 0:
-        state = PurchaserState.SIMPLE_USER;
-        break;
-      case 1:
-        state = PurchaserState.AD_OFF_USER;
-        break;
-      case 2:
-        state = PurchaserState.PURCHASER;
-        break;
-      case 3:
-        state = PurchaserState.VIP_USER;
-        break;
-    }
+    int intState = _settings.purchaserState;
+    state = PurchaserState.values[intState];
   }
 
   @override
   onInit() {
     super.onInit();
     logPrint("onInit - InAppPurchaseController");
-    _coins.value = _storage.getPropertyByKey(Const.CURRENT_COINS);
     _getPurchaserStateFromStorage();
     // Биндим стрим в Observable _subscription и подписываемся на его изменения
     _subscription.bindStream(_iap.purchaseUpdatedStream);
@@ -235,7 +206,7 @@ class InAppPurchaseController extends GetxController {
     logPrint("onTapBySimpleUser - $item");
     switch (item.id) {
       case 0:
-        coins++;
+        _settings.coins++;
         break;
       case 1:
         var productID = newRg2Products[0];

@@ -89,7 +89,7 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
           children: [
             Visibility(
                 visible: (_settings.isAdDisabled && !_settings.isAllPuzzlesEnabled),
-                child: Text("Чтобы открыть все головоломки, осталось получить ${_settings.coinsToEnableAllPuzzle - controller.coins} бесплатных монеток")),
+                child: Text("Чтобы открыть все головоломки, осталось получить ${_settings.coinsToEnableAllPuzzle - _settings.coins} бесплатных монеток")),
             SizedBox(height: UIHelper.SpaceLarge),
             ExpansionPanelList(
               expansionCallback: (int index, bool isExpanded) {
