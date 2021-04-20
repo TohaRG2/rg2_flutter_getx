@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/controllers/ad_controller.dart';
 import 'package:rg2/controllers/in_app_purchase_controller.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
@@ -11,6 +12,7 @@ import 'package:rg2/views/shared/url_helper.dart';
 
 class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
   final SettingsController _settings = Get.find();
+  final AdController _adController = Get.put(AdController());
 
   @override
   Widget build(BuildContext context) {
@@ -99,15 +101,15 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
                     StrRes.moneyDialogRemainCoinsText2
                 )),
             SizedBox(height: UIHelper.SpaceLarge),
-            // ExpansionPanelList(
-            //   expansionCallback: (int index, bool isExpanded) {
-            //     controller.onTapExpansion(index, isExpanded);
-            //   },
-            //   animationDuration: Duration(milliseconds: 600),
-            //   children: controller.listItems
-            //       .map((item) => _expansionPanel(item))
-            //       .toList(),
-            // ),
+            ExpansionPanelList(
+              expansionCallback: (int index, bool isExpanded) {
+                controller.onTapExpansion(index, isExpanded);
+              },
+              animationDuration: Duration(milliseconds: 600),
+              children: controller.listItems
+                  .map((item) => _expansionPanel(item))
+                  .toList(),
+            ),
           ],
         ),
       ),
@@ -155,6 +157,12 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
           ),
           SizedBox(height: UIHelper.SpaceMedium,),
           Text(StrRes.moneyDialogTemporaryUnavailable2, textAlign: TextAlign.center,),
+          TextButton(
+            child: Text("Показать рекламу"),
+            onPressed: () {
+              _adController.showInterstitialAd();
+            },
+          ),
         ],
       ),
     );

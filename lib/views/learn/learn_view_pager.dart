@@ -65,7 +65,7 @@ class LearnViewPager extends StatelessWidget {
                         bottom: 0,
                         left: 0,
                         right: 0,
-                        child: Text("100",// _purchaseController.getCoins(),
+                        child: Text(_purchaseController.getCoins(),
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 14.0, color: Get.textTheme.headline5.color),
                         ),
