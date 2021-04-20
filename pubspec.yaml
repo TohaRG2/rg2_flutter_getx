@@ -63,8 +63,8 @@ dependencies:
 
   # Firebase + google sign in
 #  firebase_core: ^1.0.3
-  firebase_auth: ^1.1.0
-  cloud_firestore: ^1.0.5
+  firebase_auth: ^1.1.1
+  cloud_firestore: ^1.0.6
   google_sign_in: ^5.0.2
 
   # Покупки в приложении
