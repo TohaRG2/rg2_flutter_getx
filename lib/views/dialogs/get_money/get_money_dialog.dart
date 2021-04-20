@@ -57,20 +57,20 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Спасибо, за покупку приложения!", style: Get.textTheme.headline5,),
+            Text(StrRes.moneyDialogThanks, style: Get.textTheme.headline5,),
             SizedBox(height: UIHelper.SpaceMedium,),
-            Text("Надеюсь, что вы уже подписались на мой YouTube канал. А если, еще этого не сделали, то можете это сделать прямо сейчас."),
+            Text(StrRes.moneyDialogSubscribeToYoutube),
             SizedBox(height: UIHelper.SpaceSmall,),
             ElevatedButton(
                 onPressed: () {
-                  UrlHelper.onUrlTap("https://www.youtube.com/channel/UCpSUF7w376aCRRvzkoNoAfQ");
+                  UrlHelper.onUrlTap(StrRes.moneyDialogSubscribeUrl);
                 },
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size(Get.width, 40)
                 ) ,
-                child: Text("Подписаться на канал")),
+                child: Text(StrRes.moneyDialogSubscribeButtonText)),
             SizedBox(height: UIHelper.SpaceMedium,),
-            Text("Буду очень признателен, если вы продолжите поддерживать приложение, периодически просматривая рекламные ролики."),
+            Text(StrRes.moneyDialogGratitude),
             SizedBox(height: UIHelper.SpaceSmall,),
             ElevatedButton(
               onPressed: () {
@@ -79,7 +79,7 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(Get.width, 40)
               ) ,
-              child: Text("Посмотреть ролики"))
+              child: Text(StrRes.moneyDialogShowAdsButtonText))
           ],
         )
     );
@@ -93,7 +93,11 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
           children: [
             Visibility(
                 visible: (_settings.isAdDisabled && !_settings.isAllPuzzlesEnabled),
-                child: Text("Чтобы открыть все головоломки, осталось получить ${_settings.coinsToEnableAllPuzzle - _settings.coins} бесплатных монеток")),
+                child: Text(
+                    StrRes.moneyDialogRemainCoinsText1 +
+                    "${_settings.coinsToEnableAllPuzzle - _settings.coins} " +
+                    StrRes.moneyDialogRemainCoinsText2
+                )),
             SizedBox(height: UIHelper.SpaceLarge),
             // ExpansionPanelList(
             //   expansionCallback: (int index, bool isExpanded) {
@@ -141,7 +145,19 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
 
   /// Сообщение о временной недоступности магазина покупок
   Widget _storeDisabled() {
-    return Text("Магазин временно недоступен");
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(StrRes.moneyDialogTemporaryUnavailable,
+            textAlign: TextAlign.center,
+            style: Get.textTheme.headline5.copyWith(color: Get.theme.primaryColor),
+          ),
+          SizedBox(height: UIHelper.SpaceMedium,),
+          Text(StrRes.moneyDialogTemporaryUnavailable2, textAlign: TextAlign.center,),
+        ],
+      ),
+    );
   }
 
   AppBar _appBar() {
@@ -160,18 +176,18 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
         Flexible(
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
-            child: Obx(
-              () => Text(
+            child: //Obx( () =>
+                Text(
                 // "У вас ${controller.getCoins()} монеток",
                 "У вас 100 монеток",
                 style: Get.textTheme.headline5.copyWith(fontSize: 18),
                 softWrap: true,
               ),
-            ),
+            //),
           ),
         ),
         Image.asset(
-          "assets/images/icons/coins.png",
+          StrRes.moneyDialogPathToCoinsImage,
           width: 50,
         ),
       ],
@@ -192,13 +208,6 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(StrRes.backButtonText),
-            Visibility(
-              visible: _settings.godMode,
-              child: Text( true ? //(controller.isAvailable) ?
-                "Магазин доступен" : "Магазин недоступен",
-                style: Get.textTheme.headline6.copyWith(fontSize: 16),
-              ),
-            ),
           ],
         ),
       ),

@@ -155,4 +155,16 @@ class StrRes {
   static const authLaterButtonText = "Войду позже";
   static const authNeverButtonText = "Больше не спрашивать";
 
+
+  static const moneyDialogThanks = "Спасибо, за покупку приложения!";
+  static const moneyDialogSubscribeToYoutube = "Надеюсь, что вы уже подписались на мой YouTube канал. А если, еще этого не сделали, то можете это сделать прямо сейчас.";
+  static const moneyDialogSubscribeUrl = "https://www.youtube.com/channel/UCpSUF7w376aCRRvzkoNoAfQ";
+  static const moneyDialogSubscribeButtonText = "Подписаться на канал";
+  static const moneyDialogGratitude = "Буду очень признателен, если вы продолжите поддерживать приложение, периодически просматривая рекламные ролики.";
+  static const moneyDialogShowAdsButtonText = "Посмотреть ролики";
+  static const moneyDialogRemainCoinsText1 = "Чтобы открыть все головоломки, осталось получить ";
+  static const moneyDialogRemainCoinsText2 = "бесплатных монеток";
+  static const moneyDialogTemporaryUnavailable = "Магазин покупок временно недоступен.";
+  static const moneyDialogTemporaryUnavailable2 = "Пожалуйста, проверьте интернет-подключение и доступность магазина приложений (AppStore или PlayMarket) на вашем устройстве.";
+  static const moneyDialogPathToCoinsImage = "assets/images/icons/coins.png";
 }
