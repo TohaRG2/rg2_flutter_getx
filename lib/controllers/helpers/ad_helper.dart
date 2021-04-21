@@ -15,8 +15,8 @@ class AdHelper {
     } else {
       // Если debug режим, то выводим тестовые рекламки https://developers.google.com/admob/android/test-ads#sample%5C_ad%5C_units
       if (Platform.isAndroid) {
-        //return "ca-app-pub-2544863615395812/9657376245";
-        return "ca-app-pub-3940256099942544/8691691433";
+        return "ca-app-pub-2544863615395812/9657376245";
+        //return "ca-app-pub-3940256099942544/8691691433";
       } else if (Platform.isIOS) {
         return "ca-app-pub-3940256099942544/5135589807";
       } else {
@@ -37,8 +37,8 @@ class AdHelper {
     } else {
       // Если debug режим, то выводим тестовые рекламки https://developers.google.com/admob/android/test-ads#sample%5C_ad%5C_units
       if (Platform.isAndroid) {
-        //return "ca-app-pub-2544863615395812/5074422963";
-        return "ca-app-pub-3940256099942544/5224354917";
+        return "ca-app-pub-2544863615395812/5074422963";
+        //return "ca-app-pub-3940256099942544/5224354917";
       } else if (Platform.isIOS) {
         return "ca-app-pub-3940256099942544/1712485313";
       } else {

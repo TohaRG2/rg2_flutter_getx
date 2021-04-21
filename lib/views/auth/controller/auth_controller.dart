@@ -1,3 +1,4 @@
+import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -43,13 +44,11 @@ class AuthController extends GetxController {
   }
 
   Future<void> googleSignInAndGoToStart() async {
-    // _waitingSync = true;
     await googleSignIn();
     if (user != null) {
       logPrint("googleSignInAndGoToStart - Переходим на основной экран");
       Get.offAll(() => MainView(), transition: Transition.downToUp);
     }
-    // _waitingSync = false;
   }
 
   Future<void> googleSignIn() async {
@@ -93,6 +92,51 @@ class AuthController extends GetxController {
       await _googleSignIn.signOut();
     } catch (e) {
       logPrint("Не смогли выйти из аккаунта:\n $e");
+    }
+  }
+
+  Future<void> appleSignInAndGoToStart() async {
+    await appleSignIn();
+    if (user != null) {
+      logPrint("googleSignInAndGoToStart - Переходим на основной экран");
+      Get.offAll(() => MainView(), transition: Transition.downToUp);
+    }
+  }
+
+
+  Future<void> appleSignIn() async {
+    logPrint("appleSignIn - request");
+    final AuthorizationResult result = await AppleSignIn.performRequests([
+      AppleIdRequest(requestedScopes: [Scope.email])
+    ]);
+    switch(result.status) {
+      case AuthorizationStatus.authorized:
+        logPrint("appleSignIn - authorized");
+        // Пользователь вошел в аккаунт, создаем запись в Firebase
+        final AppleIdCredential _appleCredential = result.credential;
+        final OAuthProvider oAuthProvider = OAuthProvider("apple.com");
+        final AuthCredential credential = oAuthProvider.credential(
+          idToken: String.fromCharCodes(_appleCredential.identityToken),
+          accessToken: String.fromCharCodes(_appleCredential.authorizationCode),
+        );
+
+        UserCredential _authResult = await _auth.signInWithCredential(credential);
+
+        logPrint("Создаем новую или перезаписываем по uid запись в таблице users");
+        if (await CloudDatabase().createOrUpdateUser(_authResult.user)) {
+          // Create success
+        } else {
+          throw Exception("Ошибка создания пользователя $user в FireBase");
+        }
+
+        break;
+      case AuthorizationStatus.error:
+        Get.snackbar("Apple SignIn Error", "Ошибка входа в apple аккаунт, попробуйте повторить.", snackPosition: SnackPosition.BOTTOM);
+        logPrintErr("Ошибка входа в эппл аккаунт или регистрации в FireStore:\n ${result.error.localizedDescription}");
+        break;
+      case AuthorizationStatus.cancelled:
+        logPrint("appleSignIn - прервано пользователем");
+        break;
     }
   }
 

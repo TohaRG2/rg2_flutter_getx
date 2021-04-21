@@ -15,6 +15,7 @@ class AdController extends GetxController {
   }
 
   _loadInterstitial() async {
+    logPrint("AD _loadInterstitial - ${AdHelper.rewardedAdUnitId}");
     _rewardedAd = RewardedAd(
       adUnitId: AdHelper.rewardedAdUnitId,
       request: AdRequest(),

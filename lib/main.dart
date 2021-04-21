@@ -11,6 +11,7 @@ import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/azbuka/azbuka_dialog_controller.dart';
 import 'package:rg2/controllers/helpers/binding_controllers.dart';
 import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/trainers/controller/trainers_controller.dart';
 import 'package:rg2/views/youtube_player/controller/youtube_controller.dart';
 import 'package:rg2/views/auth/main_auth_view.dart';
@@ -78,27 +79,36 @@ class RG2App extends StatelessWidget {
         // home: SettingsScreen(),
         // initialBinding: BindingControllers(),
         //TODO Перенести FutureBuilder создания базы при первом входе в фон аутентификации
-        home: FutureBuilder<MainDatabase>(
-            future: dbFuture,
-            builder: (context, data) {
-              logPrint("FutureBuilder rebuild");
-              if (data.hasData) {
-                logPrint("DBController.fillDB отработал");
-                putDAOs(data.data);
-                return MainAuthView();
-              } else if (data.hasError) {
-                return Center(child: Text("Can't create or open database"));
-              } else
-                return Center(child: CircularProgressIndicator());
-            }),
+        home: Scaffold(
+          body: FutureBuilder<MainDatabase>(
+              future: dbFuture,
+              builder: (context, data) {
+                logPrint("FutureBuilder rebuild");
+                if (data.hasData) {
+                  logPrint("DBController.fillDB отработал");
+                  putDAOs(data.data);
+                  return MainAuthView();
+                } else if (data.hasError) {
+                  return Center(child: Text("Can't create or open database"));
+                } else
+                  return Center(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircularProgressIndicator(),
+                          SizedBox(height: UIHelper.SpaceMedium,),
+                          Text("Инициализация переменных...")
+                        ],
+                      )
+                  );
+              }),
+        ),
         routes: {},
         builder: (context, child) {
-          return Obx(
-                () => MediaQuery(
+          return Obx(() =>
+            MediaQuery(
               child: child,
-              //TODO поменять на Get.MediaQuery
-              data: MediaQuery.of(context)
-                  .copyWith(textScaleFactor: _settings.textScaleFactor),
+              data: MediaQuery.of(context).copyWith(textScaleFactor: _settings.textScaleFactor),
             ),
           );
         });

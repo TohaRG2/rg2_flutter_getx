@@ -62,10 +62,13 @@ dependencies:
   percent_indicator: ^3.0.1
 
   # Firebase + google sign in
-#  firebase_core: ^1.0.3
   firebase_auth: ^1.1.1
   cloud_firestore: ^1.0.6
   google_sign_in: ^5.0.2
+  apple_sign_in: ^0.1.0
+
+  # Красивые кнопки аутентификации
+  auth_buttons: ^1.0.1
 
   # Покупки в приложении
   in_app_purchase: ^0.5.2
