@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.20210415.1+402
+version: 4.20210425.1+403
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -22,7 +22,7 @@ dependencies:
   # возможность смахивать элементы List
   flutter_slidable: ^0.6.0
   # Добавляем возможность работы с SVG
-  flutter_svg: ^0.21.0+1
+  flutter_svg: ^0.22.0
 
   # Отображаем текст в html
   # Plugin for parsing html
@@ -97,7 +97,8 @@ dev_dependencies:
 flutter_icons:
   android: "ic_launcher"
   ios: true
-  image_path: "assets/icons/icon_rg2.png"
+
+  image_path: "assets/icons/icon_1024.png"
 
 
 # For information on the generic Dart part of this file, see the

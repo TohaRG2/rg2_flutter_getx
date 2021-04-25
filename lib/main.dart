@@ -92,12 +92,12 @@ class RG2App extends StatelessWidget {
                   return Center(child: Text("Can't create or open database"));
                 } else
                   return Center(
-                      child: Row(
+                      child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           CircularProgressIndicator(),
                           SizedBox(height: UIHelper.SpaceMedium,),
-                          Text("Инициализация переменных...")
+                          Text("Инициализация базы...")
                         ],
                       )
                   );

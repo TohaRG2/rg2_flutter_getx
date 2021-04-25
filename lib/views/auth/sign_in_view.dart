@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -53,14 +55,18 @@ class SignInView extends GetWidget<AuthController> {
                   text: StrRes.authSignInGoogleButtonText,
                 ),
                 SizedBox(height: UIHelper.SpaceMedium,),
-                AppleAuthButton(
-                  onPressed: () {
-                    if (Get.isSnackbarOpen) { Get.back(); }
-                    controller.appleSignInAndGoToStart();
-                  },
-                  darkMode: _settings.isDarkThemeSelect,
-                  text: StrRes.authSignInAppleButtonText,
-                ),
+
+                /// Войти в эппл аккаунт, только для iPhone
+                if (Platform.isIOS) ...{
+                  AppleAuthButton(
+                    onPressed: () {
+                      if (Get.isSnackbarOpen) { Get.back(); }
+                      controller.appleSignInAndGoToStart();
+                    },
+                    darkMode: _settings.isDarkThemeSelect,
+                    text: StrRes.authSignInAppleButtonText,
+                  )
+                },
                 SizedBox(height: UIHelper.SpaceMedium,),
 
                 GestureDetector(
