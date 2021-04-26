@@ -172,6 +172,7 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Вход по почте и паролю
   Future<void> loginWithEmailAndPassword() async {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
@@ -181,6 +182,7 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Регистрация по почте и паролю
   Future<void> registerWithEmailAndPassword() async {
     try {
       UserCredential currentUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
