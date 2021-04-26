@@ -17,14 +17,27 @@ class AuthController extends GetxController {
   /// Observable переменная, в которой храним данные об авторизации пользователя
   /// null - если не авторизован
   final Rx<User> _firebaseUser = Rx<User>(null);
-  Rx<User> get firebaseUser => _firebaseUser;
-  User get user => _firebaseUser.value;
+    Rx<User> get firebaseUser => _firebaseUser;
+    User get user => _firebaseUser.value;
 
   bool _needShowSignInView = true;
 
   int localEnterCounts = 0;
 
   get showSignInDialog => _needShowSignInView && (user == null);
+
+  final RxString _email = "".obs;
+    String get email => _email.value;
+    set email(value) {
+      _email.value = value;
+    }
+
+
+  final RxString _password = "".obs;
+    String get password => _password.value;
+    set password(value) {
+      _password.value = value;
+    }
 
   @override
   onInit() {
@@ -90,6 +103,7 @@ class AuthController extends GetxController {
       _enableShowSignInView();
       await _auth.signOut();
       await _googleSignIn.signOut();
+
     } catch (e) {
       logPrint("Не смогли выйти из аккаунта:\n $e");
     }
@@ -137,6 +151,27 @@ class AuthController extends GetxController {
       case AuthorizationStatus.cancelled:
         logPrint("appleSignIn - прервано пользователем");
         break;
+    }
+  }
+
+  Future<void> loginWithEmailAndPassword() async {
+    try {
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+    } catch (e) {
+      Get.snackbar("Login Error", "Ошибка входа, ${e.message}", snackPosition: SnackPosition.BOTTOM);
+      logPrintErr("Ошибка входа по логину/паролю - $e");
+    }
+  }
+
+  Future<void> registerWithEmailAndPassword() async {
+    try {
+      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      if (result.user != null) {
+        logPrint("registerWithEmailAndPassword - залогинились, создаем запись в базе");
+      }
+    } catch (e) {
+      Get.snackbar("Registration Error", "Ошибка регистрации нового пользователя, ${e.message}", snackPosition: SnackPosition.BOTTOM);
+      logPrintErr("Ошибка регистрации по логину/паролю - $e");
     }
   }
 

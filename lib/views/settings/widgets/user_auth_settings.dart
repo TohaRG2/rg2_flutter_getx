@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/auth/controller/auth_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
@@ -13,6 +14,7 @@ class UserAuthSettings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       var user = controller.user;
+      logPrint("build - ${user?.uid} ${user?.email}");
       return user == null ? buildEmptyUserRow() : buildUserRow(user);
       },
     );
@@ -41,7 +43,7 @@ class UserAuthSettings extends StatelessWidget {
         children: [
           CircleAvatar(
             maxRadius: 20,
-            backgroundImage: NetworkImage(user.photoURL),
+            backgroundImage: (user.photoURL == null) ? AssetImage("assets/images/icons/back_arrow.svg") : NetworkImage(user.photoURL),
           ),
           Expanded(
             child: Container(
