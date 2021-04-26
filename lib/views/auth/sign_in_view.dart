@@ -18,6 +18,8 @@ import 'package:rg2/views/shared/ui_helpers.dart';
 class SignInView extends GetWidget<AuthController> {
   final SettingsController _settings  = Get.find();
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
       return Scaffold(
@@ -45,7 +47,12 @@ class SignInView extends GetWidget<AuthController> {
                   SizedBox(height: UIHelper.SpaceMedium,),
                   _signInFields(),
                   EmailAuthButton(onPressed: () {
-                      controller.loginWithEmailAndPassword();
+                      //controller.loginWithEmailAndPassword();
+                      if (_formKey.currentState.validate()) {
+                        logPrint("build - Проверка прошла");
+                      } else {
+                        logPrint("build - Проверка не прошла");
+                      }
                     },
                     darkMode: _settings.isDarkThemeSelect,
                     style: AuthButtonStyle(
@@ -142,42 +149,51 @@ class SignInView extends GetWidget<AuthController> {
 
 
   Widget _signInFields() {
-    return Column(
-      children: [
-        TextFormField(
-          decoration: InputDecoration(
-              border: OutlineInputBorder(), labelText: "Email"),
-          keyboardType: TextInputType.emailAddress,
-          validator: (_val) {
-            if (_val.isEmpty) {
-              return "Can't be empty";
-            } else {
-              return null;
-            }
-          },
-          onChanged: (val) {
-            controller.email = val;
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15.0),
-          child: TextFormField(
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          TextFormField(
             decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Password"),
-            validator: MultiValidator([
-              RequiredValidator(
-                  errorText: "Необходимо заполнить это поле"),
-              MinLengthValidator(6,
-                  errorText: "Пароль должен быть не меньше 6 символов")
-            ]),
-            obscureText: true,
+                border: OutlineInputBorder(), labelText: "Имя"),
+            validator: RequiredValidator(errorText: "Необходимо заполнить это поле"),
             onChanged: (val) {
-              controller.password = val;
+              controller.name = val;
             },
           ),
-        ),
-      ],
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 15.0),
+            child: TextFormField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(), labelText: "Email"),
+              keyboardType: TextInputType.emailAddress,
+              validator: MultiValidator([
+                RequiredValidator(errorText: "Необходимо заполнить это поле"),
+                EmailValidator(errorText: "Неверно указан адрес"),
+              ]),
+              onChanged: (val) {
+                controller.email = val;
+              },
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 15.0),
+            child: TextFormField(
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Пароль"),
+              validator: MultiValidator([
+                RequiredValidator(errorText: "Необходимо заполнить это поле"),
+                MinLengthValidator(8, errorText: "Пароль должен быть не меньше 8 символов"),
+              ]),
+              obscureText: true,
+              onChanged: (val) {
+                controller.password = val;
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 

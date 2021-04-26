@@ -20,19 +20,37 @@ class AuthController extends GetxController {
     Rx<User> get firebaseUser => _firebaseUser;
     User get user => _firebaseUser.value;
 
+  /// Нужно ли показывать диалог логина (true, пока не нажата кнопка "больше не показывать")
   bool _needShowSignInView = true;
 
+  /// Счетчик локальных входов
   int localEnterCounts = 0;
 
-  get showSignInDialog => _needShowSignInView && (user == null);
+  /// Вычисляем необходимость отображения диалога входа при входе в программу
+  /// если пользователь еще не вошел или не подтвердил email, но и не нажимал "больше не показывать", то true
+  get showSignInDialog {
+    bool isUserAuthenticated = (user != null);
+    if (isUserAuthenticated) {
+      isUserAuthenticated = user.emailVerified;
+    }
+    return _needShowSignInView && !isUserAuthenticated;
+  }
 
+  /// Имя пользователя
+  final RxString _name = "".obs;
+    String get name => _name.value;
+    set name(value) {
+      _name.value = value;
+    }
+
+  /// Введеный адрес email
   final RxString _email = "".obs;
     String get email => _email.value;
     set email(value) {
       _email.value = value;
     }
 
-
+  /// Пароль
   final RxString _password = "".obs;
     String get password => _password.value;
     set password(value) {
@@ -165,9 +183,20 @@ class AuthController extends GetxController {
 
   Future<void> registerWithEmailAndPassword() async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      if (result.user != null) {
-        logPrint("registerWithEmailAndPassword - залогинились, создаем запись в базе");
+      UserCredential currentUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      if (currentUser.user != null) {
+        logPrint("registerWithEmailAndPassword - залогинились, обновляем данные");
+        currentUser.user.updateProfile(displayName: name, photoURL: "");
+        logPrint("registerWithEmailAndPassword - ${user.email} ${user.displayName}");
+        await currentUser.user.sendEmailVerification();
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        logPrint('The password provided is too weak.');
+        Get.snackbar("Registration Error", "Слишком простой пароль", snackPosition: SnackPosition.BOTTOM);
+      } else if (e.code == 'email-already-in-use') {
+        logPrintErr('registerWithEmailAndPassword - The account already exists for that email.');
+        Get.snackbar("Registration Error", "Пользователь с таким email уже зарегистрирован", snackPosition: SnackPosition.BOTTOM);
       }
     } catch (e) {
       Get.snackbar("Registration Error", "Ошибка регистрации нового пользователя, ${e.message}", snackPosition: SnackPosition.BOTTOM);
