@@ -175,14 +175,20 @@ class AuthController extends GetxController {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
       if (result.user != null) {
-        await createObjectInUsers(result.user);
-        _showPreLoader.value = false;
-        Get.offAll(() => MainView(), transition: Transition.downToUp);
+        if (result.user.emailVerified) {
+          await createObjectInUsers(result.user);
+          _showPreLoader.value = false;
+          Get.offAll(() => MainView(), transition: Transition.downToUp);
+        } else {
+          _showPreLoader.value = false;
+          Get.snackbar("Login Error", "Вы еще не подтвердили email. Если вы не получили письмо для подтверждения, воспользуйтесь формой восстановления пароля.",
+              snackPosition: SnackPosition.BOTTOM
+          );
+        }
       }
-
     } catch (e) {
       _showPreLoader.value = false;
-      Get.snackbar("Login Error", "Ошибка входа, ${e.message}", snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Login Error", "Ошибка входа, $e", snackPosition: SnackPosition.BOTTOM);
       logPrintErr("Ошибка входа по логину/паролю - $e");
     }
   }
@@ -192,14 +198,15 @@ class AuthController extends GetxController {
     _showPreLoader.value = true;
     try {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text);
-      _showPreLoader.value = false;
       if (credential.user != null) {
         logPrint("registerWithEmailAndPassword - залогинились, обновляем данные");
         credential.user.updateProfile(displayName: nameController.text, photoURL: "");
         logPrint("registerWithEmailAndPassword - ${credential.user.email} ${credential.user.displayName}");
         credential.user.sendEmailVerification();
+        _showPreLoader.value = false;
         return true;
       }
+      _showPreLoader.value = false;
       return false;
     } on FirebaseAuthException catch (e) {
       _showPreLoader.value = false;
