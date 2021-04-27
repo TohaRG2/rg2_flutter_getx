@@ -22,7 +22,7 @@ class MainRepository extends GetxController {
   @override
   onInit() async {
     super.onInit();
-    logPrint("onInit - MainRepository ${_auth.firebaseUser.value?.uid}");
+    logPrint("onInit - MainRepository ${_auth.user?.uid}");
     // подписываемся на получение изменений firebaseUser, при изменении вызываем _userAuthChanged не чаще, чем раз в 2 сек
     debounce(_auth.firebaseUser, _userAuthChanged, time: Duration(seconds: 2));
     // если к моменту инициализации пользователь уже залогинен, то апдейтим данные из FBS

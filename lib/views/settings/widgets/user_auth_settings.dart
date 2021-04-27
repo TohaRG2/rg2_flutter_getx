@@ -76,7 +76,7 @@ class UserAuthSettings extends StatelessWidget {
           ),
           OutlinedButton(
               onPressed: () {
-                controller.googleSignOut();
+                controller.signOut();
               },
               child: Text("Выйти")
           ),

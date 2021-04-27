@@ -5,6 +5,7 @@ import 'package:rg2/controllers/ad_controller.dart';
 import 'package:rg2/controllers/in_app_purchase_controller.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
+import 'package:rg2/views/dialogs/big_dialog.dart';
 import 'package:rg2/views/dialogs/get_money/model/get_money_item.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
@@ -16,32 +17,15 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
 
   @override
   Widget build(BuildContext context) {
-    return _showDialog(context);
-  }
-
-  Widget _showDialog(BuildContext context) {
-    return SafeArea(
-      child: Center(
-        // Чтобы Scaffold не спрямил закругленные углы, засовываем его в контейнер с полями (margin)
-        child: Container(
-          width: context.mediaQuerySize.width - 50,
-          height: context.mediaQuerySize.height - 50,
-          decoration: BoxDecoration(
-            color: Get.theme.scaffoldBackgroundColor,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Container(
-            margin: EdgeInsets.all(10),
-            child: Scaffold(
-              appBar: _appBar(),
-              body: _body(),
-              bottomNavigationBar: _bottomBar(),
-            ),
-          ),
-        ),
+    return BigDialog(
+      child: Scaffold(
+        appBar: _appBar(),
+        body: _body(),
+        bottomNavigationBar: _bottomBar(),
       ),
     );
   }
+
 
   /// В зависимости от статуса покупок выводим  "Спасибо за покупку", "варианты покупок" или магазин временно недоступен
   Widget _body() {

@@ -1,5 +1,6 @@
 import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -7,6 +8,7 @@ import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/main_view.dart';
+import 'package:rg2/views/auth/wait_confirm_email_dialog.dart';
 
 class AuthController extends GetxController {
 
@@ -19,6 +21,7 @@ class AuthController extends GetxController {
   final Rx<User> _firebaseUser = Rx<User>(null);
     Rx<User> get firebaseUser => _firebaseUser;
     User get user => _firebaseUser.value;
+    //set _user(value) => _firebaseUser.value = value;
 
   /// Нужно ли показывать диалог логина (true, пока не нажата кнопка "больше не показывать")
   bool _needShowSignInView = true;
@@ -36,34 +39,28 @@ class AuthController extends GetxController {
     return _needShowSignInView && !isUserAuthenticated;
   }
 
-  /// Имя пользователя
-  final RxString _name = "".obs;
-    String get name => _name.value;
-    set name(value) {
-      _name.value = value;
-    }
+  /// Введеное имя пользователя
+  TextEditingController nameController = TextEditingController();
 
-  /// Введеный адрес email
-  final RxString _email = "".obs;
-    String get email => _email.value;
-    set email(value) {
-      _email.value = value;
-    }
+  /// Введенный email
+  TextEditingController emailController = TextEditingController();
 
-  /// Пароль
-  final RxString _password = "".obs;
-    String get password => _password.value;
-    set password(value) {
-      _password.value = value;
-    }
+  /// Введенный пароль
+  TextEditingController passwordController = TextEditingController();
+
+  /// Отображение прелоадера
+  RxBool _showPreLoader = false.obs;
+  bool get showPreLoader => _showPreLoader.value;
 
   @override
   onInit() {
     logPrint("onInit - AuthController");
     super.onInit();
     // Биндим стрим в Observable _firebaseUser и подписываемся на его изменения
-    _firebaseUser.bindStream(_auth.authStateChanges());
-
+    //_firebaseUser.bindStream(_auth.authStateChanges());
+    bool isUserLoggedIn = _auth.currentUser?.emailVerified ?? false;
+    _firebaseUser.value = (isUserLoggedIn) ? _auth.currentUser : null;
+    //_auth.authStateChanges().listen((event) { logPrint("AuthController - изменились данные в auth ${event.email} ${event.emailVerified}");});
     _needShowSignInView = _sp.read(Const.IS_FIREBASE_ENTER_ENABLED) ?? true;
     _updateLocalEnterCounts();
   }
@@ -102,12 +99,7 @@ class AuthController extends GetxController {
 
       //logPrint("Проверяем, есть ли пользователь в базе fireStore");
       //var user = await Database().getUser(_authResult.user.uid);
-      logPrint("Создаем новую или перезаписываем по uid запись в таблице users");
-      if (await CloudDatabase().createOrUpdateUser(_authResult.user)) {
-        // Create success
-      } else {
-        throw Exception("Ошибка создания пользователя $user в FireBase");
-      }
+      await createObjectInUsers(_authResult.user);
 
     } catch(e) {
       Get.snackbar("Google SignIn Error", "Ошибка входа в гугл аккаунт, попробуйте повторить.", snackPosition: SnackPosition.BOTTOM);
@@ -115,13 +107,23 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<void> googleSignOut() async {
+  Future createObjectInUsers(User user) async {
+    logPrint("Создаем новую или перезаписываем по uid запись в таблице users");
+    if (await CloudDatabase().createOrUpdateUser(user)) {
+      // Create success
+      _firebaseUser.value = _auth.currentUser;
+    } else {
+      throw Exception("Ошибка создания пользователя $user в FireBase");
+    }
+  }
+
+  Future<void> signOut() async {
     logPrint("SignOut ${user.email}");
     try {
       _enableShowSignInView();
       await _auth.signOut();
       await _googleSignIn.signOut();
-
+      _firebaseUser.value = null;
     } catch (e) {
       logPrint("Не смогли выйти из аккаунта:\n $e");
     }
@@ -154,12 +156,7 @@ class AuthController extends GetxController {
 
         UserCredential _authResult = await _auth.signInWithCredential(credential);
 
-        logPrint("Создаем новую или перезаписываем по uid запись в таблице users");
-        if (await CloudDatabase().createOrUpdateUser(_authResult.user)) {
-          // Create success
-        } else {
-          throw Exception("Ошибка создания пользователя $user в FireBase");
-        }
+        await createObjectInUsers(_authResult.user);
 
         break;
       case AuthorizationStatus.error:
@@ -174,36 +171,71 @@ class AuthController extends GetxController {
 
   /// Вход по почте и паролю
   Future<void> loginWithEmailAndPassword() async {
+    _showPreLoader.value = true;
     try {
-      UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await _auth.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+      if (result.user != null) {
+        await createObjectInUsers(result.user);
+        _showPreLoader.value = false;
+        Get.offAll(() => MainView(), transition: Transition.downToUp);
+      }
+
     } catch (e) {
+      _showPreLoader.value = false;
       Get.snackbar("Login Error", "Ошибка входа, ${e.message}", snackPosition: SnackPosition.BOTTOM);
       logPrintErr("Ошибка входа по логину/паролю - $e");
     }
   }
 
-  /// Регистрация по почте и паролю
-  Future<void> registerWithEmailAndPassword() async {
+  /// Регистрация по почте и паролю, возвращаем true, если регистрация успешная
+  Future<bool> registerWithEmailAndPassword() async {
+    _showPreLoader.value = true;
     try {
-      UserCredential currentUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      if (currentUser.user != null) {
+      UserCredential credential = await _auth.createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+      _showPreLoader.value = false;
+      if (credential.user != null) {
         logPrint("registerWithEmailAndPassword - залогинились, обновляем данные");
-        currentUser.user.updateProfile(displayName: name, photoURL: "");
-        logPrint("registerWithEmailAndPassword - ${user.email} ${user.displayName}");
-        await currentUser.user.sendEmailVerification();
+        credential.user.updateProfile(displayName: nameController.text, photoURL: "");
+        logPrint("registerWithEmailAndPassword - ${credential.user.email} ${credential.user.displayName}");
+        credential.user.sendEmailVerification();
+        return true;
       }
+      return false;
     } on FirebaseAuthException catch (e) {
+      _showPreLoader.value = false;
       if (e.code == 'weak-password') {
         logPrint('The password provided is too weak.');
         Get.snackbar("Registration Error", "Слишком простой пароль", snackPosition: SnackPosition.BOTTOM);
       } else if (e.code == 'email-already-in-use') {
         logPrintErr('registerWithEmailAndPassword - The account already exists for that email.');
-        Get.snackbar("Registration Error", "Пользователь с таким email уже зарегистрирован", snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar("Registration Error", "Пользователь с таким email уже зарегистрирован, воспользуйтесь формой восстановления пароля, если вы его забыли.", snackPosition: SnackPosition.BOTTOM);
       }
+      return false;
     } catch (e) {
-      Get.snackbar("Registration Error", "Ошибка регистрации нового пользователя, ${e.message}", snackPosition: SnackPosition.BOTTOM);
+      _showPreLoader.value = false;
+      Get.snackbar("Registration Error", "Ошибка регистрации нового пользователя, $e", snackPosition: SnackPosition.BOTTOM);
       logPrintErr("Ошибка регистрации по логину/паролю - $e");
+      return false;
     }
+  }
+
+  checkEmailVerification() async {
+    // Иначе сразу не обновляются данные пользователя
+    await FirebaseAuth.instance.currentUser.reload();
+    var user = FirebaseAuth.instance.currentUser;
+    logPrint("checkEmailVerification - ${user.email} ${user.emailVerified}");
+    if (user.emailVerified) {
+      _emailConfirmed();
+    } else {
+      Get.snackbar("Ошибка", "Видимо ваше подтверждение адреса почты, еще в пути. Попробуйте нажать эту кнопку через 10 секунд.", snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
+  _emailConfirmed() async {
+    Get.offAll(() => MainView(), transition: Transition.downToUp);
+    var user = FirebaseAuth.instance.currentUser;
+    await createObjectInUsers(user);
+    _firebaseUser.value = user;
   }
 
   disableShowSignInView() {
