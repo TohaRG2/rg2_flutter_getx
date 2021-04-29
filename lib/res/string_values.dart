@@ -144,12 +144,12 @@ class StrRes {
   static const azbukaTrainerSettingsTimeForBadAnswer = "Продолжение при ошибочном ответе (сек)";
 
   static const authTitle = "Добро пожаловать!";
-  static const authBodyText = "Чтобы синхронизировать между несколькими устройствами и чтобы не потерять при переустановке программы:\n"
+  static const authBodyText = "Чтобы не потерять при переустановке программы и синхронизировать между несколькими устройствами:\n"
       "1. Персональные настройки;\n"
       "2. Избранное;\n"
       "3. Свои комментарии к этапам;\n"
       "4. Время сборки в таймере.";
-  static const authSignInGoogleButtonText = "Войти при помощи Google";
+  static const authSignInGoogleButtonText = "Google";
   static const authSignInAppleButtonText = "Войти при помощи Apple";
   static const authSignInWhy = "Зачем мне это?";
   static const authSignInBecause = "Авторизация нужна:";

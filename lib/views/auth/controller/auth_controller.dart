@@ -186,7 +186,14 @@ class AuthController extends GetxController {
           );
         }
       }
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
+      _showPreLoader.value = false;
+      if (e.code == 'wrong-password') {
+        logPrint('Wrong password $e');
+        Get.snackbar("Login Error", "Неверный пароль для данного пользователя", snackPosition: SnackPosition.BOTTOM);
+      }
+    }
+    catch (e) {
       _showPreLoader.value = false;
       Get.snackbar("Login Error", "Ошибка входа, $e", snackPosition: SnackPosition.BOTTOM);
       logPrintErr("Ошибка входа по логину/паролю - $e");
@@ -211,11 +218,14 @@ class AuthController extends GetxController {
     } on FirebaseAuthException catch (e) {
       _showPreLoader.value = false;
       if (e.code == 'weak-password') {
-        logPrint('The password provided is too weak.');
+        logPrintErr('The password provided is too weak.');
         Get.snackbar("Registration Error", "Слишком простой пароль", snackPosition: SnackPosition.BOTTOM);
       } else if (e.code == 'email-already-in-use') {
         logPrintErr('registerWithEmailAndPassword - The account already exists for that email.');
         Get.snackbar("Registration Error", "Пользователь с таким email уже зарегистрирован, воспользуйтесь формой восстановления пароля, если вы его забыли.", snackPosition: SnackPosition.BOTTOM);
+      } else if (e.code == 'wrong-password') {
+        logPrintErr('Wrong password $e');
+        Get.snackbar("Registration Error", "Неверное имя пользователя или пароль", snackPosition: SnackPosition.BOTTOM);
       }
       return false;
     } catch (e) {
@@ -223,6 +233,16 @@ class AuthController extends GetxController {
       Get.snackbar("Registration Error", "Ошибка регистрации нового пользователя, $e", snackPosition: SnackPosition.BOTTOM);
       logPrintErr("Ошибка регистрации по логину/паролю - $e");
       return false;
+    }
+  }
+
+  resetPasswordForEmail() async {
+    try {
+      await _auth.sendPasswordResetEmail(email: emailController.text);
+      Get.back();
+      Get.snackbar("Сброс пароля", "Письмо с инструкцией по сбросу пароля отправлено по указанному адресу.", snackPosition: SnackPosition.BOTTOM);
+    } catch (e) {
+      logPrintErr("resetPasswordForEmail - ошибка при сбросе пароля");
     }
   }
 
@@ -234,7 +254,7 @@ class AuthController extends GetxController {
     if (user.emailVerified) {
       _emailConfirmed();
     } else {
-      Get.snackbar("Ошибка", "Видимо ваше подтверждение адреса почты, еще в пути. Попробуйте нажать эту кнопку через 10 секунд.", snackPosition: SnackPosition.BOTTOM);
+      Get.snackbar("Ошибка", "Вы еще не подтвердили адрес эл.почты. Пожалуйста, проверьте почту и пройдите по ссылке, для подтверждения, что это ваш адрес почты.", snackPosition: SnackPosition.BOTTOM);
     }
   }
 

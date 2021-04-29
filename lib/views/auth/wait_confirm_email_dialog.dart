@@ -58,6 +58,7 @@ class WaitConfirmEmailDialog extends GetWidget<AuthController> {
   Widget _bottomBar() {
     return TextButton(
       onPressed: () {
+        _onWillPop();
         Get.back();
       },
       style: ButtonStyle(
