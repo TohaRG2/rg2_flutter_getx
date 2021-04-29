@@ -14,7 +14,7 @@ import 'main_menu/main_menu_list_view.dart';
 class LearnViewPager extends StatelessWidget {
   final LearnController _learnController = Get.find();
   final SettingsController _settings = Get.find();
-  final InAppPurchaseController _purchaseController = Get.find();
+  // final InAppPurchaseController _purchaseController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -60,17 +60,17 @@ class LearnViewPager extends StatelessWidget {
                         },
                       ),
                     ),
-                    Obx(() =>
+                    // Obx(() =>
                       Positioned(
                         bottom: 0,
                         left: 0,
                         right: 0,
-                        child: Text(_purchaseController.getCoins(),
+                        child: Text( "15", //_purchaseController.getCoins(),
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 14.0, color: Get.textTheme.headline5.color),
                         ),
                       ),
-                    )
+                    // )
                   ]),
                   IconButton(
                     onPressed: () {

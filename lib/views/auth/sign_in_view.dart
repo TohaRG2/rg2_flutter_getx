@@ -117,7 +117,10 @@ class SignInView extends GetWidget<AuthController> {
                             controller.appleSignInAndGoToStart();
                           },
                           darkMode: _settings.isDarkThemeSelect,
-                          text: StrRes.authSignInAppleButtonText,
+                          style: AuthButtonStyle(
+                            buttonType: AuthButtonType.icon,
+                          ),
+                          // text: StrRes.authSignInAppleButtonText,
                         )
                       },
                     ],

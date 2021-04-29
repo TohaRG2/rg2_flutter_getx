@@ -11,7 +11,7 @@ import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/shared/url_helper.dart';
 
-class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
+class GetMoneyDialog extends StatelessWidget { //GetWidget<InAppPurchaseController> {
   final SettingsController _settings = Get.find();
   final AdController _adController = Get.put(AdController());
 
@@ -85,15 +85,15 @@ class GetMoneyDialog extends GetWidget<InAppPurchaseController> {
                     StrRes.moneyDialogRemainCoinsText2
                 )),
             SizedBox(height: UIHelper.SpaceLarge),
-            ExpansionPanelList(
-              expansionCallback: (int index, bool isExpanded) {
-                controller.onTapExpansion(index, isExpanded);
-              },
-              animationDuration: Duration(milliseconds: 600),
-              children: controller.listItems
-                  .map((item) => _expansionPanel(item))
-                  .toList(),
-            ),
+            // ExpansionPanelList(
+            //   expansionCallback: (int index, bool isExpanded) {
+            //     controller.onTapExpansion(index, isExpanded);
+            //   },
+            //   animationDuration: Duration(milliseconds: 600),
+            //   children: controller.listItems
+            //       .map((item) => _expansionPanel(item))
+            //       .toList(),
+            // ),
           ],
         ),
       ),
