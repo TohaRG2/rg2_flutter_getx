@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/auth/controller/auth_controller.dart';
+import 'package:rg2/views/auth/sign_in_view.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class UserAuthSettings extends StatelessWidget {
@@ -29,7 +30,7 @@ class UserAuthSettings extends StatelessWidget {
           _whyNeedAuthButton(),
           OutlinedButton(
               onPressed: () {
-                controller.googleSignIn();
+                Get.to(() => SignInView());
               },
               child: Text("Войти")),
         ],
