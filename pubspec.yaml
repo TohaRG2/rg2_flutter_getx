@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   # SQL Database
-  floor: ^1.0.1
+  floor: ^1.1.0
   # DI + StateManagement
   get: ^4.1.4
   # Работаем с SharedPreferences
@@ -95,8 +95,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация + build runner
-  floor_generator: ^1.0.1
-  build_runner: ^1.11.5
+  floor_generator: ^1.1.0
+  build_runner: ^2.0.1
 
 flutter_icons:
   android: "ic_launcher"
