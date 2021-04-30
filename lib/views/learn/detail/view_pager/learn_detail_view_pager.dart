@@ -34,13 +34,15 @@ class LearnDetailViewPager extends StatelessWidget {
                 },
                 child: Icon(
                   Icons.menu_rounded,
-                  color: Theme.of(context).scaffoldBackgroundColor,
+                  color: Get.theme.scaffoldBackgroundColor,
                 ),
                 style: ElevatedButton.styleFrom(
+                  elevation: 0,
                   primary: Get.theme.primaryColor, // background
                 ),
               ),
-              flexibleSpace: Center(
+              /// Кнопка открытия бокового меню
+              title: Center(
                 child: TabBar(
                   isScrollable: true,
                   tabs: _tabsList(),
