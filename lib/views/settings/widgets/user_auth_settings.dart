@@ -25,7 +25,8 @@ class UserAuthSettings extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Не авторизован"),
+          Expanded(child: Text("Не авторизован")),
+          _whyNeedAuthButton(),
           OutlinedButton(
               onPressed: () {
                 controller.googleSignIn();
@@ -56,24 +57,7 @@ class UserAuthSettings extends StatelessWidget {
               ),
             ),
           ),
-          IconButton(
-              onPressed: (){
-                if (Get.isSnackbarOpen) {
-                  Get.back();
-                } else {
-                  Get.snackbar(StrRes.authSignInBecause, StrRes.authBodyText,
-                    snackPosition: SnackPosition.BOTTOM,
-                    colorText: Colors.white,
-                    backgroundColor: Colors.grey[800],
-                    duration: Duration(seconds: 15),
-                    onTap: (_) {
-                      Get.back();
-                    },
-                  );
-                }
-              },
-              icon: Icon(MaterialIcons.help_outline),
-          ),
+          _whyNeedAuthButton(),
           OutlinedButton(
               onPressed: () {
                 controller.signOut();
@@ -82,5 +66,28 @@ class UserAuthSettings extends StatelessWidget {
           ),
         ]),
       );
+  }
+
+  IconButton _whyNeedAuthButton() {
+    return IconButton(
+      onPressed: () {
+        if (Get.isSnackbarOpen) {
+          Get.back();
+        } else {
+          Get.snackbar(
+            StrRes.authSignInBecause,
+            StrRes.authBodyText,
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Colors.white,
+            backgroundColor: Colors.grey[800],
+            duration: Duration(seconds: 15),
+            onTap: (_) {
+              Get.back();
+            },
+          );
+        }
+      },
+      icon: Icon(MaterialIcons.help_outline),
+    );
   }
 }
