@@ -26,8 +26,10 @@ class LearnDetailViewPager extends StatelessWidget {
           tabController.index = _controller.curPageNumber;
           return Scaffold(
             appBar: AppBar(
-              automaticallyImplyLeading: false,
               //Убираем автогенерируемую кнопку "Назад" из AppBar
+              automaticallyImplyLeading: false,
+
+              /// Кнопка открытия бокового меню
               leading: ElevatedButton(
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
@@ -41,7 +43,8 @@ class LearnDetailViewPager extends StatelessWidget {
                   primary: Get.theme.primaryColor, // background
                 ),
               ),
-              /// Кнопка открытия бокового меню
+
+              /// Верхний Таббар
               title: Center(
                 child: TabBar(
                   isScrollable: true,
@@ -61,12 +64,8 @@ class LearnDetailViewPager extends StatelessWidget {
   }
 
   List<Tab> _tabsList() {
-    var result = <Tab>[];
-    var pageList = _controller.currentItems;
-    pageList.forEach((element) {
-      result.add(Tab(text: element.title));
-    });
-    return result;
+    return _controller.currentItems
+        .map((mainDBItem) => Tab(text: mainDBItem.title,)).toList();
   }
 
   List<Widget> _tabBarView() {

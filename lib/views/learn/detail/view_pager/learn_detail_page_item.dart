@@ -42,7 +42,7 @@ class LearnDetailPage extends StatelessWidget {
               child: Column(
                 children: [
                   Header(curPageNumber: _curPageNumber),
-                  Divider(color: Theme.of(context).primaryColor,),
+                  Divider(color: Get.theme.primaryColor,),
                   Visibility(
                       visible: (_controller.currentItems[_curPageNumber].comment == "") ? false : true,
                       child: Column(
