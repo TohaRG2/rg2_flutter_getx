@@ -4,6 +4,7 @@ import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/learn/detail/view_pager/my_html_view.dart';
 import 'package:get/get.dart';
 import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
+import 'package:rg2/views/learn/detail/view_pager/youtube_thumbnail.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -18,13 +19,7 @@ class LearnDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    YoutubePlayerController _youTubeController = YoutubePlayerController(
-      initialVideoId: _controller.currentItems[_curPageNumber].url,
-      flags: YoutubePlayerFlags(
-        autoPlay: false,
-        mute: false,
-      ),
-    );
+
     bool showYouTubeVideo =
         (_controller.currentItems[_curPageNumber].url != "") &&
             (_settingsController.internetUsage != 3);
@@ -36,7 +31,7 @@ class LearnDetailPage extends StatelessWidget {
       }
     });
     //_scrollController.position.userScrollDirection
-
+    
     return Column(
       children: <Widget>[
         Expanded(
@@ -60,26 +55,19 @@ class LearnDetailPage extends StatelessWidget {
                           ),
                           Text(_controller.currentItems[_curPageNumber].comment,
                             style: TextStyle(
-                                color: Theme.of(context).primaryColor,
+                                color: Get.theme.primaryColor,
                                 fontSize: 16
                             ),
                           ),
-                          Divider(color: Theme.of(context).primaryColor,)
+                          Divider(color: Get.theme.primaryColor,)
                         ],
                       )
                   ),
                   MyHtmlView(curPageNumber: _curPageNumber),
                   Visibility(
-                    //visible: false,
                     visible: (showYouTubeVideo) ? true : false,
-                    child: YoutubePlayer(
-                      controller: _youTubeController,
-                      //уберем кнопку перехода на полный экран
-                      bottomActions: [
-                        CurrentPosition(),
-                        ProgressBar(isExpanded: true),
-                      ],
-                    ),
+                    child: YoutubeThumbnail(videoID: _controller.currentItems[_curPageNumber].url),
+
                   ),
                   SizedBox(height: 150,)
                 ],
