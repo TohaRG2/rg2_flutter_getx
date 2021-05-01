@@ -141,7 +141,7 @@ class AuthController extends GetxController {
   Future<void> appleSignIn() async {
     logPrint("appleSignIn - request");
     final AuthorizationResult result = await AppleSignIn.performRequests([
-      AppleIdRequest(requestedScopes: [Scope.email])
+      AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
     ]);
     switch(result.status) {
       case AuthorizationStatus.authorized:
