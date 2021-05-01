@@ -46,7 +46,7 @@ dependencies:
 
   # YouTube Plugin
   youtube_player_flutter: ^8.0.0
-  # youtube_plyr_iframe: ^2.0.0
+#  youtube_plyr_iframe: ^2.0.3
 
   #Слайдер для картинок списка советов по работе с программой
   carousel_slider: ^3.0.0
