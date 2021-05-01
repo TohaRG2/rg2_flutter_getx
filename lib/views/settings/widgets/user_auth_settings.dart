@@ -45,7 +45,9 @@ class UserAuthSettings extends StatelessWidget {
         children: [
           CircleAvatar(
             maxRadius: 20,
-            backgroundImage: (user.photoURL == null) ? AssetImage("assets/images/icons/back_arrow.svg") : NetworkImage(user.photoURL),
+            child: (user.photoURL == null || user.photoURL == "")
+                ? Icon(MaterialCommunityIcons.account, size: 40,)
+                : Image.network(user.photoURL, width: 40),
           ),
           Expanded(
             child: Container(
