@@ -198,6 +198,11 @@ class SettingsController extends GetxController {
     SystemUiOverlayStyle _currentStyle = SystemUiOverlayStyle.dark;
     SystemChrome.setSystemUIOverlayStyle(_currentStyle);
     ThemeData theme = getCurrentTheme();
+    if (theme.brightness == Brightness.dark) {
+      Get.changeThemeMode(ThemeMode.dark);
+    } else {
+      Get.changeThemeMode(ThemeMode.light);
+    }
     Get.changeTheme(theme);
   }
 
