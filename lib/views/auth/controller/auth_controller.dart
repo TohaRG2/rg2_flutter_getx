@@ -118,8 +118,8 @@ class AuthController extends GetxController {
       // Create success
       _firebaseUser.value = _auth.currentUser;
     } else {
-      throw Exception("Ошибка создания пользователя $user в FireBase");
       _showPreLoader.value = false;
+      throw Exception("Ошибка создания пользователя $user в FireBase");
     }
   }
 
@@ -146,6 +146,7 @@ class AuthController extends GetxController {
 
   Future<void> appleSignIn() async {
     logPrint("appleSignIn - request");
+    _showPreLoader.value = true;
     final AuthorizationResult result = await AppleSignIn.performRequests([
       AppleIdRequest(requestedScopes: [Scope.email, Scope.fullName])
     ]);
@@ -166,10 +167,12 @@ class AuthController extends GetxController {
 
         break;
       case AuthorizationStatus.error:
+        _showPreLoader.value = false;
         Get.snackbar("Apple SignIn Error", "Ошибка входа в apple аккаунт, попробуйте повторить.", snackPosition: SnackPosition.BOTTOM);
         logPrintErr("Ошибка входа в эппл аккаунт или регистрации в FireStore:\n ${result.error.localizedDescription}");
         break;
       case AuthorizationStatus.cancelled:
+        _showPreLoader.value = false;
         logPrint("appleSignIn - прервано пользователем");
         break;
     }
