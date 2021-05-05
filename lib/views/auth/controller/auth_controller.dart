@@ -60,7 +60,9 @@ class AuthController extends GetxController {
     //_firebaseUser.bindStream(_auth.authStateChanges());
     bool isUserLoggedIn = _auth.currentUser?.emailVerified ?? false;
     _firebaseUser.value = (isUserLoggedIn) ? _auth.currentUser : null;
-    //_auth.authStateChanges().listen((event) { logPrint("AuthController - изменились данные в auth ${event.email} ${event.emailVerified}");});
+    _auth.authStateChanges().listen((event) {
+      logPrint("AuthController - изменились данные в auth ${event.email} ${event.emailVerified}");
+    });
     _needShowSignInView = _sp.read(Const.IS_FIREBASE_ENTER_ENABLED) ?? true;
     _updateLocalEnterCounts();
   }
@@ -83,6 +85,7 @@ class AuthController extends GetxController {
     try {
       //logPrint("вызываем окно входа гугл аккаунтом");
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      _showPreLoader.value = true;
       if (googleUser != null) {
         logPrint("аутентификация пользователем ${googleUser.displayName} прошла");
       } else {
@@ -100,20 +103,23 @@ class AuthController extends GetxController {
       //logPrint("Проверяем, есть ли пользователь в базе fireStore");
       //var user = await Database().getUser(_authResult.user.uid);
       await createObjectInUsers(_authResult.user);
-
+      _showPreLoader.value = false;
     } catch(e) {
+      _showPreLoader.value = false;
       Get.snackbar("Google SignIn Error", "Ошибка входа в гугл аккаунт, попробуйте повторить.", snackPosition: SnackPosition.BOTTOM);
       logPrint("Ошибка входа в гугл аккаунт или регистрации в FireStore:\n $e");
     }
   }
 
   Future createObjectInUsers(User user) async {
+    _showPreLoader.value = true;
     logPrint("Создаем новую или перезаписываем по uid запись в таблице users");
     if (await CloudDatabase().createOrUpdateUser(user)) {
       // Create success
       _firebaseUser.value = _auth.currentUser;
     } else {
       throw Exception("Ошибка создания пользователя $user в FireBase");
+      _showPreLoader.value = false;
     }
   }
 
