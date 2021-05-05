@@ -60,19 +60,19 @@ class TrainersScreen extends StatelessWidget {
     switch(item.id) {
       case StrRes.trainersScrambleGen:
         logPrint("Start Scramble Generator");
-        Get.to(() => ScrambleGenView(title: item.title), transition: Transition.fadeIn);
+        Get.to(() => ScrambleGenView(title: item.title), transition: Transition.cupertino);
         break;
       case StrRes.trainersTimer:
         logPrint("Start Timer");
-        Get.to(() => TimerView(), transition: Transition.fadeIn);
+        Get.to(() => TimerView(), transition: Transition.cupertino);
         break;
       case StrRes.trainersPll:
         logPrint("Start PLL trainer");
-        Get.to(() => MainPllTrainerView(), transition: Transition.fadeIn);
+        Get.to(() => MainPllTrainerView(), transition: Transition.cupertino);
         break;
       case StrRes.trainersAzbuka:
         logPrint("Start AZBUKA trainer");
-        Get.to(() => MainAzbukaTrainerView(), transition: Transition.fadeIn);
+        Get.to(() => MainAzbukaTrainerView(), transition: Transition.cupertino);
         break;
       default:
         logPrint("Warning!!! Pressed on ${item.title}");
@@ -81,7 +81,7 @@ class TrainersScreen extends StatelessWidget {
 
   _onHelpSelected (TrainerMenuItem item) {
     //logPrint("Pressed on ${item.title} - help");
-    Get.to(() => HelpView(item: item), transition: Transition.fadeIn);
+    Get.to(() => HelpView(item: item), transition: Transition.cupertino);
   }
 
   _onSettingsSelected (TrainerMenuItem item) {

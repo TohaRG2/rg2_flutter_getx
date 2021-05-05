@@ -60,7 +60,7 @@ class MenuList extends StatelessWidget {
       } else {
         _learnController.saveListPositionForPhase(item.phase);
         Get.to(() => LearnDetailScreen(item.phase, item.id),
-            transition: Transition.fadeIn);
+            transition: Transition.cupertino);
       }
     } else {
       if (Get.isSnackbarOpen) { Get.back(); }

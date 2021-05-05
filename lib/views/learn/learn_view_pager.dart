@@ -74,7 +74,7 @@ class LearnViewPager extends StatelessWidget {
                   ]),
                   IconButton(
                     onPressed: () {
-                      Get.to(() => SettingsScreenWithBottomBar());
+                      Get.to(() => SettingsScreenWithBottomBar(), transition: Transition.cupertino);
                     },
                     icon: const Icon(Icons.settings_rounded),
                     color: Get.textTheme.headline5.color,

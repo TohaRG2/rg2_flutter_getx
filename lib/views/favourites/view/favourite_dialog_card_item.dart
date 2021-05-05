@@ -116,7 +116,7 @@ class FavouriteDialogCardItem extends StatelessWidget {
               logPrint("CurRoute - ${Get.currentRoute}");
             }
             logPrint("GetBack complete -> Get.to(LearnDetailScreen(${_item.phase}, ${_item.id})");
-            Get.to(() => LearnDetailScreen(_item.phase, _item.id), transition: Transition.fadeIn);
+            Get.to(() => LearnDetailScreen(_item.phase, _item.id), transition: Transition.cupertino);
           }
         },
       ),
