@@ -39,15 +39,18 @@ class MenuList extends StatelessWidget {
         logPrint("jumpTo $position in ${_learnController.pages[pageNumber].currentPhase}");
       }
       var isItemEnabled = (_isPurchaseEnabled || pageNumber < 2 || (pageNumber < 4 && Platform.isAndroid) || _isGodModeEnabled);
-      return ListView(
-        controller: _scrollController,
-        children: items.map((listItem) =>
-          MainMenuItem(
-              item: listItem,
-              isItemEnabled: isItemEnabled,
-              onTapCallback: _onTapCallBack,
-          )
-        ).toList(),
+      return Scrollbar(
+        showTrackOnHover: true,
+        child: ListView(
+          controller: _scrollController,
+          children: items.map((listItem) =>
+            MainMenuItem(
+                item: listItem,
+                isItemEnabled: isItemEnabled,
+                onTapCallback: _onTapCallBack,
+            )
+          ).toList(),
+        ),
       );
     });
   }
