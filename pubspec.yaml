@@ -29,7 +29,7 @@ dependencies:
   html: ^0.15.0
   # Plugins for parsing css
   csslib: ^0.17.0
-  css_colors: ^1.1.0
+  css_colors: ^1.1.1
   # Plugins for rendering the <video> tag.
   # video_player: ^1.0.1
   # chewie: ^0.12.2
@@ -83,7 +83,7 @@ dependencies:
   # красивый свитч для смены темы
   flutter_switch: ^0.3.1
 
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.3
 
   # icon of google
   flutter_vector_icons: ^1.0.0
@@ -96,7 +96,7 @@ dev_dependencies:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация + build runner
   floor_generator: ^1.1.0
-  build_runner: ^2.0.1
+  build_runner: ^2.0.2
 
 flutter_icons:
   android: "ic_launcher"
