@@ -49,6 +49,8 @@ class AzbukaItem extends StatelessWidget {
                 messageText: Center(child: Text(item.toast)),
                 snackPosition: SnackPosition.BOTTOM,
                 backgroundColor: Colors.black54,
+                snackStyle: SnackStyle.FLOATING,
+                titleText: Center(child: Text("Подсказка:")),
                 duration: Duration(seconds: 5)
             );
           }
