@@ -118,9 +118,9 @@ class AuthController extends GetxController {
       // Create success
       _firebaseUser.value = _auth.currentUser;
     } else {
-      _showPreLoader.value = false;
       throw Exception("Ошибка создания пользователя $user в FireBase");
     }
+    _showPreLoader.value = false;
   }
 
   Future<void> signOut() async {
