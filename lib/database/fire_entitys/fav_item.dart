@@ -20,7 +20,7 @@ class FavItem {
     this.subId = map['subId'];
   }
 
-  FavItem.fromDocSnapShot(DocumentSnapshot doc) {
+  FavItem.fromDocSnapShot(DocumentSnapshot<Map<String, dynamic>> doc) {
     this.id = doc.data()['id'];
     this.phase = doc.data()['phase'];
     this.subId = doc.data()['subId'];

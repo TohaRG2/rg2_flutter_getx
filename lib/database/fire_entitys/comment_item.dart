@@ -21,7 +21,7 @@ class CommentItem {
     this.comment = map['comment'];
   }
 
-  CommentItem.fromDocSnapShot(DocumentSnapshot doc) {
+  CommentItem.fromDocSnapShot(DocumentSnapshot<Map<String, dynamic>> doc) {
     this.id = doc.data()['id'];
     this.phase = doc.data()['phase'];
     this.comment = doc.data()['comment'];

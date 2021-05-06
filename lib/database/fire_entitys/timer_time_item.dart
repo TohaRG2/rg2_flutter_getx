@@ -31,7 +31,7 @@ class TimerTimeItem {
   }
 
   /// Конструктор для создания из снапшота документа
-  TimerTimeItem.fromDocSnapShot(DocumentSnapshot doc) {
+  TimerTimeItem.fromDocSnapShot(DocumentSnapshot<Map<String, dynamic>> doc) {
     this.date = doc.data()['date'].toDate();
     this.solvingTime = doc.data()['solvingTime'];
     this.scramble = doc.data()['scramble'] ?? "";
