@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:rg2/controllers/connection_controller.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 // import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:rg2/controllers/in_app_purchase_controller.dart';
@@ -143,6 +144,7 @@ class RG2App extends StatelessWidget {
     Get.put(AzbukaTrainerController());
 
     //TODO после тестирования поменять на lazy
+    //Get.lazyPut(() => ConnectionController());
     //Get.lazyPut(() => InAppPurchaseController());
     // Get.put(InAppPurchaseController());
   }

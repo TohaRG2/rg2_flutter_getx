@@ -1,9 +1,11 @@
 import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rg2/controllers/connection_controller.dart';
 import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
@@ -11,6 +13,7 @@ import 'package:rg2/views/main_view.dart';
 import 'package:rg2/views/auth/wait_confirm_email_dialog.dart';
 
 class AuthController extends GetxController {
+  final ConnectionController _connection = Get.find();
 
   final _sp = GetStorage();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -30,13 +33,15 @@ class AuthController extends GetxController {
   int localEnterCounts = 0;
 
   /// Вычисляем необходимость отображения диалога входа при входе в программу
-  /// если пользователь еще не вошел или не подтвердил email, но и не нажимал "больше не показывать", то true
+  /// если пользователь еще не вошел или не подтвердил email, но и не нажимал "больше не показывать",
+  /// и интернет на устройстве в принципе доступен, то true
   get showSignInDialog {
     bool isUserAuthenticated = (user != null);
     if (isUserAuthenticated) {
       isUserAuthenticated = user.emailVerified;
     }
-    return _needShowSignInView && !isUserAuthenticated;
+    bool isInternetAvailable = _connection.connection != ConnectivityResult.none;
+    return _needShowSignInView && !isUserAuthenticated && isInternetAvailable;
   }
 
   /// Введеное имя пользователя
