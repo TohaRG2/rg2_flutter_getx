@@ -32,7 +32,7 @@ class AdHelper {
       } else if (Platform.isIOS) {
         return "ca-app-pub-2544863615395812/4771154723";
       } else {
-        throw UnsupportedError("Unsupported platform ${Platform.localeName} for interstitial Ads");
+        throw UnsupportedError("Unsupported platform ${Platform.localeName} for rewarded Ads");
       }
     } else {
       // Если debug режим, то выводим тестовые рекламки https://developers.google.com/admob/android/test-ads#sample%5C_ad%5C_units
@@ -42,7 +42,30 @@ class AdHelper {
       } else if (Platform.isIOS) {
         return "ca-app-pub-3940256099942544/1712485313";
       } else {
-        throw UnsupportedError("Unsupported platform ${Platform.localeName} for interstitial Ads");
+        throw UnsupportedError("Unsupported platform ${Platform.localeName} for rewarded Ads");
+      }
+    }
+  }
+
+  static String get bannerAdUnitId {
+    if (kReleaseMode) { // is Release Mode ??
+      if (Platform.isAndroid) {
+        return "ca-app-pub-2544863615395812/6368113327";
+      } else if (Platform.isIOS) {
+        return "ca-app-pub-2544863615395812/3787989937";
+      } else {
+        throw UnsupportedError("Unsupported platform ${Platform.localeName} for banner Ads");
+      }
+    } else {
+      // Если debug режим, то выводим тестовые рекламки
+      // https://developers.google.com/admob/android/test-ads#sample%5C_ad%5C_units
+      // https://developers.google.com/admob/ios/test-ads
+      if (Platform.isAndroid) {
+        return "ca-app-pub-3940256099942544/6300978111";
+      } else if (Platform.isIOS) {
+        return "ca-app-pub-3940256099942544/2934735716";
+      } else {
+        throw UnsupportedError("Unsupported platform ${Platform.localeName} for banner Ads");
       }
     }
   }
