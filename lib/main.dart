@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:rg2/controllers/ads/ad_state_controller.dart';
+import 'package:rg2/controllers/ads/ad_state.dart';
 import 'package:rg2/controllers/connection_controller.dart';
-// import 'package:google_mobile_ads/google_mobile_ads.dart';
-// import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:rg2/controllers/in_app_purchase_controller.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/storage/global_storage_controller.dart';
@@ -39,12 +40,14 @@ import 'package:firebase_core/firebase_core.dart';
 
 
 void main() async {
-  // Для работы байндинга
+  // Поскольку обращаемся к плагинам до вызова runApp, то сначала ждем инициализации плагинов
   WidgetsFlutterBinding.ensureInitialized();
   // Инициализируем FireBase, нужен import 'package:firebase_core/firebase_core.dart';
   await Firebase.initializeApp();
   // инициализируем adMob
-  // await MobileAds.instance.initialize();
+  final AdStateController adStateController = Get.put(AdStateController());
+  final initStatusFuture = MobileAds.instance.initialize();
+  adStateController.adState = AdState(initStatusFuture);
   // Инициализируем SharedPreferences
   await GetStorage.init();
   // Инициализируем внутренние покупки
@@ -52,8 +55,6 @@ void main() async {
   runApp(RG2App());
 }
 
-// https://github.com/afterlogic/aurora-files-app-flutter.git - moor + getX
-// https://github.com/Psunu/HabitCalendar.git - moor + getX obs
 // https://github.com/Rubywai/flutter_floor_example.git - floor + get
 // https://github.com/Junaidhassan99/todo_app.git
 

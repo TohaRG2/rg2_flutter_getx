@@ -69,7 +69,7 @@ class AuthController extends GetxController {
     // Слушаем поток авторизации юзера, если юзер авторизовался и email подтвержден, то записываем его в
     // _firebaseUser иначе null
     _auth.authStateChanges().listen((_user) {
-      logPrint("AuthController - изменились данные в auth ${_user.email} ${_user.emailVerified}");
+      logPrint("AuthController - изменились данные в auth ${_user?.email} ${_user?.emailVerified}");
       if (_user?.email != null && (_user?.emailVerified ?? false)) {
         logPrint("AuthController - allOK");
         _firebaseUser.value = _user;

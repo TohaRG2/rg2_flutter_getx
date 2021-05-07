@@ -6,7 +6,9 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:rg2/controllers/ads/ad_show_controller.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/auth/controller/auth_controller.dart';
@@ -20,6 +22,7 @@ import 'package:rg2/views/shared/ui_helpers.dart';
 
 class SignInView extends GetWidget<AuthController> {
   final SettingsController _settings  = Get.find();
+  final AdShowController adShowController = Get.put(AdShowController());
 
   final _formKey = GlobalKey<FormState>();
 
@@ -36,21 +39,35 @@ class SignInView extends GetWidget<AuthController> {
               SizedBox(width: UIHelper.SpaceSmall,),
             ],
           ),
-        body: Stack(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMedium),
-              child: Column(
-                children: [
-                  Expanded(child: loginPage(context)),
-                  SizedBox(height: 50,),
-                ],
+        body: Obx(() =>
+          Stack(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMedium),
+                child: Column(
+                  children: [
+                    Expanded(child: loginPage(context)),
+                    adBanner(adShowController.bannerAd),
+                  ],
+                ),
               ),
-            ),
-            Obx(() => FullScreenPreLoader(isShowing: controller.showPreLoader))
-          ],
+              FullScreenPreLoader(isShowing: controller.showPreLoader)
+            ],
+          ),
         ),
     );
+  }
+
+  Widget adBanner(BannerAd bannerAd) {
+    logPrint("adBanner - ${bannerAd?.adUnitId}");
+    return (bannerAd == null)
+        ? SizedBox(
+            height: 50,
+          )
+        : Container(
+            height: 50,
+            child: AdWidget(ad: bannerAd),
+          );
   }
 
   Widget loginPage(BuildContext context) {
