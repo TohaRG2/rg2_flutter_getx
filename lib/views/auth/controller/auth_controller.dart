@@ -63,10 +63,20 @@ class AuthController extends GetxController {
     super.onInit();
     // Биндим стрим в Observable _firebaseUser и подписываемся на его изменения
     //_firebaseUser.bindStream(_auth.authStateChanges());
-    bool isUserLoggedIn = _auth.currentUser?.emailVerified ?? false;
-    _firebaseUser.value = (isUserLoggedIn) ? _auth.currentUser : null;
-    _auth.authStateChanges().listen((event) {
-      logPrint("AuthController - изменились данные в auth ${event.email} ${event.emailVerified}");
+    // bool isUserLoggedIn = _auth.currentUser?.emailVerified ?? false;
+    // _firebaseUser.value = (isUserLoggedIn) ? _auth.currentUser : null;
+
+    // Слушаем поток авторизации юзера, если юзер авторизовался и email подтвержден, то записываем его в
+    // _firebaseUser иначе null
+    _auth.authStateChanges().listen((_user) {
+      logPrint("AuthController - изменились данные в auth ${_user.email} ${_user.emailVerified}");
+      if (_user?.email != null && (_user?.emailVerified ?? false)) {
+        logPrint("AuthController - allOK");
+        _firebaseUser.value = _user;
+      } else {
+        logPrint("AuthController - что не так с авторизацией, пишем null");
+        _firebaseUser.value = null;
+      }
     });
     _needShowSignInView = _sp.read(Const.IS_FIREBASE_ENTER_ENABLED) ?? true;
     _updateLocalEnterCounts();
@@ -80,6 +90,7 @@ class AuthController extends GetxController {
 
   Future<void> googleSignInAndGoToStart() async {
     await googleSignIn();
+    logPrint("googleSignInAndGoToStart - ${user.displayName}");
     if (user != null) {
       logPrint("googleSignInAndGoToStart - Переходим на основной экран");
       Get.offAll(() => MainView(), transition: Transition.downToUp);
@@ -121,7 +132,7 @@ class AuthController extends GetxController {
     logPrint("Создаем новую или перезаписываем по uid запись в таблице users");
     if (await CloudDatabase().createOrUpdateUser(user)) {
       // Create success
-      _firebaseUser.value = _auth.currentUser;
+      // _firebaseUser.value = _auth.currentUser;
     } else {
       throw Exception("Ошибка создания пользователя $user в FireBase");
     }
@@ -134,7 +145,7 @@ class AuthController extends GetxController {
       _enableShowSignInView();
       await _auth.signOut();
       await _googleSignIn.signOut();
-      _firebaseUser.value = null;
+      // _firebaseUser.value = null;
     } catch (e) {
       logPrint("Не смогли выйти из аккаунта:\n $e");
     }
@@ -276,7 +287,7 @@ class AuthController extends GetxController {
     Get.offAll(() => MainView(), transition: Transition.downToUp);
     var user = FirebaseAuth.instance.currentUser;
     await createObjectInUsers(user);
-    _firebaseUser.value = user;
+    // _firebaseUser.value = user;
   }
 
   disableShowSignInView() {
