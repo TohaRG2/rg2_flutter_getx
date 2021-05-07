@@ -15,6 +15,7 @@ import 'package:rg2/views/auth/reset_password_view.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/settings/widgets/theme_switch.dart';
 import 'package:rg2/views/main_view.dart';
+import 'package:rg2/views/shared/full_screen_preloader.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class SignInView extends GetWidget<AuthController> {
@@ -39,21 +40,14 @@ class SignInView extends GetWidget<AuthController> {
           children: [
             Container(
               margin: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMedium),
-              child: Center(
-                child: loginPage(context),
+              child: Column(
+                children: [
+                  Expanded(child: loginPage(context)),
+                  SizedBox(height: 50,),
+                ],
               ),
             ),
-            Obx(() =>
-              Visibility(
-                visible: controller.showPreLoader,
-                child: Container(
-                  color: Colors.black38,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              ),
-            )
+            Obx(() => FullScreenPreLoader(isShowing: controller.showPreLoader))
           ],
         ),
     );
