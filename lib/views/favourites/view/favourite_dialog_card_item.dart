@@ -11,6 +11,7 @@ import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
 
 class FavouriteDialogCardItem extends StatelessWidget {
   final _learnController = Get.find<LearnController>();
@@ -24,28 +25,31 @@ class FavouriteDialogCardItem extends StatelessWidget {
     final textTheme = Get.textTheme;
     final _imagePath = _item.getAssetFilePath(); // _learnController.getAssetFilePath(_item.icon, _item.phase);
     final List<Widget> actions = [
-      SlideAction(
-        closeOnTap: true,
-        color: Colors.redAccent,
-        onTap: () {
-          _learnController.removeElementFromFavourites(_item);
-        },
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const Icon(
-                Icons.delete,
-                color: Colors.white,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                StrRes.deleteItem,
-                style: textTheme.bodyText2.copyWith(
+      Container(
+        padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceMini),
+        child: SlideAction(
+          closeOnTap: true,
+          color: Colors.redAccent,
+          onTap: () {
+            _learnController.removeElementFromFavourites(_item);
+          },
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                const Icon(
+                  Icons.delete,
                   color: Colors.white,
                 ),
-              ),
-            ],
+                const SizedBox(height: 4),
+                Text(
+                  StrRes.deleteItem,
+                  style: textTheme.bodyText2.copyWith(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -68,8 +72,8 @@ class FavouriteDialogCardItem extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: _imagePath.endsWith(".svg") ?
-                      SvgPicture.asset(_imagePath, height: 65,) :
-                      Image.asset(_imagePath, height: 65,),
+                    SvgPicture.asset(_imagePath, height: 65,) :
+                    Image.asset(_imagePath, height: 65,),
                   ),
                   Expanded(
                     child: Text(
