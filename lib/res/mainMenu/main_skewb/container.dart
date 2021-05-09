@@ -73,7 +73,7 @@ class ContainerCube implements Phase {
     только два центра такие, а четыре центра двухцветные. Это означает, что важно не только то, где
     находится элемент, но и <a href="rg2://ytplay?time=1:13&link=rh3rMuESOIM">как он повернут.</a></p>
 
-    <p><a href="rg2://ytplay?time=1:33&link=rh3rMuESOIM">И восьми углов</a></p>
+    <p><a href="rg2://ytplay?time=1:33&link=rh3rMuESOIM">И восьмь углов</a></p>
 
     <p style="text-align:center"><img src="container_1_2.xml" width="100"></p>
 
