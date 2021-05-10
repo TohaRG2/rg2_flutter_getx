@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/controllers/ads/ad_show_controller.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/repository/repository.dart';
 import 'package:rg2/controllers/storage/global_storage_controller.dart';
@@ -10,6 +11,7 @@ import 'package:rg2/database/fire_entitys/fav_item.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
+import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 class LearnController extends GetxController {
@@ -249,6 +251,53 @@ class LearnController extends GetxController {
     }
     curPositionInList = position;
     return position;
+  }
+
+  String redirectPhase = "";
+  int redirectId = 0;
+  bool isNeedRedirectToDetail = false;
+
+  setRedirectPage(String phase, int id){
+    logPrint("setRedirectPage - $phase, $id");
+    redirectPhase = phase;
+    redirectId = id;
+    isNeedRedirectToDetail = true;
+  }
+
+  resetRedirectPage(){
+    logPrint("resetRedirectPage - ");
+    redirectPhase = "";
+    redirectId = 0;
+    isNeedRedirectToDetail = false;
+  }
+
+  onFavouriteItemClick(MainDBItem item) {
+    // переходим на "Обучалки" в любом случае
+    _settings.bottomItem = 0;
+    // Если submenu, то меняем фазу в основном меню
+    if (item.url == "submenu") {
+      logPrint("onTap -> submenu -> change to ${item.description}");
+      changePageAndPhaseTo(item.description);
+      logPrint("rawRoute - ${Get.rawRoute} currentRoute - ${Get.currentRoute} previousRoute - ${Get.previousRoute}");
+      if (Get.isDialogOpen) { Get.back(); }
+      while (Get.currentRoute != "/() => MainView" && Get.currentRoute != "/") {
+        Get.back();
+        // logPrint("CurRoute - ${Get.currentRoute}");
+      }
+      logPrint("GetBack complete");
+    } else {
+      // Если url не submenu, значит переходим в детальную информацию, т.е. в обучалку
+      logPrint("onTap -> not submenu -> change detailScreen to ${item.phase}");
+      changePageAndPhaseTo(item.phase);
+      if (Get.isDialogOpen) { Get.back(); }
+      while (Get.currentRoute != "/() => MainView"  && Get.currentRoute != "/") {
+        Get.back();
+        logPrint("CurRoute - ${Get.currentRoute}");
+      }
+      logPrint("GetBack complete -> Get.to(LearnDetailScreen(${item.phase}, ${item.id})");
+      //setRedirectPage(item.phase, item.id);
+      //Get.to(() => LearnDetailScreen(item.phase, item.id), transition: Transition.cupertino);
+    }
   }
 
 }

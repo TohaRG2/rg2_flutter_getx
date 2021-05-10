@@ -305,8 +305,9 @@ class TimerView extends StatelessWidget {
       duration: _duration,
       bottom: _controller.showBottomBar ? 0 : -_controller.bottomBarHeight,
       child: GetBuilder<TimerController>(initState: (_) {
+        //TODO подумать как использовать для этих целей onReady в GetxController
         // Вот таким образом вызываем метод, который выполнится после отрисовки
-        // виджета и обновит высоту нижней панели в контроллере, а заодно и перериует виджет
+        // виджета и обновит высоту нижней панели в контроллере, а заодно и перерисует виджет
         WidgetsBinding.instance.addPostFrameCallback((_) {
           _controller.bottomBarHeight = _getBottomBarHeight();
         });

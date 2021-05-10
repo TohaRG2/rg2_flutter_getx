@@ -61,9 +61,11 @@ class AdHelper {
       // https://developers.google.com/admob/android/test-ads#sample%5C_ad%5C_units
       // https://developers.google.com/admob/ios/test-ads
       if (Platform.isAndroid) {
-        return "ca-app-pub-3940256099942544/6300978111";
+        // return "ca-app-pub-2544863615395812/6368113327"; // рабочая ссылка
+        return "ca-app-pub-3940256099942544/6300978111";  // тестовая ссылка
       } else if (Platform.isIOS) {
-        return "ca-app-pub-3940256099942544/2934735716";
+        // return "ca-app-pub-2544863615395812/3787989937"; // рабочая ссылка
+        return "ca-app-pub-3940256099942544/2934735716";  // тестовая ссылка
       } else {
         throw UnsupportedError("Unsupported platform ${Platform.localeName} for banner Ads");
       }

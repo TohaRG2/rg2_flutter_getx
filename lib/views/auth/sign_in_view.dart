@@ -22,7 +22,6 @@ import 'package:rg2/views/shared/ui_helpers.dart';
 
 class SignInView extends GetWidget<AuthController> {
   final SettingsController _settings  = Get.find();
-  final AdShowController adShowController = Get.put(AdShowController());
 
   final _formKey = GlobalKey<FormState>();
 
@@ -47,7 +46,6 @@ class SignInView extends GetWidget<AuthController> {
                 child: Column(
                   children: [
                     Expanded(child: loginPage(context)),
-                    adBanner(adShowController.bannerAd),
                   ],
                 ),
               ),
@@ -56,18 +54,6 @@ class SignInView extends GetWidget<AuthController> {
           ),
         ),
     );
-  }
-
-  Widget adBanner(BannerAd bannerAd) {
-    logPrint("adBanner - ${bannerAd?.adUnitId}");
-    return (bannerAd == null)
-        ? SizedBox(
-            height: 50,
-          )
-        : Container(
-            height: 50,
-            child: AdWidget(ad: bannerAd),
-          );
   }
 
   Widget loginPage(BuildContext context) {

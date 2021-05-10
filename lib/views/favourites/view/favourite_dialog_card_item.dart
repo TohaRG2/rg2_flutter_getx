@@ -15,7 +15,6 @@ import 'package:rg2/views/shared/ui_helpers.dart';
 
 class FavouriteDialogCardItem extends StatelessWidget {
   final _learnController = Get.find<LearnController>();
-  final SettingsController _settings = Get.find();
   final MainDBItem _item;
 
   FavouriteDialogCardItem(this._item);
@@ -96,32 +95,7 @@ class FavouriteDialogCardItem extends StatelessWidget {
           ),
         ),
         onTap: () {
-          // переходим на "Обучалки" в любом случае
-          _settings.bottomItem = 0;
-          if (_item.url == "submenu") {
-            logPrint("onTap -> submenu -> change to ${_item.description}");
-            _learnController.changePageAndPhaseTo(_item.description);
-            logPrint("rawRoute - ${Get.rawRoute}");
-            logPrint("currentRoute - ${Get.currentRoute}");
-            logPrint("previousRoute - ${Get.previousRoute}");
-            logPrint("isDialogOpen - ${Get.isDialogOpen}");
-            if (Get.isDialogOpen) { Get.back(); }
-            while (Get.currentRoute != "/() => MainView" && Get.currentRoute != "/") {
-              Get.back();
-              logPrint("CurRoute - ${Get.currentRoute}");
-            }
-            logPrint("GetBack complete");
-          } else {
-            logPrint("onTap -> not submenu -> change to ${_item.phase}");
-            _learnController.changePageAndPhaseTo(_item.phase);
-            if (Get.isDialogOpen) { Get.back(); }
-            while (Get.currentRoute != "/() => MainView"  && Get.currentRoute != "/") {
-              Get.back();
-              logPrint("CurRoute - ${Get.currentRoute}");
-            }
-            logPrint("GetBack complete -> Get.to(LearnDetailScreen(${_item.phase}, ${_item.id})");
-            Get.to(() => LearnDetailScreen(_item.phase, _item.id), transition: Transition.cupertino);
-          }
+          _learnController.onFavouriteItemClick(_item);
         },
       ),
     );

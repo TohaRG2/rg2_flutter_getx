@@ -6,6 +6,8 @@ import 'package:rg2/views/dialogs/get_money/get_money_dialog.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/learn/controller/learn_view_controller.dart';
+import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/settings/settings_screen_view.dart';
 
@@ -14,12 +16,27 @@ import 'main_menu/main_menu_list_view.dart';
 class LearnViewPager extends StatelessWidget {
   final LearnController _learnController = Get.find();
   final SettingsController _settings = Get.find();
+  //final LearnViewController _viewController = Get.put(LearnViewController());
   // final InAppPurchaseController _purchaseController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    Get.create(() =>LearnViewController());
     var _isSwipeEnabled = _settings.isSwipeEnabled;
     return GetBuilder<LearnController>(
+      // initState: (_) {
+      //   // Вот таким образом вызываем метод, который выполнится после отрисовки виджета
+      //   WidgetsBinding.instance.addPostFrameCallback((_) {
+      //     logPrint("MenuList build - check NeedRedirectToDetail");
+      //     if (_learnController.isNeedRedirectToDetail) {
+      //       if (_learnController.redirectPhase != "") {
+      //         logPrint("MenuList build - NeedRedirectToDetail ${_learnController.redirectPhase} ${_learnController.redirectId}");
+      //         Get.to(() => LearnDetailScreen(_learnController.redirectPhase, _learnController.redirectId), transition: Transition.cupertino);
+      //         _learnController.resetRedirectPage();
+      //       }
+      //     }
+      //   });
+      // },
       builder: (_lc) {
         return DefaultTabController(
           length: _lc.pages.length,
@@ -40,56 +57,7 @@ class LearnViewPager extends StatelessWidget {
             }
             _tabController.index = pageNum;
           return Scaffold(
-              appBar: AppBar(
-              title: Center(
-                child: Text(
-                  "${StrRes.learnTitle}",
-                  style: TextStyle(color: Get.textTheme.headline5.color),
-              )),
-              //backgroundColor: Theme.of(context).primaryColor,
-                backgroundColor: Get.theme.scaffoldBackgroundColor,
-                actions: [
-                  Stack(children: [
-                    Center(
-                      child: IconButton(
-                        icon: const Icon(Icons.monetization_on_outlined),
-                        color: Get.textTheme.headline5.color,
-                        tooltip: 'Монетки',
-                        onPressed: () {
-                          Get.dialog(GetMoneyDialog());
-                        },
-                      ),
-                    ),
-                    // Obx(() =>
-                      Positioned(
-                        bottom: 0,
-                        left: 0,
-                        right: 0,
-                        child: Text( "15", //_purchaseController.getCoins(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 14.0, color: Get.textTheme.headline5.color),
-                        ),
-                      ),
-                    // )
-                  ]),
-                  IconButton(
-                    onPressed: () {
-                      Get.to(() => SettingsScreenWithBottomBar(), transition: Transition.cupertino);
-                    },
-                    icon: const Icon(Icons.settings_rounded),
-                    color: Get.textTheme.headline5.color,
-                    tooltip: 'Настройки',
-                  ),
-                ],
-                bottom: TabBar(
-                  indicatorWeight: 3.0,
-                  //По умолчанию берется из ThemeData.primaryTextTheme.bodyText1.textColor
-                  labelColor: Get.textTheme.headline5.color,
-                  unselectedLabelColor: Get.textTheme.headline5.color.withAlpha(130),
-                  isScrollable: true,
-                  tabs: _tabsList(),
-                ),
-              ),
+              appBar: _buildAppBar(),
               body: WillPopScope(
                 // Обработчик нажатия на Back в андродид
                 onWillPop: _onWillPop,
@@ -105,6 +73,59 @@ class LearnViewPager extends StatelessWidget {
           //initialIndex: _settings.currentPageNumber.value,
         );
       }
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      title: Center(
+          child: Text(
+        "${StrRes.learnTitle}",
+        style: TextStyle(color: Get.textTheme.headline5.color),
+      )),
+      backgroundColor: Get.theme.scaffoldBackgroundColor,
+      actions: [
+        Stack(children: [
+          Center(
+            child: IconButton(
+              icon: const Icon(Icons.monetization_on_outlined),
+              color: Get.textTheme.headline5.color,
+              tooltip: 'Монетки',
+              onPressed: () {
+                Get.dialog(GetMoneyDialog());
+              },
+            ),
+          ),
+          // Obx(() =>
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Text(
+              "15", //_purchaseController.getCoins(),
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 14.0, color: Get.textTheme.headline5.color),
+            ),
+          ),
+          // )
+        ]),
+        IconButton(
+          onPressed: () {
+            Get.to(() => SettingsScreenWithBottomBar(), transition: Transition.cupertino);
+          },
+          icon: const Icon(Icons.settings_rounded),
+          color: Get.textTheme.headline5.color,
+          tooltip: 'Настройки',
+        ),
+      ],
+      bottom: TabBar(
+        indicatorWeight: 3.0,
+        //По умолчанию берется из ThemeData.primaryTextTheme.bodyText1.textColor
+        labelColor: Get.textTheme.headline5.color,
+        unselectedLabelColor: Get.textTheme.headline5.color.withAlpha(130),
+        isScrollable: true,
+        tabs: _tabsList(),
+      ),
     );
   }
 
@@ -124,6 +145,7 @@ class LearnViewPager extends StatelessWidget {
   }
 
   List<Widget> _tabBarView() {
+    //TODO зарефакторить создание списка MenuList
     var result = <Widget>[];
     List<PageProperties> pageList = _learnController.pages;
     Map<int, PageProperties> map = pageList.asMap();
