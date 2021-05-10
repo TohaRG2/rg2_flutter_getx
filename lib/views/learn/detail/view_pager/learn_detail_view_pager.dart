@@ -10,11 +10,12 @@ import 'learn_detail_page_item.dart';
 class LearnDetailViewPager extends StatelessWidget {
   final LearnDetailController _detailController = Get.find();
   final SettingsController _settings = Get.find();
-  final AdShowController _adShowController = Get.put(AdShowController(),);
+  // final AdShowController _adShowController = Get.put(AdShowController());
 
   @override
   Widget build(BuildContext context) {
     var _isSwipeEnabled = _settings.isSwipeEnabled;
+    AdShowController _adShowController = Get.put(AdShowController());
     _adShowController.count = _detailController.currentItems.length;
     return DefaultTabController(
       length: _detailController.currentItems.length,

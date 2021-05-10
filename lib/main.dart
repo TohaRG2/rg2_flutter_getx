@@ -130,7 +130,7 @@ class RG2App extends StatelessWidget {
     Get.put(TimerRepository());
     Get.put(FavouriteController());
     Get.put(LearnController());
-    Get.put(LearnDetailController());
+    //Get.put(LearnDetailController());
     Get.put(AzbukaDialogController());
 
     //TODO подумать, куда перенести, или оставить тут через Lazy

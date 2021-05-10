@@ -17,6 +17,11 @@ class LearnDetailController extends GetxController {
     _mainRepo.detailUpdateCacheCallback = _commentsCallback;
   }
 
+  @override
+  onClose() {
+    logPrint("LearnDetailController onClose - ");
+  }
+
   RxInt _curPageNumberObs = 0.obs;
   int get curPageNumber => _curPageNumberObs.value;
   set _curPageNumber(value) => _curPageNumberObs.value = value;
@@ -46,6 +51,7 @@ class LearnDetailController extends GetxController {
   }
 
   Future<void> reLoadPages(String phase, int id) async {
+    logPrint("reLoadPages - $phase, $id");
     obsPhase = phase;
     var list = await _mainRepo.getPhasePages(phase);
     currentItems.assignAll(list);

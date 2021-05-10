@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
 import 'package:rg2/res/string_values.dart';
 
@@ -13,7 +14,10 @@ class LearnDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> pages = Get.find<LearnDetailController>().reLoadPages(_phase, _startId);
+    logPrint("LearnDetailScreen build - ");
+    var controller = Get.put(LearnDetailController());
+    logPrint("LearnDetailScreen reLoadPages");
+    Future<void> pages = controller.reLoadPages(_phase, _startId);
     return FutureBuilder(
         future: pages,
         builder: (context, snapshot) {

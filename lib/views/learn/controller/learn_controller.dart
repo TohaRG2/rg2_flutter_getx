@@ -12,6 +12,7 @@ import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
+import 'package:rg2/views/learn/detail/learn_redirect_page.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 class LearnController extends GetxController {
@@ -290,13 +291,19 @@ class LearnController extends GetxController {
       logPrint("onTap -> not submenu -> change detailScreen to ${item.phase}");
       changePageAndPhaseTo(item.phase);
       if (Get.isDialogOpen) { Get.back(); }
-      while (Get.currentRoute != "/() => MainView"  && Get.currentRoute != "/") {
-        Get.back();
-        logPrint("CurRoute - ${Get.currentRoute}");
-      }
+      // while (Get.currentRoute != "/() => MainView"  && Get.currentRoute != "/") {
+      //   Get.back();
+      //   logPrint("CurRoute - ${Get.currentRoute}");
+      // }
       logPrint("GetBack complete -> Get.to(LearnDetailScreen(${item.phase}, ${item.id})");
       //setRedirectPage(item.phase, item.id);
-      //Get.to(() => LearnDetailScreen(item.phase, item.id), transition: Transition.cupertino);
+      if (Get.currentRoute == "/() => MainView" || Get.currentRoute == "/") {
+        logPrint("onTap Get.to ");
+        Get.to(() => LearnDetailScreen(item.phase, item.id), transition: Transition.cupertino);
+      } else {
+        logPrint("onTap Get.off ");
+        Get.off(() => LearnRedirectPage(item.phase, item.id));
+      }
     }
   }
 
