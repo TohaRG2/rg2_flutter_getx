@@ -1,7 +1,9 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
+import 'package:rg2/controllers/connection_controller.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/auth/controller/auth_controller.dart';
@@ -10,6 +12,7 @@ import 'package:rg2/views/shared/ui_helpers.dart';
 
 class UserAuthSettings extends StatelessWidget {
   final AuthController controller = Get.find();
+  final ConnectionController _connectionController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,17 @@ class UserAuthSettings extends StatelessWidget {
           _whyNeedAuthButton(),
           OutlinedButton(
               onPressed: () {
-                Get.to(() => SignInView());
+                if (_connectionController.connection != ConnectivityResult.none) {
+                  Get.to(() => SignInView(), transition: Transition.cupertino);
+                } else {
+                  Get.defaultDialog(
+                    title: StrRes.internetAccessDialogTitle,
+                    titleStyle: TextStyle(fontSize: 24),
+                    middleText: StrRes.internetAccessDialogText,
+                    textConfirm: StrRes.buttonOkText,
+                    onConfirm: (){ Get.back(); }
+                  );
+                }
               },
               child: Text("Войти")),
         ],

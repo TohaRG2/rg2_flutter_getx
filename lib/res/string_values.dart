@@ -168,4 +168,8 @@ class StrRes {
   static const moneyDialogTemporaryUnavailable = "Магазин покупок временно недоступен.";
   static const moneyDialogTemporaryUnavailable2 = "Пожалуйста, проверьте интернет-подключение и доступность магазина приложений (AppStore или PlayMarket) на вашем устройстве.";
   static const moneyDialogPathToCoinsImage = "assets/images/icons/coins.png";
+
+  static const internetAccessDialogTitle = "Отсутствует подключение к интернету";
+  static const internetAccessDialogText = "Для авторизации в приложении, требуется подключение к интернету";
+
 }
