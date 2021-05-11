@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/controller/learn_redirect_controller.dart';
 
-class LearnRedirectPage extends GetView<LearnRedirectController> {
-  final LearnRedirectController _controller = Get.put(LearnRedirectController());
+class LearnRedirectPage extends StatelessWidget {
+  final LearnRedirectController controller = Get.put(LearnRedirectController());
   final String phase;
   final int id;
 

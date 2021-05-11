@@ -7,7 +7,6 @@ import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/learn/controller/learn_view_controller.dart';
-import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/settings/settings_screen_view.dart';
 
@@ -16,27 +15,12 @@ import 'main_menu/main_menu_list_view.dart';
 class LearnViewPager extends StatelessWidget {
   final LearnController _learnController = Get.find();
   final SettingsController _settings = Get.find();
-  //final LearnViewController _viewController = Get.put(LearnViewController());
-  // final InAppPurchaseController _purchaseController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     Get.create(() =>LearnViewController());
     var _isSwipeEnabled = _settings.isSwipeEnabled;
     return GetBuilder<LearnController>(
-      // initState: (_) {
-      //   // Вот таким образом вызываем метод, который выполнится после отрисовки виджета
-      //   WidgetsBinding.instance.addPostFrameCallback((_) {
-      //     logPrint("MenuList build - check NeedRedirectToDetail");
-      //     if (_learnController.isNeedRedirectToDetail) {
-      //       if (_learnController.redirectPhase != "") {
-      //         logPrint("MenuList build - NeedRedirectToDetail ${_learnController.redirectPhase} ${_learnController.redirectId}");
-      //         Get.to(() => LearnDetailScreen(_learnController.redirectPhase, _learnController.redirectId), transition: Transition.cupertino);
-      //         _learnController.resetRedirectPage();
-      //       }
-      //     }
-      //   });
-      // },
       builder: (_lc) {
         return DefaultTabController(
           length: _lc.pages.length,
