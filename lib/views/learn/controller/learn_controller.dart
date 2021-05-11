@@ -21,6 +21,7 @@ class LearnController extends GetxController {
   final SettingsController _settings = Get.find();
   final FavouriteController _favController = Get.find();
 
+
   double curPositionInList = 0.0;
   String _backIconPath = "assets/images/icons/back_arrow.svg";
 
@@ -253,6 +254,10 @@ class LearnController extends GetxController {
     curPositionInList = position;
     return position;
   }
+
+  RxBool _hasDetailController = false.obs;
+    bool get hasDetailController => _hasDetailController.value;
+    set hasDetailController(value) => _hasDetailController.value = value;
 
   String redirectPhase = "";
   int redirectId = 0;

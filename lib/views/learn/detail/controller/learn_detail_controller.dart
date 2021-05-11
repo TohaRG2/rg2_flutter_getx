@@ -13,13 +13,20 @@ class LearnDetailController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    logPrint("Init LearnDetailController");
+    logPrint("LearnDetailController onInit");
     _mainRepo.detailUpdateCacheCallback = _commentsCallback;
+    // Делаем отметку в основном контроллере, что создан DetailController
+    // костыль, который нужен для корректного перехода из одного DetailView в другое с новыми параметрами
+    // Переход осуществляется через learn_redirect_view со своим контролеером
+    _learnController.hasDetailController = true;
   }
 
   @override
   onClose() {
     logPrint("LearnDetailController onClose - ");
+    // Убираем отметку в основном контроллере, что создан DetailController
+    // нужно для отмены ожидания в learn_redirect_controller
+    _learnController.hasDetailController = false;
   }
 
   RxInt _curPageNumberObs = 0.obs;

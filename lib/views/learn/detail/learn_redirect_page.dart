@@ -16,14 +16,9 @@ class LearnRedirectPage extends GetView<LearnRedirectController> {
     controller.id = id;
     logPrint("LearnRedirectPage build - ");
     return Container(
-      color: Colors.black,
+      color: Colors.black54,
       child: Center(
-        child: TextButton(
-          onPressed: () {
-            _controller.redirectToDetail();
-          },
-          child: Text("Redirect"),
-        ),
+        child: CircularProgressIndicator()
       ),
     );
   }
