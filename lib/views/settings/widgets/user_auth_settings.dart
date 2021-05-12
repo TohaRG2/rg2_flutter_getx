@@ -36,6 +36,7 @@ class UserAuthSettings extends StatelessWidget {
                 if (_connectionController.connection != ConnectivityResult.none) {
                   Get.to(() => SignInView(), transition: Transition.cupertino);
                 } else {
+                  //Get.to(() => SignInView(), transition: Transition.cupertino);
                   Get.defaultDialog(
                     title: StrRes.internetAccessDialogTitle,
                     titleStyle: TextStyle(fontSize: 24),
