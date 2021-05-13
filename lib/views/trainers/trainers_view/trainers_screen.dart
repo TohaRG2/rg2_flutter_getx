@@ -60,7 +60,7 @@ class TrainersScreen extends StatelessWidget {
     switch(item.id) {
       case StrRes.trainersScrambleGen:
         logPrint("Start Scramble Generator");
-        Get.to(() => ScrambleGenView(title: item.title), transition: Transition.cupertino);
+        Get.to(() => ScrambleGenView(), transition: Transition.cupertino);
         break;
       case StrRes.trainersTimer:
         logPrint("Start Timer");

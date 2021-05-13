@@ -273,7 +273,7 @@ class Blind implements Phase {
     static const blind_st11_title = "N11 Цепочки";
     static const blind_st11_descr = """
         Как создаются последовательности элементов, которые оказываются в буфере.<br/>
-        <b>Скармбл в видео: U2 F2 L\' D2 R U F\' L2 B2 R L2 B2 U R</b>
+        <b>Скармбл в видео: <a href="rg2://scrmbl?scram=U2_F2_L\'_D2_R_U_F\'_L2_B2_R_L2_B2_U_R">U2 F2 L\' D2 R U F\' L2 B2 R L2 B2 U R</a></b>
     """;
     static const blind_st11_url = "8h4JDbvXPMg";
 
@@ -287,7 +287,7 @@ class Blind implements Phase {
     static const blind_st13_title = "N13 Тренируем азбуку";
     static const blind_st13_descr = """
         Пробуем создать цепочку по азбуке.<br/>
-        <b>Скармбл в видео: U2 F2 L\' D2 R U F\' L2 B2 R L2 B2 U R </b><br/>
+        <b>Скармбл в видео: <a href="rg2://scrmbl?scram=U2_F2_L\'_D2_R_U_F\'_L2_B2_R_L2_B2_U_R">U2 F2 L\' D2 R U F\' L2 B2 R L2 B2 U R</a></b><br/>
         Должно получиться: КЁрлинг ПО МоВе ЛИ Желтые Яблоки Э <br/>
     """;
     static const blind_st13_url = "CiDALMqmlxo";
@@ -321,7 +321,7 @@ class Blind implements Phase {
     static const blind_st16_title = "N16 Двойная переплавка";
     static const blind_st16_descr = """
         Еще более сложная ситуация, когда буфер не встает на свое место и после первой переплавки. <br/>
-        <b>Скрамбл: R D2 U F2 R\' F\' U2 R D R2 B </b><br/>
+        <b>Скрамбл: <a href="rg2://scrmbl?scram=R_D2_U_F2_R\'_F\'_U2_R_D_R2_B">R D2 U F2 R\' F\' U2 R D R2 B</a></b><br/>
         Фраза: ХЁ ВаГон МАма ПыШка СЯ ЮК Р
     """;
     static const blind_st16_url = "pkikOC_SgPs";
@@ -336,10 +336,12 @@ class Blind implements Phase {
 
     static const blind_st18_title = "N18 Перевернутое ребро";
     static const blind_st18_descr = """
-        <b>Скрамбл: B2 D U2 R\' L2 U2 R2 D F2 U\' L2 R\' B\' D R </b> <br/>
-        Что делать если попалось ребро которое стоит на своем месте, но перевернуто. <br/>
-        Фраза: ГЭФЕСА ЖаЛко ЦО ЯРик.<br/>
-        Или можно воспользоваться ускорениями №1 и №2.
+        <p><b>Скрамбл: B2 D U2 R\' L2 U2 R2 D F2 U\' L2 R\' B\' D R </b></p>
+        
+        <p>Что делать если попалось ребро которое стоит на своем месте, но перевернуто. <br/>
+        Фраза: ГЭФЕСА ЖаЛко ЦО ЯРик.</p>
+        
+        <p>Или можно воспользоваться ускорениями №1 и №2.</p>
     """;
     static const blind_st18_url = "TJKqLhg9Q7c";
 
@@ -360,7 +362,7 @@ class Blind implements Phase {
 
     static const blind_st21_title = "N21 Австралия";
     static const blind_st21_descr = """
-        Где находится буфер и корзина для углов. Основной алгоритм для постановки на место углов - Австралия. <br/>
+        <p>Где находится буфер и корзина для углов. Основной алгоритм для постановки на место углов - Австралия.</p>
         Фингертрикс: <a href="rg2://ytplay?time=4:07&link=artmFaxjaC0">на видео 4:07</a> <br/>
         <b>Алгоритм: (F R) (U\' R\' U\' R U R\' F\') (R U R\' U\') (R\' F R F\')</b>
     """;
@@ -368,14 +370,14 @@ class Blind implements Phase {
 
     static const blind_st22_title = "N22 Азбука углов";
     static const blind_st22_descr = """
-        Азбука для углов.
+        <p>Азбука для углов.</p>
         <p style="text-align:center"><img src="blind_22_1.xml" width="80%"></p>
     """;
     static const blind_st22_url = "fxvR33pCHN0";
 
     static const blind_st23_title = "N23 Установочные ходы для углов часть 1";
     static const blind_st23_descr = """
-        Установочные ходы для углов зеленой и синей стороны + бело-зелено-красного угла.
+        <p>Установочные ходы для углов зеленой и синей стороны + бело-зелено-красного угла.</p>
     """;
     static const blind_st23_url = "aEA5PdC2xhg";
 
@@ -411,16 +413,21 @@ class Blind implements Phase {
 
   static const blindacc_st1_title = "Ускорение №1";
   static const blindacc_st1_descr = """
-        Ускорение для ситуации, когда одно из ребер на своем месте, но перевернуто. Или не для
-        слепой сборки - как перевернуть два ребра находящиеся друг напротив друга. <br/>
-        1. Вариант когда одно ребро на ближней грани, а другое на дальней.<br/>
+        <p>Ускорение для ситуации, когда одно из ребер на своем месте, но перевернуто. Или не для
+        слепой сборки - как перевернуть два ребра находящиеся друг напротив друга. </p>
+        
+        <p>1. Вариант когда одно ребро на ближней грани, а другое на дальней.</p>
+        
         <p style="text-align:center"><img src="blaccel_1_1.xml"></p>
-        Фингертрикс:  <a href="rg2://ytplay?time=7:49&link=sWlREfNebUI">на видео 7:49</a> <br/>
-        <b>Алгоритм: (M\' U\' M\' U\' M\' U2) (M U\' M U\' M U2)</b><br/><br/>
-        2. Вариант для классического расположения буфера и корзины, т.е. можно выполнять без
+        Фингертрикс:  <a href="rg2://ytplay?time=7:49&link=sWlREfNebUI">на видео 7:49</a> </p>
+        
+        <p><b>Алгоритм: (M\' U\' M\' U\' M\' U2) (M U\' M U\' M U2)</b></p>
+        
+        <p>2. Вариант для классического расположения буфера и корзины, т.е. можно выполнять без
         перехвата кубика. К тому же без неудобного кручения среднего слоя, но с чередованием
-        вращения верхней грани.
+        вращения верхней грани.</p>
         <p style="text-align:center"><img src="blaccel_1_2.xml"></p>
+        
         <b>Алгоритм: (M\' U M\' U M\' U M\' U) (M\' U\' M\' U\' M\' U\' M\' U\')</b> или <b>4(M\' U) 4(M\' U\')</b>
     """;
   static const blindacc_st1_url = "sWlREfNebUI";
