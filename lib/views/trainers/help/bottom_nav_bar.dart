@@ -15,7 +15,7 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = context.mediaQuery.size;
-    final iconColor = Theme.of(context).scaffoldBackgroundColor;
+    final iconColor = Get.theme.scaffoldBackgroundColor;
     return Positioned(
       bottom: 0,
       left: 0,
@@ -27,18 +27,18 @@ class BottomNavBar extends StatelessWidget {
             // Подложка
             CustomPaint(
               size: Size(size.width, 70),
-              painter: BottomNavBarPainter(Theme.of(context).primaryColor),
+              painter: BottomNavBarPainter(Get.theme.primaryColor),
             ),
             // FAB
             Center(
               heightFactor: 0.6,
               child: FloatingActionButton(
-                  backgroundColor: Theme.of(context).accentColor,
+                  backgroundColor: Get.theme.accentColor,
                   foregroundColor: iconColor,
                   child: Icon(Icons.repeat),
                   elevation: 0.1,
                   onPressed: () {
-                    Get.to(() => ScrambleGenView(title: item.title), transition: Transition.downToUp);
+                    Get.to(() => ScrambleGenView(), transition: Transition.downToUp);
                   }),
             ),
             // Кнопки на подложке

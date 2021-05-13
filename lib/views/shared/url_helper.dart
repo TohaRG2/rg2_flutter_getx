@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:rg2/utils/my_logger.dart';
-import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
+import 'package:rg2/views/learn/detail/learn_redirect_page.dart';
 import 'package:rg2/views/trainers/scramble_gen/view/main_scramble_gen_view.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -33,21 +33,22 @@ class UrlHelper {
     } else {
 
       // окно генератора скрамблов для "scrmbl" или "scramble"
+      // rg2://scrmbl?scram=F2_U2_R_L2_B2_D_F_D2_R2_U_R2_L2_R\'_U_R_B_D\'
       if (uri.host.toLowerCase() == "scrmbl" ||
           uri.host.toLowerCase() == "scramble") {
-        var scramble = uri.queryParameters["scram"] ?? "R_R\'";
+        var scramble = uri.queryParameters["scram"].replaceAll("_", " ") ?? "R R\'";
         //TODO uncomment when ScrambleGenerator will be completed
-        //Get.to(() => ScrambleGenView(scramble));
+        Get.to(() => ScrambleGenView(scramble: scramble));
       }
 
       // окно детальной информации для ссылок типа "pager"
-      //rg2://pager?phase=BEGIN&item=1
+      // rg2://pager?phase=BEGIN&item=1
       if (uri.host.toLowerCase() == "pager") {
         var phase = uri.queryParameters["phase"] ?? "BEGIN";
         var id = int.tryParse(uri.queryParameters["item"]) ?? 1;
-        //Поскольку мы и так в LearnDetailScreen, то переходим не через Get.off()
-        Get.back();
-        Get.to(() => LearnDetailScreen(phase, id), transition: Transition.cupertino);
+        Get.off(() => LearnRedirectPage(phase, id));
+        // Get.back();
+        // Get.to(() => LearnDetailScreen(phase, id), transition: Transition.cupertino);
       }
     }
   }

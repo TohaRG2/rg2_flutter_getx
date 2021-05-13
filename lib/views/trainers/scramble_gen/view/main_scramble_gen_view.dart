@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 import 'package:rg2/views/trainers/scramble_gen/model/blind_cube_support_arrays.dart';
@@ -13,24 +14,28 @@ import 'show_blind_decision.dart';
 
 class ScrambleGenView extends StatelessWidget {
   final ScrambleGenController _controller = Get.find();
-  final String title;
+  final String scramble;
 
-  ScrambleGenView({this.title});
+  ScrambleGenView({this.scramble});
 
   @override
   Widget build(BuildContext context) {
-    final Color backgroundColor = Theme.of(context).scaffoldBackgroundColor;
+    logPrint("ScrambleGenView");
+    final title = StrRes.trainersScrambleGenTitle;
+    final Color backgroundColor = Get.theme.scaffoldBackgroundColor;
     const padding = 8.0;
     var cellHeight = (Get.width - padding * 2) / 12;
     var border = 2.0;
-    logPrint("ScrambleGenView");
+    if (scramble != null) {
+      logPrint("ScrambleGenView - executeScramble $scramble");
+      _controller.executeScramble(scramble);
+    }
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Center(
-            child: Text( title,
-              style:
-              TextStyle(color: Get.textTheme.headline5.color),
+            child: Text(title,
+              style: TextStyle(color: Get.textTheme.headline5.color),
             ),
           ),
           backgroundColor: backgroundColor,

@@ -137,6 +137,14 @@ class ScrambleGenController extends GetxController {
     scrambleLength = 14;
   }
 
+  void executeScramble(String scramble) {
+    _conditions = mainCube.getDecisionForScramble(scramble);
+    mainCube.executeScrambleWithReset(scramble);
+    currentScramble = scramble;
+    currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
+    mainColoredAzbuka = mainCube.getColoredAzbuka();
+  }
+
   void generateNewScramble() {
     _conditions = mainCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength);
     currentScramble = _conditions.scramble;
