@@ -12,11 +12,11 @@ class ConnectionController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    //connection = await Connectivity().checkConnectivity();
+    connection = await Connectivity().checkConnectivity();
     Connectivity().onConnectivityChanged
         .listen((event) {
-        logPrint("onConnectivityChanged - $event");
-        connection = event;
-    });
+          logPrint("onConnectivityChanged - $event");
+          connection = event;
+        });
   }
 }
