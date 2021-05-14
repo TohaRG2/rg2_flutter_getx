@@ -37,7 +37,6 @@ class UrlHelper {
       if (uri.host.toLowerCase() == "scrmbl" ||
           uri.host.toLowerCase() == "scramble") {
         var scramble = uri.queryParameters["scram"].replaceAll("_", " ") ?? "R R\'";
-        //TODO uncomment when ScrambleGenerator will be completed
         Get.to(() => ScrambleGenView(scramble: scramble));
       }
 
@@ -47,8 +46,6 @@ class UrlHelper {
         var phase = uri.queryParameters["phase"] ?? "BEGIN";
         var id = int.tryParse(uri.queryParameters["item"]) ?? 1;
         Get.off(() => LearnRedirectPage(phase, id));
-        // Get.back();
-        // Get.to(() => LearnDetailScreen(phase, id), transition: Transition.cupertino);
       }
     }
   }
