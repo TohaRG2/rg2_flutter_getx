@@ -43,7 +43,7 @@ class FavouriteDialog extends StatelessWidget {
                     ),
                     Flexible(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
+                        padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceSmall),
                         child: Text(
                           StrRes.favouriteDialogHint,
                           style: Get.textTheme.headline6.copyWith(
