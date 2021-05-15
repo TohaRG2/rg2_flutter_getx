@@ -82,6 +82,13 @@ class AuthController extends GetxController {
     _updateLocalEnterCounts();
   }
 
+  @override
+  onClose() {
+    emailController.dispose();
+    nameController.dispose();
+    passwordController.dispose();
+  }
+
   _updateLocalEnterCounts() {
     localEnterCounts = _sp.read(Const.LOCAL_STARTS_COUNT) ?? 0;
     localEnterCounts++;
