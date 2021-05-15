@@ -9,6 +9,7 @@ import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/settings/settings_screen_view.dart';
+import 'package:rg2/views/settings/settings_with_bottom_back.dart';
 
 import 'main_menu_item.dart';
 
@@ -78,7 +79,7 @@ class MenuList extends StatelessWidget {
               // закрываем снэкбар
               Get.back();
               //TODO сделать переход с прокруткой к определенному пункту в настройках
-              Get.to(() => SettingsScreen(), transition: Transition.downToUp);
+              Get.to(() => SettingsWithBottomBack(), transition: Transition.downToUp);
             },
             child: Container(
                 padding: EdgeInsets.all(8.0),
