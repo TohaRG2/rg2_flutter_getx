@@ -37,8 +37,6 @@ class StrRes {
 
   static const settingsSwipe = "Свайпы";
   static const settingsSwipeMenuText = "Прокрутка вправо/влево свайпами в основном меню и обучалках";
-  static const settingsPurchase = "Покупки";
-  static const settingsPurchaseMenuText = "Показать больше головоломок";
 
   static const infoAboutTitle = "О программе";
   static const infoThanksTitle = "Спасибо";
@@ -168,6 +166,10 @@ class StrRes {
   static const moneyDialogTemporaryUnavailable = "Магазин покупок временно недоступен.";
   static const moneyDialogTemporaryUnavailable2 = "Пожалуйста, проверьте интернет-подключение и доступность магазина приложений (AppStore или PlayMarket) на вашем устройстве.";
   static const moneyDialogPathToCoinsImage = "assets/images/icons/coins.png";
+  static const purchasePuzzles = "Покупки";
+  static const purchasePuzzlesText = "Показать все головоломки";
+  static const purchaseAds = "Реклама";
+  static const purchaseAdsText = "Отключить рекламу";
 
   static const internetAccessDialogTitle = "Отсутствует подключение к интернету";
   static const internetAccessDialogText = "Для авторизации в приложении, требуется подключение к интернету";

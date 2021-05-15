@@ -6,7 +6,6 @@ import 'package:rg2/views/trainers/help/bottom_bar_with_back_button.dart';
 
 import 'widgets/helpSettings.dart';
 import 'widgets/internetSettings.dart';
-import 'widgets/purchase_settings.dart';
 import 'widgets/swipe_settings.dart';
 import 'widgets/theme_settings.dart';
 import 'widgets/user_auth_settings.dart';
@@ -38,8 +37,6 @@ class SettingsScreen extends StatelessWidget {
               HelpSettings(),
               SizedBox(height: UIHelper.SpaceMedium,),
               SwipeSettings(),
-              SizedBox(height: UIHelper.SpaceMedium,),
-              PurchaseSettings(),
               SizedBox(height: UIHelper.SpaceMedium,),
               SizedBox(height: UIHelper.SpaceSmall,),
               InternetSettings(),

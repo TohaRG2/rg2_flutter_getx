@@ -49,7 +49,9 @@ class LearnDetailPage extends StatelessWidget {
               controller: _scrollController,
               child: Column(
                 children: [
-                  Obx(() => _adBanner(_adShowController.bannersList[_curPageNumber].value)),
+                  Obx(() =>
+                    _adBanner(_adShowController.bannersList[_curPageNumber].value)
+                  ),
                   Header(curPageNumber: _curPageNumber),
                   Divider(color: Get.theme.primaryColor,),
                   _commentWidget(mainDBItem),

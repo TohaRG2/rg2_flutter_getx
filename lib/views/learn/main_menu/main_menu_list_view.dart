@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/purchase/purchase_view.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
@@ -78,8 +79,8 @@ class MenuList extends StatelessWidget {
             onPressed: (){
               // закрываем снэкбар
               Get.back();
-              //TODO сделать переход с прокруткой к определенному пункту в настройках
-              Get.to(() => SettingsWithBottomBack(), transition: Transition.downToUp);
+              //Get.to(() => SettingsWithBottomBack(), transition: Transition.downToUp);
+              Get.to(() => PurchaseView());
             },
             child: Container(
                 padding: EdgeInsets.all(8.0),

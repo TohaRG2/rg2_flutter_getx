@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:rg2/controllers/in_app_purchase_controller.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/get_money/get_money_dialog.dart';
-import 'package:rg2/views/dialogs/purchase/purchase_dialog.dart';
+import 'package:rg2/views/purchase/purchase_view.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/res/string_values.dart';
@@ -75,9 +75,9 @@ class LearnViewPager extends StatelessWidget {
             child: IconButton(
               icon: const Icon(Icons.monetization_on_outlined),
               color: Get.textTheme.headline5.color,
-              tooltip: 'Монетки',
+              tooltip: 'Покупки',
               onPressed: () {
-                Get.dialog(PurchaseDialog());
+                Get.to(() => PurchaseView());
               },
             ),
           ),

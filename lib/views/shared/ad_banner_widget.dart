@@ -16,7 +16,7 @@ class AdBannerWidget extends GetView<AdShowController> {
     logPrint("adBanner - ${controller.bannerAd?.adUnitId}");
     return Obx( () =>
     (controller.bannerAd == null)
-      ? SizedBox(height: 60,)
+      ? SizedBox(height: 0,)
       : Container(height: 60,
           child: AdWidget(ad: controller.bannerAd),
       )

@@ -113,6 +113,7 @@ class SettingsController extends GetxController {
   /// Куплен ли бесконечный просмотр обучалок
   final _isAdDisabled = RxBool(true);
     bool get isAdDisabled => _isAdDisabled.value;
+    bool get isAdEnabled => !_isAdDisabled.value;
     set isAdDisabled(value) {
       _isAdDisabled.value = value;
       _storage.setPropertyByKey(Property(key: Const.IS_AD_DISABLED, value: value));
