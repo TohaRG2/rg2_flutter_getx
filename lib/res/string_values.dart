@@ -39,7 +39,7 @@ class StrRes {
   static const settingsSwipeMenuText = "Прокрутка вправо/влево свайпами в основном меню и обучалках";
 
   static const infoAboutTitle = "О программе";
-  static const infoThanksTitle = "Спасибо";
+  static const infoPartnersTitle = "Партнеры";
   static const infoAdviceTitle = "Советы";
   static const infoAdviceComment = "* Щелкните по изображению, чтобы увидеть другие полезные советы по работе с программой";
 

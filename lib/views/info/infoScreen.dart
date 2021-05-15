@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/info/partners/pertners_view.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/settings/settings_screen_view.dart';
 
 import 'about/about_programm_view.dart';
 import 'advice/advice_view.dart';
-import 'thanks/thanks_view.dart';
 
 class InfoScreen extends StatelessWidget {
   final SettingsController _settings = Get.find();
@@ -49,7 +49,7 @@ class InfoScreen extends StatelessWidget {
                     Get.textTheme.headline5.color.withAlpha(130),
                 tabs: [
                   Tab(text: StrRes.infoAboutTitle),
-                  Tab(text: StrRes.infoThanksTitle),
+                  Tab(text: StrRes.infoPartnersTitle),
                   Tab(text: StrRes.infoAdviceTitle),
                 ],
               ),
@@ -59,7 +59,7 @@ class InfoScreen extends StatelessWidget {
               controller: _tabController,
               children: [
                 AboutProgramView(),
-                ThanksView(),
+                PartnersView(),
                 AdviceView(),
               ],
             ));
