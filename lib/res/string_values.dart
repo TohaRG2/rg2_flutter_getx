@@ -163,7 +163,7 @@ class StrRes {
   static const moneyDialogShowAdsButtonText = "Посмотреть ролики";
   static const moneyDialogRemainCoinsText1 = "Чтобы открыть все головоломки, осталось получить ";
   static const moneyDialogRemainCoinsText2 = "бесплатных монеток";
-  static const moneyDialogTemporaryUnavailable = "Магазин покупок временно недоступен.";
+  static const moneyDialogTemporaryUnavailable = "Магазин покупок в данной версии недоступен.";
   static const moneyDialogTemporaryUnavailable2 = "Пожалуйста, проверьте интернет-подключение и доступность магазина приложений (AppStore или PlayMarket) на вашем устройстве.";
   static const moneyDialogPathToCoinsImage = "assets/images/icons/coins.png";
   static const purchasePuzzles = "Покупки";
