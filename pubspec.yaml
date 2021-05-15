@@ -53,7 +53,7 @@ dependencies:
 
   # Поддержка звука, для метронома в таймере
   #assets_audio_player: ^2.0.14
-  audioplayers: ^0.18.3
+  audioplayers: ^0.19.0
 
   # Для удобной работы с датой/временем
   intl: ^0.17.0
@@ -65,7 +65,7 @@ dependencies:
   firebase_core: ^1.1.1
   firebase_auth: ^1.1.4
   cloud_firestore: ^2.1.0
-  google_sign_in: ^5.0.2
+  google_sign_in: ^5.0.3
   apple_sign_in: ^0.1.0
 
   # Валидаторы для проверки полей ввода
@@ -78,10 +78,10 @@ dependencies:
   connectivity: ^3.0.3
 
   # Покупки в приложении
-  in_app_purchase: ^0.5.2
+  in_app_purchase: ^0.6.0
 
   # Реклама в приложении
-  google_mobile_ads: ^0.12.1+1
+  google_mobile_ads: ^0.12.2
 
   # красивый свитч для смены темы
   flutter_switch: ^0.3.1
@@ -99,7 +99,7 @@ dev_dependencies:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация + build runner
   floor_generator: ^1.1.0
-  build_runner: ^2.0.2
+  build_runner: ^2.0.3
 
 flutter_icons:
   android: "ic_launcher"

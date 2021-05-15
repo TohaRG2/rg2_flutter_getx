@@ -1,7 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
-import 'package:audioplayers/audio_cache.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/timer/model/timer.dart';
 import 'package:rg2/views/trainers/timer/controller/timer_settings_controller.dart';
