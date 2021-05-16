@@ -212,7 +212,7 @@ class LearnController extends GetxController {
 
   /// Проверяем есть ли элементы списка в кэше и обновляем при необходимости кэш
   void _updateItemsInCache(List<MainDBItem> items) {
-    logPrint("_updateItemsInCache - $items");
+    // logPrint("_updateItemsInCache - $items");
     items.forEach((item) { 
       _updateItemInCache(item); 
     });

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/fire_entitys/comment_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
@@ -182,7 +183,7 @@ class CloudDatabase extends GetxController {
 
   /// Возвращаем список всех комментариев к этапам из коллеккции в usersId/comments
   Future<List<CommentItem>> getComments(String userId) async{
-    logPrint("getComments - получаем список комментов");
+    logPrint("getComments - получаем список комментов из FBS");
     try {
       var mainDocRef = _usersCollection.doc(userId);
       var refCol = await mainDocRef.collection(COMMENTS).get();
@@ -211,16 +212,39 @@ class CloudDatabase extends GetxController {
         .catchError((error) => logPrintErr("Не удалось добавить $timerItem в firebase\n $error"));
   }
 
-  /// Создаем или обновляем одну запись в коллекции TimerTimes в FBS
-  deleteTimerTime(String userId, TimerTimeItem timerItem) {
+  /// Удяляем записи в коллекции TimerTimes в FBS у которых время создания (idDoc) +/- 10 милисекунд от заданного
+  deleteTimerTime(String userId, TimerTimeItem timerItem) async {
     var mainDocRef = _usersCollection.doc(userId);
-    var refCol = mainDocRef.collection(TIMER_TIMES);
+    // отметка, что изменяли что-то в TimerTimes
     mainDocRef.update({TIMER_TIMES_UPDATE_DATE: DateTime.now()});
-    return refCol
-        .doc("${timerItem.date.millisecondsSinceEpoch}")
-        .delete()
-        .then((value) => logPrint("Удалили $timerItem из FBS"))
-        .catchError((error) => logPrintErr("Не удалось добавить $timerItem в FBS\n $error"));
+
+    var refCol = mainDocRef.collection(TIMER_TIMES);
+    var qSnapShot = await refCol.get();
+    var listIdToDelete = getDocIdsWithTimeNear(timerItem.date, qSnapShot);
+    listIdToDelete.forEach((delId) {
+      refCol.doc("$delId")
+          .delete()
+          .then((_) => logPrint("getDocIdsWithTimeNear Удалили $delId из FBS.TimerTimes"))
+          .catchError((error) => logPrintErr("Не удалось удалить $timerItem в FBS\n $error"));
+    });
+  }
+
+  /// пересматриваем все записи в коллекции и отбираем те, которые отличаются временем создания менее чем на 10 милисек
+  /// можем вернуть не одну запись
+  List<String> getDocIdsWithTimeNear(DateTime dateTime, QuerySnapshot<Map<String, dynamic>> querySnapshot) {
+    var listIdToDelete = <String>[];
+    var docs = querySnapshot.docs;
+    docs.forEach((doc) {
+      var timerTime = TimerTimeItem.fromDocSnapShot(doc);
+      var dur = timerTime.date.isAfter(dateTime)
+          ? timerTime.date.difference(dateTime)
+          : dateTime.difference(timerTime.date);
+      if (dur < Duration(milliseconds: 10)) {
+        listIdToDelete.add(doc.id);
+      }
+    });
+    logPrint("getDocIdsWithTimeNear - $listIdToDelete");
+    return listIdToDelete;
   }
 
   /// Возвращаем список всех записей сборок в таймере в usersId/timerTimes

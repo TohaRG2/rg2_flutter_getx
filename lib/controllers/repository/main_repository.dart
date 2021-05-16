@@ -154,12 +154,12 @@ class MainRepository extends GetxController {
 
     // обновляем данные в кэше основного меню обучалок
     if (learnUpdateMainCacheCallback != null) {
-      learnUpdateMainCacheCallback(mainDBItems);
+      await learnUpdateMainCacheCallback(mainDBItems);
     }
 
     // обновляем данные в кэше избранного
     if (favouritesUpdateCallback != null) {
-      favouritesUpdateCallback(mainDBItems);
+      await favouritesUpdateCallback(mainDBItems);
     }
   }
 

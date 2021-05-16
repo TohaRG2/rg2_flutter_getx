@@ -89,9 +89,18 @@ class TimerRepository extends GetxController {
     List<TimeNoteItem> dbItems = await getAllTimeNotes();
     // синхронизируем списки из локальной базы и FBS
     await Future.forEach(fbsItems,(TimerTimeItem fbsItem) async {
-      // ищем запись с таким же временем создания в локальной базе
-      var index = dbItems.indexWhere((dbItem) => dbItem.dateTime.isAtSameMomentAs(fbsItem.date));
-      // если не находим, то добавляем
+      // logPrint("_updateTimerTimes - $fbsItem");
+      // ищем запись с таким же временем создания (+/- 10 милисекунд) в локальной базе
+      // т.к. может быть погрешность округления/преобразования
+      var index = dbItems.indexWhere((dbItem) {
+        var dur = dbItem.dateTime.isBefore(fbsItem.date)
+            ? fbsItem.date.difference(dbItem.dateTime)
+            : dbItem.dateTime.difference(fbsItem.date);
+        logPrint("_updateTimerTimes - сравниваем ${fbsItem.date} == ${dbItem.dateTime} - $dur ${dur < Duration(milliseconds: 10)}");
+        return dur < Duration(milliseconds: 10);
+      });
+      logPrint("_updateTimerTimes index - $index");
+      // если не находим в локальной, то добавляем в нее
       if (index == -1) {
         var newItem = TimeNoteItem(
             fbsItem.solvingTime,
@@ -101,9 +110,10 @@ class TimerRepository extends GetxController {
         );
         await _timesDao.insertOrReplace(newItem);
       } else {
-        // если находим, то обновляем у нее комментарий из FBS
+        // если находим в локальной, то обновляем у нее комментарий и время из FBS
         var upItem = dbItems[index];
         upItem.comment = fbsItem.comment;
+        upItem.dateTime = fbsItem.date;
         await _timesDao.updateItem(upItem);
       }
     });
