@@ -129,28 +129,31 @@ class SavedResultListItem extends StatelessWidget {
   }
 
   List<Widget> actions() => [
-    SlideAction(
-      closeOnTap: true,
-      color: Colors.redAccent,
-      onTap: () {
-        _controller.removeItem(_item);
-      },
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const Icon(
-              Icons.delete,
-              color: Colors.white,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              StrRes.deleteItem,
-              style: Get.textTheme.bodyText2.copyWith(
+    Container(
+      padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceSmall),
+      child: SlideAction(
+        closeOnTap: true,
+        color: Colors.redAccent,
+        onTap: () {
+          _controller.removeItem(_item);
+        },
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Icon(
+                Icons.delete,
                 color: Colors.white,
               ),
-            ),
-          ],
+              const SizedBox(height: 4),
+              Text(
+                StrRes.deleteItem,
+                style: Get.textTheme.bodyText2.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ),

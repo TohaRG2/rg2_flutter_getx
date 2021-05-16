@@ -17,35 +17,38 @@ class EditUserNameView extends GetWidget<AuthController> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(UIHelper.SpaceSmall),
       ),
-      child: Container(
-        padding: EdgeInsets.all(UIHelper.SpaceSmall),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              padding: EdgeInsets.all(UIHelper.SpaceSmall),
-              child: Text("Редактирование данных пользователя",
-                textAlign: TextAlign.center,
-                style: Get.textTheme.headline5,
-              ),
-            ),
-            Form(
-              key: _formKey,
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 15.0),
-                child: TextFormField(
-                  controller: controller.nameController,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Имя"),
-                  validator: RequiredValidator(errorText: "Необходимо заполнить это поле"),
-                  onChanged: (val) {
-                    //controller.name = val;
-                  },
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(UIHelper.SpaceSmall),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: EdgeInsets.all(UIHelper.SpaceSmall),
+                child: Text("Редактирование данных пользователя",
+                  textAlign: TextAlign.center,
+                  style: Get.textTheme.headline5,
                 ),
               ),
-            ),
-            _bottomBar()
-          ],
+              Form(
+                key: _formKey,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  child: TextFormField(
+                    keyboardType: TextInputType.name,
+                    controller: controller.nameController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(), labelText: "Имя"),
+                    validator: RequiredValidator(errorText: "Необходимо заполнить это поле"),
+                    onChanged: (val) {
+                      //controller.name = val;
+                    },
+                  ),
+                ),
+              ),
+              _bottomBar()
+            ],
+          ),
         ),
       ),
     );
