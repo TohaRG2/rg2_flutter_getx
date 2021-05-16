@@ -73,6 +73,7 @@ class AuthController extends GetxController {
       if (_user?.email != null && (_user?.emailVerified ?? false)) {
         logPrint("AuthController - allOK");
         _firebaseUser.value = _user;
+        setCurrentUserNameToEditor();
       } else {
         logPrint("AuthController - что не так с авторизацией, пишем null");
         _firebaseUser.value = null;
@@ -93,6 +94,20 @@ class AuthController extends GetxController {
     localEnterCounts = _sp.read(Const.LOCAL_STARTS_COUNT) ?? 0;
     localEnterCounts++;
     _sp.write(Const.LOCAL_STARTS_COUNT, localEnterCounts);
+  }
+
+  setCurrentUserNameToEditor() {
+    nameController.text = user.displayName;
+  }
+
+  changeUserNameTo() async{
+    var displayName = nameController.text;
+    var _user = _auth.currentUser;
+    await _user.updateProfile(displayName: displayName, photoURL: user.photoURL);
+    await _user.reload();
+    _firebaseUser.value = _auth.currentUser;
+    await CloudDatabase().createOrUpdateUser(user);
+    logPrint("UserName changed to - ${user.displayName}");
   }
 
   Future<void> googleSignInAndGoToStart() async {

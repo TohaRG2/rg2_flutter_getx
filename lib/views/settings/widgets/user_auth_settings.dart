@@ -8,6 +8,7 @@ import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/auth/controller/auth_controller.dart';
 import 'package:rg2/views/auth/sign_in_view.dart';
+import 'package:rg2/views/dialogs/edit_user_name/edit_user_name_view.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class UserAuthSettings extends StatelessWidget {
@@ -66,11 +67,16 @@ class UserAuthSettings extends StatelessWidget {
           Expanded(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
-              child: Text(
-                "${user.displayName}",
-                overflow: TextOverflow.fade,
-                softWrap: false,
-                style: Get.textTheme.headline6,
+              child: GestureDetector(
+                onTap: () {
+                  Get.dialog(EditUserNameView());
+                },
+                child: Text(
+                  "${user.displayName}",
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  style: Get.textTheme.headline6,
+                ),
               ),
             ),
           ),
@@ -91,20 +97,25 @@ class UserAuthSettings extends StatelessWidget {
         if (Get.isSnackbarOpen) {
           Get.back();
         } else {
-          Get.snackbar(
-            StrRes.authSignInBecause,
-            StrRes.authBodyText,
-            snackPosition: SnackPosition.BOTTOM,
-            colorText: Colors.white,
-            backgroundColor: Colors.grey[800],
-            duration: Duration(seconds: 15),
-            onTap: (_) {
-              Get.back();
-            },
-          );
+          _openSnackBar();
         }
       },
       icon: Icon(MaterialIcons.help_outline),
     );
   }
+
+  _openSnackBar() {
+    Get.snackbar(
+      StrRes.authSignInBecause,
+      StrRes.authBodyText,
+      snackPosition: SnackPosition.BOTTOM,
+      colorText: Colors.white,
+      backgroundColor: Colors.grey[800],
+      duration: Duration(seconds: 15),
+      onTap: (_) {
+        Get.back();
+      },
+    );
+  }
+
 }
