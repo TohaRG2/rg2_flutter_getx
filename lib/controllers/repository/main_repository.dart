@@ -80,7 +80,7 @@ class MainRepository extends GetxController {
 
   /// Обновляем одну запись в базе
   Future<int> updateMainDBItem(MainDBItem item) async {
-    //logPrint("repo updateItem $item");
+    logPrint("repo updateItem $item ${item.comment}");
     return await _mainDao.updateItem(item);
   }
 

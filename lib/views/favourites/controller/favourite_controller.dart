@@ -50,12 +50,18 @@ class FavouriteController extends GetxController {
   /// Обновляем избранное у элемента
   updateInFavourites(MainDBItem item) {
     logPrint("updateInFavourites - $item, \n curFav = $favourites");
+    var index = favourites.indexWhere((e) => (e.id == item.id && e.phase == item.phase));
     if (item.isFavourite) {
-      // добавляем в избранное
-      favourites.insert(0, item);
+      // если этот элемент избранного
+      if (index == -1) {
+        // и его нет в избранном, то добавляем
+        favourites.insert(0, item);
+      } else {
+        // если уже есть, то обновляем
+        favourites[index] = item;
+      }
     } else {
       // убираем из избранного, если item там есть, но его там не должно быть
-      var index = favourites.indexWhere((e) => (e.id == item.id && e.phase == item.phase));
       if (index >= 0) {
         favourites.removeAt(index);
         item.subId = 0; // на всякий случай обнуляем индекс (не обязательно)
