@@ -17,10 +17,11 @@ class PartnersView extends StatelessWidget {
             SizedBox(height: UIHelper.SpaceMedium,),
             Image.asset("assets/images/ads/cubemarket_logo.png"),
             SizedBox(height: UIHelper.SpaceMedium,),
-            Text("Используйте промокод 'RG2', чтобы получить наклейки в подарок, а так же скидку 5% на первую покупку",
+            Text("По промокоду 'RG2' наклейки с логотипом в подарок",
               textAlign: TextAlign.center,
             ),
-            TextButton(
+            SizedBox(height: UIHelper.SpaceSmall,),
+            ElevatedButton(
               onPressed: () {
                 launch("https://vk.cc/9Hgeyd");
               },
