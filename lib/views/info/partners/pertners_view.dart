@@ -11,13 +11,16 @@ class PartnersView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Ищите все эти и многие другие головоломки на сайте нашего партнера:",
+            Text("Эти и многие другие головоломки ищите на сайте нашего партнера:",
               textAlign: TextAlign.center,
             ),
             SizedBox(height: UIHelper.SpaceMedium,),
-            Image.asset("assets/images/ads/cubemarket_logo.png"),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMedium),
+              child: Image.asset("assets/images/ads/cubemarket_logo.png")
+            ),
             SizedBox(height: UIHelper.SpaceMedium,),
-            Text("По промокоду 'RG2' наклейки с логотипом в подарок",
+            Text("По промокоду 'RG2' наклейка с логотипом в подарок!",
               textAlign: TextAlign.center,
             ),
             SizedBox(height: UIHelper.SpaceSmall,),
@@ -25,7 +28,7 @@ class PartnersView extends StatelessWidget {
               onPressed: () {
                 launch("https://vk.cc/9Hgeyd");
               },
-              child: Text("Перейти на сайт магазина"))
+              child: Text("Перейти на сайт"))
           ],
         ),
       ),
