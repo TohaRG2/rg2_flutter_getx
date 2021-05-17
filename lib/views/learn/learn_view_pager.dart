@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/in_app_purchase_controller.dart';
 import 'package:rg2/utils/my_logger.dart';
+import 'package:rg2/views/dialogs/advices/advices_dialog.dart';
 import 'package:rg2/views/dialogs/get_money/get_money_dialog.dart';
 import 'package:rg2/views/purchase/purchase_view.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
@@ -70,38 +71,9 @@ class LearnViewPager extends StatelessWidget {
       )),
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       actions: [
-        Stack(children: [
-          Center(
-            child: IconButton(
-              icon: const Icon(Icons.monetization_on_outlined),
-              color: Get.textTheme.headline5.color,
-              tooltip: 'Покупки',
-              onPressed: () {
-                Get.to(() => PurchaseView());
-              },
-            ),
-          ),
-          // Obx(() =>
-          // Positioned(
-          //   bottom: 0,
-          //   left: 0,
-          //   right: 0,
-          //   child: Text(
-          //     "15", //_purchaseController.getCoins(),
-          //     textAlign: TextAlign.center,
-          //     style: TextStyle(fontSize: 14.0, color: Get.textTheme.headline5.color),
-          //   ),
-          // ),
-          // )
-        ]),
-        IconButton(
-          onPressed: () {
-            Get.to(() => SettingsScreenWithBottomBar(), transition: Transition.cupertino);
-          },
-          icon: const Icon(Icons.settings_rounded),
-          color: Get.textTheme.headline5.color,
-          tooltip: 'Настройки',
-        ),
+        _showAdvicesButton(),
+        _purchaseButton(),
+        _settingsButton(),
       ],
       bottom: TabBar(
         indicatorWeight: 3.0,
@@ -112,6 +84,55 @@ class LearnViewPager extends StatelessWidget {
         tabs: _tabsList(),
       ),
     );
+  }
+
+  Widget _showAdvicesButton() {
+    return IconButton(
+      onPressed: () {
+        Get.dialog(AdvicesDialog());
+      },
+      icon: const Icon(Icons.help_outline),
+      color: Get.textTheme.headline5.color,
+      tooltip: 'Подсказки',
+    );
+  }
+
+  Widget _settingsButton() {
+    return IconButton(
+        onPressed: () {
+          Get.to(() => SettingsScreenWithBottomBar(), transition: Transition.cupertino);
+        },
+        icon: const Icon(Icons.settings_rounded),
+        color: Get.textTheme.headline5.color,
+        tooltip: 'Настройки',
+      );
+  }
+
+  Widget _purchaseButton() {
+    return Stack(children: [
+        Center(
+          child: IconButton(
+            icon: const Icon(Icons.monetization_on_outlined),
+            color: Get.textTheme.headline5.color,
+            tooltip: 'Покупки',
+            onPressed: () {
+              Get.to(() => PurchaseView());
+            },
+          ),
+        ),
+        // Obx(() =>
+        // Positioned(
+        //   bottom: 0,
+        //   left: 0,
+        //   right: 0,
+        //   child: Text(
+        //     "15", //_purchaseController.getCoins(),
+        //     textAlign: TextAlign.center,
+        //     style: TextStyle(fontSize: 14.0, color: Get.textTheme.headline5.color),
+        //   ),
+        // ),
+        // )
+      ]);
   }
 
   //Возвращаем true, если надо дальше продолжать обрабатывать нажатие, т.е. выход из программы

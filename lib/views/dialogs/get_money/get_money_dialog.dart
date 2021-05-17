@@ -8,6 +8,7 @@ import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/big_dialog.dart';
 import 'package:rg2/views/dialogs/get_money/model/get_money_item.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
+import 'package:rg2/views/shared/bottom_back_button.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/shared/url_helper.dart';
 
@@ -21,7 +22,7 @@ class GetMoneyDialog extends StatelessWidget { //GetWidget<InAppPurchaseControll
       child: Scaffold(
         appBar: _appBar(),
         body: _body(),
-        bottomNavigationBar: _bottomBar(),
+        bottomNavigationBar: BottomBackButton(),
       ),
     );
   }
@@ -183,26 +184,6 @@ class GetMoneyDialog extends StatelessWidget { //GetWidget<InAppPurchaseControll
           width: 50,
         ),
       ],
-    );
-  }
-
-  Widget _bottomBar() {
-    return TextButton(
-      onPressed: () {
-        Get.back();
-      },
-      style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all<Color>(Get.theme.primaryColor),
-      ),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(StrRes.backButtonText),
-          ],
-        ),
-      ),
     );
   }
 }
