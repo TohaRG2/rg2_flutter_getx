@@ -3,9 +3,10 @@ import 'package:get/get.dart';
 import 'package:rg2/flutter_html/flutter_html.dart';
 import 'package:rg2/flutter_html/style.dart';
 import 'package:rg2/views/info/about/text_about.dart';
+import 'package:rg2/views/info/controller/info_controller.dart';
 import 'package:rg2/views/shared/url_helper.dart';
 
-class AboutProgramView extends StatelessWidget {
+class AboutProgramView extends GetView<InfoController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -23,10 +24,11 @@ class AboutProgramView extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(TextAbout.infoAppDescription, style: Get.textTheme.headline5.copyWith(fontSize: 26),),
-                        Container(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: Text(TextAbout.version, style: Get.textTheme.headline6.copyWith(fontSize: 16),)
+                        Obx(() => Container(
+                              alignment: Alignment.centerLeft,
+                              padding: const EdgeInsets.symmetric(vertical: 16.0),
+                              child: Text(controller.versionNumber, style: Get.textTheme.headline6.copyWith(fontSize: 16),)
+                          ),
                         )
                       ],
                     )
