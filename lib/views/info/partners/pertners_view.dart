@@ -11,7 +11,7 @@ class PartnersView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("Приобрести понравившуюся головоломку с логотипом программы вы можете у нашего партнера:",
+            Text("Ищите все эти и многие другие головоломки на сайте нашего партнера:",
               textAlign: TextAlign.center,
             ),
             SizedBox(height: UIHelper.SpaceMedium,),
