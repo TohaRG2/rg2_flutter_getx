@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
-import 'package:rg2/views/dialogs/advices_images/advices_images_dialog.dart';
+import 'package:rg2/views/info/advices/details/advices_images_detail_view.dart';
+import 'package:rg2/views/info/advices/model/advices_items.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'dart:math';
-
-import 'advices.dart';
 
 class AdviceView extends StatelessWidget {
   @override
@@ -38,7 +37,7 @@ class AdviceView extends StatelessWidget {
               ),
               onTap: (){
                 logPrint("Открываем диалог с просмотром советов по программе");
-                Get.to(() => AdvicesImagesDialog());
+                Get.to(() => AdvicesImagesDetailView(), transition: Transition.cupertino);
                 //Get.to(() => ComplicatedImageDemo());
               },
             ),

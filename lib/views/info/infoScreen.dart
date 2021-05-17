@@ -6,7 +6,7 @@ import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/settings/settings_screen_view.dart';
 
 import 'about/about_programm_view.dart';
-import 'advice/advice_view.dart';
+import 'advices/advice_view.dart';
 
 class InfoScreen extends StatelessWidget {
   final SettingsController _settings = Get.find();

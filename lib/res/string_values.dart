@@ -41,7 +41,7 @@ class StrRes {
   static const infoAboutTitle = "О программе";
   static const infoPartnersTitle = "Партнеры";
   static const infoAdviceTitle = "Советы";
-  static const infoAdviceComment = "* Щелкните по изображению, чтобы увидеть другие полезные советы по работе с программой";
+  static const infoAdviceComment = "* Щелкните по изображению, чтобы увидеть в отдельном окне другие полезные советы по работе с программой";
 
 
   static const trainersAzbuka = "AZBUKA";

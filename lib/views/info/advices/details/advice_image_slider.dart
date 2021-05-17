@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/views/info/advice/advices.dart';
+import 'package:rg2/views/info/advices/model/advices_items.dart';
 
-class ComplicatedImageDemo extends StatelessWidget {
+class AdviceImageSlider extends StatelessWidget {
   final _position = 0.obs;
 
   @override
@@ -54,7 +54,7 @@ class ComplicatedImageDemo extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _position.value == index
-                      ? Theme.of(context).accentColor
+                      ? Get.theme.accentColor
                       : Get.textTheme.headline5.color,
                 ),
               );
