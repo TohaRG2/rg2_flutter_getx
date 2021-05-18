@@ -54,6 +54,7 @@ class UserAuthSettings extends StatelessWidget {
   }
 
   Widget buildUserRow(User user) {
+    var userName = (user.displayName == null) ? "Введите имя" : user.displayName;
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,7 +73,7 @@ class UserAuthSettings extends StatelessWidget {
                   Get.dialog(EditUserNameView());
                 },
                 child: Text(
-                  "${user.displayName}",
+                  "${userName}",
                   overflow: TextOverflow.fade,
                   softWrap: false,
                   style: Get.textTheme.headline6,
