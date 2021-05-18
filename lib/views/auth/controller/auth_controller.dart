@@ -100,8 +100,8 @@ class AuthController extends GetxController {
     nameController.text = user.displayName;
   }
 
-  changeUserNameTo() async{
-    var displayName = nameController.text;
+  changeUserNameTo({String name}) async{
+    var displayName = (name == null) ? nameController.text : name;
     var _user = _auth.currentUser;
     await _user.updateProfile(displayName: displayName, photoURL: user.photoURL);
     await _user.reload();
@@ -200,6 +200,8 @@ class AuthController extends GetxController {
         );
 
         UserCredential _authResult = await _auth.signInWithCredential(credential);
+        var userName = result.credential.fullName.nickname;
+        changeUserNameTo(name: userName);
 
         await createObjectInUsers(_authResult.user);
 
