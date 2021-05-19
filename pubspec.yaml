@@ -14,7 +14,7 @@ dependencies:
   # SQL Database
   floor: ^1.1.0
   # DI + StateManagement
-  get: ^4.1.3
+  get: ^4.1.4
   # Работаем с SharedPreferences
   get_storage: ^2.0.2
   # Окно выбора цвета
@@ -34,7 +34,7 @@ dependencies:
   # video_player: ^1.0.1
   # chewie: ^0.12.2
   # Plugin for rendering the <iframe> tag.
-  webview_flutter: ^2.0.4
+  webview_flutter: ^2.0.6
   # Plugins for rendering the <audio> tag.
   # chewie_audio: ^1.1.1
 
@@ -62,9 +62,9 @@ dependencies:
   percent_indicator: ^3.0.1
 
   # Firebase + google sign in
-  firebase_core: ^1.1.1
-  firebase_auth: ^1.1.4
-  cloud_firestore: ^2.1.0
+  firebase_core: ^1.2.0
+  firebase_auth: ^1.2.0
+  cloud_firestore: ^2.2.0
   google_sign_in: ^5.0.3
   apple_sign_in: ^0.1.0
 
@@ -81,7 +81,7 @@ dependencies:
   in_app_purchase: ^0.6.0
 
   # Реклама в приложении
-  google_mobile_ads: ^0.12.2
+  google_mobile_ads: ^0.13.0
 
   # Получение версии приложения в коде
   package_info: ^2.0.0
