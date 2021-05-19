@@ -1,11 +1,12 @@
 import "package:flutter/material.dart";
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/settings/widgets/reset_settings.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/trainers/help/bottom_bar_with_back_button.dart';
 
-import 'widgets/helpSettings.dart';
-import 'widgets/internetSettings.dart';
+import 'widgets/help_settings.dart';
+import 'widgets/internet_settings.dart';
 import 'widgets/swipe_settings.dart';
 import 'widgets/theme_settings.dart';
 import 'widgets/user_auth_settings.dart';
@@ -40,6 +41,9 @@ class SettingsScreen extends StatelessWidget {
               SizedBox(height: UIHelper.SpaceMedium,),
               SizedBox(height: UIHelper.SpaceSmall,),
               InternetSettings(),
+              SizedBox(height: UIHelper.SpaceMedium,),
+              ResetSettings(),
+              SizedBox(height: UIHelper.SpaceLarge)
             ],
           ),
         ),
