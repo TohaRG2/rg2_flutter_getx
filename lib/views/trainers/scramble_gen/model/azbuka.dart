@@ -101,14 +101,14 @@ class Azbuka {
   _saveCustomAzbuka() {
     var savedString = currentAzbuka.join(",");
     logPrint("сохраняем custom в файл $savedString");
-    _settingsController.setPropertyByKey(Property(key: Const.CUSTOM_AZBUKA, value: savedString));
+    _settingsController.setProperty(Property(key: Const.CUSTOM_AZBUKA, value: savedString));
   }
 
 
   _saveCurrentAzbuka() {
     var savedString = currentAzbuka.join(",");
     logPrint("сохраняем current в файл $savedString");
-    _settingsController.setPropertyByKey(Property(key: Const.CURRENT_AZBUKA, value: savedString));
+    _settingsController.setProperty(Property(key: Const.CURRENT_AZBUKA, value: savedString));
   }
 
   List<String> _loadAzbuka(String key) {
@@ -120,7 +120,7 @@ class Azbuka {
   
   _saveCurrentColors() {
     var savedString = currentColorsSide.join(",");
-    _settingsController.setPropertyByKey(Property(key: Const.CURRENT_AZBUKA_COLORS, value: savedString));
+    _settingsController.setProperty(Property(key: Const.CURRENT_AZBUKA_COLORS, value: savedString));
     logPrint("сохраняем current_colors в файл $savedString");
   }
 
@@ -145,7 +145,7 @@ class Azbuka {
 
   _saveAsCustomColors() {
     var savedString = currentColorsSide.join(",");
-    _settingsController.setPropertyByKey(Property(key: Const.CUSTOM_AZBUKA_COLORS, value: savedString));
+    _settingsController.setProperty(Property(key: Const.CUSTOM_AZBUKA_COLORS, value: savedString));
     logPrint("сохраняем custom colors в файл $savedString");
   }
  

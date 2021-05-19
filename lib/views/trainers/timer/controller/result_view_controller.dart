@@ -42,14 +42,14 @@ class ResultViewController extends GetxController {
   sortTimeNoteItemsByDate() {
     _timeNoteItems.sort((item1, item2) => item1.dateTime.compareTo(item2.dateTime));
     _orderBy = "dateTime";
-    _storage.setPropertyByKey(Property(key: Const.RESULT_ORDER_BY, value: _orderBy));
+    _storage.setProperty(Property(key: Const.RESULT_ORDER_BY, value: _orderBy));
   }
 
   /// Сортируем список результатов по времени сборки
   sortTimeNoteItemsBySolvingTime() {
     _timeNoteItems.sort((item1, item2) => item1.solvingTime.compareTo(item2.solvingTime));
     _orderBy = "solvingTime";
-    _storage.setPropertyByKey(Property(key: Const.RESULT_ORDER_BY, value: _orderBy));
+    _storage.setProperty(Property(key: Const.RESULT_ORDER_BY, value: _orderBy));
   }
 
   /// Удалить элемент из списка и в базах

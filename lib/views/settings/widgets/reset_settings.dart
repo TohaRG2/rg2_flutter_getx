@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
 
 class ResetSettings extends GetWidget<SettingsController> {
   @override
@@ -19,22 +20,55 @@ class ResetSettings extends GetWidget<SettingsController> {
   }
 
   Widget _resetDialog() {
-    return AlertDialog(
-      title: Text("Вы уверены, что хотите сбросить настройки для:"),
-      content: ListTile(
-        title: Text("Настройки интерфейса", style: Get.textTheme.headline6,),
-        trailing: Radio (
-          value: 0,
-          groupValue: controller.internetUsage,
-          onChanged: (value) {
-            controller.internetUsage = value;
-          },
+    return Obx(
+      () => Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(UIHelper.SpaceSmall),
+        ),
+        elevation: UIHelper.SpaceMedium,
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMedium, vertical: UIHelper.SpaceSmall),
+          child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Вы уверены, что хотите сбросить настройки для:", style: Get.textTheme.headline5,),
+                SizedBox(height: UIHelper.SpaceMedium,),
+                CheckboxListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                    title: Text("Настроек интрефейса", style: Get.textTheme.headline6,),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: controller.resetMainSettings,
+                    onChanged: (value) {
+                      controller.resetMainSettings = value;
+                    }),
+                CheckboxListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                    title: Text("Комментариев к этапам", style: Get.textTheme.headline6,),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: controller.resetComments,
+                    onChanged: (value) {
+                      controller.resetComments = value;
+                    }),
+                CheckboxListTile(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
+                    title: Text("Времени сборок в таймере", style: Get.textTheme.headline6,),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: controller.resetTimerTimes,
+                    onChanged: (value) {
+                      controller.resetTimerTimes = value;
+                    }),
+                SizedBox(height: UIHelper.SpaceMedium,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    cancelButton(),
+                    okButton(),
+                  ],
+                ),
+              ],
+          ),
         ),
       ),
-      actions: [
-        cancelButton(),
-        okButton()
-      ],
     );
   }
 
@@ -45,9 +79,13 @@ class ResetSettings extends GetWidget<SettingsController> {
   }
 
   Widget okButton() {
-    return TextButton(onPressed: () {
-      Get.back();
-    }, child: Text(StrRes.buttonOkText));
+    return TextButton(
+      onPressed: () {
+        controller.resetSettings();
+      },
+      child: Text(StrRes.buttonOkText,
+          style: TextStyle(color: Get.theme.accentColor)
+    ));
   }
 
 }

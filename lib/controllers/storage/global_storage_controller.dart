@@ -49,7 +49,7 @@ class GlobalStorageController extends GetxController {
     if (value == null) {
       value = defaultSettings[key];
       if (value == null) {
-        logPrint("WARNING!!! не смогли получить дефолтное значение для параметра $key");
+        logPrintErr("WARNING!!! не смогли получить дефолтное значение для параметра $key");
       }
       //logPrint("есть дефолтное значение ${defaultSettings[key]}, а в value - $value");
     }
@@ -75,7 +75,7 @@ class GlobalStorageController extends GetxController {
   }
 
   /// Сохраняем параметр в облако(если залогинены) и в локальное хранилище
-  setPropertyByKey(Property property){
+  setProperty(Property property){
     _addOrUpdatePropertyInFBS(property);
     _setPropertyToLocalStorage(property);
   }

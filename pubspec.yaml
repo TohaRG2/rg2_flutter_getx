@@ -14,7 +14,7 @@ dependencies:
   # SQL Database
   floor: ^1.1.0
   # DI + StateManagement
-  get: ^4.1.4
+  get: ^4.1.3
   # Работаем с SharedPreferences
   get_storage: ^2.0.2
   # Окно выбора цвета
