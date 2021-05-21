@@ -101,9 +101,12 @@ class AuthController extends GetxController {
   }
 
   changeUserNameTo({String name}) async{
-    var displayName = (name == null) ? nameController.text : name;
+    var displayName = name;
+    if (displayName == null) {
+      displayName = nameController.text;
+    }
     var _user = _auth.currentUser;
-    await _user.updateProfile(displayName: displayName, photoURL: user.photoURL);
+    await _user.updateProfile(displayName: displayName);
     await _user.reload();
     _firebaseUser.value = _auth.currentUser;
     await CloudDatabase().createOrUpdateUser(user);
@@ -199,11 +202,13 @@ class AuthController extends GetxController {
           accessToken: String.fromCharCodes(_appleCredential.authorizationCode),
         );
 
-        UserCredential _authResult = await _auth.signInWithCredential(credential);
-        var userName = result.credential.fullName.nickname;
-        changeUserNameTo(name: userName);
+        final authResult = await _auth.signInWithCredential(credential);
+        final firebaseUser = authResult.user;
+        final displayName = '${_appleCredential.fullName.givenName} ${_appleCredential.fullName.familyName}';
+        //await firebaseUser.updateProfile(displayName: displayName);
+        await changeUserNameTo(name: displayName);
 
-        await createObjectInUsers(_authResult.user);
+        await createObjectInUsers(firebaseUser);
 
         break;
       case AuthorizationStatus.error:
@@ -213,8 +218,10 @@ class AuthController extends GetxController {
         break;
       case AuthorizationStatus.cancelled:
         _showPreLoader.value = false;
-        logPrint("appleSignIn - прервано пользователем");
+        logPrintErr("appleSignIn - прервано пользователем");
         break;
+      default:
+        throw UnimplementedError();
     }
   }
 
