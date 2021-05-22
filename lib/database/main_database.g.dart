@@ -229,6 +229,11 @@ class _$MainDao extends MainDao {
   }
 
   @override
+  Future<void> clearAllComments() async {
+    await _queryAdapter.queryNoReturn('UPDATE main SET comment = ' '');
+  }
+
+  @override
   Future<MainDBItem> getItem(String phase, int id) async {
     return _queryAdapter.query(
         'SELECT * FROM main WHERE phase = ? and id = ? ORDER BY id',
