@@ -147,56 +147,56 @@ class _$MainDao extends MainDao {
         _mainDBItemInsertionAdapter = InsertionAdapter(
             database,
             'main',
-            (MainDBItem item) => <String, dynamic>{
-                  'id': item.id,
-                  'phase': item.phase,
-                  'title': item.title,
-                  'icon': item.icon,
-                  'description': item.description,
-                  'url': item.url,
-                  'comment': item.comment,
-                  'isFavourite': item.isFavourite == null
-                      ? null
-                      : (item.isFavourite ? 1 : 0),
-                  'favComment': item.favComment,
-                  'subId': item.subId
-                }),
+                (MainDBItem item) => <String, dynamic>{
+              'id': item.id,
+              'phase': item.phase,
+              'title': item.title,
+              'icon': item.icon,
+              'description': item.description,
+              'url': item.url,
+              'comment': item.comment,
+              'isFavourite': item.isFavourite == null
+                  ? null
+                  : (item.isFavourite ? 1 : 0),
+              'favComment': item.favComment,
+              'subId': item.subId
+            }),
         _mainDBItemUpdateAdapter = UpdateAdapter(
             database,
             'main',
             ['id', 'phase'],
-            (MainDBItem item) => <String, dynamic>{
-                  'id': item.id,
-                  'phase': item.phase,
-                  'title': item.title,
-                  'icon': item.icon,
-                  'description': item.description,
-                  'url': item.url,
-                  'comment': item.comment,
-                  'isFavourite': item.isFavourite == null
-                      ? null
-                      : (item.isFavourite ? 1 : 0),
-                  'favComment': item.favComment,
-                  'subId': item.subId
-                }),
+                (MainDBItem item) => <String, dynamic>{
+              'id': item.id,
+              'phase': item.phase,
+              'title': item.title,
+              'icon': item.icon,
+              'description': item.description,
+              'url': item.url,
+              'comment': item.comment,
+              'isFavourite': item.isFavourite == null
+                  ? null
+                  : (item.isFavourite ? 1 : 0),
+              'favComment': item.favComment,
+              'subId': item.subId
+            }),
         _mainDBItemDeletionAdapter = DeletionAdapter(
             database,
             'main',
             ['id', 'phase'],
-            (MainDBItem item) => <String, dynamic>{
-                  'id': item.id,
-                  'phase': item.phase,
-                  'title': item.title,
-                  'icon': item.icon,
-                  'description': item.description,
-                  'url': item.url,
-                  'comment': item.comment,
-                  'isFavourite': item.isFavourite == null
-                      ? null
-                      : (item.isFavourite ? 1 : 0),
-                  'favComment': item.favComment,
-                  'subId': item.subId
-                });
+                (MainDBItem item) => <String, dynamic>{
+              'id': item.id,
+              'phase': item.phase,
+              'title': item.title,
+              'icon': item.icon,
+              'description': item.description,
+              'url': item.url,
+              'comment': item.comment,
+              'isFavourite': item.isFavourite == null
+                  ? null
+                  : (item.isFavourite ? 1 : 0),
+              'favComment': item.favComment,
+              'subId': item.subId
+            });
 
   final sqflite.DatabaseExecutor database;
 
@@ -226,6 +226,11 @@ class _$MainDao extends MainDao {
                 : (row['isFavourite'] as int) != 0,
             favComment: row['favComment'] as String,
             subId: row['subId'] as int));
+  }
+
+  @override
+  Future<void> clearAllComments() async {
+    await _queryAdapter.queryNoReturn('UPDATE main SET comment = ' '');
   }
 
   @override
@@ -379,35 +384,35 @@ class _$PagePropertiesDao extends PagePropertiesDao {
         _pagePropertiesInsertionAdapter = InsertionAdapter(
             database,
             'PageProperties',
-            (PageProperties item) => <String, dynamic>{
-                  'number': item.number,
-                  'title': item.title,
-                  'rootPhase': item.rootPhase,
-                  'currentPhase': item.currentPhase,
-                  'backTo': item.backTo
-                }),
+                (PageProperties item) => <String, dynamic>{
+              'number': item.number,
+              'title': item.title,
+              'rootPhase': item.rootPhase,
+              'currentPhase': item.currentPhase,
+              'backTo': item.backTo
+            }),
         _pagePropertiesUpdateAdapter = UpdateAdapter(
             database,
             'PageProperties',
             ['number'],
-            (PageProperties item) => <String, dynamic>{
-                  'number': item.number,
-                  'title': item.title,
-                  'rootPhase': item.rootPhase,
-                  'currentPhase': item.currentPhase,
-                  'backTo': item.backTo
-                }),
+                (PageProperties item) => <String, dynamic>{
+              'number': item.number,
+              'title': item.title,
+              'rootPhase': item.rootPhase,
+              'currentPhase': item.currentPhase,
+              'backTo': item.backTo
+            }),
         _pagePropertiesDeletionAdapter = DeletionAdapter(
             database,
             'PageProperties',
             ['number'],
-            (PageProperties item) => <String, dynamic>{
-                  'number': item.number,
-                  'title': item.title,
-                  'rootPhase': item.rootPhase,
-                  'currentPhase': item.currentPhase,
-                  'backTo': item.backTo
-                });
+                (PageProperties item) => <String, dynamic>{
+              'number': item.number,
+              'title': item.title,
+              'rootPhase': item.rootPhase,
+              'currentPhase': item.currentPhase,
+              'backTo': item.backTo
+            });
 
   final sqflite.DatabaseExecutor database;
 
@@ -484,35 +489,35 @@ class _$MovesDao extends MovesDao {
         _basicMoveInsertionAdapter = InsertionAdapter(
             database,
             'basic_moves',
-            (BasicMove item) => <String, dynamic>{
-                  'id': item.id,
-                  'eType': item.eType,
-                  'move': item.move,
-                  'icon': item.icon,
-                  'toast': item.toast
-                }),
+                (BasicMove item) => <String, dynamic>{
+              'id': item.id,
+              'eType': item.eType,
+              'move': item.move,
+              'icon': item.icon,
+              'toast': item.toast
+            }),
         _basicMoveUpdateAdapter = UpdateAdapter(
             database,
             'basic_moves',
             ['id', 'eType'],
-            (BasicMove item) => <String, dynamic>{
-                  'id': item.id,
-                  'eType': item.eType,
-                  'move': item.move,
-                  'icon': item.icon,
-                  'toast': item.toast
-                }),
+                (BasicMove item) => <String, dynamic>{
+              'id': item.id,
+              'eType': item.eType,
+              'move': item.move,
+              'icon': item.icon,
+              'toast': item.toast
+            }),
         _basicMoveDeletionAdapter = DeletionAdapter(
             database,
             'basic_moves',
             ['id', 'eType'],
-            (BasicMove item) => <String, dynamic>{
-                  'id': item.id,
-                  'eType': item.eType,
-                  'move': item.move,
-                  'icon': item.icon,
-                  'toast': item.toast
-                });
+                (BasicMove item) => <String, dynamic>{
+              'id': item.id,
+              'eType': item.eType,
+              'move': item.move,
+              'icon': item.icon,
+              'toast': item.toast
+            });
 
   final sqflite.DatabaseExecutor database;
 
@@ -602,26 +607,26 @@ class _$PhasePositionDao extends PhasePositionDao {
         _phasePositionItemInsertionAdapter = InsertionAdapter(
             database,
             'phasePositions',
-            (PhasePositionItem item) => <String, dynamic>{
-                  'phase': item.phase,
-                  'position': item.position
-                }),
+                (PhasePositionItem item) => <String, dynamic>{
+              'phase': item.phase,
+              'position': item.position
+            }),
         _phasePositionItemUpdateAdapter = UpdateAdapter(
             database,
             'phasePositions',
             ['phase'],
-            (PhasePositionItem item) => <String, dynamic>{
-                  'phase': item.phase,
-                  'position': item.position
-                }),
+                (PhasePositionItem item) => <String, dynamic>{
+              'phase': item.phase,
+              'position': item.position
+            }),
         _phasePositionItemDeletionAdapter = DeletionAdapter(
             database,
             'phasePositions',
             ['phase'],
-            (PhasePositionItem item) => <String, dynamic>{
-                  'phase': item.phase,
-                  'position': item.position
-                });
+                (PhasePositionItem item) => <String, dynamic>{
+              'phase': item.phase,
+              'position': item.position
+            });
 
   final sqflite.DatabaseExecutor database;
 
@@ -695,35 +700,35 @@ class _$TimesDao extends TimesDao {
         _timeNoteItemInsertionAdapter = InsertionAdapter(
             database,
             'times',
-            (TimeNoteItem item) => <String, dynamic>{
-                  'uuid': item.uuid,
-                  'solvingTime': item.solvingTime,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime),
-                  'scramble': item.scramble,
-                  'comment': item.comment
-                }),
+                (TimeNoteItem item) => <String, dynamic>{
+              'uuid': item.uuid,
+              'solvingTime': item.solvingTime,
+              'dateTime': _dateTimeConverter.encode(item.dateTime),
+              'scramble': item.scramble,
+              'comment': item.comment
+            }),
         _timeNoteItemUpdateAdapter = UpdateAdapter(
             database,
             'times',
             ['uuid'],
-            (TimeNoteItem item) => <String, dynamic>{
-                  'uuid': item.uuid,
-                  'solvingTime': item.solvingTime,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime),
-                  'scramble': item.scramble,
-                  'comment': item.comment
-                }),
+                (TimeNoteItem item) => <String, dynamic>{
+              'uuid': item.uuid,
+              'solvingTime': item.solvingTime,
+              'dateTime': _dateTimeConverter.encode(item.dateTime),
+              'scramble': item.scramble,
+              'comment': item.comment
+            }),
         _timeNoteItemDeletionAdapter = DeletionAdapter(
             database,
             'times',
             ['uuid'],
-            (TimeNoteItem item) => <String, dynamic>{
-                  'uuid': item.uuid,
-                  'solvingTime': item.solvingTime,
-                  'dateTime': _dateTimeConverter.encode(item.dateTime),
-                  'scramble': item.scramble,
-                  'comment': item.comment
-                });
+                (TimeNoteItem item) => <String, dynamic>{
+              'uuid': item.uuid,
+              'solvingTime': item.solvingTime,
+              'dateTime': _dateTimeConverter.encode(item.dateTime),
+              'scramble': item.scramble,
+              'comment': item.comment
+            });
 
   final sqflite.DatabaseExecutor database;
 
@@ -800,44 +805,44 @@ class _$PllTrainerDao extends PllTrainerDao {
         _pllTrainerItemInsertionAdapter = InsertionAdapter(
             database,
             'pll_trainer',
-            (PllTrainerItem item) => <String, dynamic>{
-                  'id': item.id,
-                  'internationalName': item.internationalName,
-                  'maximName': item.maximName,
-                  'customName': item.customName,
-                  'currentName': item.currentName,
-                  'imagePath': item.imagePath,
-                  'isChecked':
-                      item.isChecked == null ? null : (item.isChecked ? 1 : 0)
-                }),
+                (PllTrainerItem item) => <String, dynamic>{
+              'id': item.id,
+              'internationalName': item.internationalName,
+              'maximName': item.maximName,
+              'customName': item.customName,
+              'currentName': item.currentName,
+              'imagePath': item.imagePath,
+              'isChecked':
+              item.isChecked == null ? null : (item.isChecked ? 1 : 0)
+            }),
         _pllTrainerItemUpdateAdapter = UpdateAdapter(
             database,
             'pll_trainer',
             ['id'],
-            (PllTrainerItem item) => <String, dynamic>{
-                  'id': item.id,
-                  'internationalName': item.internationalName,
-                  'maximName': item.maximName,
-                  'customName': item.customName,
-                  'currentName': item.currentName,
-                  'imagePath': item.imagePath,
-                  'isChecked':
-                      item.isChecked == null ? null : (item.isChecked ? 1 : 0)
-                }),
+                (PllTrainerItem item) => <String, dynamic>{
+              'id': item.id,
+              'internationalName': item.internationalName,
+              'maximName': item.maximName,
+              'customName': item.customName,
+              'currentName': item.currentName,
+              'imagePath': item.imagePath,
+              'isChecked':
+              item.isChecked == null ? null : (item.isChecked ? 1 : 0)
+            }),
         _pllTrainerItemDeletionAdapter = DeletionAdapter(
             database,
             'pll_trainer',
             ['id'],
-            (PllTrainerItem item) => <String, dynamic>{
-                  'id': item.id,
-                  'internationalName': item.internationalName,
-                  'maximName': item.maximName,
-                  'customName': item.customName,
-                  'currentName': item.currentName,
-                  'imagePath': item.imagePath,
-                  'isChecked':
-                      item.isChecked == null ? null : (item.isChecked ? 1 : 0)
-                });
+                (PllTrainerItem item) => <String, dynamic>{
+              'id': item.id,
+              'internationalName': item.internationalName,
+              'maximName': item.maximName,
+              'customName': item.customName,
+              'currentName': item.currentName,
+              'imagePath': item.imagePath,
+              'isChecked':
+              item.isChecked == null ? null : (item.isChecked ? 1 : 0)
+            });
 
   final sqflite.DatabaseExecutor database;
 
