@@ -5,6 +5,7 @@ import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/controllers/storage/default_settings.dart';
 import 'package:rg2/controllers/storage/global_storage_controller.dart';
+import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
@@ -327,6 +328,7 @@ class SettingsController extends GetxController {
   void _resetCommentsSet() {
     final MainRepository _mainRepository = Get.find();
     _mainRepository.clearCommentsInLocalDBAndCaches();
+    _mainRepository.clearAllCommentsInFBS();
   }
 
   void _clearTimerTimes() {

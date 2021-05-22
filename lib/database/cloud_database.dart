@@ -180,6 +180,15 @@ class CloudDatabase extends GetxController {
         .catchError((error) => logPrintErr("Не удалось удалить $comment в FBS\n $error"));
   }
 
+  /// Очищаем комментарии в FBS
+  clearAllComments(String userId) async {
+    var mainDocRef = _usersCollection.doc(userId);
+    mainDocRef.update({COMMENTS_UPDATE_DATE: DateTime.now()});
+    var refCol = await mainDocRef.collection(COMMENTS).get();
+    refCol.docs.forEach((docSnap) {
+      docSnap.reference.delete();
+    });
+  }
 
   /// Возвращаем список всех комментариев к этапам из коллеккции в usersId/comments
   Future<List<CommentItem>> getComments(String userId) async{

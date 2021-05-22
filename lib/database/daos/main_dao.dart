@@ -9,7 +9,7 @@ abstract class MainDao extends AbstractDao<MainDBItem> {
   @Query('SELECT * FROM main')
   Future<List<MainDBItem>> getAllItems();
 
-  @Query("UPDATE main SET comment = ''")
+  @Query('UPDATE main SET comment = ""')
   Future<void> clearAllComments();
 
   @Query('SELECT * FROM main WHERE phase = :phase and id = :id ORDER BY id')

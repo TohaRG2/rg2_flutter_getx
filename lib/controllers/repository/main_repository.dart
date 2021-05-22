@@ -218,7 +218,16 @@ class MainRepository extends GetxController {
     logPrint("clearCommentsInLocalDBAndCaches - очищаем комментарии в локальной базе и кэшах");
     await _mainDao.clearAllComments();
     List<MainDBItem> allMainDBItems = await _mainDao.getAllItems();
+    logPrint("clearCommentsInLocalDBAndCaches - ${allMainDBItems.length} - $allMainDBItems");
     _updateItemsInCache(allMainDBItems);
+  }
+
+  /// Очищаем все комментарии в FBS
+  Future clearAllCommentsInFBS() async {
+    logPrint("clearAllCommentsInFBS - очищаем все комменты в FBS");
+    if (_userId != "") {
+      await _cloudDB.clearAllComments(_userId);
+    }
   }
 
   /// Обновляем данные в кэшах
