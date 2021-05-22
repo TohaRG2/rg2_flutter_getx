@@ -229,6 +229,17 @@ class CloudDatabase extends GetxController {
     });
   }
 
+  /// Очищаем табличку TimerTimes в FBS
+  clearTimerTimes(String userId) async {
+    var mainDocRef = _usersCollection.doc(userId);
+    // отметка, что изменяли что-то в TimerTimes
+    mainDocRef.update({TIMER_TIMES_UPDATE_DATE: DateTime.now()});
+    var refCol = await mainDocRef.collection(TIMER_TIMES).get();
+    refCol.docs.forEach((docSnap) {
+      docSnap.reference.delete();
+    });
+  }
+
   /// пересматриваем все записи в коллекции и отбираем те, которые отличаются временем создания менее чем на 10 милисек
   /// можем вернуть не одну запись
   List<String> getDocIdsWithTimeNear(DateTime dateTime, QuerySnapshot<Map<String, dynamic>> querySnapshot) {

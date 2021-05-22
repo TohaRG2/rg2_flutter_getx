@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:rg2/controllers/repository/main_repository.dart';
+import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/controllers/storage/default_settings.dart';
 import 'package:rg2/controllers/storage/global_storage_controller.dart';
+import 'package:rg2/database/entitys/time_note_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
@@ -295,24 +298,41 @@ class SettingsController extends GetxController {
   resetSettings() {
     if (resetMainSettings) {
       logPrint("resetSettings - сброс основных настроек");
-      _textScaleFactor.value = resetPropertyByKey(Const.SCALE_FACTOR);
-      _isStartHelpEnabled.value = resetPropertyByKey(Const.IS_START_HELP_ENABLED);
-      _isSwipeEnabled.value = resetPropertyByKey(Const.IS_SWIPE_ENABLED);
-      _internetUsage.value = resetPropertyByKey(Const.INTERNET_USAGE);
-      _godMode.value = resetPropertyByKey(Const.GOD_MODE);
-
-      _primaryThemeColor.value = Color(resetPropertyByKey(Const.PRIMARY_COLOR));
-      _accentThemeColor.value = Color(resetPropertyByKey(Const.ACCENT_COLOR));
-      _isDarkThemeSelect.value = resetPropertyByKey(Const.IS_THEME_DARK);
-      _changeCurrentTheme();
+      _resetMainSet();
     }
     if (resetComments) {
       logPrint("resetSettings - обнуляем комментарии к этапам");
+      _resetCommentsSet();
     }
     if (resetTimerTimes) {
       logPrint("resetSettings - очищаем табличку времени сборок в таймере");
+      _clearTimerTimes();
     }
     Get.back();
+  }
+
+  void _resetMainSet() {
+    _textScaleFactor.value = resetPropertyByKey(Const.SCALE_FACTOR);
+    _isStartHelpEnabled.value = resetPropertyByKey(Const.IS_START_HELP_ENABLED);
+    _isSwipeEnabled.value = resetPropertyByKey(Const.IS_SWIPE_ENABLED);
+    _internetUsage.value = resetPropertyByKey(Const.INTERNET_USAGE);
+    _godMode.value = resetPropertyByKey(Const.GOD_MODE);
+
+    _primaryThemeColor.value = Color(resetPropertyByKey(Const.PRIMARY_COLOR));
+    _accentThemeColor.value = Color(resetPropertyByKey(Const.ACCENT_COLOR));
+    _isDarkThemeSelect.value = resetPropertyByKey(Const.IS_THEME_DARK);
+    _changeCurrentTheme();
+  }
+
+  void _resetCommentsSet() {
+    final MainRepository _mainRepository = Get.find();
+    _mainRepository.clearCommentsInLocalDBAndCaches();
+  }
+
+  void _clearTimerTimes() {
+    final TimerRepository _timerRepository = Get.find();
+    _timerRepository.clearTimesTable();
+    _timerRepository.clearTimerTimesInFBS();
   }
 
   T resetPropertyByKey<T>(String key) {

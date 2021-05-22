@@ -210,18 +210,28 @@ class MainRepository extends GetxController {
   Future updateCommentsInLocalDBAndCaches(List<MainDBItem> mainDBItems) async {
     logPrint("обновляем список в локальной базе $mainDBItems");
     await updateMainDBItems(mainDBItems);
+    _updateItemsInCache(mainDBItems);
+  }
 
+  /// Очищаем все комментарии в локальной базе и кэшах
+  Future clearCommentsInLocalDBAndCaches() async {
+    logPrint("clearCommentsInLocalDBAndCaches - очищаем комментарии в локальной базе и кэшах");
+    await _mainDao.clearAllComments();
+    List<MainDBItem> allMainDBItems = await _mainDao.getAllItems();
+    _updateItemsInCache(allMainDBItems);
+  }
+
+  /// Обновляем данные в кэшах
+  _updateItemsInCache(List<MainDBItem> mainDBItems) async {
     // обновляем данные в кэше основного меню обучалок
     if (learnUpdateMainCacheCallback != null) {
       learnUpdateMainCacheCallback(mainDBItems);
     }
-
     // обновляем комментарии, если задан колбэк и получили не null в listCommentItems
     if (detailUpdateCacheCallback != null) {
       // вызываем колбэк, он находится в learnDetailController
       detailUpdateCacheCallback(mainDBItems);
     }
   }
-
 
 }

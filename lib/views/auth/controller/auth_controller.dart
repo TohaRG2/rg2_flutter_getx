@@ -205,9 +205,8 @@ class AuthController extends GetxController {
         final authResult = await _auth.signInWithCredential(credential);
         final firebaseUser = authResult.user;
         final displayName = '${_appleCredential.fullName.givenName} ${_appleCredential.fullName.familyName}';
-        //await firebaseUser.updateProfile(displayName: displayName);
-        await changeUserNameTo(name: displayName);
-
+        await firebaseUser.updateProfile(displayName: displayName);
+        //await changeUserNameTo(name: displayName);
         await createObjectInUsers(firebaseUser);
 
         break;
