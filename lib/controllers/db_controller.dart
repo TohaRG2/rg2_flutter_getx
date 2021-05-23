@@ -112,7 +112,7 @@ class DBController extends GetxController {
       await _initPhases();
       await PllTrainerVariants.initDb(_mainBase.pllTrainerDao);
       await _initFavourites();
-      await _initComments();
+      await initComments();
       needInit = false;
     } else {
       logPrint("not first start, db.init don't need");
@@ -260,7 +260,7 @@ class DBController extends GetxController {
 
 
   /// Задаем начальные комментарии для некоторых этапов
-  _initComments() async {
+  Future<List<MainDBItem>> initComments() async {
     logPrint("_initialComments");
     List<CommentItem> commentItems = InitialComments.commentItems;
     List<MainDBItem> mainDBItems = [];
@@ -270,8 +270,9 @@ class DBController extends GetxController {
       mainDBItem.comment = commentItem.comment;
       mainDBItems.add(mainDBItem);
     });
-    // обновляем записи для которых указали избранное
-    logPrint("_initComments - $mainDBItems");
+    // обновляем записи для которых указали комменты
+    // logPrint("_initComments - $mainDBItems");
     _mainBase.mainDao.updateItems(mainDBItems);
+    return mainDBItems;
   }
 }

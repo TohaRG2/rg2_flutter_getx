@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:rg2/controllers/db_controller.dart';
 import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/database/daos/main_dao.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
@@ -37,7 +38,7 @@ class MainRepository extends GetxController {
     _userId = (user == null) ? "" : user?.uid;
     if (_userId != "") {
       await _updateFavourites();
-      await _updateComments();
+      await updateCommentsFromFBS();
       await _cloudDB.updateGlobalEntersCount(_userId);
     }
   }
@@ -167,7 +168,7 @@ class MainRepository extends GetxController {
   //------------------------ методы для работы с комментариями -----------------------
 
   /// Получаем комменты из FBS и обновляем их в локальной базе и на экране (кэше)
-  Future _updateComments() async {
+  Future updateCommentsFromFBS() async {
     logPrint("_updateComments - получаем комментарии из FBS");
     List<CommentItem> commentItems = await _getComments() ?? [];
     // асинхронный цикл для всех записей в commentItems, с ожиданием выполнения операции над каждым элементом
@@ -217,6 +218,12 @@ class MainRepository extends GetxController {
   Future clearCommentsInLocalDBAndCaches() async {
     logPrint("clearCommentsInLocalDBAndCaches - очищаем комментарии в локальной базе и кэшах");
     await _mainDao.clearAllComments();
+
+    final DBController _dbController = Get.find();
+    List<MainDBItem> mainDBItems = await _dbController.initComments();
+    mainDBItems.forEach((mainDBItem) => addOrUpdateComment(mainDBItem));
+
+    // обновляем все кэши
     List<MainDBItem> allMainDBItems = await _mainDao.getAllItems();
     logPrint("clearCommentsInLocalDBAndCaches - ${allMainDBItems.length} - $allMainDBItems");
     _updateItemsInCache(allMainDBItems);

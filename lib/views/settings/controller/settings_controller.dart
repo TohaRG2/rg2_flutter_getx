@@ -5,8 +5,6 @@ import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/controllers/storage/default_settings.dart';
 import 'package:rg2/controllers/storage/global_storage_controller.dart';
-import 'package:rg2/database/cloud_database.dart';
-import 'package:rg2/database/entitys/time_note_item.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
@@ -284,32 +282,37 @@ class SettingsController extends GetxController {
 
   /// Параметры для сброса настроек
   RxBool _resetMainSettings = true.obs;
-  bool get resetMainSettings => _resetMainSettings.value;
-  set resetMainSettings(value) => _resetMainSettings.value = value;
+    bool get resetMainSettings => _resetMainSettings.value;
+    set resetMainSettings(value) => _resetMainSettings.value = value;
 
   RxBool _resetComments = false.obs;
-  bool get resetComments => _resetComments.value;
-  set resetComments(value) => _resetComments.value = value;
+    bool get resetComments => _resetComments.value;
+    set resetComments(value) => _resetComments.value = value;
 
   RxBool _resetTimerTimes = false.obs;
-  bool get resetTimerTimes => _resetTimerTimes.value;
-  set resetTimerTimes(value) => _resetTimerTimes.value = value;
+    bool get resetTimerTimes => _resetTimerTimes.value;
+    set resetTimerTimes(value) => _resetTimerTimes.value = value;
+
+  RxBool _showPreloader = false.obs;
+    bool get showPreloader => _showPreloader.value;
 
   /// Сбрасываем настройки программы в соответствии с выбранными параметрами в
-  resetSettings() {
+  resetSettings() async {
+    Get.back();
+    _showPreloader.value = true;
     if (resetMainSettings) {
       logPrint("resetSettings - сброс основных настроек");
       _resetMainSet();
     }
     if (resetComments) {
       logPrint("resetSettings - обнуляем комментарии к этапам");
-      _resetCommentsSet();
+      await _resetCommentsSet();
     }
     if (resetTimerTimes) {
       logPrint("resetSettings - очищаем табличку времени сборок в таймере");
-      _clearTimerTimes();
+      await _clearTimerTimes();
     }
-    Get.back();
+    _showPreloader.value = false;
   }
 
   void _resetMainSet() {
@@ -325,16 +328,16 @@ class SettingsController extends GetxController {
     _changeCurrentTheme();
   }
 
-  void _resetCommentsSet() {
+  _resetCommentsSet() async {
     final MainRepository _mainRepository = Get.find();
-    _mainRepository.clearCommentsInLocalDBAndCaches();
-    _mainRepository.clearAllCommentsInFBS();
+    await _mainRepository.clearCommentsInLocalDBAndCaches();
+    await _mainRepository.clearAllCommentsInFBS();
   }
 
-  void _clearTimerTimes() {
+  _clearTimerTimes() async {
     final TimerRepository _timerRepository = Get.find();
-    _timerRepository.clearTimesTable();
-    _timerRepository.clearTimerTimesInFBS();
+    await _timerRepository.clearTimesTable();
+    await _timerRepository.clearTimerTimesInFBS();
   }
 
   T resetPropertyByKey<T>(String key) {
