@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:rg2/controllers/ads/ad_state_controller.dart';
 import 'package:rg2/controllers/ads/ad_state.dart';
 import 'package:rg2/controllers/connection_controller.dart';
@@ -50,8 +53,7 @@ void main() async {
   adStateController.adState = AdState(initStatusFuture);
   // Инициализируем SharedPreferences
   await GetStorage.init();
-  // Инициализируем внутренние покупки
-  // InAppPurchaseConnection.enablePendingPurchases();
+  InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
   runApp(RG2App());
 }
 
@@ -150,3 +152,15 @@ class RG2App extends StatelessWidget {
   }
 }
 
+// Singleton https://codelabs.developers.google.com/codelabs/flutter-in-app-purchases#1
+class IAPConnection {
+  static InAppPurchase _instance;
+  static set instance(InAppPurchase value) {
+    _instance = value;
+  }
+
+  static InAppPurchase get instance {
+    _instance ??= InAppPurchase.instance;
+    return _instance;
+  }
+}

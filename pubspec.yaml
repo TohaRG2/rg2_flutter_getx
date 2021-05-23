@@ -78,7 +78,7 @@ dependencies:
   connectivity: ^3.0.4
 
   # Покупки в приложении
-  in_app_purchase: ^0.6.0
+  in_app_purchase: ^1.0.0
 
   # Реклама в приложении
   google_mobile_ads: ^0.12.2
