@@ -97,12 +97,13 @@ class GlobalStorageController extends GetxController {
 
   /// Обновляем все параметры в программе данными из firebase
   _updateAllParameters() async {
-    logPrint("updateAllParametersFromBase - ");
+    logPrint("updateAllParametersFromFBS - $_userId");
     if (_userId != "") {
       // получить все параметры из базы
       var list = await _cloudDB.getAllUserProperties(_userId);
       // перезаписать полученные параметры в локальное хранилище
       list?.forEach((property) {
+        // logPrint("updateAllParametersFromFBS - $property");
         _setPropertyToLocalStorage(property);
       });
       // обновить переменные в контроллерах

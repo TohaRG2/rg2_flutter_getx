@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/controllers/iap/iap_controller.dart';
+import 'package:rg2/controllers/iap/model/store_state.dart';
 import 'package:rg2/res/string_values.dart';
-import 'package:rg2/views/dialogs/big_dialog.dart';
 import 'package:rg2/views/purchase/purchase_ads_widget.dart';
 import 'package:rg2/views/purchase/purchase_puzzles_widget.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/trainers/help/bottom_bar_with_back_button.dart';
 
 class PurchaseView extends StatelessWidget {
+  final IAPController iapController = Get.put(IAPController());
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: _appBar(),
         body: _body(),
@@ -32,11 +36,28 @@ class PurchaseView extends StatelessWidget {
   }
 
   Widget _body() {
+    return Obx(() {
+      return (iapController.storeState != StoreState.available)
+          ? _selectItemsToPurchase()
+          : _marketLoadOrNotAvailable();
+    });
+  }
+
+  Widget _marketLoadOrNotAvailable() {
+    return Center(
+      child: Text(iapController.storeStateText,
+        textAlign: TextAlign.center,
+        style: Get.textTheme.headline5.copyWith(color: Get.theme.primaryColor),
+      ),
+    );
+  }
+
+  Widget _selectItemsToPurchase() {
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(StrRes.moneyDialogTemporaryUnavailable,
+          Text("Доступные покупки",
             textAlign: TextAlign.center,
             style: Get.textTheme.headline5.copyWith(color: Get.theme.primaryColor),
           ),
@@ -45,27 +66,7 @@ class PurchaseView extends StatelessWidget {
           SizedBox(height: UIHelper.SpaceSmall,),
           PurchaseAds(),
         ],
-      ),
-    );
-  }
-
-  Widget _bottomBar() {
-    return TextButton(
-      onPressed: () {
-        Get.back();
-      },
-      style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all<Color>(Get.theme.primaryColor),
-      ),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(StrRes.backButtonText),
-          ],
-        ),
-      ),
+      )
     );
   }
 

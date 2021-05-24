@@ -8,7 +8,7 @@ import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:rg2/controllers/ads/ad_state_controller.dart';
 import 'package:rg2/controllers/ads/ad_state.dart';
 import 'package:rg2/controllers/connection_controller.dart';
-import 'package:rg2/controllers/in_app_purchase_controller.dart';
+import 'package:rg2/controllers/iap/in_app_purchase_controller_old.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
@@ -149,18 +149,5 @@ class RG2App extends StatelessWidget {
     //Get.lazyPut(() => ConnectionController());
     //Get.lazyPut(() => InAppPurchaseController());
     // Get.put(InAppPurchaseController());
-  }
-}
-
-// Singleton https://codelabs.developers.google.com/codelabs/flutter-in-app-purchases#1
-class IAPConnection {
-  static InAppPurchase _instance;
-  static set instance(InAppPurchase value) {
-    _instance = value;
-  }
-
-  static InAppPurchase get instance {
-    _instance ??= InAppPurchase.instance;
-    return _instance;
   }
 }

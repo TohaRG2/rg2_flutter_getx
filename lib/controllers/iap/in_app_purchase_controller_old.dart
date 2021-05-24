@@ -4,8 +4,6 @@
 // import 'package:get/get.dart';
 // import 'package:in_app_purchase/in_app_purchase.dart';
 // import 'package:rg2/controllers/storage/global_storage_controller.dart';
-// import 'package:rg2/database/fire_entitys/property.dart';
-// import 'package:rg2/res/constants.dart';
 // import 'package:rg2/res/get_money/get_money.dart';
 // import 'package:rg2/utils/my_logger.dart';
 // import 'package:rg2/views/dialogs/get_money/model/get_money_item.dart';
@@ -15,7 +13,7 @@
 // class InAppPurchaseController extends GetxController {
 //   final GlobalStorageController _storage = Get.find();
 //   final SettingsController _settings = Get.find();
-//   // final InAppPurchaseConnection _iap = InAppPurchaseConnection.instance;
+//   final InAppPurchaseConnection _iap = InAppPurchaseConnection.instance;
 //
 //   /// Доступность магазина покупок
 //   bool isAvailable = false;
@@ -242,39 +240,41 @@
 //
 //
 //
-//   //------------------- Константы (списки продуктов) ----------------------------
-//
-//   /// Полный список продуктов
-//   static const List<String> allRG2Products = [
-//     SMALL_DONATION,
-//     MEDIUM_DONATION,
-//     BIG_DONATION,
-//     VERY_BIG_DONATION,
-//     G_AD_OFF,
-//     G_AD_OFF_AND_OPEN_ALL,
-//     G_AD_OFF_AND_OPEN_ALL_PLUS,
-//   ];
-//
-//   /// Список продуктов для старого андроид приложения (котлин версии)
-//   static const List<String> oldRg2Products = [
-//     SMALL_DONATION,
-//     MEDIUM_DONATION,
-//     BIG_DONATION,
-//     VERY_BIG_DONATION,
-//   ];
-//
-//   /// Список продуктов доступных для покупки во флаттер версии RG2
-//   static const List<String> newRg2Products = [
-//     G_AD_OFF,
-//     G_AD_OFF_AND_OPEN_ALL,
-//     G_AD_OFF_AND_OPEN_ALL_PLUS,
-//   ];
-//
-//   static const SMALL_DONATION = 'small_donation';
-//   static const MEDIUM_DONATION = 'medium_donation';
-//   static const BIG_DONATION = 'big_donation';
-//   static const VERY_BIG_DONATION = 'very_big_donation';
-//   static const G_AD_OFF = 'g_ad_off';
-//   static const G_AD_OFF_AND_OPEN_ALL = 'g_ad_off_and_open_all';
-//   static const G_AD_OFF_AND_OPEN_ALL_PLUS = 'g_ad_off_and_open_all_plus_coffee';
+//   // //------------------- Константы (списки продуктов) ----------------------------
+//   //
+//   // /// Полный список продуктов
+//   // static const List<String> allRG2Products = [
+//   //   SMALL_DONATION,
+//   //   MEDIUM_DONATION,
+//   //   BIG_DONATION,
+//   //   VERY_BIG_DONATION,
+//   //   G_AD_OFF,
+//   //   G_AD_OFF_AND_OPEN_ALL,
+//   //   G_AD_OFF_AND_OPEN_ALL_PLUS,
+//   // ];
+//   //
+//   // /// Список продуктов для старого андроид приложения (котлин версии)
+//   // static const List<String> oldRg2Products = [
+//   //   SMALL_DONATION,
+//   //   MEDIUM_DONATION,
+//   //   BIG_DONATION,
+//   //   VERY_BIG_DONATION,
+//   // ];
+//   //
+//   // /// Список продуктов доступных для покупки во флаттер версии RG2
+//   // static const List<String> newRg2Products = [
+//   //   G_AD_OFF,
+//   //   G_AD_OFF_AND_OPEN_ALL,
+//   //   G_AD_OFF_AND_OPEN_ALL_PLUS,
+//   // ];
+//   //
+//   // static const SMALL_DONATION = 'small_donation';
+//   // static const MEDIUM_DONATION = 'medium_donation';
+//   // static const BIG_DONATION = 'big_donation';
+//   // static const VERY_BIG_DONATION = 'very_big_donation';
+//   // static const G_AD_OFF = 'g_ad_off';
+//   // static const G_AD_OFF_AND_OPEN_ALL = 'g_ad_off_and_open_all';
+//   // static const G_AD_OFF_AND_OPEN_ALL_PLUS = 'g_ad_off_and_open_all_plus_coffee';
+//   // static const IOS_AD_OFF = 'ios_ads_remove';
+//   // static const IOS_OPEN_ALL = 'open_all_puzzles';
 // }

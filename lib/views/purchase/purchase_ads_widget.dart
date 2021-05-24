@@ -23,8 +23,16 @@ class PurchaseAds extends StatelessWidget {
               style: Get.textTheme.headline6,
             ),
             value: _settings.isAdDisabled,
-            onChanged: (v) {
-              _settings.isAdDisabled = v;
+            onChanged: (value) {
+              if (value) {
+                if (_settings.purchaserState == 1 || _settings.purchaserState > 2) {
+                  _settings.isAdDisabled = value;
+                } else {
+                  //TODO Не куплено отключение рекламы, купить!!!
+                }
+              } else {
+                _settings.isAdDisabled = false;
+              }
             },
           ),
         ]),

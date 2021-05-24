@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/ads/ad_state_controller.dart';
-import 'package:rg2/controllers/in_app_purchase_controller.dart';
+import 'package:rg2/controllers/iap/in_app_purchase_controller_old.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/big_dialog.dart';
@@ -12,6 +12,8 @@ import 'package:rg2/views/shared/bottom_back_button.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/shared/url_helper.dart';
 
+
+//TODO Удалить этот диалог, т.к. больше не нужен
 class GetMoneyDialog extends StatelessWidget { //GetWidget<InAppPurchaseController> {
   final SettingsController _settings = Get.find();
   final AdStateController _adController = Get.put(AdStateController());

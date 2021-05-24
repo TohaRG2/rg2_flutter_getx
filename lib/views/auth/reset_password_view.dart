@@ -41,7 +41,7 @@ class ResetPasswordView extends GetWidget<AuthController> {
                   style: ElevatedButton.styleFrom(
                     primary: Get.theme.accentColor, // background
                   ),
-                  child: Text("Подтведить")
+                  child: Text("Подтвердить")
                 ),
               ],
           )),

@@ -113,7 +113,7 @@ class SettingsController extends GetxController {
       _storage.setProperty(Property(key: Const.GOD_MODE, value: value));
     }
 
-  /// Куплен ли бесконечный просмотр обучалок
+  /// Отключена ли реклама
   final _isAdDisabled = RxBool(true);
     bool get isAdDisabled => _isAdDisabled.value;
     bool get isAdEnabled => !_isAdDisabled.value;
@@ -138,8 +138,12 @@ class SettingsController extends GetxController {
       _storage.setProperty(Property(key: Const.CURRENT_COINS, value: value));
     }
 
-  /// Тип пользователя, как покупателя inAppPurchase (0-ничего не покупал, 1 - купил чтобы не тратились монетки,
-  /// 2 - купил все, 3 - купил все + кофе автору :)
+  /// Тип пользователя, как покупателя inAppPurchase (
+  /// 0 - ничего не покупал,
+  /// 1 - купил отключение рекламы,
+  /// 2 - купил все головоломки,
+  /// 3 - купил и то и другое :)
+  /// 4 - ВИП
   RxInt _purchaserState = RxInt(0);
     get purchaserState => _purchaserState.value;
     set purchaserState(int value) {
@@ -174,8 +178,9 @@ class SettingsController extends GetxController {
     _godMode.value = _storage.getPropertyByKey(Const.GOD_MODE);
     _isAdDisabled.value = _storage.getPropertyByKey(Const.IS_AD_DISABLED);
     _isAllPuzzlesEnabled.value = _storage.getPropertyByKey(Const.IS_ALL_PUZZLES_ENABLED);
-    _coins.value = _storage.getPropertyByKey(Const.CURRENT_COINS);
-    _coinsToEnableAllPuzzle.value = _storage.getPropertyByKey(Const.COINS_TO_ENABLE_ALL_PUZZLE);
+    _purchaserState.value = _storage.getPropertyByKey(Const.PURCHASER_STATE);
+    // _coins.value = _storage.getPropertyByKey(Const.CURRENT_COINS);
+    // _coinsToEnableAllPuzzle.value = _storage.getPropertyByKey(Const.COINS_TO_ENABLE_ALL_PUZZLE);
 
     logPrint("_initializeRxVariables - подгружаем тему");
     int _primaryColor = _storage.getPropertyByKey(Const.PRIMARY_COLOR);
