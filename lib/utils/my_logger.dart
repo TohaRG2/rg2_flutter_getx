@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 logPrint(dynamic string){
   var tag = "FAPP";
   if (kReleaseMode) { // is Release Mode ??
-    //print("$tag $string");
+    print("$tag $string");
   } else {
     print("$tag $string");
   }

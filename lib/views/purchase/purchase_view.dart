@@ -37,7 +37,7 @@ class PurchaseView extends StatelessWidget {
 
   Widget _body() {
     return Obx(() {
-      return (iapController.storeState != StoreState.available)
+      return (iapController.storeState == StoreState.available)
           ? _selectItemsToPurchase()
           : _marketLoadOrNotAvailable();
     });

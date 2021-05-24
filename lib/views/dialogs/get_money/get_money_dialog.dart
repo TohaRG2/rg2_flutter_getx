@@ -147,7 +147,7 @@ class GetMoneyDialog extends StatelessWidget { //GetWidget<InAppPurchaseControll
           TextButton(
             child: Text("Показать рекламу"),
             onPressed: () {
-              _adController.showInterstitialAd();
+              // _adController.showInterstitialAd();
             },
           ),
         ],

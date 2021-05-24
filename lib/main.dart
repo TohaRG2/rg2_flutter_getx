@@ -45,6 +45,10 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   // Поскольку обращаемся к плагинам до вызова runApp, то сначала ждем инициализации плагинов
   WidgetsFlutterBinding.ensureInitialized();
+  // Для инициализации inAppPurchase для android
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
+  }
   // Инициализируем FireBase, нужен import 'package:firebase_core/firebase_core.dart';
   await Firebase.initializeApp();
   // инициализируем adMob
@@ -53,7 +57,6 @@ void main() async {
   adStateController.adState = AdState(initStatusFuture);
   // Инициализируем SharedPreferences
   await GetStorage.init();
-  InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
   runApp(RG2App());
 }
 
@@ -148,6 +151,6 @@ class RG2App extends StatelessWidget {
     //TODO после тестирования поменять на lazy
     //Get.lazyPut(() => ConnectionController());
     //Get.lazyPut(() => InAppPurchaseController());
-    // Get.put(InAppPurchaseController());
+    //Get.put(InAppPurchaseController());
   }
 }
