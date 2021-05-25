@@ -19,6 +19,6 @@ class PurchasableProduct {
 
   @override
   String toString() {
-    return "id = $id, price = $price";
+    return "id = $id, status = $status";
   }
 }

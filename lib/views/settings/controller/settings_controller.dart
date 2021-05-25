@@ -10,7 +10,7 @@ import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 class SettingsController extends GetxController {
-  final GlobalStorageController _storage = Get.find();
+  final GlobalStorageController _storage = Get.put(GlobalStorageController(), permanent: true);
 
   @override
   void onInit() {
@@ -143,7 +143,7 @@ class SettingsController extends GetxController {
   /// 1 - купил отключение рекламы,
   /// 2 - купил все головоломки,
   /// 3 - купил и то и другое :)
-  /// 4 - ВИП
+  /// 7 - ВИП (см.побитно)
   RxInt _purchaserState = RxInt(0);
     get purchaserState => _purchaserState.value;
     set purchaserState(int value) {

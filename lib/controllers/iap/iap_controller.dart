@@ -1,15 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:rg2/controllers/iap/iap_connection.dart';
 import 'package:rg2/controllers/iap/iap_const.dart';
+import 'package:rg2/controllers/iap/iap_helper.dart';
 import 'package:rg2/controllers/iap/model/purchasable_product.dart';
 import 'package:rg2/controllers/iap/model/store_state.dart';
 import 'package:rg2/utils/my_logger.dart';
+import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 class IAPController extends GetxController {
 
-  //final iapConnection = IAPConnection.instance;
-  final iapConnection = InAppPurchase.instance;
+  final _iapConnection = InAppPurchase.instance;
+  final SettingsController _settings = Get.find();
 
   /// Состояние доступности магазина покупок
   Rx<StoreState> _storeState = StoreState.loading.obs;
@@ -33,7 +35,7 @@ class IAPController extends GetxController {
   /// RxList в который биндим стрим изменений списка купленных товаров
   RxList<PurchaseDetails> _subscription = <PurchaseDetails>[].obs;
 
-  /// Список купленных товаров
+  /// Список товаров, которые можно купить
   RxList<PurchasableProduct> _products = <PurchasableProduct>[].obs;
     List<PurchasableProduct> get products => _products;
 
@@ -43,54 +45,118 @@ class IAPController extends GetxController {
     logPrint("IAP onInit - start");
     _loadPurchases();
     // Биндим стрим в Observable _subscription и подписываемся на его изменения
-    _subscription.bindStream(iapConnection.purchaseStream);
+    _subscription.bindStream(_iapConnection.purchaseStream);
     ever(_subscription, _listenToPurchaseUpdated);
   }
 
   /// Подгружаем список купленных товаров
   Future<void> _loadPurchases() async {
     // Проверяем, доступен ли магазин приложений, если НЕдоступен, то меняем статус и выходим
-    final available = await iapConnection.isAvailable();
+    final available = await _iapConnection.isAvailable();
     logPrint("IAP loadPurchases is available $available");
     if (!available) {
       _storeState.value = StoreState.notAvailable;
       return;
     }
     // если доступен, то пробуем получить состояние покупок для списка всех product_id
-    const ids = newRg2Products;
-    //Set<String> ids = <String>['android.test.purchased'].toSet();
+    const ids = allRg2Products;
     logPrint("IAP loadPurchases - пробуем получить состояние для $ids");
 
-    try {
-      ProductDetailsResponse response = await iapConnection.queryProductDetails(ids);
-      logPrint("IAP loadPurchases response - $response");
-      response.notFoundIDs.forEach((element) {
-        logPrint('IAP Purchase $element не найден');
-      });
-      var items = response.productDetails.map(
-              (prodDetails) => PurchasableProduct(prodDetails)
-      ).toList();
-      logPrint("IAP - можно купить $items");
-      _products.value = items;
-      _storeState.value = StoreState.available;
-    } on Exception catch (e) {
-      logPrintErr("IAP - $e");
-    }
+    ProductDetailsResponse response = await _iapConnection.queryProductDetails(ids);
+    // Продукты из списка, недоступные для покупки
+    // response.notFoundIDs.forEach((element) {
+    //   logPrint('IAP Purchase $element не найден');
+    // });
+
+    // Выбираем только те продукты, которые доступны для покупки
+    List<PurchasableProduct> items = response.productDetails.map(
+            (prodDetails) => PurchasableProduct(prodDetails)
+    ).toList();
+    logPrint("IAP - из $ids можно купить $items");
+    _products.value = items;
+    _storeState.value = StoreState.available;
+
   }
 
 
   /// Слушатель обновления в потоке покупок
   void _listenToPurchaseUpdated(List<PurchaseDetails> purchaseDetailsList) {
-    logPrint("IAP новая покупка ${purchaseDetailsList.first?.productID}");
-
-    // purchases.addAll(purchaseDetailsList);
-    // purchases.forEach((PurchaseDetails purchase) async {
-    //   logPrint("IAP _listenToPurchaseUpdated - ${purchase.productID}");
-    //   _setStateByPurchase(purchase);
-    // });
-    // if (Get.isDialogOpen) { Get.back(); }
-    //verifyPurchase(myProductID);
+    purchaseDetailsList.forEach(_handlePurchase);
   }
+
+  /// Обработчик новой покупки
+  void _handlePurchase(PurchaseDetails purchaseDetails) {
+    logPrint("IAP новая покупка ${purchaseDetails.productID} статус ${purchaseDetails.status}");
+    if (purchaseDetails.status == PurchaseStatus.purchased || purchaseDetails.status == PurchaseStatus.restored) {
+      if (purchaseDetails.productID == IAPHelper.adsRemoveId) {
+        logPrint("IAP - Купили отказ от рекламы");
+        _settings.purchaserState |= 1;
+        _settings.isAdDisabled = true;
+      }
+      else if (purchaseDetails.productID == IAPHelper.openAllPuzzlesId) {
+        logPrint("IAP - Купили открыть все головоломки");
+        _settings.purchaserState |= 2;
+        _settings.isAllPuzzlesEnabled = true;
+      }
+      else if (oldRg2Products.contains(purchaseDetails.productID)) {
+        logPrint("IAP - покупка из старой версии. Меняем статус на VIP");
+        _settings.purchaserState |= 7;
+        _settings.isAllPuzzlesEnabled = true;
+        _settings.isAdDisabled = true;
+      } else {
+        logPrintErr("IAP - Купили что-то странное. ${purchaseDetails.productID}");
+      }
+    }
+    else if (purchaseDetails.status == PurchaseStatus.error) {
+      // если ошибка при покупке, то пробуем восстановить все покупки
+      logPrintErr("IAP - ошибка покупки");
+      if (Get.isSnackbarOpen) { Get.back(); }
+      Get.snackbar("Ошибка", "Что-то пошло не так, попробуйте обновить список товаров",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.black54,
+        duration: Duration(seconds: 8),
+        mainButton: TextButton(
+            onPressed: (){
+              Get.back();
+              restorePurchases();
+            },
+            child: Container(
+                padding: EdgeInsets.all(8.0),
+                child: Text("Обновить"))
+        ),
+      );
+    }
+    // Подтверждаем, что товар доставлен (обработан программой)
+    if (purchaseDetails.pendingCompletePurchase) {
+      _iapConnection.completePurchase(purchaseDetails);
+    }
+  }
+
+  /// Запрос на восстановление выполненных покупок. Покупки приходят в purchaseStream со статусом PurchaseStatus.restored
+  restorePurchases() {
+    InAppPurchase.instance.restorePurchases();
+  }
+
+  Future<void> buy(String productId) async {
+    ProductDetails productDetails;
+    products.forEach((purchasableProduct) {
+      if (purchasableProduct.productDetails.id == productId) {
+        productDetails = purchasableProduct.productDetails;
+      }
+    });
+    // Пример поиска, есть ли в спсиске элемент соответствующий определенному условию
+    // hasUpgrade = purchases.any(
+    //       (element) => element.productId == storeKeyUpgrade,
+    // );
+
+    if (productDetails != null) {
+      final purchaseParam = PurchaseParam(productDetails: productDetails);
+      await _iapConnection.buyNonConsumable(purchaseParam: purchaseParam);
+    } else {
+      throw ArgumentError.value(productId, '$productId is not a known product');
+    }
+  }
+
 
 
 }

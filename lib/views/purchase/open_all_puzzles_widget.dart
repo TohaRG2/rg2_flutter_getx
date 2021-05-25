@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/controllers/iap/iap_controller.dart';
+import 'package:rg2/controllers/iap/iap_helper.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
-class PurchasePuzzles extends StatelessWidget {
-  const PurchasePuzzles({Key key,}) : super(key: key);
+class OpenAllPuzzles extends StatelessWidget {
+  const OpenAllPuzzles({Key key,}) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
     final SettingsController _settings = Get.find();
+    final IAPController iapController = Get.find();
     return Obx(
       () => Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -30,8 +33,16 @@ class PurchasePuzzles extends StatelessWidget {
               style: Get.textTheme.headline6,
             ),
             value: _settings.isAllPuzzlesEnabled,
-            onChanged: (v) {
-              _settings.isAllPuzzlesEnabled = v;
+            onChanged: (value) {
+              if (value) {
+                if (_settings.purchaserState & 2 != 0) {
+                  _settings.isAllPuzzlesEnabled = value;
+                } else {
+                  iapController.buy(IAPHelper.openAllPuzzlesId);
+                }
+              } else {
+                _settings.isAllPuzzlesEnabled = false;
+              }
             },
           ),
         ]),

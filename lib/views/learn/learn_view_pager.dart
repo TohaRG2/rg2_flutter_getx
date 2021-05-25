@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/controllers/iap/in_app_purchase_controller_old.dart';
-import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/advices/advices_dialog.dart';
-import 'package:rg2/views/dialogs/get_money/get_money_dialog.dart';
 import 'package:rg2/views/purchase/purchase_view.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/database/entitys/page_properties.dart';

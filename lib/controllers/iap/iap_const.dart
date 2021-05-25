@@ -1,7 +1,7 @@
 //------------------- Константы (списки продуктов) ----------------------------
 
 /// Полный список продуктов (используем объединение через ...) https://stackoverflow.com/questions/21826342/how-do-i-combine-two-lists-in-dart
-const Set<String> allRG2Products = {
+const Set<String> allRg2Products = {
   ...oldRg2Products,
   ...newRg2Products
 };
