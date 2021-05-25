@@ -137,6 +137,7 @@ class IAPController extends GetxController {
     InAppPurchase.instance.restorePurchases();
   }
 
+  /// Запрос покупки товара по его ID, с проверкой доступности его покупки. Если недоступен, то получим ошибку Invalid argument
   Future<void> buy(String productId) async {
     ProductDetails productDetails;
     products.forEach((purchasableProduct) {
@@ -153,7 +154,13 @@ class IAPController extends GetxController {
       final purchaseParam = PurchaseParam(productDetails: productDetails);
       await _iapConnection.buyNonConsumable(purchaseParam: purchaseParam);
     } else {
-      throw ArgumentError.value(productId, '$productId is not a known product');
+      //throw ArgumentError.value(productId, '$productId is not a known product');
+      Get.snackbar("Ошибка", "К сожалению, этот товар сейчас недоступен для покупок",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.black54,
+        duration: Duration(seconds: 6)
+      );
+      logPrintErr("К сожалению, $productId сейчас недоступен для покупок");
     }
   }
 
