@@ -122,6 +122,7 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Авторизация через гугл
   Future<void> googleSignIn() async {
     try {
       //logPrint("вызываем окно входа гугл аккаунтом");
@@ -152,6 +153,7 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Создаем коллекцию по идентификатору пользователя
   Future createObjectInUsers(User user) async {
     _showPreLoader.value = true;
     logPrint("Создаем новую или перезаписываем по uid запись в таблице users");
@@ -164,18 +166,21 @@ class AuthController extends GetxController {
     _showPreLoader.value = false;
   }
 
+  /// Выходим из всех
   Future<void> signOut() async {
     logPrint("SignOut ${user.email}");
     try {
       _enableShowSignInView();
       await _auth.signOut();
       await _googleSignIn.signOut();
+
       // _firebaseUser.value = null;
     } catch (e) {
       logPrint("Не смогли выйти из аккаунта:\n $e");
     }
   }
 
+  /// Авторизуемся эпплом и переходим на основной экран, как авторизация пройдет
   Future<void> appleSignInAndGoToStart() async {
     await appleSignIn();
     if (user != null) {
@@ -184,7 +189,7 @@ class AuthController extends GetxController {
     }
   }
 
-
+  /// Автоизуемся эппл-аккаунтом
   Future<void> appleSignIn() async {
     logPrint("appleSignIn - request");
     _showPreLoader.value = true;
@@ -204,9 +209,11 @@ class AuthController extends GetxController {
 
         final authResult = await _auth.signInWithCredential(credential);
         final firebaseUser = authResult.user;
-        final displayName = '${_appleCredential.fullName.givenName} ${_appleCredential.fullName.familyName}';
+        var givenName = _appleCredential.fullName.givenName ?? "Введите имя";
+        var familyName = _appleCredential.fullName.familyName ?? "";
+        final displayName = "$givenName $familyName";
         await firebaseUser.updateProfile(displayName: displayName);
-        //await changeUserNameTo(name: displayName);
+        // await changeUserNameTo(name: displayName);
         await createObjectInUsers(firebaseUser);
 
         break;
