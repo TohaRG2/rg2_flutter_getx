@@ -38,7 +38,7 @@ const VERY_BIG_DONATION = 'very_big_donation';
 const G_AD_OFF = 'g_ads_remove';
 const G_OPEN_ALL = 'g_open_all_puzzles';
 const IOS_AD_OFF = 'ios_ads_remove';
-const IOS_OPEN_ALL = 'ios_open_all_puzzles';
+const IOS_OPEN_ALL = 'ios_open_all_puzzles2';
 
 const G_AD_OFF_AND_OPEN_ALL = 'g_ad_off_and_open_all';
 const G_AD_OFF_AND_OPEN_ALL_PLUS = 'g_ad_off_and_open_all_plus_coffee';

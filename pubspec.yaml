@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.210525.1+419
+version: 4.210527.1+421
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -34,7 +34,7 @@ dependencies:
   # video_player: ^1.0.1
   # chewie: ^0.12.2
   # Plugin for rendering the <iframe> tag.
-  webview_flutter: ^2.0.7
+  webview_flutter: ^2.0.8
   # Plugins for rendering the <audio> tag.
   # chewie_audio: ^1.1.1
 
@@ -65,7 +65,7 @@ dependencies:
   firebase_core: ^1.2.0
   firebase_auth: ^1.2.0
   cloud_firestore: ^2.2.0
-  google_sign_in: ^5.0.3
+  google_sign_in: ^5.0.4
   apple_sign_in: ^0.1.0
 
   # Валидаторы для проверки полей ввода
@@ -75,16 +75,16 @@ dependencies:
   auth_buttons: ^1.0.1+3
 
   # Проверка соединения https://pub.dev/packages/connectivity
-  connectivity: ^3.0.4
+  connectivity: ^3.0.6
 
   # Покупки в приложении
-  in_app_purchase: ^1.0.0
+  in_app_purchase: ^1.0.1
 
   # Реклама в приложении
   google_mobile_ads: ^0.12.2
 
   # Получение версии приложения в коде
-  package_info: ^2.0.0
+  package_info: ^2.0.2
 
   # красивый свитч для смены темы
   flutter_switch: ^0.3.1
@@ -102,7 +102,7 @@ dev_dependencies:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация + build runner
   floor_generator: ^1.1.0
-  build_runner: ^2.0.3
+  build_runner: ^2.0.4
 
 flutter_icons:
   android: "ic_launcher"
