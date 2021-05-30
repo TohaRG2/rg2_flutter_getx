@@ -59,20 +59,39 @@ class PurchaseView extends StatelessWidget {
   }
 
   Widget _selectItemsToPurchase() {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text("Доступные покупки",
-            textAlign: TextAlign.center,
-            style: Get.textTheme.headline5.copyWith(color: Get.theme.primaryColor),
-          ),
-          SizedBox(height: UIHelper.SpaceMedium,),
-          OpenAllPuzzles(),
-          SizedBox(height: UIHelper.SpaceSmall,),
-          RemoveAds(),
-        ],
-      )
+    return Stack(
+      children: [
+        Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("Доступные покупки",
+                textAlign: TextAlign.center,
+                style: Get.textTheme.headline5.copyWith(color: Get.theme.primaryColor),
+              ),
+              SizedBox(height: UIHelper.SpaceMedium,),
+              OpenAllPuzzles(),
+              SizedBox(height: UIHelper.SpaceSmall,),
+              RemoveAds(),
+            ],
+          )
+        ),
+        _reloadButton(),
+      ],
+    );
+  }
+
+  _reloadButton() {
+    return Positioned(
+      bottom: UIHelper.SpaceMedium,
+      right: UIHelper.SpaceMedium,
+      left: UIHelper.SpaceMedium,
+      child: ElevatedButton(
+        onPressed: () {
+          iapController.restorePurchases();
+        },
+        child: Text("Восстановить покупки"),
+      ),
     );
   }
 

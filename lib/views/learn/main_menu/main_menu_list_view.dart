@@ -74,6 +74,7 @@ class MenuList extends StatelessWidget {
         messageText: Center(child: Text(StrRes.snackTextItemDisabled)),
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.black54,
+        colorText: Colors.white,
         duration: Duration(seconds: 6),
         mainButton: TextButton(
             onPressed: (){

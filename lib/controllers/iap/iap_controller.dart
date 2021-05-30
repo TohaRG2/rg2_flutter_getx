@@ -114,6 +114,7 @@ class IAPController extends GetxController {
       Get.snackbar("Ошибка", "Что-то пошло не так, попробуйте обновить список товаров",
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.black54,
+        colorText: Colors.white,
         duration: Duration(seconds: 8),
         mainButton: TextButton(
             onPressed: (){
@@ -158,6 +159,7 @@ class IAPController extends GetxController {
       Get.snackbar("Ошибка", "К сожалению, этот товар сейчас недоступен для покупок",
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.black54,
+        colorText: Colors.white,
         duration: Duration(seconds: 6)
       );
       logPrintErr("К сожалению, $productId сейчас недоступен для покупок");

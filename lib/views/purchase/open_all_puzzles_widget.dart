@@ -35,11 +35,13 @@ class OpenAllPuzzles extends StatelessWidget {
             value: _settings.isAllPuzzlesEnabled,
             onChanged: (value) {
               if (value) {
-                if (_settings.purchaserState & 2 != 0) {
-                  _settings.isAllPuzzlesEnabled = value;
-                } else {
-                  iapController.buy(IAPHelper.openAllPuzzlesId);
-                }
+                _settings.isAllPuzzlesEnabled = true;
+                //TODO Расскоментировать когда одобрит эппл
+                // if (_settings.purchaserState & 2 != 0) {
+                //   _settings.isAllPuzzlesEnabled = value;
+                // } else {
+                //   iapController.buy(IAPHelper.openAllPuzzlesId);
+                // }
               } else {
                 _settings.isAllPuzzlesEnabled = false;
               }
