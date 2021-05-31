@@ -26,6 +26,8 @@ class Advices {
       adviceText: "Просто смахните элемент избранного в сторону, чтобы его удалить"),
     AdviceItem(adviceImagePath: "assets/images/advices/frame_12.png",
       adviceText: "Меняйте пункты избранного местами"),
+    AdviceItem(adviceImagePath: "assets/images/advices/frame_13.png",
+      adviceText: "Регулируйте скорость воспроизведения видео под свой уровень"),
 
   ];
 }

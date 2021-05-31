@@ -31,7 +31,7 @@ class StrRes {
   static const azbukaDialogTitle = "Азбука вращений";
   static const azbukaDialogHint = "Нажмите, чтобы увидеть название";
   static const snackTextWarning = "Внимание!";
-  static const snackTextItemDisabled = "Разблокировать доступ к дополнительным головоломкам, можно в настройках программы";
+  static const snackTextItemDisabled = "Разблокировать доступ к дополнительным головоломкам, можно в разделе покупок";
 
   static const somethingWrong = "Что-то пошло не так :(";
 
