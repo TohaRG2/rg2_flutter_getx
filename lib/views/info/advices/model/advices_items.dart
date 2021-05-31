@@ -32,6 +32,8 @@ class Advices {
       adviceText: "Авторизуйтесь, чтобы сохранять настройки в облаке"),
     AdviceItem(adviceImagePath: "assets/images/advices/frame_15.png",
       adviceText: "Вы можете поменять имя, которое будет видно в программе"),
+    AdviceItem(adviceImagePath: "assets/images/advices/frame_16.png",
+      adviceText: "Нажмите на 'Обучалки', чтобы вернуться на уровень выше"),
 
   ];
 }
