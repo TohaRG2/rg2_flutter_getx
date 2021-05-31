@@ -21,13 +21,17 @@ class Advices {
     AdviceItem(adviceImagePath: "assets/images/advices/frame_9.png",
       adviceText: "Смотрите в видео, как правильно выполнять алгоритмы"),
     AdviceItem(adviceImagePath: "assets/images/advices/frame_10.png",
-      adviceText: "Эта кнопка позволяет повторить видео с того момента, с которого Вы начали его смотреть"),
+      adviceText: "Эта кнопка позволяет повторить видео с того момента, с которого вы начали его смотреть"),
+    AdviceItem(adviceImagePath: "assets/images/advices/frame_13.png",
+      adviceText: "Регулируйте скорость воспроизведения видео под свой уровень"),
     AdviceItem(adviceImagePath: "assets/images/advices/frame_11.png",
       adviceText: "Просто смахните элемент избранного в сторону, чтобы его удалить"),
     AdviceItem(adviceImagePath: "assets/images/advices/frame_12.png",
       adviceText: "Меняйте пункты избранного местами"),
-    AdviceItem(adviceImagePath: "assets/images/advices/frame_13.png",
-      adviceText: "Регулируйте скорость воспроизведения видео под свой уровень"),
+    AdviceItem(adviceImagePath: "assets/images/advices/frame_14.png",
+      adviceText: "Авторизуйтесь, чтобы сохранять настройки в облаке"),
+    AdviceItem(adviceImagePath: "assets/images/advices/frame_15.png",
+      adviceText: "Вы можете поменять имя, которое будет видно в программе"),
 
   ];
 }
