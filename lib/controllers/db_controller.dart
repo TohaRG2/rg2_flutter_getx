@@ -220,7 +220,7 @@ class DBController extends GetxController {
           isFavourite: false,
           favComment: "",
           subId: 0);
-      _mainBase.mainDao.insertItem(item);
+      await _mainBase.mainDao.insertItem(item);
     }
   }
 
@@ -232,7 +232,7 @@ class DBController extends GetxController {
           move: moves.moves()[i],
           icon: moves.icons()[i],
           toast: moves.toasts()[i]);
-      _mainBase.movesDao.insertItem(item);
+      await _mainBase.movesDao.insertItem(item);
     }
   }
 
