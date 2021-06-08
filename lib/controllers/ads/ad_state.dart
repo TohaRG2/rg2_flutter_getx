@@ -9,21 +9,17 @@ class AdState {
 
   String get bannerAdUnitId => AdHelper.bannerAdUnitId;
   
-  AdListener _adListener = AdListener(
+  BannerAdListener _adListener = BannerAdListener(
       onAdLoaded: (ad) => logPrint('Ad loaded: ${ad.adUnitId}'),
-      onAdClosed: (ad) => logPrint('Ad loaded: ${ad.adUnitId}'),
       onAdFailedToLoad: (ad, error) =>
           logPrint('Ad loaded: ${ad.adUnitId}, $error'),
+      // Called when an ad opens an overlay that covers the screen.
       onAdOpened: (ad) => logPrint('Ad loaded: ${ad.adUnitId}'),
-      onAppEvent: (ad, name, data) =>
-          logPrint('Ad loaded: ${ad.adUnitId}, $name, $data'),
-      onApplicationExit: (ad) => logPrint('Ad loaded: ${ad.adUnitId}'),
-      onNativeAdClicked: (nativeAd) => logPrint('Ad loaded: ${nativeAd.adUnitId}'),
-      onNativeAdImpression: (nativeAd) =>
-          logPrint('Ad loaded: ${nativeAd.adUnitId}'),
-      onRewardedAdUserEarnedReward: (ad, reward) =>
-          logPrint('Ad loaded: ${ad.adUnitId}, ${reward.amount}, ${reward.type}')
+      // Called when an ad removes an overlay that covers the screen.
+      onAdClosed: (ad) => logPrint('Ad loaded: ${ad.adUnitId}'),
+      // Called when an impression occurs on the ad.
+      onAdImpression: (Ad ad) => logPrint('Ad impression.'),
   );
-  AdListener get adListener => _adListener;
+  BannerAdListener get adListener => _adListener;
 
 }
