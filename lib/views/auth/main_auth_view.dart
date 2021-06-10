@@ -10,6 +10,7 @@ class MainAuthView extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.checkBaseResourcesVersion();
     return (controller.showSignInDialog) ?
           SignInView() :
           MainView();

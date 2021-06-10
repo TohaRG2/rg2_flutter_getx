@@ -154,6 +154,7 @@ class SettingsController extends GetxController {
     }
 
   // -------------------------  Глобальные настройки (доступны только на чтение из базы) ------------------------------
+  //TODO убрать монетки
   /// Количество монеток, необходимых для открытия всех головоломок
   final _coinsToEnableAllPuzzle = RxInt(900);
     int get coinsToEnableAllPuzzle => _coinsToEnableAllPuzzle.value;
@@ -161,7 +162,7 @@ class SettingsController extends GetxController {
   /// Количество монеток доступных изначально. При чтении глобальных настроек, значение должно сохраниться в currentCoins
   final _initialCoins = RxInt(15);
     int get initialCoins => _initialCoins.value;
-  //-------------------------------------------------------------------------------------------------------------------
+
 
   /// Счетчик нажатий на плашку
   var _godCount = 0;

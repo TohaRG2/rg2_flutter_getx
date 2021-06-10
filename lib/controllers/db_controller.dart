@@ -115,7 +115,7 @@ class DBController extends GetxController {
       await initComments();
       needInit = false;
     } else {
-      logPrint("not first start, db.init don't need");
+      logPrint("Не первый запуск, инициализация не нужна");
       // await _initCubeTypes();
       // await _initPhases();
       //logPrint("fillDB complete");
@@ -124,87 +124,42 @@ class DBController extends GetxController {
     return _mainBase;
   }
 
+  /// Список фаз для инициализации базы
+  var phasesToInit = <Phase>[
+    //--- Основные пункты меню
+    BigMain(), Cross(), G2f(), Main2x2(), Main3x3(), MainF2l(),
+    MainOther(), MainOther3x3(), MainPyraminx(), MainSkewb(),
+    //--- сами головоломки
+    Accel(), AdvF2L(), Advanced2x2(), Axis(),
+    Begin(), Begin2x2(), Begin4x4(), Begin5x5(), BigCubes(), Blind(), Blind4x4(), BrickCube(),
+    Clover(), Cll(), Coll(), ContainerCube(), Cuboid2x2x3(), Cuboid3x3x2(), Cylinder(), F2l(), Fisher(),
+    Gear(), Ghost(), IntF2l(), Ivy(), Keyhole(), Megaminx(), Mirror(), Oll(), Ortega(),
+    Patterns(), Pentacle(), Penrose(), Pll(), Prisma(), Pyramorphix(), Pyraminx(), Pyraminx4x4(),
+    RediCube(), Rozov(), Roux(), Skewb(), Square(), SquareStar(), Sudoku(),
+    TwistyCube(), TwistySkewb(), Windmill(), Yau4x4()
+  ];
+
+  /// Список фаз с основными движениями головоломок
+  var movesToInit = <Moves> [
+    Basic3x3(), Basic4x4(), Basic5x5(), BasicClover(), BasicContainer(), BasicIvy(),
+    BasicPyraminx(), BasicPyraminx4x4(), BasicRedi(), BasicSkewb(), BasicSquare(),
+  ];
+
   /// Заполняем данными основную базу с текстовками обучалок/ссылками на видео/комментами
   Future _initPhases() async {
     // logPrint("initPhasePositions");
     // await _mainBase.phasePositionDao.clearTable();
     logPrint("InitCubes");
     await _mainBase.mainDao.clearTable();
-    await _initPhase(BigMain());
-    await _initPhase(Cross());
-    await _initPhase(G2f());
-    await _initPhase(Main2x2());
-    await _initPhase(Main3x3());
-    await _initPhase(MainF2l());
-    await _initPhase(MainOther());
-    await _initPhase(MainOther3x3());
-    await _initPhase(MainPyraminx());
-    await _initPhase(MainSkewb());
-
-    //------------------------------
-    await _initPhase(Accel());
-    await _initPhase(AdvF2L());
-    await _initPhase(Advanced2x2());
-    await _initPhase(Axis());
-    await _initPhase(Begin());
-    await _initPhase(Begin2x2());
-    await _initPhase(Begin4x4());
-    await _initPhase(Begin5x5());
-    await _initPhase(BigCubes());
-    await _initPhase(Blind());
-    await _initPhase(Blind4x4());
-    await _initPhase(BrickCube());
-    await _initPhase(Clover());
-    await _initPhase(Cll());
-    await _initPhase(Coll());
-    await _initPhase(ContainerCube());
-    await _initPhase(Cuboid2x2x3());
-    await _initPhase(Cuboid3x3x2());
-    await _initPhase(Cylinder());
-    await _initPhase(F2l());
-    await _initPhase(Fisher());
-    await _initPhase(Gear());
-    await _initPhase(Ghost());
-    await _initPhase(IntF2l());
-    await _initPhase(Ivy());
-    await _initPhase(Keyhole());
-    await _initPhase(Megaminx());
-    await _initPhase(Oll());
-    await _initPhase(Ortega());
-    await _initPhase(Mirror());
-    await _initPhase(Patterns());
-    await _initPhase(Pentacle());
-    await _initPhase(Penrose());
-    await _initPhase(Pll());
-    await _initPhase(Prisma());
-    await _initPhase(Pyramorphix());
-    await _initPhase(Pyraminx());
-    await _initPhase(Pyraminx4x4());
-    await _initPhase(RediCube());
-    await _initPhase(Rozov());
-    await _initPhase(Roux());
-    await _initPhase(Skewb());
-    await _initPhase(Square());
-    await _initPhase(SquareStar());
-    await _initPhase(Sudoku());
-    await _initPhase(TwistyCube());
-    await _initPhase(TwistySkewb());
-    await _initPhase(Windmill());
-    await _initPhase(Yau4x4());
+    await Future.forEach(phasesToInit,(Phase phase) async {
+      await _initPhase(phase);
+    });
 
     //-----------------------------
     await _mainBase.movesDao.clearTable();
-    await _initBasicMoves(Basic3x3());
-    await _initBasicMoves(Basic4x4());
-    await _initBasicMoves(Basic5x5());
-    await _initBasicMoves(BasicClover());
-    await _initBasicMoves(BasicContainer());
-    await _initBasicMoves(BasicIvy());
-    await _initBasicMoves(BasicPyraminx());
-    await _initBasicMoves(BasicPyraminx4x4());
-    await _initBasicMoves(BasicRedi());
-    await _initBasicMoves(BasicSkewb());
-    await _initBasicMoves(BasicSquare());
+    await Future.forEach(movesToInit, (Moves moves) async {
+      await _initBasicMoves(moves);
+    });
   }
 
   Future _initPhase(Phase phase) async {

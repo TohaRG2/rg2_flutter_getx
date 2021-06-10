@@ -2,11 +2,14 @@ import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:package_info/package_info.dart';
 import 'package:rg2/controllers/connection_controller.dart';
 import 'package:rg2/database/cloud_database.dart';
+import 'package:rg2/database/updater/mainbase_updater.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/main_view.dart';
@@ -337,4 +340,45 @@ class AuthController extends GetxController {
     _sp.write(Const.IS_FIREBASE_ENTER_ENABLED, true);
   }
 
+
+  /// Сохраненный локально номер версии приложения. Если его еще не сохраняли (нет в сторадже), то 0
+  String get buildNumber => _sp.read(Const.BUILD_NUMBER);
+  set buildNumber(String value) {
+    _sp.write(Const.BUILD_NUMBER, value);
+  }
+
+  String get version => _sp.read(Const.VERSION);
+  set version(String value) {
+    _sp.write(Const.VERSION, value);
+  }
+
+  Future<void> checkBaseResourcesVersion() async {
+    var _build = buildNumber;
+    var _version = version;
+    logPrint("checkBaseResourcesVersion - проверка версии ресурсов в базе, была версия: $_version - $_build");
+
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String curVersion = packageInfo.version;
+    String curBuild = packageInfo.buildNumber;
+
+    if (_version != null && _version != curVersion) {
+      // запускаем обновление ресурсов в базе в отдельном потоке (изоляте)
+      compute(updateMainBaseFunction, 1).then((success) {
+            if (success) {
+              logPrint("checkBaseResourcesVersion - ресурсы в базе обновлены");
+              _updateResourcesVersion(curVersion, curBuild);
+            } else {
+              logPrintErr("checkBaseResourcesVersion - ошибка обновления");
+            }
+          }
+      );
+    } else if (curVersion == null) {
+      _updateResourcesVersion(curVersion, curBuild);
+    }
+  }
+
+  void _updateResourcesVersion(String curVersion, String curBuild) {
+    version = curVersion;
+    buildNumber = curBuild;
+  }
 }

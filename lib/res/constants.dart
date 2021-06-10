@@ -13,6 +13,8 @@ class Const {
   static const CURRENT_INFO_PAGE_NUMBER = 'currentInfoPageNumber';
   static const FAVOURITES = 'FAVOURITES';
   static const GOD_MODE = 'godMode';
+  static const BUILD_NUMBER = 'buildNumber';
+  static const VERSION = 'version';
 
   /// Настройки генератора скрамблов
   static const IS_EDGE_ENABLED = 'isEdgeEnabled';
