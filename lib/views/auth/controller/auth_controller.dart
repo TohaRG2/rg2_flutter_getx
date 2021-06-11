@@ -109,7 +109,7 @@ class AuthController extends GetxController {
       displayName = nameController.text;
     }
     var _user = _auth.currentUser;
-    await _user.updateProfile(displayName: displayName);
+    await _user.updateDisplayName(displayName);
     await _user.reload();
     _firebaseUser.value = _auth.currentUser;
     await CloudDatabase().createOrUpdateUser(user);
@@ -215,7 +215,7 @@ class AuthController extends GetxController {
         var givenName = _appleCredential.fullName.givenName ?? "Введите имя";
         var familyName = _appleCredential.fullName.familyName ?? "";
         final displayName = "$givenName $familyName";
-        await firebaseUser.updateProfile(displayName: displayName);
+        await firebaseUser.updateDisplayName(displayName);
         // await changeUserNameTo(name: displayName);
         await createObjectInUsers(firebaseUser);
 
