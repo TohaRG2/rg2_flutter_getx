@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.210608.1+428
+version: 4.210612.4+428
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -72,7 +72,7 @@ dependencies:
   form_field_validator: ^1.1.0
 
   # Красивые кнопки аутентификации
-  auth_buttons: ^1.0.1+3
+  auth_buttons: ^1.0.1+4
 
   # Проверка соединения https://pub.dev/packages/connectivity
   connectivity: ^3.0.6
