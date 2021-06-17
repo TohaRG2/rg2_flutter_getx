@@ -4,6 +4,7 @@ import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+/// Вызываем этот диалог, когда нажимаем на превью видео
 class YoutubePlayerDialog extends StatelessWidget {
   final String videoID;
 
@@ -25,6 +26,10 @@ class YoutubePlayerDialog extends StatelessWidget {
         content: YoutubePlayer(
           controller: _controller,
           showVideoProgressIndicator: true,
+          bottomActions: [
+            CurrentPosition(),
+            ProgressBar(isExpanded: true),
+          ],
           onReady: () {
             logPrint("build - Player is ready.");
           },
