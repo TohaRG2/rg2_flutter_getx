@@ -190,7 +190,7 @@ class Pentacle implements Phase {
     <p><a href="rg2://ytplay?time=22:42&link=6GMCv19sIS4">5. Носик</a></p>
     <p style="text-align:center"><img src="pentacle_2_5.xml" width="200"></p>
 
-    <p><a href="rg2://ytplay?time=23:06&link=6GMCv19sIS4&alg=F’_U’_R’_F_R">Алгоритм:</a> <b>F’ U’ R’ F R</b></p>
+    <p><a href="rg2://ytplay?time=23:06&link=6GMCv19sIS4&alg=F’_(R_U_R’_U’)_R’_F_R">Алгоритм:</a> <b>F’ (R U R’ U’) R’ F R</b></p>
 
     <p><a href="rg2://ytplay?time=23:53&link=6GMCv19sIS4">6. Вертолет</a></p>
     <p style="text-align:center"><img src="pentacle_2_6.xml" width="200"></p>
