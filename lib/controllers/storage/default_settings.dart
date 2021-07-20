@@ -37,6 +37,8 @@ Map<String, dynamic> defaultSettings = {
   Const.CURRENT_SCRAMBLE : "R F L B U2 L B' R F' D B R L F D R' D L",
   // отображать результат решения блайнда
   Const.SHOW_DECISION : true,
+  // отображать текст или информацию о решении блайнда
+  Const.SHOW_DECISION_TEXT : true,
 
   /// Настройки азбуки блайндов
   // Текущая азбука

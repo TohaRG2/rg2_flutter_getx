@@ -23,6 +23,7 @@ class Const {
   static const CURRENT_SCRAMBLE = 'currentScramble';
   static const CURRENT_DECISION = 'currentDecision';
   static const SHOW_DECISION = 'showDecision';
+  static const SHOW_DECISION_TEXT = 'showDecisionText';
 
   /// Настройки азбуки блайндов
   static const CURRENT_AZBUKA = 'currentAzbuka';

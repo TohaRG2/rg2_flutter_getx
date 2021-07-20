@@ -168,7 +168,7 @@ class DBController extends GetxController {
     String curVersion = packageInfo.version;
     String curBuild = packageInfo.buildNumber;
 
-    logPrint("checkBaseResourcesVersion - текущие версии $curVersion - $curBuild");
+    logPrint("checkBaseResourcesVersion - текущая версия $curVersion - $curBuild");
 
     if (_version != null && _version != curVersion) {
       await _updateMainBaseFromLocal();

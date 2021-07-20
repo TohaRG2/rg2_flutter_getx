@@ -30,7 +30,7 @@ class ScrambleGenController extends GetxController {
     mainCube = BlindCube.colored(colors: Azbuka().currentColorsSide, azbuka: Azbuka().currentAzbuka);
     mainCube.executeScrambleWithReset(currentScramble);
     _conditions = mainCube.getDecisionForScramble(currentScramble);
-    currentDecision = showDecision ? _conditions.decision : _conditions.decisionInfo;
+    currentDecision = showDecisionText ? _conditions.decision : _conditions.decisionInfo;
     mainColoredAzbuka = mainCube.getColoredAzbuka();
 
     settingsCube = BlindCube.colored(colors: Azbuka().currentColorsSide, azbuka: Azbuka().currentAzbuka);
@@ -95,9 +95,17 @@ class ScrambleGenController extends GetxController {
   final _showDecision = true.obs;
   bool get showDecision => _showDecision.value;
   set showDecision(bool value) {
-    currentDecision = value ? _conditions.decision : _conditions.decisionInfo;
+    currentDecision = showDecisionText ? _conditions.decision : _conditions.decisionInfo;
     _showDecision.value = value;
     _settingsController.setProperty(Property(key: Const.SHOW_DECISION, value: value));
+  }
+
+  final _showDecisionText = true.obs;
+  bool get showDecisionText => _showDecisionText.value;
+  set showDecisionText(bool value) {
+    currentDecision = value ? _conditions.decision : _conditions.decisionInfo;
+    _showDecisionText.value = value;
+    _settingsController.setProperty(Property(key: Const.SHOW_DECISION_TEXT, value: value));
   }
 
   ScrambleDecisionCondition _conditions;
@@ -141,14 +149,14 @@ class ScrambleGenController extends GetxController {
     _conditions = mainCube.getDecisionForScramble(scramble);
     mainCube.executeScrambleWithReset(scramble);
     currentScramble = scramble;
-    currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
+    currentDecision = (showDecisionText) ? _conditions.decision : _conditions.decisionInfo;
     mainColoredAzbuka = mainCube.getColoredAzbuka();
   }
 
   void generateNewScramble() {
     _conditions = mainCube.generateScrambleWithParam(checkEdge: isEdgeEnabled, checkCorner: isCornerEnabled, lenScramble: scrambleLength);
     currentScramble = _conditions.scramble;
-    currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
+    currentDecision = (showDecisionText) ? _conditions.decision : _conditions.decisionInfo;
     mainColoredAzbuka = mainCube.getColoredAzbuka();
   }
 
@@ -248,7 +256,7 @@ class ScrambleGenController extends GetxController {
     mainCube.executeScrambleWithReset(currentScramble);
     mainColoredAzbuka = mainCube.getColoredAzbuka();
     _conditions = mainCube.getDecisionForScramble(currentScramble);
-    currentDecision = (showDecision) ? _conditions.decision : _conditions.decisionInfo;
+    currentDecision = (showDecisionText) ? _conditions.decision : _conditions.decisionInfo;
   }
 
 
