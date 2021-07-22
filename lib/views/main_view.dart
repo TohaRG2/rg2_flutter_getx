@@ -32,6 +32,7 @@ class MainView extends StatelessWidget {
     var selectedColor = Get.theme.scaffoldBackgroundColor;
     var unSelectedColor = Get.theme.scaffoldBackgroundColor.withAlpha(130);
     // Get.dialog(AdvicesDialog())
+    logPrint("onPageStartBuild");
     return Obx(() {
       //logPrint("BottomItem = ${_settings.bottomItem}");
       return Scaffold(
