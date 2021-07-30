@@ -16,7 +16,7 @@ class Header extends StatelessWidget {
   Widget build(BuildContext context) {
     LearnDetailController _controller = Get.find();
     var item = _controller.currentItems[_curPageNumber];
-    bool isPngImg = item.icon.endsWith(".png");
+    bool isPngImg = !item.icon.endsWith(".svg");
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

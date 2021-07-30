@@ -45,18 +45,18 @@ class Begin implements Phase {
     ];
 
     static const begin_icon = [
-        "assets/images/main3x3/begin/begin_0.svg",
-        "assets/images/main3x3/begin/begin_1.svg",
-        "assets/images/main3x3/begin/begin_2.svg",
-        "assets/images/main3x3/begin/begin_3.svg",
-        "assets/images/main3x3/begin/begin_4.svg",
-        "assets/images/main3x3/begin/begin_5a.svg",
-        "assets/images/main3x3/begin/begin_5b.svg",
-        "assets/images/main3x3/begin/begin_6.svg",
-        "assets/images/main3x3/begin/begin_7.svg",
-        "assets/images/main3x3/begin/begin_8.svg",
-        "assets/images/main3x3/begin/begin_9.svg",
-        "assets/images/main3x3/begin/begin_0.svg",
+        "assets/images/main3x3/begin/begin_0.png",
+        "assets/images/main3x3/begin/begin_1.png",
+        "assets/images/main3x3/begin/begin_2.png",
+        "assets/images/main3x3/begin/begin_3.png",
+        "assets/images/main3x3/begin/begin_4.png",
+        "assets/images/main3x3/begin/begin_5a.png",
+        "assets/images/main3x3/begin/begin_5b.png",
+        "assets/images/main3x3/begin/begin_6.png",
+        "assets/images/main3x3/begin/begin_7.png",
+        "assets/images/main3x3/begin/begin_8.png",
+        "assets/images/main3x3/begin/begin_9.png",
+        "assets/images/main3x3/begin/begin_0.png",
     ];
     
     static const begin_descr = [

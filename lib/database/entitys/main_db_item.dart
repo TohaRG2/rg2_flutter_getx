@@ -47,7 +47,8 @@ class MainDBItem{
       path = iconName;
     } else {
       var subDir = getAssetPath();
-      path = "assets/images/$subDir/$iconName.svg";
+      // path = "assets/images/$subDir/$iconName.svg";
+      path = "assets/images/$subDir/$iconName.png";
     }
     return path;
   }

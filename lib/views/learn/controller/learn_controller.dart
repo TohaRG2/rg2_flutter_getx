@@ -23,7 +23,7 @@ class LearnController extends GetxController {
 
 
   double curPositionInList = 0.0;
-  String _backIconPath = "assets/images/icons/back_arrow.svg";
+  String _backIconPath = "assets/images/icons/back_arrow.png";
 
   // Список со свойствами страниц
   RxList<PageProperties> pages = <PageProperties>[].obs;
