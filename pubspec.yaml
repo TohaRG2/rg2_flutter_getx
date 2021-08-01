@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.210727.1+433
+version: 4.210801.1+434
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -14,7 +14,7 @@ dependencies:
   # SQL Database
   floor: ^1.1.0
   # DI + StateManagement
-  get: ^4.3.0
+  get: ^4.3.4
   # Работаем с SharedPreferences
   get_storage: ^2.0.3
   # Окно выбора цвета
