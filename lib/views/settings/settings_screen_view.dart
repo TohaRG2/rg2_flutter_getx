@@ -5,6 +5,7 @@ import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/settings/widgets/reset_settings.dart';
+import 'package:rg2/views/settings/widgets/screen_on_off_settings.dart';
 import 'package:rg2/views/settings/widgets/theme_switch.dart';
 import 'package:rg2/views/shared/preloader.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
@@ -42,6 +43,8 @@ class SettingsScreen extends GetWidget<SettingsController> {
                     UserAuthSettings(),
                     SizedBox(height: UIHelper.SpaceMedium,),
                     _themeSettings(context),
+                    SizedBox(height: UIHelper.SpaceMedium,),
+                    ScreenOnOffSettings(),
                     SizedBox(height: UIHelper.SpaceMedium,),
                     HelpSettings(),
                     SizedBox(height: UIHelper.SpaceMedium,),

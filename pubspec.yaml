@@ -65,7 +65,7 @@ dependencies:
   firebase_core: ^1.4.0
   firebase_auth: ^3.0.1
   cloud_firestore: ^2.4.0
-  google_sign_in: ^5.0.5
+  google_sign_in: ^5.0.7
   apple_sign_in: ^0.1.0
 
   # Валидаторы для проверки полей ввода
@@ -81,7 +81,7 @@ dependencies:
   in_app_purchase: ^1.0.6
 
   # Реклама в приложении
-  google_mobile_ads: ^0.13.2
+  google_mobile_ads: ^0.13.3
 
   # Получение версии приложения в коде
   package_info: ^2.0.2
@@ -97,12 +97,15 @@ dependencies:
   # Автосоздание иконок для приложения
   flutter_launcher_icons: ^0.9.1
 
+  # Убираем автоотключение экрана
+  wakelock: ^0.5.3+3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация + build runner
   floor_generator: ^1.1.0
-  build_runner: ^2.0.6
+  build_runner: ^2.1.0
 
 flutter_icons:
   android: "ic_launcher"

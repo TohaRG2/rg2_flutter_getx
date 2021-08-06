@@ -8,6 +8,7 @@ import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
+import 'package:wakelock/wakelock.dart';
 
 class SettingsController extends GetxController {
   final GlobalStorageController _storage = Get.put(GlobalStorageController(), permanent: true);
@@ -58,6 +59,23 @@ class SettingsController extends GetxController {
       _textScaleFactor.value = value;
       _storage.setProperty(Property(key: Const.SCALE_FACTOR, value: value));
     }
+
+  /// Необходимость отключения экрана для всей программы
+  final _alwaysScreenOnGlobal = RxBool(true);
+  bool get alwaysScreenOnGlobal => _alwaysScreenOnGlobal.value;
+  set alwaysScreenOnGlobal(value) {
+    _alwaysScreenOnGlobal.value = value;
+    _storage.setProperty(Property(key: Const.ALWAYS_SCREEN_ON_GLOBAL, value: value));
+    checkAlwaysOnGlobal();
+  }
+
+  /// Необходимость отключения экрана для всей программы
+  final _alwaysScreenOnTimer = RxBool(true);
+  bool get alwaysScreenOnTimer => _alwaysScreenOnTimer.value;
+  set alwaysScreenOnTimer(value) {
+    _alwaysScreenOnTimer.value = value;
+    _storage.setProperty(Property(key: Const.ALWAYS_SCREEN_ON_TIMER, value: value));
+  }
 
   /// Открывать ли окно с подсказками при старте программы
   final _isStartHelpEnabled = RxBool(false);
@@ -167,11 +185,24 @@ class SettingsController extends GetxController {
   /// Счетчик нажатий на плашку
   var _godCount = 0;
 
+  /// Проверка и установка настройки гашения экрана при бездействии
+  void checkAlwaysOnGlobal() {
+    if (alwaysScreenOnGlobal) {
+      logPrint("Wakelock.enable");
+      Wakelock.enable();
+    } else {
+      logPrint("Wakelock.disable");
+      Wakelock.disable();
+    }
+  }
+
   /// Инициализируем observable переменные
   _initializeRxVariables() {
     logPrint("_initializeRxVariables Start");
 
     _textScaleFactor.value = _storage.getPropertyByKey(Const.SCALE_FACTOR);
+    _alwaysScreenOnGlobal.value = _storage.getPropertyByKey(Const.ALWAYS_SCREEN_ON_GLOBAL);
+    _alwaysScreenOnTimer.value = _storage.getPropertyByKey(Const.ALWAYS_SCREEN_ON_TIMER);
     _isStartHelpEnabled.value = _storage.getPropertyByKey(Const.IS_START_HELP_ENABLED);
     _isSwipeEnabled.value = _storage.getPropertyByKey(Const.IS_SWIPE_ENABLED);
     _internetUsage.value = _storage.getPropertyByKey(Const.INTERNET_USAGE);

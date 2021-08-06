@@ -13,6 +13,10 @@ Map<String, dynamic> defaultSettings = {
   Const.SCALE_FACTOR : 1.0,
   // свайпы во viewPager
   Const.IS_SWIPE_ENABLED : true,
+  // не гасить экран в приложении
+  Const.ALWAYS_SCREEN_ON_GLOBAL : false,
+  // не гасить экран в таймере
+  Const.ALWAYS_SCREEN_ON_TIMER : true,
   // включено ли отображение подсказок при старте программы
   Const.IS_START_HELP_ENABLED : true,
   // режим использования интернета

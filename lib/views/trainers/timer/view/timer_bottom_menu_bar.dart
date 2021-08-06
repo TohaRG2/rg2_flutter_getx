@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/utils/my_logger.dart';
+import 'package:rg2/views/trainers/timer/controller/timer_controller.dart';
 import 'package:rg2/views/trainers/timer/view/settings_timer_view.dart';
 import 'package:rg2/views/trainers/timer/view/result_view/results_view.dart';
 
 class TimerBottomMenuBar extends StatelessWidget {
   TimerBottomMenuBar({Key key,}) : super(key: key);
+  final TimerController _timerController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class TimerBottomMenuBar extends StatelessWidget {
         switch (tappedItemIndex) {
         // Нажата кнопка "Назад"
           case 0:
+            _timerController.checkAlwaysOnGlobalState();
             Get.back();
             break;
         // Нажата кнопка "Результаты"

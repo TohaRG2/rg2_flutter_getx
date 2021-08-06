@@ -24,6 +24,9 @@ class TimerSettingsController extends GetxController {
     _metronomFrequency.value = _settingsController.getPropertyByKey(Const.METRONOM_FREQUENCY);
     _showScramble.value = _settingsController.getPropertyByKey(Const.SHOW_SCRAMBLE);
     _scrambleTextRatio.value = _settingsController.getPropertyByKey(Const.SCRAMBLE_TEXT_RATIO);
+    _alwaysScreenOnTimer.value = _settingsController.getPropertyByKey(Const.ALWAYS_SCREEN_ON_TIMER);
+    _alwaysScreenOnGlobal.value = _settingsController.getPropertyByKey(Const.ALWAYS_SCREEN_ON_GLOBAL);
+    logPrint("_initializeRxVariables - $_alwaysScreenOnGlobal $_alwaysScreenOnTimer");
   }
 
   final _isOneHanded = RxBool(false);
@@ -67,6 +70,12 @@ class TimerSettingsController extends GetxController {
       _showScramble.value = value;
       _settingsController.setProperty(Property(key: Const.SHOW_SCRAMBLE, value: value));
     }
+
+  final _alwaysScreenOnTimer = RxBool(false);
+    bool get alwaysScreenOnTimer => _settingsController.getPropertyByKey(Const.ALWAYS_SCREEN_ON_TIMER);
+
+  final _alwaysScreenOnGlobal = RxBool(false);
+    bool get alwaysScreenOnGlobal => _settingsController.getPropertyByKey(Const.ALWAYS_SCREEN_ON_GLOBAL);
 
   final _scrambleTextRatio = RxDouble(1.0);
     double get scrambleTextRatio => _scrambleTextRatio.value;

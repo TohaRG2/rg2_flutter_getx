@@ -5,6 +5,8 @@ class Const {
   static const ACCENT_COLOR = 'accentColor';
   static const IS_THEME_DARK = 'isThemeDark';
   static const SCALE_FACTOR = 'scaleFactor';
+  static const ALWAYS_SCREEN_ON_GLOBAL = 'alwaysScreenOnGlobal';
+  static const ALWAYS_SCREEN_ON_TIMER = 'alwaysScreenOnTimer';
   static const IS_START_HELP_ENABLED = 'isStartHelpEnabled';
   static const IS_SWIPE_ENABLED = 'isSwipeEnabled';
   static const INTERNET_USAGE = 'internetUsing';
