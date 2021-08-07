@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/utils/my_logger.dart';
+import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/youtube_player/controller/youtube_controller.dart';
 import 'package:rg2/views/shared/buttons_style.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
@@ -20,7 +21,7 @@ class YouTubeView extends GetView<MyYouTubeController> {
     logPrint("arg = $_id, $_time, $_alg");
     // т.к. в других местах контроллер не нужен, то инициализируем его только на время работы плеера
     Get.put(MyYouTubeController());
-    YoutubePlayerController _youTubeController = YoutubePlayerController(
+    YoutubePlayerController youTubeController = YoutubePlayerController(
       initialVideoId: _id,
       flags: YoutubePlayerFlags(
         autoPlay: true,
@@ -53,23 +54,23 @@ class YouTubeView extends GetView<MyYouTubeController> {
                             ),
                           ),
                           YoutubePlayer(
-                            controller: _youTubeController,
+                            controller: youTubeController,
                             bottomActions: [
                               CurrentPosition(),
                               ProgressBar(isExpanded: true),
-                              PlaybackSpeedButton()
+                              // PlaybackSpeedButton()
                             ],
                             onReady: () {
                               //logPrint("Player Ready");
-                              _youTubeController.addListener(() {
-                                if (_youTubeController.value.playerState != _playerState) {
-                                  _playerState = _youTubeController.value.playerState;
+                              youTubeController.addListener(() {
+                                if (youTubeController.value.playerState != _playerState) {
+                                  _playerState = youTubeController.value.playerState;
                                   if ((_playerState == PlayerState.playing) || (_playerState == PlayerState.cued)) {
-                                    _youTubeController.setPlaybackRate(controller.playbackRate);
+                                    youTubeController.setPlaybackRate(controller.playbackRate);
                                     if (controller.playbackRate < 0.75) {
-                                      _youTubeController.mute();
+                                      youTubeController.mute();
                                     } else {
-                                      _youTubeController.unMute();
+                                      youTubeController.unMute();
                                     }
                                   }
                                   controller.setPlayerState(_playerState.index);
@@ -82,6 +83,21 @@ class YouTubeView extends GetView<MyYouTubeController> {
                       ),
                     ),
                   )),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('0.25'),
+                    Text('0.5'),
+                    Text('0.75'),
+                    Text('1'),
+                    Text('1.25'),
+                    Text('1.5'),
+                    Text('1.75'),
+                  ],
+                ),
+              ),
               Obx(
                     () => Slider(
                     value: controller.playbackRate,
@@ -91,17 +107,17 @@ class YouTubeView extends GetView<MyYouTubeController> {
                     divisions: 6,
                     label: controller.playbackRate.toString(),
                     onChanged: (value) {
-                      _youTubeController.setPlaybackRate(value);
+                      youTubeController.setPlaybackRate(value);
                       controller.playbackRate = value;
                       if (value < 0.75) {
-                        _youTubeController.mute();
+                        youTubeController.mute();
                       } else {
-                        _youTubeController.unMute();
+                        youTubeController.unMute();
                       }
                     }
                 ),
               ),
-              playerNavigation(_youTubeController),
+              playerNavigation(youTubeController),
             ],
           ),
         ),
@@ -109,7 +125,7 @@ class YouTubeView extends GetView<MyYouTubeController> {
     );
   }
 
-  Center playerNavigation(YoutubePlayerController _youTubeController) {
+  Center playerNavigation(YoutubePlayerController youTubeController) {
     return Center(
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -129,7 +145,7 @@ class YouTubeView extends GetView<MyYouTubeController> {
               style: raisedButtonStyle,
               child: Icon(Icons.skip_previous_rounded),
               onPressed: () {
-                _youTubeController.seekTo(Duration(seconds: _tryParseTime(_time)));
+                youTubeController.seekTo(Duration(seconds: _tryParseTime(_time)));
               },
             ),
           ),
@@ -139,8 +155,8 @@ class YouTubeView extends GetView<MyYouTubeController> {
               style: raisedButtonStyle,
               child: Icon(Icons.fast_rewind_rounded),
               onPressed: () {
-                var backTo = _youTubeController.value.position.inSeconds - 10;
-                _youTubeController.seekTo(Duration(seconds: backTo));
+                var backTo = youTubeController.value.position.inSeconds - 10;
+                youTubeController.seekTo(Duration(seconds: backTo));
               },
             ),
           ),
@@ -152,9 +168,9 @@ class YouTubeView extends GetView<MyYouTubeController> {
                 child: (controller.getPlayerState() == 4) ? Icon(Icons.play_arrow_rounded) : Icon(Icons.pause_rounded),
                 onPressed: () {
                   if (controller.getPlayerState() == PlayerState.paused.index) {
-                    _youTubeController.play();
+                    youTubeController.play();
                   } else {
-                    _youTubeController.pause();
+                    youTubeController.pause();
                   }
                 },
               ),
@@ -166,8 +182,8 @@ class YouTubeView extends GetView<MyYouTubeController> {
               style: raisedButtonStyle,
               child: Icon(Icons.fast_forward_rounded),
               onPressed: () {
-                var forwardTo = _youTubeController.value.position.inSeconds + 10;
-                _youTubeController.seekTo(Duration(seconds: forwardTo));
+                var forwardTo = youTubeController.value.position.inSeconds + 10;
+                youTubeController.seekTo(Duration(seconds: forwardTo));
               },
             ),
           ),
