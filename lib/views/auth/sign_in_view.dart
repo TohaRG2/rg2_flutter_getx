@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:apple_sign_in/apple_sign_in_button.dart' as asb;
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -123,7 +124,8 @@ class SignInView extends GetWidget<AuthController> {
                   }
                   controller.googleSignInAndGoToStart();
                 },
-                darkMode: _settings.isDarkThemeSelect,
+                darkMode: false,
+                // darkMode: _settings.isDarkThemeSelect,
                 style: _googleButtonStyle,
               ),
 
@@ -131,16 +133,25 @@ class SignInView extends GetWidget<AuthController> {
 
               /// Войти в эппл аккаунт, только для iPhone
               if (Platform.isIOS) ...{
-                AppleAuthButton(
+                asb.AppleSignInButton(
                   onPressed: () {
                     if (Get.isSnackbarOpen) {
                       Get.back();
                     }
                     controller.appleSignInAndGoToStart();
                   },
-                  darkMode: _settings.isDarkThemeSelect,
-                  style: _appleButtonStyle
-                )
+                  style: asb.ButtonStyle.black,
+                ),
+                // AppleAuthButton(
+                //   onPressed: () {
+                //     if (Get.isSnackbarOpen) {
+                //       Get.back();
+                //     }
+                //     controller.appleSignInAndGoToStart();
+                //   },
+                //   darkMode: _settings.isDarkThemeSelect,
+                //   style: _appleButtonStyle
+                // )
               },
             ],
           ),
@@ -187,17 +198,19 @@ class SignInView extends GetWidget<AuthController> {
 
   AuthButtonStyle _googleButtonStyle = AuthButtonStyle(
     iconSize: 20,
+    buttonType: AuthButtonType.secondary,
+    borderRadius: 4.0,
     elevation: 3,
-    padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceMini),
+    padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceSmall),
     width: double.infinity,
   );
 
-  AuthButtonStyle _appleButtonStyle = AuthButtonStyle(
-    iconSize: 20,
-    elevation: 3,
-    padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceMini),
-    width: double.infinity,
-  );
+  // AuthButtonStyle _appleButtonStyle = AuthButtonStyle(
+  //   iconSize: 20,
+  //   elevation: 3,
+  //   padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceMini),
+  //   width: double.infinity,
+  // );
 
 
   Widget buildBottomButtons() {
