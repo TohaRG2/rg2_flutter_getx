@@ -23,6 +23,14 @@ class MainFavourite extends StatelessWidget {
           backgroundColor: Get.theme.scaffoldBackgroundColor,
           actions: [
             IconButton(
+              icon: const Icon(Icons.shuffle_rounded),
+              color: Get.textTheme.headline5.color,
+              tooltip: 'Перемешать',
+              onPressed: () {
+                _favController.shuffleFavourites();
+              }
+            ),
+            IconButton(
               icon: const Icon(Icons.settings_rounded),
               color: Get.textTheme.headline5.color,
               tooltip: 'Настройки',
@@ -33,8 +41,8 @@ class MainFavourite extends StatelessWidget {
           ],
         ),
         body: Container(
-            child: Obx(
-          () => (_favController.favourites.length == 0)
+          child: Obx(() =>
+            (_favController.favourites.length == 0)
               ? Center(
                   child: Text(
                   StrRes.nothingInFavourites,
@@ -42,8 +50,6 @@ class MainFavourite extends StatelessWidget {
                   style: Get.textTheme.headline5,
                 ))
               : FavouriteDialogList(),
-        )
-        )
-    );
+        )));
   }
 }

@@ -24,21 +24,21 @@ class FavouriteController extends GetxController {
   }
 
   /// Перечитываем список избранного из базы и если надо апдейтим в FB
-  reloadFromBase() async {
+  void reloadFromBase() async {
     logPrint("ReloadFavourites");
     _favourites = await _mainRepo.getFavourites();
     //logPrint("favourites - $favourites");
   }
 
   /// меняем местами два элемента в списке избранного. Переписываем списком с новым порядком
-  reorderFavouritesElements(List<MainDBItem> newList){
+  void reorderFavouritesElements(List<MainDBItem> newList){
     _favourites = newList;
     _updateFavouritesSubIds();
   }
 
   /// Обновлеем индексы порядка вывода для избранного
   /// и сохраняем записи в базе
-  _updateFavouritesSubIds() {
+  void _updateFavouritesSubIds() {
     Map<int, MainDBItem> map = favourites.asMap();
     map.forEach((index, item) {
       item.subId = index;
@@ -48,7 +48,7 @@ class FavouriteController extends GetxController {
   }
 
   /// Обновляем избранное у элемента
-  updateInFavourites(MainDBItem item) {
+  void updateInFavourites(MainDBItem item) {
     logPrint("updateInFavourites - $item, \n curFav = $favourites");
     var index = favourites.indexWhere((e) => (e.id == item.id && e.phase == item.phase));
     if (item.isFavourite) {
@@ -72,7 +72,7 @@ class FavouriteController extends GetxController {
   }
 
   /// Убираем элемент из Избранного
-  removeElementFromFavourites(MainDBItem item) {
+  void removeElementFromFavourites(MainDBItem item) {
     favourites.removeAt(item.subId);
     _updateFavouritesSubIds();
     item.isFavourite = false;
@@ -80,8 +80,14 @@ class FavouriteController extends GetxController {
   }
 
   /// Задаем новое избранное (из списка) без сохранения в firebase
-  _setFavourites(List<MainDBItem> items) {
+  void _setFavourites(List<MainDBItem> items) {
     logPrint("_updateCallBackForFavourites - $items");
     __favourites.assignAll(items);
+  }
+
+  /// Перемешиваем избранное
+  void shuffleFavourites(){
+    favourites.shuffle();
+    _updateFavouritesSubIds();
   }
 }

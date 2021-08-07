@@ -8,7 +8,7 @@ class PllTrainerVariants {
   /// Конструктор для заполнения таблицы PLL_Trainers данными
   static Future initDb(PllTrainerDao dao) async {
     logPrint("Заполняем таблицу PLL_Trainers данными");
-    dao.clearTable();
+    await dao.clearTable();
     var items = <PllTrainerItem>[];
     _internationalNames.asMap().forEach((index, intName) {
       var maximName = _maximNames[index];
@@ -16,7 +16,7 @@ class PllTrainerVariants {
       var customName = "$maximName ($intName)";
       items.add(PllTrainerItem(intName, maximName, customName, customName, imagePath, true, id: index));
     });
-    dao.insertItems(items);
+    await dao.insertItems(items);
   }
 
   /// Названия PLL алгоритмов по методике Максима Чечнева

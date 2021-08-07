@@ -1,21 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:rg2/controllers/ads/ad_state_controller.dart';
 import 'package:rg2/controllers/ads/ad_state.dart';
-import 'package:rg2/controllers/connection_controller.dart';
-import 'package:rg2/controllers/in_app_purchase_controller.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
-import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/azbuka/azbuka_dialog_controller.dart';
-import 'package:rg2/controllers/helpers/binding_controllers.dart';
-import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
-import 'package:rg2/views/trainers/controller/trainers_controller.dart';
-import 'package:rg2/views/youtube_player/controller/youtube_controller.dart';
 import 'package:rg2/views/auth/main_auth_view.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 import 'package:rg2/views/favourites/dialog/favourite_dialog.dart';
@@ -42,6 +37,10 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   // Поскольку обращаемся к плагинам до вызова runApp, то сначала ждем инициализации плагинов
   WidgetsFlutterBinding.ensureInitialized();
+  // Для инициализации inAppPurchase для android
+  if (defaultTargetPlatform == TargetPlatform.android) {
+    InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
+  }
   // Инициализируем FireBase, нужен import 'package:firebase_core/firebase_core.dart';
   await Firebase.initializeApp();
   // инициализируем adMob
@@ -50,8 +49,6 @@ void main() async {
   adStateController.adState = AdState(initStatusFuture);
   // Инициализируем SharedPreferences
   await GetStorage.init();
-  // Инициализируем внутренние покупки
-  // InAppPurchaseConnection.enablePendingPurchases();
   runApp(RG2App());
 }
 
@@ -60,8 +57,9 @@ void main() async {
 
 class RG2App extends StatelessWidget {
   final dbFuture = Get.put(DBController()).fillDB();
-  final GlobalStorageController _storageController = Get.put(GlobalStorageController());
-  final SettingsController _settings = Get.put(SettingsController());
+  // Не удалять! Нужно его инициализировать тут до SettingsController
+
+  final SettingsController _settings = Get.put(SettingsController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +144,6 @@ class RG2App extends StatelessWidget {
     //TODO после тестирования поменять на lazy
     //Get.lazyPut(() => ConnectionController());
     //Get.lazyPut(() => InAppPurchaseController());
-    // Get.put(InAppPurchaseController());
+    //Get.put(InAppPurchaseController());
   }
 }
-

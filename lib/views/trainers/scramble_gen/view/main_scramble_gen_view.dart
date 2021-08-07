@@ -50,6 +50,7 @@ class ScrambleGenView extends StatelessWidget {
           var isEdgeEnabled = _controller.isEdgeEnabled;
           var isCornerEnabled = _controller.isCornerEnabled;
           var showDecision = _controller.showDecision;
+          var showDecisionText = _controller.showDecisionText;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: padding),
             child: SingleChildScrollView(
@@ -75,7 +76,12 @@ class ScrambleGenView extends StatelessWidget {
                       )
                     ).toList(),
                   ),
-                  ShowBlindDecision(blindDecision: blindDecision, controller: _controller, showDecision: showDecision,),
+                  ShowBlindDecision(
+                    blindDecision: blindDecision,
+                    controller: _controller,
+                    showDecision: showDecision,
+                    showDecisionText: showDecisionText,
+                  ),
                 ],
               ),
             ),

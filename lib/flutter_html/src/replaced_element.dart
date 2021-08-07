@@ -133,7 +133,7 @@ class ImageContentElement extends ReplacedElement {
     } else if (node.attributes["apath"] != null) {
       var assetPath = src.replaceAll('.svg', '');
       assetPath = assetPath.replaceAll('.xml', '');
-      assetPath = 'assets/images/${node.attributes["apath"]}/$assetPath.svg';
+      assetPath = 'assets/images/${node.attributes["apath"]}/$assetPath.png';
       var size = MediaQuery.of(context.buildContext).size;
       var widthAttr = node.attributes["width"];
       double width;
@@ -151,7 +151,7 @@ class ImageContentElement extends ReplacedElement {
           }
         }
       }
-      imageWidget = SvgPicture.asset(assetPath, width: width,);
+      imageWidget = Image.asset(assetPath, width: width,);
     } else {
       precacheImage(
         NetworkImage(src),

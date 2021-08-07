@@ -25,7 +25,7 @@ class Property {
   Property.fromDocSnapShot(DocumentSnapshot<Map<String, dynamic>> doc) {
     this.key = doc.data()['key'];
     this.value = doc.data()['value'];
-    this.changeDate = doc.data()['changeDate'].toDate();
+    this.changeDate = doc.data()['changeDate']?.toDate() ?? DateTime.now();
   }
 
   @override

@@ -27,7 +27,7 @@ class MyYouTubeController extends GetxController {
     var rounded = (value * 100).round() / 100;
     _playbackRate.value = rounded;
     var property = Property(key: Const.YOU_TUBE_PLAYER_SPEED, value: rounded);
-    _storage.setPropertyByKey(property);
+    _storage.setProperty(property);
   }
 
 }

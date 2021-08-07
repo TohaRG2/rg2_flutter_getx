@@ -45,18 +45,18 @@ class Begin implements Phase {
     ];
 
     static const begin_icon = [
-        "assets/images/main3x3/begin/begin_0.svg",
-        "assets/images/main3x3/begin/begin_1.svg",
-        "assets/images/main3x3/begin/begin_2.svg",
-        "assets/images/main3x3/begin/begin_3.svg",
-        "assets/images/main3x3/begin/begin_4.svg",
-        "assets/images/main3x3/begin/begin_5a.svg",
-        "assets/images/main3x3/begin/begin_5b.svg",
-        "assets/images/main3x3/begin/begin_6.svg",
-        "assets/images/main3x3/begin/begin_7.svg",
-        "assets/images/main3x3/begin/begin_8.svg",
-        "assets/images/main3x3/begin/begin_9.svg",
-        "assets/images/main3x3/begin/begin_0.svg",
+        "begin_0",
+        "begin_1",
+        "begin_2",
+        "begin_3",
+        "begin_4",
+        "begin_5a",
+        "begin_5b",
+        "begin_6",
+        "begin_7",
+        "begin_8",
+        "begin_9",
+        "begin_0",
     ];
     
     static const begin_descr = [

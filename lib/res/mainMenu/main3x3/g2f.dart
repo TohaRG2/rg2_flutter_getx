@@ -37,14 +37,14 @@ class G2f implements Phase {
     ];
 
     static const g2f_icon = [
-        "assets/images/main3x3/g2f/g2f_info.svg",
-        "assets/images/main3x3/g2f/g2f_accel.svg",
-        "assets/images/main3x3/g2f/g2f_cross.svg",
-        "assets/images/main3x3/g2f/g2f_f2l.svg",
-        "assets/images/main3x3/g2f/g2f_pll.svg",
-        "assets/images/main3x3/g2f/g2f_oll.svg",
-        "assets/images/main3x3/g2f/g2f_coll.svg",
-        "assets/images/main3x3/g2f/g2l_roux.svg",
+        "g2f_info",
+        "g2f_accel",
+        "g2f_cross",
+        "g2f_f2l",
+        "g2f_pll",
+        "g2f_oll",
+        "g2f_coll",
+        "g2l_roux",
     ];
 
     static const g2f_descr = [

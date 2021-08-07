@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/trainers/controller/trainers_controller.dart';
 import 'package:rg2/views/trainers/model/trainer_menu_item.dart';
 import 'package:rg2/res/string_values.dart';
@@ -13,11 +14,13 @@ import 'package:rg2/views/trainers/scramble_gen/view/main_scramble_gen_view.dart
 import 'package:rg2/views/trainers/timer/view/main_timer_view.dart';
 import 'package:rg2/views/trainers/timer/view/settings_timer_view.dart';
 import 'package:rg2/views/trainers/trainers_view/trainer_view_menu_item.dart';
+import 'package:wakelock/wakelock.dart';
 
 import '../help/help_view.dart';
 import '../scramble_gen/view/settings_scramble_gen_view.dart';
 
 class TrainersScreen extends StatelessWidget {
+  final SettingsController _settings = Get.put(SettingsController());
   final TrainersController _controller = Get.put(TrainersController());
 
   @override

@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.210517.1+415
+version: 4.210807.2+436
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -14,9 +14,9 @@ dependencies:
   # SQL Database
   floor: ^1.1.0
   # DI + StateManagement
-  get: ^4.1.4
+  get: ^4.3.4
   # Работаем с SharedPreferences
-  get_storage: ^2.0.2
+  get_storage: ^2.0.3
   # Окно выбора цвета
   flutter_material_color_picker: ^1.0.5
   # возможность смахивать элементы List
@@ -34,7 +34,7 @@ dependencies:
   # video_player: ^1.0.1
   # chewie: ^0.12.2
   # Plugin for rendering the <iframe> tag.
-  webview_flutter: ^2.0.4
+  webview_flutter: ^2.0.10
   # Plugins for rendering the <audio> tag.
   # chewie_audio: ^1.1.1
 
@@ -49,7 +49,7 @@ dependencies:
 #  youtube_plyr_iframe: ^2.0.3
 
   #Слайдер для картинок списка советов по работе с программой
-  carousel_slider: ^3.0.0
+  carousel_slider: ^4.0.0
 
   # Поддержка звука, для метронома в таймере
   #assets_audio_player: ^2.0.14
@@ -62,32 +62,32 @@ dependencies:
   percent_indicator: ^3.0.1
 
   # Firebase + google sign in
-  firebase_core: ^1.1.1
-  firebase_auth: ^1.1.4
-  cloud_firestore: ^2.1.0
-  google_sign_in: ^5.0.3
+  firebase_core: ^1.4.0
+  firebase_auth: ^3.0.1
+  cloud_firestore: ^2.4.0
+  google_sign_in: ^5.0.7
   apple_sign_in: ^0.1.0
 
   # Валидаторы для проверки полей ввода
   form_field_validator: ^1.1.0
 
   # Красивые кнопки аутентификации
-  auth_buttons: ^1.0.1+3
+  auth_buttons: ^1.0.1+4
 
   # Проверка соединения https://pub.dev/packages/connectivity
-  connectivity: ^3.0.3
+  connectivity: ^3.0.6
 
   # Покупки в приложении
-  in_app_purchase: ^0.6.0
+  in_app_purchase: ^1.0.6
 
   # Реклама в приложении
-  google_mobile_ads: ^0.12.2
+  google_mobile_ads: ^0.13.3
 
   # Получение версии приложения в коде
-  package_info: ^2.0.0
+  package_info: ^2.0.2
 
   # красивый свитч для смены темы
-  flutter_switch: ^0.3.1
+  flutter_switch: ^0.3.2
 
   cupertino_icons: ^1.0.3
 
@@ -95,14 +95,17 @@ dependencies:
   flutter_vector_icons: ^1.0.0
 
   # Автосоздание иконок для приложения
-  flutter_launcher_icons: ^0.9.0
+  flutter_launcher_icons: ^0.9.1
+
+  # Убираем автоотключение экрана
+  wakelock: ^0.5.3+3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация + build runner
   floor_generator: ^1.1.0
-  build_runner: ^2.0.3
+  build_runner: ^2.1.0
 
 flutter_icons:
   android: "ic_launcher"

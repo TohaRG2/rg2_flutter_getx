@@ -10,7 +10,6 @@ import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/main_view.dart';
-import 'package:rg2/views/auth/wait_confirm_email_dialog.dart';
 
 class AuthController extends GetxController {
   final ConnectionController _connection = Get.find();
@@ -100,10 +99,13 @@ class AuthController extends GetxController {
     nameController.text = user.displayName;
   }
 
-  changeUserNameTo() async{
-    var displayName = nameController.text;
+  changeUserNameTo({String name}) async{
+    var displayName = name;
+    if (displayName == null) {
+      displayName = nameController.text;
+    }
     var _user = _auth.currentUser;
-    await _user.updateProfile(displayName: displayName, photoURL: user.photoURL);
+    await _user.updateDisplayName(displayName);
     await _user.reload();
     _firebaseUser.value = _auth.currentUser;
     await CloudDatabase().createOrUpdateUser(user);
@@ -119,6 +121,7 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Авторизация через гугл
   Future<void> googleSignIn() async {
     try {
       //logPrint("вызываем окно входа гугл аккаунтом");
@@ -149,6 +152,7 @@ class AuthController extends GetxController {
     }
   }
 
+  /// Создаем коллекцию по идентификатору пользователя
   Future createObjectInUsers(User user) async {
     _showPreLoader.value = true;
     logPrint("Создаем новую или перезаписываем по uid запись в таблице users");
@@ -161,18 +165,21 @@ class AuthController extends GetxController {
     _showPreLoader.value = false;
   }
 
+  /// Выходим из всех
   Future<void> signOut() async {
     logPrint("SignOut ${user.email}");
     try {
       _enableShowSignInView();
       await _auth.signOut();
       await _googleSignIn.signOut();
+
       // _firebaseUser.value = null;
     } catch (e) {
       logPrint("Не смогли выйти из аккаунта:\n $e");
     }
   }
 
+  /// Авторизуемся эпплом и переходим на основной экран, как авторизация пройдет
   Future<void> appleSignInAndGoToStart() async {
     await appleSignIn();
     if (user != null) {
@@ -181,7 +188,7 @@ class AuthController extends GetxController {
     }
   }
 
-
+  /// Автоизуемся эппл-аккаунтом
   Future<void> appleSignIn() async {
     logPrint("appleSignIn - request");
     _showPreLoader.value = true;
@@ -199,9 +206,14 @@ class AuthController extends GetxController {
           accessToken: String.fromCharCodes(_appleCredential.authorizationCode),
         );
 
-        UserCredential _authResult = await _auth.signInWithCredential(credential);
-
-        await createObjectInUsers(_authResult.user);
+        final authResult = await _auth.signInWithCredential(credential);
+        final firebaseUser = authResult.user;
+        var givenName = _appleCredential.fullName.givenName ?? "Введите имя";
+        var familyName = _appleCredential.fullName.familyName ?? "";
+        final displayName = "$givenName $familyName";
+        await firebaseUser.updateDisplayName(displayName);
+        // await changeUserNameTo(name: displayName);
+        await createObjectInUsers(firebaseUser);
 
         break;
       case AuthorizationStatus.error:
@@ -211,8 +223,10 @@ class AuthController extends GetxController {
         break;
       case AuthorizationStatus.cancelled:
         _showPreLoader.value = false;
-        logPrint("appleSignIn - прервано пользователем");
+        logPrintErr("appleSignIn - прервано пользователем");
         break;
+      default:
+        throw UnimplementedError();
     }
   }
 

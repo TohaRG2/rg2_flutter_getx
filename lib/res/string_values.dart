@@ -4,6 +4,9 @@ class StrRes {
   static const primaryColor = "Основной цвет";
   static const accentColor = "Акцент";
   static const textSize = "Размер шрифта:";
+  static const screenOnOffSettingsText = "Отключение экрана:";
+  static const screenOnOffSettingsGlobal = "Не отключать экран когда запущено приложение";
+  static const screenOnOffSettingsInTimer = "Не отключать экран в таймере";
   static const miniHelpSettingsText = "Подсказки по программе:";
   static const miniHelpSettingsSwitch = "Отображение подсказок по  интерфейсу при загрузке программы";
   static const internetSettingsText = "Использование интернета:";
@@ -31,7 +34,7 @@ class StrRes {
   static const azbukaDialogTitle = "Азбука вращений";
   static const azbukaDialogHint = "Нажмите, чтобы увидеть название";
   static const snackTextWarning = "Внимание!";
-  static const snackTextItemDisabled = "Разблокировать доступ к дополнительным головоломкам, можно в настройках программы";
+  static const snackTextItemDisabled = "Разблокировать доступ к дополнительным головоломкам, можно в разделе покупок";
 
   static const somethingWrong = "Что-то пошло не так :(";
 

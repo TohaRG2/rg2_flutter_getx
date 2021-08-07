@@ -7,6 +7,7 @@ import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/timer/model/timer.dart';
 import 'package:rg2/views/trainers/timer/controller/timer_settings_controller.dart';
 import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
+import 'package:wakelock/wakelock.dart';
 
 class TimerController extends GetxController {
   final TimerSettingsController _settingsController = Get.find();
@@ -85,14 +86,16 @@ class TimerController extends GetxController {
   Timer _timer = Timer();
   TimerControllerState _state = TimerControllerState.stopped;
   DateTime _secondBarPressingTime = DateTime.now();
-  var _isLeftPadPressed = false;
-  var _isRightPadPressed = false;
+  bool _isLeftPadPressed = false;
+  bool _isRightPadPressed = false;
+  bool get alwaysScreenOn => _settingsController.alwaysScreenOnTimer || _settingsController.alwaysScreenOnGlobal;
 
   /// Methods
 
   initialization(){
     player.load(_metronomSound);
     _resetTimer();
+    checkAlwaysOnTimerState();
   }
 
   trySetBottomBarHeight(double newValue) {
@@ -108,7 +111,30 @@ class TimerController extends GetxController {
       _tryToFullStopTimer();
       return false;
     }
+    checkAlwaysOnGlobalState();
     return true;
+  }
+
+  /// Проверка и установка параметра гашения экрана в соответствии с глобальной настройкой приложения
+  void checkAlwaysOnGlobalState() {
+    if (_settingsController.alwaysScreenOnGlobal) {
+      logPrint("Wakelock.enable");
+      Wakelock.enable();
+    } else {
+      logPrint("Wakelock.disable");
+      Wakelock.disable();
+    }
+  }
+
+  /// Проверка и установка параметра гашения экрана для экрана таймера и его дочерних
+  void checkAlwaysOnTimerState() {
+    if (_settingsController.alwaysScreenOnTimer) {
+      logPrint("Wakelock.enable");
+      Wakelock.enable();
+    } else {
+      logPrint("Wakelock.disable");
+      Wakelock.disable();
+    }
   }
 
   /// Обработчики нажатий на панельки таймера
@@ -237,6 +263,7 @@ class TimerController extends GetxController {
 
   _startTimer() {
     logPrint("Start Timer");
+    Wakelock.enable();
     _state = TimerControllerState.running;
     _timer.start();
     _hideBars();
@@ -247,7 +274,8 @@ class TimerController extends GetxController {
   }
 
   _stopTimer() {
-    logPrint("Stop Timer");
+    logPrint("Stop Timer $alwaysScreenOn");
+    if (!alwaysScreenOn) Wakelock.disable();
     _state = TimerControllerState.waitForFullStop;
     _timer.stop();
     _showBars();

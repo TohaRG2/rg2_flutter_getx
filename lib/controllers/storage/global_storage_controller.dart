@@ -49,16 +49,16 @@ class GlobalStorageController extends GetxController {
     if (value == null) {
       value = defaultSettings[key];
       if (value == null) {
-        logPrint("WARNING!!! не смогли получить дефолтное значение для параметра $key");
+        logPrintErr("WARNING!!! не смогли получить дефолтное значение для параметра $key");
       }
       //logPrint("есть дефолтное значение ${defaultSettings[key]}, а в value - $value");
     }
     //TODO добавить умолчательные значения для типов, если параметр не найден ни в хранилище, ни в дефолтной мапе
     // if (value == null) {
-    //   if (value is String) value = "";
-    //   if (value is int) value = 0;
-    //   if (value is double) value = 0.0;
-    //   if (value is bool) value = false;
+    //   if (T is String) value = "";
+    //   if (T is int) value = 0;
+    //   if (T is double) value = 0.0;
+    //   if (T is bool) value = false;
     // }
     return value;
   }
@@ -75,7 +75,7 @@ class GlobalStorageController extends GetxController {
   }
 
   /// Сохраняем параметр в облако(если залогинены) и в локальное хранилище
-  setPropertyByKey(Property property){
+  setProperty(Property property){
     _addOrUpdatePropertyInFBS(property);
     _setPropertyToLocalStorage(property);
   }
@@ -97,12 +97,13 @@ class GlobalStorageController extends GetxController {
 
   /// Обновляем все параметры в программе данными из firebase
   _updateAllParameters() async {
-    logPrint("updateAllParametersFromBase - ");
+    logPrint("updateAllParametersFromFBS - $_userId");
     if (_userId != "") {
       // получить все параметры из базы
       var list = await _cloudDB.getAllUserProperties(_userId);
       // перезаписать полученные параметры в локальное хранилище
       list?.forEach((property) {
+        // logPrint("updateAllParametersFromFBS - $property");
         _setPropertyToLocalStorage(property);
       });
       // обновить переменные в контроллерах

@@ -112,7 +112,7 @@ class SignInView extends GetWidget<AuthController> {
           ),
 
           /// Войти в гугл аккаунт
-          Row(
+          Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               GoogleAuthButton(
@@ -124,11 +124,10 @@ class SignInView extends GetWidget<AuthController> {
                   controller.googleSignInAndGoToStart();
                 },
                 darkMode: _settings.isDarkThemeSelect,
-                style: AuthButtonStyle(
-                  buttonType: AuthButtonType.icon,
-                ),
-                // text: StrRes.authSignInGoogleButtonText,
+                style: _googleButtonStyle,
               ),
+
+              SizedBox(height: UIHelper.SpaceSmall,),
 
               /// Войти в эппл аккаунт, только для iPhone
               if (Platform.isIOS) ...{
@@ -140,10 +139,7 @@ class SignInView extends GetWidget<AuthController> {
                     controller.appleSignInAndGoToStart();
                   },
                   darkMode: _settings.isDarkThemeSelect,
-                  style: AuthButtonStyle(
-                    buttonType: AuthButtonType.icon,
-                  ),
-                  // text: StrRes.authSignInAppleButtonText,
+                  style: _appleButtonStyle
                 )
               },
             ],
@@ -188,6 +184,21 @@ class SignInView extends GetWidget<AuthController> {
       ),
     );
   }
+
+  AuthButtonStyle _googleButtonStyle = AuthButtonStyle(
+    iconSize: 20,
+    elevation: 3,
+    padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceMini),
+    width: double.infinity,
+  );
+
+  AuthButtonStyle _appleButtonStyle = AuthButtonStyle(
+    iconSize: 20,
+    elevation: 3,
+    padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceMini),
+    width: double.infinity,
+  );
+
 
   Widget buildBottomButtons() {
     return Container(

@@ -171,7 +171,7 @@ class Skewb implements Phase {
         глазки, а с другой ушки. Т.е. если сравнивать с кубиком, то должно получиться что-то
         похожее на ситуацию \"Вертолет\".</p>
         
-        <p style="text-align:center"><img src="vaccel_3.xml"></p>
+        <p style="text-align:center"><img src="accel_3.xml"></p>
 
         <p>Делаем перехват таким образом, чтобы скьюб смотрел <a href="rg2://ytplay?time=8:41&link=93Sp66a5Q6o">глазками направо:</a></p>
         

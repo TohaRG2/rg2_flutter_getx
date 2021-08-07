@@ -154,7 +154,12 @@ class TimerRepository extends GetxController {
       var timerTimeItem = TimerTimeItem.fromTimeNoteItem(item);
       await _cloudDB.deleteTimerTime(_userId, timerTimeItem);
     }
+  }
 
+  clearTimerTimesInFBS() async {
+    if (_userId != "") {
+      await _cloudDB.clearTimerTimes(_userId);
+    }
   }
 
 }

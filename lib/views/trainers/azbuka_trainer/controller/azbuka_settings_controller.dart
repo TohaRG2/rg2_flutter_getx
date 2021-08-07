@@ -30,7 +30,7 @@ class AzbukaSettingsController extends GetxController {
     get isEdgeEnabled => _isEdgeEnabled.value;
     set isEdgeEnabled(value) {
       _isEdgeEnabled.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.IS_AZBUKA_EDGE_ENABLED, value: value));
+      _settingsController.setProperty(Property(key: Const.IS_AZBUKA_EDGE_ENABLED, value: value));
     }
 
   /// Возможность выбрать в загаданных вариантах углы
@@ -38,7 +38,7 @@ class AzbukaSettingsController extends GetxController {
     get isCornerEnabled => _isCornerEnabled.value;
     set isCornerEnabled(value) {
       _isCornerEnabled.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.IS_AZBUKA_CORNER_ENABLED, value: value));
+      _settingsController.setProperty(Property(key: Const.IS_AZBUKA_CORNER_ENABLED, value: value));
     }
 
   /// Тренировка на время или нет (true - на время)
@@ -46,7 +46,7 @@ class AzbukaSettingsController extends GetxController {
     get isTimerEnabled => _isTimerEnabled.value;
     set isTimerEnabled(value) {
       _isTimerEnabled.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.IS_AZBUKA_TIMER_ENABLED, value: value));
+      _settingsController.setProperty(Property(key: Const.IS_AZBUKA_TIMER_ENABLED, value: value));
     }
 
   /// Время ожидания ответа (0 если тренировка не на время)
@@ -54,7 +54,7 @@ class AzbukaSettingsController extends GetxController {
     int get timeForAnswer => isTimerEnabled ? _timeForAnswer.value : 0;
     set timeForAnswer(value) {
       _timeForAnswer.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.AZBUKA_TIME_FOR_ANSWER, value: value));
+      _settingsController.setProperty(Property(key: Const.AZBUKA_TIME_FOR_ANSWER, value: value));
     }
 
   /// Время автонажатия кнопки далее при успешном ответе
@@ -62,7 +62,7 @@ class AzbukaSettingsController extends GetxController {
     int get goodAnswerWaiting => _goodAnswerWaiting.value;
     set goodAnswerWaiting(value) {
       _goodAnswerWaiting.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.AZBUKA_GOOD_ANSWER_WAITING, value: value));
+      _settingsController.setProperty(Property(key: Const.AZBUKA_GOOD_ANSWER_WAITING, value: value));
     }
 
   /// Время автонажатия кнопки далее при неуспешном ответе
@@ -70,7 +70,7 @@ class AzbukaSettingsController extends GetxController {
     int get badAnswerWaiting => _badAnswerWaiting.value;
     set badAnswerWaiting(value) {
       _badAnswerWaiting.value = value;
-      _settingsController.setPropertyByKey(Property(key: Const.AZBUKA_BAD_ANSWER_WAITING, value: value));
+      _settingsController.setProperty(Property(key: Const.AZBUKA_BAD_ANSWER_WAITING, value: value));
     }
 
 

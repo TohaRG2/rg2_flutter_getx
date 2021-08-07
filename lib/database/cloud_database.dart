@@ -180,6 +180,15 @@ class CloudDatabase extends GetxController {
         .catchError((error) => logPrintErr("Не удалось удалить $comment в FBS\n $error"));
   }
 
+  /// Очищаем комментарии в FBS
+  clearAllComments(String userId) async {
+    var mainDocRef = _usersCollection.doc(userId);
+    mainDocRef.update({COMMENTS_UPDATE_DATE: DateTime.now()});
+    var refCol = await mainDocRef.collection(COMMENTS).get();
+    refCol.docs.forEach((docSnap) {
+      docSnap.reference.delete();
+    });
+  }
 
   /// Возвращаем список всех комментариев к этапам из коллеккции в usersId/comments
   Future<List<CommentItem>> getComments(String userId) async{
@@ -226,6 +235,17 @@ class CloudDatabase extends GetxController {
           .delete()
           .then((_) => logPrint("getDocIdsWithTimeNear Удалили $delId из FBS.TimerTimes"))
           .catchError((error) => logPrintErr("Не удалось удалить $timerItem в FBS\n $error"));
+    });
+  }
+
+  /// Очищаем табличку TimerTimes в FBS
+  clearTimerTimes(String userId) async {
+    var mainDocRef = _usersCollection.doc(userId);
+    // отметка, что изменяли что-то в TimerTimes
+    mainDocRef.update({TIMER_TIMES_UPDATE_DATE: DateTime.now()});
+    var refCol = await mainDocRef.collection(TIMER_TIMES).get();
+    refCol.docs.forEach((docSnap) {
+      docSnap.reference.delete();
     });
   }
 
