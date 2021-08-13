@@ -93,9 +93,10 @@ class LearnDetailPage extends StatelessWidget {
 
   Widget _adBanner(BannerAd bannerAd) {
     logPrint("adBanner - ${bannerAd?.adUnitId}");
+    if (_settingsController.isAdDisabled) return SizedBox(height: 0,);
     return (bannerAd == null)
         ? SizedBox(
-            height: 0,
+            height: 60,
           )
         : Container(
             height: 60,

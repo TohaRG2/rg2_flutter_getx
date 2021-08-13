@@ -8,7 +8,9 @@ class AdState {
   AdState(this.initialization);
 
   String get bannerAdUnitId => AdHelper.bannerAdUnitId;
-  
+
+  BannerAdListener get adListener => _adListener;
+
   BannerAdListener _adListener = BannerAdListener(
       onAdLoaded: (ad) => logPrint('Ad loaded: ${ad.adUnitId}'),
       onAdFailedToLoad: (ad, error) =>
@@ -20,6 +22,5 @@ class AdState {
       // Called when an impression occurs on the ad.
       onAdImpression: (Ad ad) => logPrint('Ad impression.'),
   );
-  BannerAdListener get adListener => _adListener;
 
 }
