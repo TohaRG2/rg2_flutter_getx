@@ -2,13 +2,18 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:rg2/controllers/ads/ad_helper.dart';
 import 'package:rg2/utils/my_logger.dart';
 
+/// Класс для
 class AdState {
+  /// Статус инициализации
   Future<InitializationStatus> initialization;
 
+  /// Конструктор
   AdState(this.initialization);
 
+  /// Возвращаем ссылку на ID баннера в зависимости от того IOS или Android, debug или release режим.
   String get bannerAdUnitId => AdHelper.bannerAdUnitId;
 
+  /// A listener for receiving notifications for the lifecycle of a [BannerAd].
   BannerAdListener get adListener => _adListener;
 
   BannerAdListener _adListener = BannerAdListener(

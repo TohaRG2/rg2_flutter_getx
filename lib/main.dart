@@ -45,8 +45,8 @@ void main() async {
   await Firebase.initializeApp();
   // инициализируем adMob
   final AdStateController adStateController = Get.put(AdStateController());
-  final initStatusFuture = MobileAds.instance.initialize();
-  adStateController.adState = AdState(initStatusFuture);
+  // final initStatusFuture = MobileAds.instance.initialize();
+  // adStateController.adState = AdState(initStatusFuture);
   // Инициализируем SharedPreferences
   await GetStorage.init();
   runApp(RG2App());

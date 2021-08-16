@@ -15,8 +15,11 @@ class LearnDetailViewPager extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _isSwipeEnabled = _settings.isSwipeEnabled;
+    // Создаем новый контроллер и задаем количество баннеров, которое надо сгенерировать
+    // далее в каждой странице ViewPager
     AdShowController _adShowController = Get.put(AdShowController());
     _adShowController.count = _detailController.currentItems.length;
+
     return DefaultTabController(
       length: _detailController.currentItems.length,
       child: Builder(builder: (BuildContext context) {
@@ -72,6 +75,7 @@ class LearnDetailViewPager extends StatelessWidget {
         .map((mainDBItem) => Tab(text: mainDBItem.title,)).toList();
   }
 
+  /// Создаем ViewPager (TabBarView) возвращаем спсиок сраничек для пэйджера
   List<Widget> _tabBarView() {
     var result = <Widget>[];
     List<MainDBItem> pageList = _detailController.currentItems;

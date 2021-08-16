@@ -4,6 +4,8 @@ import 'package:rg2/controllers/ads/ad_state_controller.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 
+/// Контроллер, который создается каждый раз при открытии окна с деталкой
+/// и который генерирует список баннеров в зависимости от количества страниц с детальной информацией
 class AdShowController extends GetxController {
   SettingsController _settingsController = Get.find();
 
@@ -20,33 +22,36 @@ class AdShowController extends GetxController {
     bannersList  = List<Rxn<BannerAd>>.generate(value, (_) => Rxn(null));
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-    logPrint("AdShowController onReady - start create ");
-    if (_settingsController.isAdEnabled) {
-      final AdStateController controller = Get.find();
-      final adState = controller.adState;
-      adState.initialization.then((status) {
-        bannersList.forEach((banner) {
-          banner.value = BannerAd(
-              adUnitId: adState.bannerAdUnitId,
-              size: AdSize.banner,
-              request: AdRequest(),
-              // колбэки в ответ на события с баннером
-              listener: adState.adListener)
-          // оператор ..load() вызывает метод, как и .load(), но возвращает не результат load(), а сам объект BannerAd
-            ..load();
-        });
-        logPrint("AdShowController onReady - complete. ${bannersList.map((b) => b.value?.adUnitId)}");
-      });
-    }
-  }
-
+  /// Действия при инициализации контроллера
   @override
   void onInit() {
     logPrint("AdShowController onInit");
     super.onInit();
+  }
+
+  /// Действия через 1 кадр после onInit();
+  @override
+  void onReady() async {
+    super.onReady();
+    logPrint("AdShowController onReady - start create ");
+    if (_settingsController.isAdEnabled) {
+      // final AdStateController controller = Get.find();
+      // final adState = controller.adState;
+      // adState.initialization.then((status) {
+      //   logPrint("AdShowController onReady - start banners init");
+      //   bannersList.forEach((banner) {
+      //     banner.value = BannerAd(
+      //         adUnitId: adState.bannerAdUnitId,
+      //         size: AdSize.banner,
+      //         request: AdRequest(),
+      //         // колбэки в ответ на события с баннером
+      //         listener: adState.adListener)
+      //     // оператор ..load() вызывает метод, как и .load(), но возвращает не результат load(), а сам объект BannerAd
+      //       ..load();
+      //   });
+      //   logPrint("AdShowController onReady - complete. ${bannersList.map((b) => b.value?.adUnitId)}");
+      // });
+    }
   }
 
   @override
