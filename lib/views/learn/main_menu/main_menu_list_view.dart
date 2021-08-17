@@ -64,8 +64,7 @@ class MenuList extends StatelessWidget {
         _learnController.changeCurrentPhaseWith(item);
       } else {
         _learnController.saveListPositionForPhase(item.phase);
-        Get.to(() => LearnDetailScreen(item.phase, item.id),
-            transition: Transition.cupertino);
+        Get.to(() => LearnDetailScreen(item.phase, item.id), transition: Transition.cupertino);
       }
     } else {
       if (Get.isSnackbarOpen) { Get.back(); }

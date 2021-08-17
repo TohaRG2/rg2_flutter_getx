@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class AdHelper {
   static String get interstitialAdUnitId {
@@ -71,4 +72,11 @@ class AdHelper {
       }
     }
   }
+
+  static initialization(){
+    if (MobileAds.instance == null) {
+      MobileAds.instance.initialize();
+    }
+  }
+
 }

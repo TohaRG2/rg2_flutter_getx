@@ -13,13 +13,13 @@ class AdBannerWidget extends GetView<AdShowController> {
 
   @override
   Widget build(BuildContext context) {
-    logPrint("AdBannerWidget.build - ${controller.bannerAd?.adUnitId}");
-    return Obx( () =>
-    (controller.bannerAd == null)
-      ? SizedBox(height: 0,)
-      : Container(height: 60,
-          child: AdWidget(ad: controller.bannerAd),
-      )
-    );
+    // logPrint("AdBannerWidget.build - ${controller.bannerAd?.adUnitId}");
+    // return Obx( () =>
+    // (controller.bannerAd == null)
+    //   ? SizedBox(height: 0,)
+    //   : Container(height: 60,
+    //       child: AdWidget(ad: controller.bannerAd),
+    //   )
+    // );
   }
 }

@@ -2,10 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
-import 'package:rg2/controllers/ads/ad_state_controller.dart';
-import 'package:rg2/controllers/ads/ad_state.dart';
+import 'package:rg2/controllers/ads/ad_helper.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/utils/my_logger.dart';
@@ -44,9 +42,8 @@ void main() async {
   // Инициализируем FireBase, нужен import 'package:firebase_core/firebase_core.dart';
   await Firebase.initializeApp();
   // инициализируем adMob
-  final AdStateController adStateController = Get.put(AdStateController());
-  // final initStatusFuture = MobileAds.instance.initialize();
-  // adStateController.adState = AdState(initStatusFuture);
+  AdHelper.initialization();
+
   // Инициализируем SharedPreferences
   await GetStorage.init();
   runApp(RG2App());
