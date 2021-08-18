@@ -13,6 +13,7 @@ class AdBannerWidget extends GetView<AdShowController> {
 
   @override
   Widget build(BuildContext context) {
+    return Text("Not use");
     // logPrint("AdBannerWidget.build - ${controller.bannerAd?.adUnitId}");
     // return Obx( () =>
     // (controller.bannerAd == null)

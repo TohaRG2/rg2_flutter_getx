@@ -13,8 +13,8 @@ class InfoController extends GetxController {
   void onInit() {
     super.onInit();
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-      String appName = packageInfo.appName;
-      String packageName = packageInfo.packageName;
+      // String appName = packageInfo.appName;
+      // String packageName = packageInfo.packageName;
       String version = packageInfo.version;
       String buildNumber = packageInfo.buildNumber;
       _versionNumber.value = "ver. $version ($buildNumber)";

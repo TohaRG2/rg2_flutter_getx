@@ -27,7 +27,7 @@ class LearnViewPager extends StatelessWidget {
             final TabController _tabController = DefaultTabController.of(context);
             var pageNum = _lc.curPageNumber;
 
-            //регистрируем листенер, только если его нет, и переходим на страницу
+            //регистрируем листенер, в котором фиксируем переходы по страницам, только если его нет
             //logPrint("tabController has listeners? - ${_tabController.hasListeners}, curPage - $pageNum");
             if (!_tabController.hasListeners) {
               _tabController.addListener(() {

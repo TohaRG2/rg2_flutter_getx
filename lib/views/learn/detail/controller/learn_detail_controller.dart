@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
-import 'package:rg2/database/fire_entitys/comment_item.dart';
 import 'package:rg2/utils/my_logger.dart';
+import 'package:rg2/views/learn/controller/learn_controller.dart';
 
-import '../../controller/learn_controller.dart';
 
 class LearnDetailController extends GetxController {
   MainRepository _mainRepo = Get.find();

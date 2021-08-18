@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:rg2/controllers/connection_controller.dart';
 import 'package:rg2/controllers/storage/default_settings.dart';
 import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
@@ -11,7 +10,6 @@ import 'package:rg2/views/auth/controller/auth_controller.dart';
 
 /// Контроллер, являющийся по сути repository для firebase + контроллер для локального хранилища
 class GlobalStorageController extends GetxController {
-  final ConnectionController _connection = Get.put<ConnectionController>(ConnectionController(), permanent: true);
   final AuthController _auth = Get.put<AuthController>(AuthController(), permanent: true);
   final CloudDatabase _cloudDB = Get.put<CloudDatabase>(CloudDatabase(), permanent: true);
 

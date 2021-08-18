@@ -268,7 +268,7 @@ class AuthController extends GetxController {
       UserCredential credential = await _auth.createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text);
       if (credential.user != null) {
         logPrint("registerWithEmailAndPassword - залогинились, обновляем данные");
-        credential.user.updateProfile(displayName: nameController.text, photoURL: "");
+        credential.user.updateDisplayName(nameController.text);
         logPrint("registerWithEmailAndPassword - ${credential.user.email} ${credential.user.displayName}");
         credential.user.sendEmailVerification();
         _showPreLoader.value = false;

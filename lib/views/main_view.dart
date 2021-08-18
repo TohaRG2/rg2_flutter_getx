@@ -8,7 +8,6 @@ import 'package:rg2/views/learn/learn_menu_screen.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 import 'bottomNavBarItems.dart';
-import 'dialogs/advices/advices_dialog.dart';
 import 'trainers/trainers_view/trainers_screen.dart';
 
 class MainView extends StatelessWidget {

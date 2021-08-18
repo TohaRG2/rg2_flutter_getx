@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:package_info/package_info.dart';
 import 'package:rg2/controllers/init_phases.dart';
-import 'package:rg2/database/daos/main_dao.dart';
 import 'package:rg2/database/entitys/basic_move.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/fire_entitys/comment_item.dart';

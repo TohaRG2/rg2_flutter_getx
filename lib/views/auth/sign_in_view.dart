@@ -2,15 +2,10 @@ import 'dart:io';
 
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:rg2/controllers/ads/ad_show_controller.dart';
 import 'package:rg2/res/string_values.dart';
-import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/auth/controller/auth_controller.dart';
 import 'package:rg2/views/auth/register_dialog.dart';
 import 'package:rg2/views/auth/reset_password_view.dart';
@@ -185,14 +180,14 @@ class SignInView extends GetWidget<AuthController> {
     );
   }
 
-  AuthButtonStyle _googleButtonStyle = AuthButtonStyle(
+  final AuthButtonStyle _googleButtonStyle = AuthButtonStyle(
     iconSize: 20,
     elevation: 3,
     padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceMini),
     width: double.infinity,
   );
 
-  AuthButtonStyle _appleButtonStyle = AuthButtonStyle(
+  final AuthButtonStyle _appleButtonStyle = AuthButtonStyle(
     iconSize: 20,
     elevation: 3,
     padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceMini),

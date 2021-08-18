@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:meta/meta.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 class LearnViewController extends GetxController {

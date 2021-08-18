@@ -73,7 +73,7 @@ class UserAuthSettings extends StatelessWidget {
                   Get.dialog(EditUserNameView());
                 },
                 child: Text(
-                  "${userName}",
+                  "$userName",
                   overflow: TextOverflow.fade,
                   softWrap: false,
                   style: Get.textTheme.headline6,

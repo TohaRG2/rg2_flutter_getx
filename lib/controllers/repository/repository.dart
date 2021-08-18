@@ -4,7 +4,6 @@ import 'package:rg2/database/daos/page_prop_dao.dart';
 import 'package:rg2/database/daos/phase_position_dao.dart';
 import 'package:rg2/database/daos/pll_trainer_dao.dart';
 import 'package:rg2/database/entitys/basic_move.dart';
-import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/database/entitys/phase_position_item.dart';
 import 'package:rg2/database/entitys/pll_trainer_item.dart';
@@ -15,8 +14,6 @@ class Repository extends GetxController {
   MovesDao _movesDao = Get.find();
   PhasePositionDao _positionsDao = Get.find();
   PllTrainerDao _pllTrainerDao = Get.find();
-
-  List<MainDBItem> _cache = [];
 
   //----------------------------------------------
 

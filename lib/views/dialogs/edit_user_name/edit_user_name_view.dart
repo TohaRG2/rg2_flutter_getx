@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
-import 'package:rg2/flutter_html/style.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/auth/controller/auth_controller.dart';
-import 'package:rg2/views/dialogs/big_dialog.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class EditUserNameView extends GetWidget<AuthController> {

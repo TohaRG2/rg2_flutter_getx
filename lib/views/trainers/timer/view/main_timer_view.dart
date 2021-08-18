@@ -7,11 +7,9 @@ import 'package:rg2/views/trainers/timer/view/icon_with_text_widget.dart';
 import 'package:rg2/views/trainers/timer/view/timer_bottom_menu_bar.dart';
 import 'package:rg2/views/trainers/timer/view/scramble_text_widget.dart';
 import 'package:rg2/views/trainers/timer/controller/timer_settings_controller.dart';
-import 'package:wakelock/wakelock.dart';
 
 class TimerView extends StatelessWidget {
   final TimerController _controller = Get.find();
-  // final ScrambleGenController _genController = Get.find();
   final TimerSettingsController _settingsController = Get.find();
   final _textController = TextEditingController();
 

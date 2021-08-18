@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
-import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
-import 'package:rg2/database/fire_entitys/fav_item.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 class FavouriteController extends GetxController {

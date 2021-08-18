@@ -13,7 +13,6 @@ import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
 import 'package:rg2/views/learn/detail/view_pager/youtube_thumbnail.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'header.dart';
 
