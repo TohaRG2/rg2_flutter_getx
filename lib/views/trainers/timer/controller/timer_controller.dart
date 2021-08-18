@@ -13,7 +13,7 @@ class TimerController extends GetxController {
   final ScrambleGenController _genController = Get.find();
   final TimerRepository _repository = Get.find();
 
-  final player = AudioCache(prefix: "assets/sounds/");
+  final cachedAudioPlayer = AudioCache(prefix: "assets/sounds/");
   final _metronomSound = "metronom.mp3";
 
   @override
@@ -92,7 +92,7 @@ class TimerController extends GetxController {
   /// Methods
 
   initialization(){
-    player.load(_metronomSound);
+    cachedAudioPlayer.load(_metronomSound);
     _resetTimer();
     checkAlwaysOnTimerState();
   }
@@ -311,7 +311,7 @@ class TimerController extends GetxController {
     while ( _state != TimerControllerState.waitForFullStop && _state != TimerControllerState.stopped) {
       if (DateTime.now().isAfter(nextTikTime)) {
         //assetsAudioPlayer.open(sound);
-        player.play(_metronomSound);
+        cachedAudioPlayer.play(_metronomSound);
         nextTikTime = nextTikTime.add(tikPause);
       }
       await Future.delayed(Duration(milliseconds: 100), () {});
