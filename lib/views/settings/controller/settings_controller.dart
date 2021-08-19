@@ -278,29 +278,29 @@ class SettingsController extends GetxController {
   ThemeData getCurrentTheme() {
     logPrint("Настройки темы: $primaryThemeColor, $accentThemeColor, $isDarkThemeSelect");
     return ThemeData(
-        brightness: isDarkThemeSelect ? Brightness.dark : Brightness.light,
-        primaryColor: primaryThemeColor,
-        accentColor: accentThemeColor,
-        primarySwatch: materialColorFrom(primaryThemeColor),
-        toggleableActiveColor: accentThemeColor,
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ButtonStyle(
-            // side: MaterialStateProperty.resolveWith<BorderSide>(
-            //         (states) => BorderSide(color: Colors.blue ?? Colors.black)),
-            backgroundColor: MaterialStateProperty.resolveWith<Color>((states) => primaryThemeColor),
-            shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
-              return RoundedRectangleBorder(borderRadius: BorderRadius.circular(10));
-            }),
-          ),
+      brightness: isDarkThemeSelect ? Brightness.dark : Brightness.light,
+      primaryColor: primaryThemeColor,
+      accentColor: accentThemeColor,
+      primarySwatch: materialColorFrom(primaryThemeColor),
+      toggleableActiveColor: accentThemeColor,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          // side: MaterialStateProperty.resolveWith<BorderSide>(
+          //         (states) => BorderSide(color: Colors.blue ?? Colors.black)),
+          backgroundColor: MaterialStateProperty.resolveWith<Color>((states) => primaryThemeColor),
+          shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
+            return RoundedRectangleBorder(borderRadius: BorderRadius.circular(10));
+          }),
         ),
-        //primarySwatch: Colors.orange,
-        textTheme: TextTheme().copyWith(
-          headline4: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-          headline5: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-          headline6: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-          bodyText1: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
-          bodyText2: TextStyle(fontSize: 16, fontWeight: FontWeight.normal), //DefaultText для Text("")
-        ));
+      ),
+      //primarySwatch: Colors.orange,
+      textTheme: TextTheme().copyWith(
+        headline4: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+        headline5: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+        headline6: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
+        bodyText1: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+        bodyText2: TextStyle(fontSize: 16, fontWeight: FontWeight.normal), //DefaultText для Text("")
+      ));
   }
 
   /// Пытаемся включить godMode (нужно 5 нажатий за 2.5 сек)

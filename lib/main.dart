@@ -53,8 +53,8 @@ void main() async {
 // https://github.com/Junaidhassan99/todo_app.git
 
 class RG2App extends StatelessWidget {
-  final dbFuture = Get.put(DBController()).fillDB();
   // Не удалять! Нужно его инициализировать тут до SettingsController
+  final dbFuture = Get.put(DBController()).fillDB();
 
   final SettingsController _settings = Get.put(SettingsController(), permanent: true);
 
