@@ -31,6 +31,7 @@ class EditButton extends StatelessWidget {
                         decoration: InputDecoration(
                           hintText: StrRes.learnHintComment,
                         ),
+                        minLines: 1,
                         maxLines: 3,
                         controller: _textController,
                       ),
