@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:rg2/controllers/iap/iap_controller.dart';
 import 'package:rg2/controllers/iap/iap_helper.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
@@ -12,38 +13,33 @@ class OpenAllPuzzles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SettingsController _settings = Get.find();
+    final SettingsController settings = Get.find();
     final IAPController iapController = Get.find();
+    final LearnController learnController = Get.find();
     return Obx(
       () => Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          // Text(
-          //     StrRes.settingsPurchase,
-          //     style: Get.textTheme.headline5,
-          // ),
-          // SizedBox(
-          //   height: UIHelper.SpaceSmall,
-          // ),
           SwitchListTile(
             contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
             title: Text(
               StrRes.purchasePuzzlesText,
               style: Get.textTheme.headline6,
             ),
-            value: _settings.isAllPuzzlesEnabled,
+            value: settings.isAllPuzzlesEnabled,
             onChanged: (value) {
               if (value) {
-                // _settings.isAllPuzzlesEnabled = true;
-                if (_settings.purchaserState & 2 != 0) {
-                  _settings.isAllPuzzlesEnabled = value;
+                if (settings.purchaserState & 2 != 0) {
+                  settings.isAllPuzzlesEnabled = true;
                 } else {
                   iapController.buy(IAPHelper.openAllPuzzlesId);
                 }
               } else {
-                _settings.isAllPuzzlesEnabled = false;
+                settings.isAllPuzzlesEnabled = false;
               }
+              learnController.searchInitialization();
+              learnController.searchTextListener();
             },
           ),
         ]),

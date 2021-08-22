@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
@@ -19,8 +21,17 @@ class LearnController extends GetxController {
   final FavouriteController _favController = Get.find();
 
 
+
   double curPositionInList = 0.0;
-  String _backIconPath = "assets/images/icons/back_arrow.png";
+  final _backIconPath = "assets/images/icons/back_arrow.png";
+
+  final searchEditingController = TextEditingController();
+  final searchFocusNode = FocusNode();
+  final RxBool _showSearchResult = false.obs;
+    bool get showSearchResult => _showSearchResult.value;
+  List<MainDBItem> allPuzzles = [];
+  RxList<MainDBItem> _searchList  = <MainDBItem>[].obs;
+    List<MainDBItem> get searchList  => _searchList;
 
   // Список со свойствами страниц
   RxList<PageProperties> pages = <PageProperties>[].obs;
@@ -41,12 +52,64 @@ class LearnController extends GetxController {
     _mainRepo.learnUpdateMainCacheCallback = _updateItemsInCache;
   }
 
+  searchInitialization() {
+    logPrint("searchInitialization");
+    searchEditingController.addListener(searchTextListener);
+    searchFocusNode.addListener(searchFocusNodeListener);
+    final isPurchaseEnabled = _settings.isAllPuzzlesEnabled;
+    final isGodModeEnabled = _settings.godMode;
+    _mainRepo.getSubMenuList().then((List<MainDBItem> subMenuList) {
+      allPuzzles = subMenuList;
+      allPuzzles.sort((item1, item2) => item1.title.compareTo(item2.title));
+      allPuzzles.forEach((MainDBItem item) {
+        final rootPhase = MainDBItem.getRootPhaseFor(item.phase);
+        final pageNumber = _getPageByRoot(rootPhase);
+        final isItemEnabled = (isPurchaseEnabled || pageNumber < 3 || (pageNumber < 4 && Platform.isAndroid) || isGodModeEnabled);
+        if (isItemEnabled) {
+          item.subId = 1;
+        } else {
+          item.subId = 0;
+        }
+        // logPrint("searchInitialization - ${item.subId} - $rootPhase - $pageNumber -  ${item.title} ");
+      });
+    });
+  }
+
+  void searchFocusNodeListener() {
+    // if (searchFocusNode.hasFocus) {
+    //   searchInitialization();
+    // }
+  }
+
+  void onSearchClearButtonPressed(){
+    logPrint("onSearchClearButtonPressed - ");
+    searchEditingController.text = '';
+    searchFocusNode.unfocus();
+    _showSearchResult.value = false;
+    update();
+  }
+
+  void searchTextListener() {
+    String sText = searchEditingController.text;
+    logPrint("searchTextListener - $sText");
+    _showSearchResult.value = true;
+    if (sText.isNotEmpty) {
+      _searchList.assignAll(allPuzzles.where(
+          (mainDBItem) => mainDBItem.title.toLowerCase().contains(sText.toLowerCase())
+      ));
+    } else {
+      _searchList.assignAll(allPuzzles);
+    }
+    update();
+  }
+
 
   Future<void> loadPages() async {
     await _loadBackPhases();
     await _getPagesFromBase();
     await _setCurrentPhasesObsLists();
     await _getPhasesPositions();
+    searchInitialization();
   }
 
   /// Заполняем currentList для всех фаз
@@ -111,8 +174,8 @@ class LearnController extends GetxController {
   /// По фазе узнаем страницу и меняем на ней фазу
   changePageAndPhaseTo(String phase){
     logPrint("changePageAndPhaseTo $phase");
-    var rootPhase = MainDBItem.getRootPhaseFor(phase);
-    var pageNumber = _getPageByRoot(rootPhase);
+    final rootPhase = MainDBItem.getRootPhaseFor(phase);
+    final pageNumber = _getPageByRoot(rootPhase);
     curPageNumber = pageNumber;
     changeCurrentPhaseTo(phase);
     update();
@@ -274,6 +337,7 @@ class LearnController extends GetxController {
     isNeedRedirectToDetail = false;
   }
 
+  /// Обрабатываем клик на запись в избранном
   onFavouriteItemClick(MainDBItem item) {
     // переходим на "Обучалки" в любом случае
     _settings.bottomItem = 0;
@@ -308,5 +372,6 @@ class LearnController extends GetxController {
       }
     }
   }
+
 
 }

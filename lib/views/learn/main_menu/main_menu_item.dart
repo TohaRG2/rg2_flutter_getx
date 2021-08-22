@@ -13,52 +13,64 @@ class MainMenuItem extends StatelessWidget {
   final bool isItemEnabled;
   final FunctionForCallback onTapCallback;
 
-  MainMenuItem({this.item, this.isItemEnabled, this.onTapCallback});
+  MainMenuItem({
+    @required this.item,
+    @required this.isItemEnabled,
+    @required this.onTapCallback});
 
   @override
   Widget build(BuildContext context) {
-    var _primaryColor = Get.theme.primaryColor;
-    var _imagePath = item.getAssetFilePath(); // _learnController.getAssetFilePath(item.icon, item.phase);
-    //TODO переделать на использование card
+    final _primaryColor = Get.theme.primaryColor;
+    final _imagePath = item.getAssetFilePath(); // _learnController.getAssetFilePath(item.icon, item.phase);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
       child: GestureDetector(
         child: Container(
-          child: Material(
-            //color: Colors.amberAccent,
-            elevation: 10.0,
-            borderRadius: BorderRadius.circular(10.0),
-            shadowColor: Colors.black54,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ColorFiltered(
-                    colorFilter: ColorFilter.mode(
-                        Colors.grey,
-                        //Выводим цветную или ч/б картинку в зависимости от настроек
-                        (isItemEnabled) ? BlendMode.dst : BlendMode.saturation,
-                    ),
-                    child: _imagePath.endsWith(".svg") ?
-                      SvgPicture.asset(_imagePath, height: 70,) :
-                      Image.asset(_imagePath, height: 70,),
+          decoration: BoxDecoration(
+              color: Get.theme.scaffoldBackgroundColor,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.35),
+                    blurRadius: 7,
+                    offset: Offset(2,4)
+                )
+              ]
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                      Colors.grey,
+                      //Выводим цветную или ч/б картинку в зависимости от настроек
+                      (isItemEnabled) ? BlendMode.dst : BlendMode.saturation,
                   ),
+                  child: _imagePath.endsWith(".svg") ?
+                    SvgPicture.asset(_imagePath, height: 66,) :
+                    Image.asset(_imagePath, height: 66,),
                 ),
-                Expanded(
-                  child: Padding(
-                  padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item.title,
-                        softWrap: true,
-                        maxLines: 3,
-                        style: Get.textTheme.headline6,
-                      ),
-                      Padding(
+              ),
+              SizedBox(width: 4,),
+              Expanded(
+                child: Padding(
+                padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceSmall),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title.replaceFirst('(', '\n('),
+                      softWrap: true,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: Get.textTheme.bodyText1,
+                    ),
+                    Visibility(
+                      visible: item.comment.isNotEmpty,
+                      child: Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
                           item.comment,
@@ -69,34 +81,34 @@ class MainMenuItem extends StatelessWidget {
                               fontSize: 14),
                         ),
                       ),
-                    ],
-                  ),
-                )),
-                Visibility(
-                  //если enabled и не возврат на шаг выше
-                  visible: (item.id != -1 && isItemEnabled) ? true : false,
-                  child: GestureDetector(
-                    child: Container(
-                      color: Colors.transparent,  // Выглядит странно, но без этого область нажатия на иконку не увеличивается на величину padding
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            right: 10.0, top: 15.0, bottom: 15.0, left: 5.0),
-                        child: Icon( item.isFavourite ?
-                                Icons.favorite_rounded : Icons.favorite_border_rounded,
-                                color: _primaryColor,
-                              ),
-                      ),
                     ),
-                    onTap: () {
-                      _learnController.changeFavStatus(item);
-                    },
-                    onLongPress: () {
-                      Get.dialog(FavouriteDialog());
-                    },
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              )),
+              Visibility(
+                //если enabled и не возврат на шаг выше
+                visible: (item.id != -1 && isItemEnabled) ? true : false,
+                child: GestureDetector(
+                  child: Container(
+                    color: Colors.transparent,  // Выглядит странно, но без этого область нажатия на иконку не увеличивается на величину padding
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          right: 10.0, top: 15.0, bottom: 15.0, left: 5.0),
+                      child: Icon( item.isFavourite ?
+                              Icons.favorite_rounded : Icons.favorite_border_rounded,
+                              color: _primaryColor,
+                            ),
+                    ),
+                  ),
+                  onTap: () {
+                    _learnController.changeFavStatus(item);
+                  },
+                  onLongPress: () {
+                    Get.dialog(FavouriteDialog());
+                  },
+                ),
+              ),
+            ],
           ),
         ),
         onTap: () {
