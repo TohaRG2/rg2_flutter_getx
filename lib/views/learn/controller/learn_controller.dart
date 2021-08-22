@@ -52,10 +52,11 @@ class LearnController extends GetxController {
     _mainRepo.learnUpdateMainCacheCallback = _updateItemsInCache;
   }
 
+  /// Инициализация списков для поиска по головоломкам
   searchInitialization() {
     logPrint("searchInitialization");
-    searchEditingController.addListener(searchTextListener);
-    searchFocusNode.addListener(searchFocusNodeListener);
+    searchEditingController.addListener(_searchTextListener);
+    searchFocusNode.addListener(_searchFocusNodeListener);
     final isPurchaseEnabled = _settings.isAllPuzzlesEnabled;
     final isGodModeEnabled = _settings.godMode;
     _mainRepo.getSubMenuList().then((List<MainDBItem> subMenuList) {
@@ -75,12 +76,14 @@ class LearnController extends GetxController {
     });
   }
 
-  void searchFocusNodeListener() {
+  //TODO убрать листнер фокуса для поля поиска
+  void _searchFocusNodeListener() {
     // if (searchFocusNode.hasFocus) {
     //   searchInitialization();
     // }
   }
 
+  /// если нажали на кнопку очистки поиска
   void onSearchClearButtonPressed(){
     logPrint("onSearchClearButtonPressed - ");
     searchEditingController.text = '';
@@ -89,7 +92,8 @@ class LearnController extends GetxController {
     update();
   }
 
-  void searchTextListener() {
+  /// листенер ввода текста в поле поиска
+  void _searchTextListener() {
     String sText = searchEditingController.text;
     logPrint("searchTextListener - $sText");
     _showSearchResult.value = true;
@@ -103,7 +107,17 @@ class LearnController extends GetxController {
     update();
   }
 
+  /// вызываем, чтобы обновить списки всех головоломок и список поиска, если
+  /// поменяли настройку отображения всех головоломок
+  void updateSearchList() {
+    searchInitialization();
+    if (showSearchResult) {
+      _searchTextListener();
+    }
+  }
 
+
+  /// вызваем при загрузке главного меню, для инициализации всех массивов
   Future<void> loadPages() async {
     await _loadBackPhases();
     await _getPagesFromBase();
