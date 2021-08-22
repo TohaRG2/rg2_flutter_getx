@@ -157,6 +157,9 @@ class LearnViewPager extends GetView<LearnController> {
         color: Get.textTheme.headline5.color,
         tooltip: StrRes.purchaseButtonTooltip,
         onPressed: () {
+          if (controller.searchFocusNode.hasPrimaryFocus) {
+            controller.searchFocusNode.unfocus();
+          }
           Get.to(() => PurchaseView());
         },
       ),

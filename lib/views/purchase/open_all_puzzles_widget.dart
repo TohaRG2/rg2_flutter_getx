@@ -38,8 +38,7 @@ class OpenAllPuzzles extends StatelessWidget {
               } else {
                 settings.isAllPuzzlesEnabled = false;
               }
-              learnController.searchInitialization();
-              learnController.searchTextListener();
+              learnController.updateSearchList();
             },
           ),
         ]),
