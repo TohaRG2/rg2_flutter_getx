@@ -29,6 +29,11 @@ class StrRes {
   static const trainersTitle = "Тренажеры";
   static const settingsTitle = "Настройки";
   static const favouritesTitle = "Избранное";
+  static const searchHint = "Поиск";
+  static const advicesButtonTooltip = 'Подсказки';
+  static const settingsButtonTooltip = 'Настройки';
+  static const purchaseButtonTooltip = 'Покупки';
+
   static const nothingInFavourites = "Сейчас в избранном ничего нет";
   static const favouriteDialogHint = "Открывайте, удаляйте или меняйте местами выбранные обучалки";
   static const azbukaDialogTitle = "Азбука вращений";

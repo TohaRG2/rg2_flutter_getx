@@ -40,7 +40,7 @@ class MenuList extends StatelessWidget {
         _scrollController.jumpTo(position);
         logPrint("jumpTo $position in ${_learnController.pages[pageNumber].currentPhase}");
       }
-      var isItemEnabled = (_isPurchaseEnabled || pageNumber < 2 || (pageNumber < 4 && Platform.isAndroid) || _isGodModeEnabled);
+      final isItemEnabled = (_isPurchaseEnabled || pageNumber < 3 || (pageNumber < 4 && Platform.isAndroid) || _isGodModeEnabled);
       return Scrollbar(
         showTrackOnHover: true,
         child: ListView(
