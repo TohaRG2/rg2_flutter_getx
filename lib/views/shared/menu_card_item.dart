@@ -9,7 +9,7 @@ class MenuCardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
+      padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMini, vertical: UIHelper.SpaceMini),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceSmall),
         decoration: BoxDecoration(
