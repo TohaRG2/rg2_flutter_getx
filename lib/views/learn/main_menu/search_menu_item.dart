@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
-import 'package:rg2/views/shared/ui_helpers.dart';
+import 'package:rg2/views/shared/menu_card_item.dart';
 typedef FunctionForCallback = Function(MainDBItem);
 
 class SearchMenuItem extends StatelessWidget {
@@ -17,23 +17,8 @@ class SearchMenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final _imagePath = item.getAssetFilePath();
     return GestureDetector(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceSmall),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceSmall),
-          decoration: BoxDecoration(
-            color: Get.theme.scaffoldBackgroundColor,
-            // border: Border.all(color: Colors.black.withOpacity(0.3)),
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.35),
-                blurRadius: 7,
-                offset: Offset(2,4)
-              )
-            ]
-          ),
-          child: Row(
+      child: MenuCardItem(
+        child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -48,7 +33,7 @@ class SearchMenuItem extends StatelessWidget {
               SizedBox(width: 15,),
               Expanded(
                 child: Text(
-                  item.title,
+                  item.title.replaceFirst('(', '\n('),
                   softWrap: true,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
@@ -58,7 +43,6 @@ class SearchMenuItem extends StatelessWidget {
             ],
           ),
         ),
-      ),
       onTap: () {
         onTapCallback(item);
       },
