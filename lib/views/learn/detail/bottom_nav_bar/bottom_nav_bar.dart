@@ -35,7 +35,7 @@ class BottomNavBar extends StatelessWidget {
             child: FloatingActionButton(
                 backgroundColor: Theme.of(context).accentColor,
                 foregroundColor: iconColor,
-                child: Icon(Icons.repeat),
+                child: Icon(Icons.help_outline_rounded, size: 35),
                 elevation: 0.1,
                 onPressed: () {
                   Get.dialog(AzbukaDialog(_controller.obsPhase));

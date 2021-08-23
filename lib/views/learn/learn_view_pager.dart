@@ -130,6 +130,9 @@ class LearnViewPager extends GetView<LearnController> {
   Widget _showAdvicesButton() {
     return IconButton(
       onPressed: () {
+        if (controller.searchFocusNode.hasPrimaryFocus) {
+          controller.searchFocusNode.unfocus();
+        }
         Get.dialog(AdvicesDialog());
       },
       icon: const Icon(Icons.help_outline),
