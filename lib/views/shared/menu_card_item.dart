@@ -9,17 +9,17 @@ class MenuCardItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMini, vertical: UIHelper.SpaceMini),
+      padding: EdgeInsets.symmetric(horizontal: UIHelper.Zero, vertical: UIHelper.One),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceSmall),
         decoration: BoxDecoration(
           color: Get.theme.scaffoldBackgroundColor,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(0)),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.35),
+                color: Colors.black.withOpacity(0.15),
                 blurRadius: 7,
-                offset: Offset(2, 4))
+                offset: Offset(0, 4))
           ]),
         child: child,
       )
