@@ -13,6 +13,9 @@ class UIHelper {
   static const double _HorizontalSpaceLarge = 60.0;
 
   // Space constants
+  static const double Zero = 0;
+  static const double One = 1;
+  static const double Two = 2;
   static const double SpaceMini = 5.0;
   static const double SpaceSmall = 10.0;
   static const double SpaceMedium = 20.0;

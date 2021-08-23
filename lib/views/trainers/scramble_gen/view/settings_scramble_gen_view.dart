@@ -20,7 +20,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
           appBar: AppBar(
             automaticallyImplyLeading: false,
             title: Center(
-              child: Text(StrRes.scrambleGenAzbukaSelect, style: TextStyle(color: Get.textTheme.headline5.color),),
+              child: Text(StrRes.scrambleGenAzbukaSelect, style: TextStyle(color: Get.textTheme.headline6.color),),
             ),
             backgroundColor: Get.theme.scaffoldBackgroundColor,
           ),
@@ -106,7 +106,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
 
   Widget _buildTableWithArrows(List<List<ColoredAzbukaItem>> tableRows, double cellHeight) {
     var border = 2.0;
-    var arrowColor = Get.textTheme.headline6.color;
+    var arrowColor = Get.textTheme.bodyText1.color;
     return Stack(children: [
       Table(
         //border: TableBorder.all(width: 3.0, color: backgroundColor),

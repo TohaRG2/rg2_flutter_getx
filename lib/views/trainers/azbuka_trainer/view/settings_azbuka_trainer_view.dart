@@ -17,7 +17,7 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Center(
-          child: Text(azbukaTrainerTitle, style: TextStyle(color: Get.textTheme.headline5.color)),
+          child: Text(azbukaTrainerTitle, style: TextStyle(color: Get.textTheme.headline6.color)),
         ),
         backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
@@ -33,7 +33,7 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
                 /// Сложность тренировки:
                 Container(
                   padding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  child: Text(StrRes.azbukaTrainerSettingsTrainingTitle, style: Get.textTheme.headline5,)
+                  child: Text(StrRes.azbukaTrainerSettingsTrainingTitle, style: Get.textTheme.headline6,)
                 ),
 
                 /// Чекбоксы Углы/Ребра
@@ -65,7 +65,7 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
                 /// Игра на время
                 SwitchListTile(
                   contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  title: Text(StrRes.azbukaTrainerSettingsEnableTimer, style:Get.textTheme.headline6,),
+                  title: Text(StrRes.azbukaTrainerSettingsEnableTimer, style:Get.textTheme.bodyText1,),
                   value: _controller.isTimerEnabled,
                   onChanged: (value) {
                     _controller.isTimerEnabled = value;
@@ -172,7 +172,7 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
               opacity: enabled ? 1.0 : 0.5,
               child: Text(
                 text,
-                style: Get.textTheme.headline6,
+                style: Get.textTheme.bodyText1,
               ),
             )),
           Container(

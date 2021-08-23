@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
 import 'package:rg2/res/string_values.dart';
+import 'package:rg2/views/shared/menu_card_item.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/trainers/timer/controller/result_view_controller.dart';
 
@@ -20,72 +21,68 @@ class SavedResultListItem extends StatelessWidget {
       actionPane: const SlidableBehindActionPane(),
       actions: actions(),
       secondaryActions: actions(),
-      child: Container(
-        margin: const EdgeInsets.all(UIHelper.SpaceMini),
-        child: GestureDetector(
-          child: Card(
-            elevation: 8.0,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
-              child: Column(
-                children: [
-                  Container(
+      child: GestureDetector(
+        child: MenuCardItem(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
+            child: Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(bottom: UIHelper.SpaceMini),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("$formattedDate", style: Get.textTheme.subtitle1,),
+                      Text("${_item.solvingTime}", style: Get.textTheme.headline5.copyWith(color: Get.theme.accentColor),),
+                  ],),
+                ),
+                Visibility(
+                  visible: _item.scramble != "",
+                  child: Container(
                     padding: const EdgeInsets.only(bottom: UIHelper.SpaceMini),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("$formattedDate", style: Get.textTheme.subtitle1,),
-                        Text("${_item.solvingTime}", style: Get.textTheme.headline5.copyWith(color: Get.theme.accentColor),),
-                    ],),
-                  ),
-                  Visibility(
-                    visible: _item.scramble != "",
-                    child: Container(
-                      padding: const EdgeInsets.only(bottom: UIHelper.SpaceMini),
-                      child: Row(
-                        children: [
-                          Text(StrRes.timerResultItemScramble, style: Get.textTheme.subtitle2),
-                          Expanded(
-                            child: Text(
-                              "${_item.scramble}",
-                              style: Get.textTheme.subtitle2,
-                              softWrap: true,
-                              textAlign: TextAlign.left,
-                              maxLines: 2,
-                            )
-                          ),
-                        ],
-                      ),
-                    )),
-                  Visibility(
-                    visible: _item.comment != "",
-                    child: Container(
-                      padding: const EdgeInsets.only(bottom: UIHelper.SpaceMini),
-                      child: Row(
-                        children: [
-                          Text(StrRes.timerResultItemComment, style: Get.textTheme.subtitle2),
-                          Expanded(
-                            child: Text(
-                              "${_item.comment}",
-                              style: Get.textTheme.subtitle2.copyWith(color: Get.theme.primaryColor),
-                              softWrap: true,
-                              textAlign: TextAlign.left,
-                              maxLines: 3,
-                            )
-                          ),
-                        ],
-                      ),
-                    )
-                  ),
-                ],
-              ),
+                        Text(StrRes.timerResultItemScramble, style: Get.textTheme.subtitle2),
+                        Expanded(
+                          child: Text(
+                            "${_item.scramble}",
+                            style: Get.textTheme.subtitle2,
+                            softWrap: true,
+                            textAlign: TextAlign.left,
+                            maxLines: 2,
+                          )
+                        ),
+                      ],
+                    ),
+                  )),
+                Visibility(
+                  visible: _item.comment != "",
+                  child: Container(
+                    padding: const EdgeInsets.only(bottom: UIHelper.SpaceMini),
+                    child: Row(
+                      children: [
+                        Text(StrRes.timerResultItemComment, style: Get.textTheme.subtitle2),
+                        Expanded(
+                          child: Text(
+                            "${_item.comment}",
+                            style: Get.textTheme.subtitle2.copyWith(color: Get.theme.primaryColor),
+                            softWrap: true,
+                            textAlign: TextAlign.left,
+                            maxLines: 3,
+                          )
+                        ),
+                      ],
+                    ),
+                  )
+                ),
+              ],
             ),
           ),
-          onTap: () {
-            //logPrint("Нажали на элемент $_item");
-            showEditCommentDialog();
-          },
         ),
+        onTap: () {
+          //logPrint("Нажали на элемент $_item");
+          showEditCommentDialog();
+        },
       ),
     );
   }
