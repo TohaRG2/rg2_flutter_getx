@@ -309,6 +309,10 @@ class LearnController extends GetxController {
     //saveCurrentPhasePosition(); - сохраняем текущую позицию
     var fromPhase = pages[curPageNumber].currentPhase;
     var toPhase = MainDBItem.backFrom[fromPhase] ?? fromPhase;
+    if (showSearchResult) {
+      onSearchClearButtonPressed();
+      return false;
+    }
     if (toPhase != fromPhase) {
       changeCurrentPhaseTo(toPhase);
       return false;
