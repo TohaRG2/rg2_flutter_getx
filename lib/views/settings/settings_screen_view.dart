@@ -80,7 +80,7 @@ class SettingsScreen extends GetWidget<SettingsController> {
           /// Заголовок "Внешний вид:"
           Text(
             StrRes.appTheme,
-            style: Get.textTheme.headline5,
+            style: Get.textTheme.headline6,
           ),
           SizedBox(
             height: UIHelper.SpaceSmall,
@@ -94,7 +94,7 @@ class SettingsScreen extends GetWidget<SettingsController> {
                   padding: EdgeInsets.only(left: UIHelper.SpaceSmall),
                   child: Text(
                     StrRes.darkTheme,
-                    style: Get.textTheme.headline6,
+                    style: Get.textTheme.bodyText1,
                   )),
               ThemeSwitch(),
             ],
@@ -112,7 +112,7 @@ class SettingsScreen extends GetWidget<SettingsController> {
                   children: [
                     Text(
                       StrRes.primaryColor,
-                      style: Get.textTheme.headline6,
+                      style: Get.textTheme.bodyText1,
                     ),
                     CircleAvatar(backgroundColor: controller.primaryThemeColor, radius: UIHelper.SpaceMedium),
                   ],
@@ -134,7 +134,7 @@ class SettingsScreen extends GetWidget<SettingsController> {
                 children: [
                   Text(
                     StrRes.accentColor,
-                    style: Get.textTheme.headline6,
+                    style: Get.textTheme.bodyText1,
                   ),
                   CircleAvatar(backgroundColor: controller.accentThemeColor, radius: UIHelper.SpaceMedium),
                 ],
@@ -153,7 +153,7 @@ class SettingsScreen extends GetWidget<SettingsController> {
             padding: const EdgeInsets.only(left: UIHelper.SpaceSmall),
             child: Text(
               StrRes.textSize,
-              style: Get.textTheme.headline6,
+              style: Get.textTheme.bodyText1,
             ),
           ),
 

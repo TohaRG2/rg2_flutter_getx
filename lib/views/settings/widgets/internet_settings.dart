@@ -16,7 +16,7 @@ class InternetSettings extends StatelessWidget {
         children: <Widget>[
           Text(
             StrRes.internetSettingsText,
-            style: Get.textTheme.headline5,
+            style: Get.textTheme.headline6,
           ),
           SizedBox(height: UIHelper.SpaceSmall,),
           Padding(
@@ -24,12 +24,12 @@ class InternetSettings extends StatelessWidget {
                 left: UIHelper.SpaceSmall, right: UIHelper.SpaceSmall),
             child: Text(
               StrRes.internetSettingsHelp,
-              style: Get.textTheme.headline6,
+              style: Get.textTheme.bodyText1,
             ),
           ),
           SizedBox(height: UIHelper.SpaceSmall,),
           ListTile(
-            title: Text(StrRes.allInternetUsingText, style: Get.textTheme.headline6,),
+            title: Text(StrRes.allInternetUsingText, style: Get.textTheme.bodyText1,),
             trailing: Radio (
               value: 0,
               groupValue: _settings.internetUsage,
@@ -39,7 +39,7 @@ class InternetSettings extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(StrRes.wiFiUsingText, style: Get.textTheme.headline6,),
+            title: Text(StrRes.wiFiUsingText, style: Get.textTheme.bodyText1,),
             trailing: Radio (
               value: 2,
               groupValue: _settings.internetUsage,
@@ -49,7 +49,7 @@ class InternetSettings extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(StrRes.disableInternetUsingText, style: Get.textTheme.headline6,),
+            title: Text(StrRes.disableInternetUsingText, style: Get.textTheme.bodyText1,),
             trailing: Radio (
               value: 3,
               groupValue: _settings.internetUsage,
