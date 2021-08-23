@@ -42,12 +42,14 @@ class LearnDetailView extends StatelessWidget {
   Drawer _buildDrawer() {
     return Drawer(
         child: Obx(() {
-          var items = _controller.currentItems;
+          //TODO перенести ScrollController в _controller
+          final items = _controller.currentItems;
           var intPosition = (_controller.curPageNumber > 2) ? _controller.curPageNumber - 2 : 0;
           // высчитаем смещение в пикселях для заданной позиции
-          var offset = intPosition.toDouble() * 88;
+          var offset = intPosition.toDouble() * 81;
           var _scrollController = ScrollController(initialScrollOffset: offset);
           logPrint("Offset $intPosition - $offset");
+          // TODO попрбовать ListView.builder
           return ListView(
             controller: _scrollController,
             children: items.map((listItem) =>

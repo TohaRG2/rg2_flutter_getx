@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:rg2/controllers/ads/ad_show_controller.dart';
+import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
@@ -10,16 +12,10 @@ import 'learn_detail_page_item.dart';
 class LearnDetailViewPager extends StatelessWidget {
   final LearnDetailController _detailController = Get.find();
   final SettingsController _settings = Get.find();
-  // final AdShowController _adShowController = Get.put(AdShowController());
+  final AdShowController _adShowController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    var _isSwipeEnabled = _settings.isSwipeEnabled;
-    // Создаем новый контроллер и задаем количество баннеров, которое надо сгенерировать
-    // далее в каждой странице ViewPager
-    AdShowController _adShowController = Get.put(AdShowController());
-    _adShowController.count = _detailController.currentItems.length;
-
     return DefaultTabController(
       length: _detailController.currentItems.length,
       child: Builder(builder: (BuildContext context) {
@@ -50,25 +46,34 @@ class LearnDetailViewPager extends StatelessWidget {
                   primary: Get.theme.primaryColor, // background
                 ),
               ),
-
-              /// Верхний Таббар
-              title: Center(
-                child: TabBar(
-                  isScrollable: true,
-                  tabs: _tabsList(),
-                ),
+              title: TabBar(
+                isScrollable: true,
+                tabs: _tabsList(),
               ),
             ),
-            body: TabBarView(
-              physics: _isSwipeEnabled ? null : NeverScrollableScrollPhysics(),
-              children: _tabBarView(),
-            ),
+            body: _fullTabBar(tabController)
           );
         });
       }),
       initialIndex: _detailController.curPageNumber,
     );
   }
+
+  Widget _fullTabBar(TabController tabController) {
+    return Column(
+      children: [
+        Obx(() => _adBanner(_adShowController.bannerAd)),
+        Expanded(
+          child: TabBarView(
+            controller: tabController,
+            physics: _settings.isSwipeEnabled ? null : NeverScrollableScrollPhysics(),
+            children: _tabBarView(),
+          ),
+        )
+      ],
+    );
+  }
+
 
   List<Tab> _tabsList() {
     return _detailController.currentItems
@@ -84,5 +89,17 @@ class LearnDetailViewPager extends StatelessWidget {
       result.add(LearnDetailPage(pageNum));
     });
     return result;
+  }
+
+  Widget _adBanner(BannerAd bannerAd) {
+    logPrint("adBanner - ${bannerAd?.adUnitId}");
+    if (_settings.isAdDisabled)
+      return SizedBox(height: 0);
+    return (bannerAd == null)
+        ? SizedBox(height: 60,)
+        : Container(
+            height: 60,
+            child: AdWidget(ad: bannerAd),
+          );
   }
 }

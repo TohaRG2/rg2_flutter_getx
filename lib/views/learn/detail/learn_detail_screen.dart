@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/controllers/ads/ad_show_controller.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
 import 'package:rg2/res/string_values.dart';
@@ -7,6 +8,7 @@ import 'package:rg2/res/string_values.dart';
 import 'learn_detail_view.dart';
 
 class LearnDetailScreen extends StatelessWidget {
+  final AdShowController _adShowController = Get.put(AdShowController());
   final String _phase;
   final int _startId;
 
@@ -15,8 +17,9 @@ class LearnDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     logPrint("LearnDetailScreen build - ");
-    var controller = Get.put(LearnDetailController());
+
     logPrint("LearnDetailScreen reLoadPages");
+    var controller = Get.put(LearnDetailController());
     Future<void> pages = controller.reLoadPages(_phase, _startId);
     return FutureBuilder(
         future: pages,

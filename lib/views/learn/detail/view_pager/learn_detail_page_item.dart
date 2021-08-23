@@ -21,7 +21,7 @@ class LearnDetailPage extends StatelessWidget {
   final LearnDetailController _controller = Get.find();
   final SettingsController _settingsController = Get.find();
   final ConnectionController _connectionController = Get.find();
-  final AdShowController _adShowController = Get.find();
+
 
   LearnDetailPage(this._curPageNumber);
 
@@ -48,9 +48,6 @@ class LearnDetailPage extends StatelessWidget {
               controller: _scrollController,
               child: Column(
                 children: [
-                  Obx(() =>
-                    _adBanner(_adShowController.bannersList[_curPageNumber].value)
-                  ),
                   Header(curPageNumber: _curPageNumber),
                   Divider(color: Get.theme.primaryColor,),
                   _commentWidget(mainDBItem),
@@ -90,17 +87,5 @@ class LearnDetailPage extends StatelessWidget {
         ));
   }
 
-  Widget _adBanner(BannerAd bannerAd) {
-    logPrint("adBanner - ${bannerAd?.adUnitId}");
-    if (_settingsController.isAdDisabled) return SizedBox(height: 0,);
-    return (bannerAd == null)
-        ? SizedBox(
-            height: 60,
-          )
-        : Container(
-            height: 60,
-            child: AdWidget(ad: bannerAd),
-          );
-  }
 }
 
