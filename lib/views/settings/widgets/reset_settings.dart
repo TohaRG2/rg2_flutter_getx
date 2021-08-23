@@ -31,11 +31,11 @@ class ResetSettings extends GetWidget<SettingsController> {
           child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text("Сброс настроек:", style: Get.textTheme.headline5,),
+                Text("Сброс настроек:", style: Get.textTheme.headline6,),
                 SizedBox(height: UIHelper.SpaceMedium,),
                 CheckboxListTile(
                     contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                    title: Text("Интерфейс", style: Get.textTheme.headline6,),
+                    title: Text("Интерфейс", style: Get.textTheme.bodyText1,),
                     controlAffinity: ListTileControlAffinity.leading,
                     value: controller.resetMainSettings,
                     onChanged: (value) {
@@ -43,7 +43,7 @@ class ResetSettings extends GetWidget<SettingsController> {
                     }),
                 CheckboxListTile(
                     contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                    title: Text("Комментарии к этапам", style: Get.textTheme.headline6,),
+                    title: Text("Комментарии к этапам", style: Get.textTheme.bodyText1,),
                     controlAffinity: ListTileControlAffinity.leading,
                     value: controller.resetComments,
                     onChanged: (value) {
@@ -51,7 +51,7 @@ class ResetSettings extends GetWidget<SettingsController> {
                     }),
                 CheckboxListTile(
                     contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
-                    title: Text("Время сборок в таймере", style: Get.textTheme.headline6,),
+                    title: Text("Время сборок в таймере", style: Get.textTheme.bodyText1,),
                     controlAffinity: ListTileControlAffinity.leading,
                     value: controller.resetTimerTimes,
                     onChanged: (value) {

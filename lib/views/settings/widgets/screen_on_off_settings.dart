@@ -19,7 +19,7 @@ class ScreenOnOffSettings extends StatelessWidget {
         children: <Widget>[
           Text(
             StrRes.screenOnOffSettingsText,
-            style: Get.textTheme.headline5,
+            style: Get.textTheme.headline6,
           ),
           SizedBox(
             height: UIHelper.SpaceSmall,
@@ -28,7 +28,7 @@ class ScreenOnOffSettings extends StatelessWidget {
             contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
             title: Text(
               StrRes.screenOnOffSettingsGlobal,
-              style: Get.textTheme.headline6,
+              style: Get.textTheme.bodyText1,
             ),
             value: _settings.alwaysScreenOnGlobal,
             onChanged: (value) {
@@ -40,7 +40,7 @@ class ScreenOnOffSettings extends StatelessWidget {
             contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
             title: Text(
               StrRes.screenOnOffSettingsInTimer,
-              style: Get.textTheme.headline6,
+              style: Get.textTheme.bodyText1,
             ),
             value: _settings.alwaysScreenOnTimer,
             onChanged: (value) {

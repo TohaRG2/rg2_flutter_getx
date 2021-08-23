@@ -19,7 +19,7 @@ class HelpSettings extends StatelessWidget {
           GestureDetector(
             child: Text(
               _settings.godMode ? "${StrRes.miniHelpSettingsText} +" : StrRes.miniHelpSettingsText,
-              style: Get.textTheme.headline5,
+              style: Get.textTheme.headline6,
             ),
             onTap: () {
               _settings.tryChangeGodMode();
@@ -32,7 +32,7 @@ class HelpSettings extends StatelessWidget {
             contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
             title: Text(
               StrRes.miniHelpSettingsSwitch,
-              style: Get.textTheme.headline6,
+              style: Get.textTheme.bodyText1,
             ),
             value: _settings.isStartHelpEnabled,
             onChanged: (value) {

@@ -20,7 +20,7 @@ class SwipeSettings extends StatelessWidget {
           children: <Widget>[
             Text(
                 StrRes.settingsSwipe,
-                style: Get.textTheme.headline5,
+                style: Get.textTheme.headline6,
             ),
             SizedBox(
               height: UIHelper.SpaceSmall,
@@ -29,7 +29,7 @@ class SwipeSettings extends StatelessWidget {
               contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
               title: Text(
                 StrRes.settingsSwipeMenuText,
-                style: Get.textTheme.headline6,
+                style: Get.textTheme.bodyText1,
               ),
               value: _settings.isSwipeEnabled,
               onChanged: (value) {
