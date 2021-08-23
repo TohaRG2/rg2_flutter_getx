@@ -4,7 +4,7 @@ import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/views/favourites/view/main_favourite.dart';
 import 'package:rg2/views/info/infoScreen.dart';
-import 'package:rg2/views/learn/learn_menu_screen.dart';
+import 'package:rg2/views/learn/learn_waiting_screen.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 import 'bottomNavBarItems.dart';
@@ -15,7 +15,7 @@ class MainView extends StatelessWidget {
   final LearnController _learnController = Get.find();
 
   static List<Widget> _widgetOptions = <Widget>[
-    LearnScreen(),
+    LearnWaitingScreen(),
     TrainersScreen(),
     MainFavourite(),
     InfoScreen(),

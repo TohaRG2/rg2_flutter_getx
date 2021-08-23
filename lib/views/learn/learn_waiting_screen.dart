@@ -5,7 +5,7 @@ import 'package:rg2/res/string_values.dart';
 
 import 'learn_view_pager.dart';
 
-class LearnScreen extends StatelessWidget {
+class LearnWaitingScreen extends StatelessWidget {
   // Проверяем загрузились ли из базы значения типов головоломок (CubeTypes)
   final Future<void> pages = Get.find<LearnController>().loadPages();
 
