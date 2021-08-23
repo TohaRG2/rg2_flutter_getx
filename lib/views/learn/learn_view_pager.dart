@@ -169,9 +169,9 @@ class LearnViewPager extends GetView<LearnController> {
     );
   }
 
-  //Возвращаем true, если надо дальше продолжать обрабатывать нажатие, т.е. выход из программы
+  ///Возвращаем true, если надо дальше продолжать обрабатывать нажатие, т.е. выход из программы
   Future<bool> _onWillPop() async {
-    //logPrint("Back pressed");
+    logPrint("Back pressed");
     return controller.canReturnToOnePhaseBack();
   }
 

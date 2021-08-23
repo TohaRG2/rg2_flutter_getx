@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
+import 'package:rg2/views/shared/menu_card_item.dart';
 
 class DrawerMenuItem extends StatelessWidget {
   final MainDBItem item;
@@ -12,39 +13,30 @@ class DrawerMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-      child: GestureDetector(
-        child: Container(
-          child: Material(
-            //color: Colors.amberAccent,
-            elevation: 10.0,
-            borderRadius: BorderRadius.circular(10.0),
-            shadowColor: Colors.black54,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SvgPicture.asset(
-                    item.getAssetFilePath(), // _learnController.getAssetFilePath(item.icon, item.phase),
-                    height: 60,
-                  ),
-                ),
-                Expanded(
-                    child: Padding(
-                  padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        item.title,
-                        softWrap: true,
-                        maxLines: 2,
-                        style: Get.textTheme.bodyText1,
-                      ),
-                      Padding(
+    return GestureDetector(
+      child: MenuCardItem(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              item.getAssetFilePath(), // _learnController.getAssetFilePath(item.icon, item.phase),
+              height: 60,
+            ),
+            SizedBox(width: 15,),
+            Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title,
+                      softWrap: true,
+                      maxLines: 2,
+                      style: Get.textTheme.bodyText1,
+                    ),
+                    Visibility(
+                      visible: item.comment.isNotEmpty,
+                      child: Padding(
                         padding: const EdgeInsets.only(top: 8.0),
                         child: Text(
                           item.comment,
@@ -54,17 +46,15 @@ class DrawerMenuItem extends StatelessWidget {
                               fontSize: 12),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )),
-              ],
-            ),
-          ),
+          ],
         ),
-        onTap: () {
-          onItemSelected(item);
-        },
       ),
+      onTap: () {
+        onItemSelected(item);
+      },
     );
   }
 }
