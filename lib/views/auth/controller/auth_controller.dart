@@ -117,7 +117,8 @@ class AuthController extends GetxController {
     logPrint("googleSignInAndGoToStart - ${user.displayName}");
     if (user != null) {
       logPrint("googleSignInAndGoToStart - Переходим на основной экран");
-      Get.offAll(() => MainView(), transition: Transition.downToUp);
+      Get.toNamed("/main");
+      //Get.offAll(() => MainView(), transition: Transition.downToUp);
     }
   }
 
@@ -184,7 +185,8 @@ class AuthController extends GetxController {
     await appleSignIn();
     if (user != null) {
       logPrint("googleSignInAndGoToStart - Переходим на основной экран");
-      Get.offAll(() => MainView(), transition: Transition.downToUp);
+      Get.toNamed("/main");
+      //Get.offAll(() => MainView(), transition: Transition.downToUp);
     }
   }
 
@@ -239,7 +241,7 @@ class AuthController extends GetxController {
         if (result.user.emailVerified) {
           await createObjectInUsers(result.user);
           _showPreLoader.value = false;
-          Get.offAll(() => MainView(), transition: Transition.downToUp);
+          Get.toNamed("/main");
         } else {
           _showPreLoader.value = false;
           Get.snackbar("Login Error", "Вы еще не подтвердили email. Если вы не получили письмо для подтверждения, воспользуйтесь формой восстановления пароля.",
@@ -320,7 +322,7 @@ class AuthController extends GetxController {
   }
 
   _emailConfirmed() async {
-    Get.offAll(() => MainView(), transition: Transition.downToUp);
+    Get.toNamed("/main");
     var user = FirebaseAuth.instance.currentUser;
     await createObjectInUsers(user);
     // _firebaseUser.value = user;

@@ -202,14 +202,16 @@ class SignInView extends GetWidget<AuthController> {
         children: [
           TextButton(
             onPressed: () {
-              Get.offAll(() => MainView(), transition: Transition.leftToRight);
+              Get.toNamed("/main");
+              //Get.offAll(() => MainView(), transition: Transition.leftToRight);
             },
             child: Text(StrRes.authLaterButtonText),
           ),
           TextButton(
             onPressed: () {
               controller.disableShowSignInView();
-              Get.offAll(() => MainView(), transition: Transition.rightToLeft);
+              Get.toNamed("/main");
+              // Get.offAll(() => MainView(), transition: Transition.rightToLeft);
             },
             child: Text(StrRes.authNeverButtonText),
           ),
