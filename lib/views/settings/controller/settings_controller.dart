@@ -283,6 +283,7 @@ class SettingsController extends GetxController {
       accentColor: accentThemeColor,
       primarySwatch: materialColorFrom(primaryThemeColor),
       toggleableActiveColor: accentThemeColor,
+      dividerColor: primaryThemeColor,
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           // side: MaterialStateProperty.resolveWith<BorderSide>(

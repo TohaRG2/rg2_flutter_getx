@@ -102,7 +102,7 @@ class SignInView extends GetWidget<AuthController> {
             height: 2,
             color: Get.theme.primaryColor,
           ),
-          SizedBox(
+          const SizedBox(
             height: UIHelper.SpaceMedium,
           ),
 
