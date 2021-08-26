@@ -39,6 +39,7 @@ class LearnDetailView extends StatelessWidget {
         ));
   }
 
+  static const int oneItemHeight = 81;
   Drawer _buildDrawer() {
     return Drawer(
         child: Obx(() {
@@ -46,24 +47,26 @@ class LearnDetailView extends StatelessWidget {
           final items = _controller.currentItems;
           var intPosition = (_controller.curPageNumber > 2) ? _controller.curPageNumber - 2 : 0;
           // высчитаем смещение в пикселях для заданной позиции
-          var offset = intPosition.toDouble() * 81;
-          var _scrollController = ScrollController(initialScrollOffset: offset);
-          logPrint("Offset $intPosition - $offset");
-          // TODO попрбовать ListView.builder
-          return ListView(
+          var offset = intPosition * oneItemHeight;
+          var _scrollController = ScrollController(initialScrollOffset: offset.toDouble());
+          logPrint("Offset drawer $intPosition - $offset");
+          return ListView.builder(
             controller: _scrollController,
-            children: items.map((listItem) =>
+            itemCount: items.length,
+            itemBuilder: ((context, i) =>
               DrawerMenuItem(
-                item: listItem,
-                onItemSelected: (selectedItem) {
-                  logPrint("DrawerPressed on ${selectedItem.title}");
-                  _controller.changeCurrentPageByItem(selectedItem);
-                  Get.back();
-                },
+                item: items[i],
+                onItemSelected: onDrawerItemPressed,
               )
-            ).toList(),
+            ),
           );
         }),
       );
   }
+
+  onDrawerItemPressed(selectedItem) {
+          logPrint("DrawerPressed on ${selectedItem.title}");
+          _controller.changeCurrentPageByItem(selectedItem);
+          Get.back();
+        }
 }
