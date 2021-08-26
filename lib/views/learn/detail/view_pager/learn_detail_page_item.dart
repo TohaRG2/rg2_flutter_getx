@@ -48,8 +48,8 @@ class LearnDetailPage extends StatelessWidget {
               controller: _scrollController,
               child: Column(
                 children: [
-                  Header(curPageNumber: _curPageNumber),
-                  Divider(color: Get.theme.primaryColor,),
+                  Builder( builder: (BuildContext context) {return Header(curPageNumber: _curPageNumber);}),
+                  const Divider(),
                   _commentWidget(mainDBItem),
                   MyHtmlView(curPageNumber: _curPageNumber),
                   Visibility(
