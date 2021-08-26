@@ -6,18 +6,19 @@ import 'package:rg2/flutter_html/style.dart';
 import 'package:rg2/views/shared/url_helper.dart';
 
 class MyHtmlView extends StatelessWidget {
+  final int _curPageNumber;
+
   const MyHtmlView({
     Key key,
     @required int curPageNumber,
   })  : _curPageNumber = curPageNumber,
         super(key: key);
 
-  final int _curPageNumber;
 
   @override
   Widget build(BuildContext context) {
     LearnDetailController _controller = Get.find();
-    var htmlText = UrlHelper.getNormalHtmlTextFromDescription(
+    final htmlText = UrlHelper.getNormalHtmlTextFromDescription(
         _controller.currentItems[_curPageNumber].description,
         _controller.getAssetPath()
     );

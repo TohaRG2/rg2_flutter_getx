@@ -8,7 +8,7 @@ class DrawerMenuItem extends StatelessWidget {
   final MainDBItem item;
   final Function(MainDBItem) onItemSelected;
 
-  DrawerMenuItem({this.item, this.onItemSelected});
+  const DrawerMenuItem({this.item, this.onItemSelected});
 
   @override
   Widget build(BuildContext context) {

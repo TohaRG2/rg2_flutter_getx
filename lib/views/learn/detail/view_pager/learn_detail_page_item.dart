@@ -18,26 +18,28 @@ import 'header.dart';
 
 class LearnDetailPage extends StatelessWidget {
   final int _curPageNumber;
-  final LearnDetailController _controller = Get.find();
-  final SettingsController _settingsController = Get.find();
-  final ConnectionController _connectionController = Get.find();
 
-
-  LearnDetailPage(this._curPageNumber);
+  const LearnDetailPage(this._curPageNumber);
 
   @override
   Widget build(BuildContext context) {
-    var mainDBItem = _controller.currentItems[_curPageNumber];
+    final LearnDetailController _controller = Get.find();
+    final SettingsController _settingsController = Get.find();
+    final ConnectionController _connectionController = Get.find();
+
+    final mainDBItem = _controller.currentItems[_curPageNumber];
     bool showYouTubeVideo = (mainDBItem.url != "") &&
         (_settingsController.internetUsage != 3) &&
         _connectionController.connection != ConnectivityResult.none;
-    ScrollController _scrollController = ScrollController();
-    _scrollController.addListener(() {
-      var isScrollDirectionReverse = _scrollController.position.userScrollDirection == ScrollDirection.forward;
-      if (_controller.isBottomBarShowing != isScrollDirectionReverse) {
-        _controller.isBottomBarShowing = isScrollDirectionReverse;
-      }
-    });
+
+    // Скролконтроллер, чтобы можно было сделать bottomBar уезжающим при скроле
+    // ScrollController _scrollController = ScrollController();
+    // _scrollController.addListener(() {
+    //   final isScrollDirectionReverse = _scrollController.position.userScrollDirection == ScrollDirection.forward;
+    //   if (_controller.isBottomBarShowing != isScrollDirectionReverse) {
+    //     _controller.isBottomBarShowing = isScrollDirectionReverse;
+    //   }
+    // });
 
     return Column(
       children: <Widget>[
@@ -45,10 +47,10 @@ class LearnDetailPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
             child: SingleChildScrollView(
-              controller: _scrollController,
+              // controller: _scrollController,
               child: Column(
                 children: [
-                  Builder( builder: (BuildContext context) {return Header(curPageNumber: _curPageNumber);}),
+                  Header(curPageNumber: _curPageNumber),
                   const Divider(),
                   _commentWidget(mainDBItem),
                   MyHtmlView(curPageNumber: _curPageNumber),
@@ -56,7 +58,7 @@ class LearnDetailPage extends StatelessWidget {
                     visible: showYouTubeVideo,
                     child: YoutubeThumbnail(videoID: mainDBItem.url),
                   ),
-                  SizedBox(height: 150,)
+                  const SizedBox(height: 150,)
                 ],
               ),
             ),
@@ -72,7 +74,7 @@ class LearnDetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               StrRes.commentPager,
               style: TextStyle(fontSize: 16),
             ),
@@ -80,9 +82,7 @@ class LearnDetailPage extends StatelessWidget {
               mainDBItem.comment,
               style: TextStyle(color: Get.theme.primaryColor, fontSize: 16),
             ),
-            Divider(
-              color: Get.theme.primaryColor,
-            )
+            const Divider()
           ],
         ));
   }
