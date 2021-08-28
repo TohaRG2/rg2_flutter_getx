@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -117,8 +119,15 @@ class AuthController extends GetxController {
     logPrint("googleSignInAndGoToStart - ${user.displayName}");
     if (user != null) {
       logPrint("googleSignInAndGoToStart - Переходим на основной экран");
+      goToMainPage();
+    }
+  }
+
+  void goToMainPage() {
+    if (Platform.isAndroid) {
+      Get.offNamed("/main");
+    } else {
       Get.toNamed("/main");
-      //Get.offAll(() => MainView(), transition: Transition.downToUp);
     }
   }
 
@@ -185,8 +194,7 @@ class AuthController extends GetxController {
     await appleSignIn();
     if (user != null) {
       logPrint("googleSignInAndGoToStart - Переходим на основной экран");
-      Get.toNamed("/main");
-      //Get.offAll(() => MainView(), transition: Transition.downToUp);
+      goToMainPage();
     }
   }
 

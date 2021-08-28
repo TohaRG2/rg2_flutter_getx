@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
@@ -119,6 +121,7 @@ class LearnViewPager extends GetView<LearnController> {
         style: TextStyle(color: Get.textTheme.headline5.color),
       )),
       backgroundColor: Get.theme.scaffoldBackgroundColor,
+      automaticallyImplyLeading: false,
       actions: [
         _showAdvicesButton(),
         _purchaseButton(),
@@ -172,7 +175,11 @@ class LearnViewPager extends GetView<LearnController> {
   ///Возвращаем true, если надо дальше продолжать обрабатывать нажатие, т.е. выход из программы
   Future<bool> _onWillPop() async {
     logPrint("Back pressed");
-    return controller.canReturnToOnePhaseBack();
+    final result = controller.canReturnToOnePhaseBack();
+    if (Platform.isIOS) {
+      return false;
+    }
+    return result;
   }
 
   List<Widget> _fullTabBar(TabController tabController) {

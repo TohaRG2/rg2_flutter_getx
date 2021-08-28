@@ -28,8 +28,8 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var selectedColor = Get.theme.scaffoldBackgroundColor;
-    var unSelectedColor = Get.theme.scaffoldBackgroundColor.withAlpha(130);
+    final selectedColor = Get.theme.scaffoldBackgroundColor;
+    final unSelectedColor = Get.theme.scaffoldBackgroundColor.withAlpha(130);
     // Get.dialog(AdvicesDialog())
     logPrint("onPageStartBuild ");
     _settings.checkAlwaysOnGlobal();
