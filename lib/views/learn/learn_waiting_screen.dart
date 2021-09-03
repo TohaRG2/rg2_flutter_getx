@@ -6,11 +6,11 @@ import 'package:rg2/res/string_values.dart';
 import 'learn_view_pager.dart';
 
 class LearnWaitingScreen extends StatelessWidget {
-  // Проверяем загрузились ли из базы значения типов головоломок (CubeTypes)
-  final Future<void> pages = Get.find<LearnController>().loadPages();
 
   @override
   Widget build(BuildContext context) {
+    // Проверяем загрузились ли из базы значения типов головоломок (CubeTypes)
+    final Future<void> pages = Get.find<LearnController>().loadPages();
     return FutureBuilder(
         future: pages,
         builder: (context, snapshot) {

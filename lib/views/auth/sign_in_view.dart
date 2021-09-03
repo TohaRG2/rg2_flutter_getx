@@ -16,38 +16,40 @@ import 'package:rg2/views/shared/full_screen_preloader.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class SignInView extends GetWidget<AuthController> {
-  final SettingsController _settings  = Get.find();
+  final SettingsController _settings = Get.find();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-            automaticallyImplyLeading: false,
-            title: Center(
-              child: Text(StrRes.authTitle, style: TextStyle(color: Theme.of(context).textTheme.headline5.color)),
-            ),
-            actions: [
-              ThemeSwitch(),
-              SizedBox(width: UIHelper.SpaceSmall,),
-            ],
-          ),
-        body: Obx(() =>
-          Stack(
-            children: [
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMedium),
-                child: Column(
-                  children: [
-                    Expanded(child: loginPage(context)),
-                  ],
-                ),
-              ),
-              FullScreenPreLoader(isShowing: controller.showPreLoader)
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Center(
+          child: Text(StrRes.authTitle, style: TextStyle(color: Theme.of(context).textTheme.headline5.color)),
         ),
+        actions: [
+          ThemeSwitch(),
+          SizedBox(
+            width: UIHelper.SpaceSmall,
+          ),
+        ],
+      ),
+      body: Obx(
+        () => Stack(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMedium),
+              child: Column(
+                children: [
+                  Expanded(child: loginPage(context)),
+                ],
+              ),
+            ),
+            FullScreenPreLoader(isShowing: controller.showPreLoader)
+          ],
+        ),
+      ),
     );
   }
 
@@ -122,20 +124,21 @@ class SignInView extends GetWidget<AuthController> {
                 style: _googleButtonStyle,
               ),
 
-              SizedBox(height: UIHelper.SpaceSmall,),
+              SizedBox(
+                height: UIHelper.SpaceSmall,
+              ),
 
               /// Войти в эппл аккаунт, только для iPhone
               if (Platform.isIOS) ...{
                 AppleAuthButton(
-                  onPressed: () {
-                    if (Get.isSnackbarOpen) {
-                      Get.back();
-                    }
-                    controller.appleSignInAndGoToStart();
-                  },
-                  darkMode: _settings.isDarkThemeSelect,
-                  style: _appleButtonStyle
-                )
+                    onPressed: () {
+                      if (Get.isSnackbarOpen) {
+                        Get.back();
+                      }
+                      controller.appleSignInAndGoToStart();
+                    },
+                    darkMode: _settings.isDarkThemeSelect,
+                    style: _appleButtonStyle)
               },
             ],
           ),
@@ -194,7 +197,6 @@ class SignInView extends GetWidget<AuthController> {
     width: double.infinity,
   );
 
-
   Widget buildBottomButtons() {
     return Container(
       child: Row(
@@ -218,7 +220,6 @@ class SignInView extends GetWidget<AuthController> {
     );
   }
 
-
   Widget _signInFields() {
     return Form(
       key: _formKey,
@@ -228,8 +229,7 @@ class SignInView extends GetWidget<AuthController> {
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             child: TextFormField(
               controller: controller.emailController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(), labelText: "Email"),
+              decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Email"),
               keyboardType: TextInputType.emailAddress,
               validator: MultiValidator([
                 RequiredValidator(errorText: "Необходимо заполнить это поле"),
@@ -244,9 +244,7 @@ class SignInView extends GetWidget<AuthController> {
             padding: const EdgeInsets.symmetric(vertical: 15.0),
             child: TextFormField(
               controller: controller.passwordController,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Пароль"),
+              decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Пароль"),
               validator: MultiValidator([
                 RequiredValidator(errorText: "Необходимо заполнить это поле"),
                 MinLengthValidator(8, errorText: "Пароль должен быть не меньше 8 символов"),
@@ -261,6 +259,4 @@ class SignInView extends GetWidget<AuthController> {
       ),
     );
   }
-
 }
-

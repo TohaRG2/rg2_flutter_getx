@@ -7,6 +7,8 @@ import 'package:rg2/controllers/ads/ad_helper.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/utils/my_logger.dart';
+import 'package:rg2/views/auth/controller/redirect_auth_controller.dart';
+import 'package:rg2/views/auth/sign_in_view.dart';
 import 'package:rg2/views/dialogs/azbuka/azbuka_dialog_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/auth/main_auth_view.dart';
@@ -69,6 +71,7 @@ class RG2App extends StatelessWidget {
         transitionDuration: Duration(milliseconds: 230),
         getPages: [
           GetPage(name: '/main', page: () => MainView(), transition: Transition.leftToRight),
+          GetPage(name: '/signIn', page: () => SignInView(), transition: Transition.leftToRight),
           GetPage(name: '/youtube', page: () => YouTubeView(), transition: Transition.leftToRight),
           GetPage(name: '/favourite', page: () => FavouriteDialog(), transition: Transition.upToDown),
         ],
@@ -86,15 +89,15 @@ class RG2App extends StatelessWidget {
                   putDAOs(data.data);
                   return MainAuthView();
                 } else if (data.hasError) {
-                  return Center(child: Text("Can't create or open database"));
+                  return Center(child: const Text("Can't create or open database"));
                 } else
                   return Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          CircularProgressIndicator(),
-                          SizedBox(height: UIHelper.SpaceMedium,),
-                          Text("Инициализация базы...")
+                          const CircularProgressIndicator(),
+                          const SizedBox(height: UIHelper.SpaceMedium,),
+                          const Text("Инициализация базы...")
                         ],
                       )
                   );

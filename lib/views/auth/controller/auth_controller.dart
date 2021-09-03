@@ -123,7 +123,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void goToMainPage() {
+  void goToMainPage() async {
     if (Platform.isAndroid) {
       Get.offNamed("/main");
     } else {
