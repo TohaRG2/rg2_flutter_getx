@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/repository/repository.dart';
@@ -387,6 +388,27 @@ class LearnController extends GetxController {
       } else {
         logPrint("onTap Get.off ");
         Get.off(() => LearnRedirectPage(item.phase, item.id));
+      }
+    }
+  }
+
+  /// возможен ли выход из приложения
+  bool _canAndroidExit = false;
+
+  /// Выходим из приложения только на Андроид по двойному тапу в течении секунды
+  /// на IOS никогда не выходим (политика IOS)
+  void tryExitAppOnAndroid(bool result) {
+    if (Platform.isAndroid && result) {
+      logPrint("onWillPop - try ExitApplication");
+      if (_canAndroidExit) {
+        // выходим из приложения
+        SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+      } else {
+        _canAndroidExit = true;
+        Future.delayed(Duration(seconds: 1)).then((_) {
+          logPrint("onWillPop - return canAndroidExit to false");
+          _canAndroidExit = false;
+        });
       }
     }
   }

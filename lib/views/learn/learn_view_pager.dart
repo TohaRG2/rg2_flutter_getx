@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/utils/my_logger.dart';
@@ -176,11 +177,10 @@ class LearnViewPager extends GetView<LearnController> {
   Future<bool> _onWillPop() async {
     logPrint("Back pressed");
     final result = controller.canReturnToOnePhaseBack();
-    if (Platform.isIOS) {
-      return false;
-    }
-    return result;
+    controller.tryExitAppOnAndroid(result);
+    return false;
   }
+
 
   List<Widget> _fullTabBar(TabController tabController) {
     return [
