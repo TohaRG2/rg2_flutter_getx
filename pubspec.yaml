@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.210819.1+437
+version: 4.210904.1+440
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -42,7 +42,7 @@ dependencies:
   url_launcher: ^6.0.2
 
   # Плагин чтобы сделать элементы списка перемещаемыми и смахиваемыми (Reorderable & Slidable)
-  implicitly_animated_reorderable_list: ^0.4.0
+  implicitly_animated_reorderable_list: ^0.4.1
 
   # YouTube Plugin
   youtube_player_flutter: ^8.0.0
@@ -62,10 +62,10 @@ dependencies:
   percent_indicator: ^3.0.1
 
   # Firebase + google sign in
-  firebase_core: ^1.5.0
-  firebase_auth: ^3.0.2
-  cloud_firestore: ^2.5.0
-  google_sign_in: ^5.0.7
+  firebase_core: ^1.6.0
+  firebase_auth: ^3.1.0
+  cloud_firestore: ^2.5.1
+  google_sign_in: ^5.1.0
   apple_sign_in: ^0.1.0
 
   # Валидаторы для проверки полей ввода
@@ -78,10 +78,10 @@ dependencies:
   connectivity: ^3.0.6
 
   # Покупки в приложении
-  in_app_purchase: ^1.0.6
+  in_app_purchase: ^1.0.8
 
   # Реклама в приложении
-  google_mobile_ads: ^0.13.3
+  google_mobile_ads: ^0.13.4
 
   # Получение версии приложения в коде
   package_info: ^2.0.2
@@ -95,7 +95,7 @@ dependencies:
   flutter_vector_icons: ^1.0.0
 
   # Автосоздание иконок для приложения
-  flutter_launcher_icons: ^0.9.1
+  flutter_launcher_icons: ^0.9.2
 
   # Убираем автоотключение экрана
   wakelock: ^0.5.3+3
@@ -105,7 +105,7 @@ dev_dependencies:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация + build runner
   floor_generator: ^1.1.0
-  build_runner: ^2.1.1
+  build_runner: ^2.1.2
 
 flutter_icons:
   android: "ic_launcher"
