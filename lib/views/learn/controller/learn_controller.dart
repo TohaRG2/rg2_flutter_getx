@@ -361,17 +361,17 @@ class LearnController extends GetxController {
     // переходим на "Обучалки" в любом случае
     _settings.bottomItem = 0;
     // Если submenu, то меняем фазу в основном меню
+    logPrint("rawRoute - ${Get.rawRoute} currentRoute - ${Get.currentRoute} previousRoute - ${Get.previousRoute}");
     if (item.url == "submenu") {
       logPrint("onTap -> submenu -> change to ${item.description}");
       changePageAndPhaseTo(item.description);
-      logPrint("rawRoute - ${Get.rawRoute} currentRoute - ${Get.currentRoute} previousRoute - ${Get.previousRoute}");
       if (Get.isDialogOpen) { Get.back(); }
-      // while (Get.currentRoute != "/() => MainView" && Get.currentRoute != "/main") {
+      // while (Get.currentRoute != "/main" && Get.currentRoute != "/") {
       //   Get.back();
       //   logPrint("CurRoute - ${Get.currentRoute}");
       // }
-      Get.offNamed("/main");
-      logPrint("GetBack complete");
+      Get.offAllNamed("/main");
+      logPrint("GetBack to submenu complete");
     } else {
       // Если url не submenu, значит переходим в детальную информацию, т.е. в обучалку
       logPrint("onTap -> not submenu -> change detailScreen to ${item.phase}");
@@ -381,13 +381,13 @@ class LearnController extends GetxController {
       //   Get.back();
       //   logPrint("CurRoute - ${Get.currentRoute}");
       // }
-      logPrint("GetBack complete -> Get.to(LearnDetailScreen(${item.phase}, ${item.id})");
+      //logPrint("GetBack complete -> Get.to(LearnDetailScreen(${item.phase}, ${item.id})");
       //setRedirectPage(item.phase, item.id);
       if (Get.currentRoute == "/main" || Get.currentRoute == "/") {
-        logPrint("onTap Get.to ");
+        logPrint("onTap Get.to - переходим из главного меню в ${item.phase} - ${item.id}");
         Get.to(() => LearnDetailScreen(item.phase, item.id), transition: Transition.cupertino);
       } else {
-        logPrint("onTap Get.off ");
+        logPrint("onTap Get.off переходим НЕ из главного меню в ${item.phase} - ${item.id}");
         Get.off(() => LearnRedirectPage(item.phase, item.id));
       }
     }
