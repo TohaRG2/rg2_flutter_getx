@@ -366,10 +366,11 @@ class LearnController extends GetxController {
       changePageAndPhaseTo(item.description);
       logPrint("rawRoute - ${Get.rawRoute} currentRoute - ${Get.currentRoute} previousRoute - ${Get.previousRoute}");
       if (Get.isDialogOpen) { Get.back(); }
-      while (Get.currentRoute != "/() => MainView" && Get.currentRoute != "/") {
-        Get.back();
-        // logPrint("CurRoute - ${Get.currentRoute}");
-      }
+      // while (Get.currentRoute != "/() => MainView" && Get.currentRoute != "/main") {
+      //   Get.back();
+      //   logPrint("CurRoute - ${Get.currentRoute}");
+      // }
+      Get.offNamed("/main");
       logPrint("GetBack complete");
     } else {
       // Если url не submenu, значит переходим в детальную информацию, т.е. в обучалку
@@ -382,7 +383,7 @@ class LearnController extends GetxController {
       // }
       logPrint("GetBack complete -> Get.to(LearnDetailScreen(${item.phase}, ${item.id})");
       //setRedirectPage(item.phase, item.id);
-      if (Get.currentRoute == "/() => MainView" || Get.currentRoute == "/") {
+      if (Get.currentRoute == "/main" || Get.currentRoute == "/") {
         logPrint("onTap Get.to ");
         Get.to(() => LearnDetailScreen(item.phase, item.id), transition: Transition.cupertino);
       } else {

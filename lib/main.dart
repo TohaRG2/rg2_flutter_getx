@@ -75,6 +75,9 @@ class RG2App extends StatelessWidget {
           GetPage(name: '/youtube', page: () => YouTubeView(), transition: Transition.leftToRight),
           GetPage(name: '/favourite', page: () => FavouriteDialog(), transition: Transition.upToDown),
         ],
+        routingCallback: (routing) {
+          logPrint("routing - ${routing?.current}");
+        },
         debugShowCheckedModeBanner: false,
         // home: SettingsScreen(),
         // initialBinding: BindingControllers(),
