@@ -91,17 +91,17 @@ class AuthController extends GetxController {
     passwordController.dispose();
   }
 
-  _updateLocalEnterCounts() {
+  void _updateLocalEnterCounts() {
     localEnterCounts = _sp.read(Const.LOCAL_STARTS_COUNT) ?? 0;
     localEnterCounts++;
     _sp.write(Const.LOCAL_STARTS_COUNT, localEnterCounts);
   }
 
-  setCurrentUserNameToEditor() {
+  void setCurrentUserNameToEditor() {
     nameController.text = user.displayName;
   }
 
-  changeUserNameTo({String name}) async{
+  Future<void> changeUserNameTo({String name}) async{
     var displayName = name;
     if (displayName == null) {
       displayName = nameController.text;
@@ -123,7 +123,7 @@ class AuthController extends GetxController {
     }
   }
 
-  void goToMainPage() async {
+  Future<void> goToMainPage() async {
     if (Platform.isAndroid) {
       Get.offNamed("/main");
     } else {
@@ -163,7 +163,7 @@ class AuthController extends GetxController {
   }
 
   /// Создаем коллекцию по идентификатору пользователя
-  Future createObjectInUsers(User user) async {
+  Future<void> createObjectInUsers(User user) async {
     _showPreLoader.value = true;
     logPrint("Создаем новую или перезаписываем по uid запись в таблице users");
     if (await CloudDatabase().createOrUpdateUser(user)) {
@@ -307,7 +307,7 @@ class AuthController extends GetxController {
     }
   }
 
-  resetPasswordForEmail() async {
+  Future<void> resetPasswordForEmail() async {
     try {
       await _auth.sendPasswordResetEmail(email: emailController.text);
       Get.back();
@@ -317,7 +317,7 @@ class AuthController extends GetxController {
     }
   }
 
-  checkEmailVerification() async {
+  Future<void> checkEmailVerification() async {
     // Иначе сразу не обновляются данные пользователя
     await FirebaseAuth.instance.currentUser.reload();
     var user = FirebaseAuth.instance.currentUser;
@@ -329,19 +329,19 @@ class AuthController extends GetxController {
     }
   }
 
-  _emailConfirmed() async {
-    Get.toNamed("/main");
+  Future<void> _emailConfirmed() async {
     var user = FirebaseAuth.instance.currentUser;
     await createObjectInUsers(user);
+    goToMainPage();
     // _firebaseUser.value = user;
   }
 
-  disableShowSignInView() {
+  void disableShowSignInView() {
     _needShowSignInView = false;
     _sp.write(Const.IS_FIREBASE_ENTER_ENABLED, false);
   }
 
-  _enableShowSignInView() {
+  void _enableShowSignInView() {
     _needShowSignInView = true;
     _sp.write(Const.IS_FIREBASE_ENTER_ENABLED, true);
   }
