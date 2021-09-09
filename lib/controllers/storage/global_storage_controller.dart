@@ -55,10 +55,10 @@ class GlobalStorageController extends GetxController {
     }
     //TODO добавить умолчательные значения для типов, если параметр не найден ни в хранилище, ни в дефолтной мапе
     // if (value == null) {
-    //   if (T is String) value = "";
-    //   if (T is int) value = 0;
-    //   if (T is double) value = 0.0;
-    //   if (T is bool) value = false;
+    //   if (T is String) value = "" as T;
+    //   if (T is int) value = 0 as T;
+    //   if (T is double) value = 0.0 as T;
+    //   if (T is bool) value = false as T;
     // }
     return value;
   }

@@ -139,21 +139,21 @@ class AuthController extends GetxController {
       _showPreLoader.value = true;
       if (googleUser != null) {
         logPrint("аутентификация пользователем ${googleUser.displayName} прошла");
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        //logPrint("Получаем данные пользователя для аутентификации в firebase");
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        //logPrint("singin with credential");
+        UserCredential _authResult = await _auth.signInWithCredential(credential);
+
+        //logPrint("Проверяем, есть ли пользователь в базе fireStore");
+        //var user = await Database().getUser(_authResult.user.uid);
+        await createObjectInUsers(_authResult.user);
       } else {
         logPrint("аутентификация не прошла");
       }
-      final GoogleSignInAuthentication googleAuth = await googleUser?.authentication;
-      //logPrint("Получаем данные пользователя для аутентификации в firebase");
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-      //logPrint("singin with credential");
-      UserCredential _authResult = await _auth.signInWithCredential(credential);
-
-      //logPrint("Проверяем, есть ли пользователь в базе fireStore");
-      //var user = await Database().getUser(_authResult.user.uid);
-      await createObjectInUsers(_authResult.user);
       _showPreLoader.value = false;
     } catch(e) {
       _showPreLoader.value = false;
@@ -165,12 +165,12 @@ class AuthController extends GetxController {
   /// Создаем коллекцию по идентификатору пользователя
   Future<void> createObjectInUsers(User user) async {
     _showPreLoader.value = true;
-    logPrint("Создаем новую или перезаписываем по uid запись в таблице users");
+    logPrint("Создаем новую или апдейтим по uid запись в таблице users");
     if (await CloudDatabase().createOrUpdateUser(user)) {
       // Create success
       // _firebaseUser.value = _auth.currentUser;
     } else {
-      throw Exception("Ошибка создания пользователя $user в FireBase");
+      throw Exception("Ошибка создания записи пользователя $user в Firestore Database");
     }
     _showPreLoader.value = false;
   }

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:rg2/res/constants.dart';
 
 /// Map c дефолтными значениями для глобальных параметров программы
-Map<String, dynamic> defaultSettings = {
-  // основной цвет - оранжевый
-  Const.PRIMARY_COLOR : Colors.orange[600].value,
-  // цвет акцента - зеленый
-  Const.ACCENT_COLOR : Colors.green[600].value,
+const Map<String, dynamic> defaultSettings = {
+  // основной цвет - оранжевый Colors.orange[600].value
+  Const.PRIMARY_COLOR : 0xFFFB8C00,
+  // цвет акцента - зеленый Colors.green[600].value
+  Const.ACCENT_COLOR : 0xFF43A047,
   // темная тема вкл.
   Const.IS_THEME_DARK : true,
   // относительный размер шрифта
