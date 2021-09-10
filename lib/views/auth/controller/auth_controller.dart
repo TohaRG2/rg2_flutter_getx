@@ -8,7 +8,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:rg2/controllers/connection_controller.dart';
+import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/database/cloud_database.dart';
+import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/main_view.dart';
@@ -209,21 +211,26 @@ class AuthController extends GetxController {
       case AuthorizationStatus.authorized:
         logPrint("appleSignIn - authorized");
         // Пользователь вошел в аккаунт, создаем запись в Firebase
-        final AppleIdCredential _appleCredential = result.credential;
+        final AppleIdCredential appleCredential = result.credential;
         final OAuthProvider oAuthProvider = OAuthProvider("apple.com");
         final AuthCredential credential = oAuthProvider.credential(
-          idToken: String.fromCharCodes(_appleCredential.identityToken),
-          accessToken: String.fromCharCodes(_appleCredential.authorizationCode),
+          idToken: String.fromCharCodes(appleCredential.identityToken),
+          accessToken: String.fromCharCodes(appleCredential.authorizationCode),
         );
 
         final authResult = await _auth.signInWithCredential(credential);
         final firebaseUser = authResult.user;
-        var givenName = _appleCredential.fullName.givenName ?? "Введите имя";
-        var familyName = _appleCredential.fullName.familyName ?? "";
+        var givenName = appleCredential.fullName.givenName ?? "Введите имя";
+        var familyName = appleCredential.fullName.familyName ?? "";
         final displayName = "$givenName $familyName";
         await firebaseUser.updateDisplayName(displayName);
         // await changeUserNameTo(name: displayName);
         await createObjectInUsers(firebaseUser);
+
+        String st = 'credential: $appleCredential - scopes: ${appleCredential.authorizedScopes} - fullName: ${appleCredential.fullName} - email: ${appleCredential.email} - user: ${appleCredential.user}';
+        Property property = Property(key: 'appleSignInLog', value: st);
+        final GlobalStorageController storage = Get.find();
+        storage.setProperty(property);
 
         break;
       case AuthorizationStatus.error:
