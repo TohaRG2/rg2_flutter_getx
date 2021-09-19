@@ -6,7 +6,7 @@ import 'package:rg2/views/purchase/remove_ads_widget.dart';
 import 'package:rg2/views/purchase/open_all_puzzles_widget.dart';
 import 'package:rg2/views/shared/preloader.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
-import 'package:rg2/views/trainers/help/bottom_bar_with_back_button.dart';
+import 'package:rg2/views/shared/bottom_bar_with_back_button.dart';
 
 class PurchaseView extends StatelessWidget {
   final IAPController iapController = Get.put(IAPController());

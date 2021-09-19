@@ -289,6 +289,8 @@ class CloudDatabase extends GetxController {
     try {
       var mainDocRef = _usersCollection.doc(userId);
       DocumentSnapshot<Map<String, dynamic>> docSnapShot = await mainDocRef.get();
+      Map<String, dynamic> a = docSnapShot.data();
+
       int currentCount = docSnapShot.data()[ENTERS_COUNT] ?? 0;
       currentCount++;
       mainDocRef.update({ENTERS_COUNT: currentCount});

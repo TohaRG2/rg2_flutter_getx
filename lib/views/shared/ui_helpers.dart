@@ -19,10 +19,12 @@ class UIHelper {
   static const double SpaceMini = 5.0;
   static const double SpaceSmall = 10.0;
   static const double SpaceMedium = 20.0;
+  static const double spaceBig = 30.0;
   static const double SpaceLarge = 60.0;
   static const EdgeInsets horizontalSymmetricMiniPadding = EdgeInsets.symmetric(horizontal: SpaceMini);
   static const EdgeInsets horizontalSymmetricSmallPadding = EdgeInsets.symmetric(horizontal: SpaceSmall);
   static const EdgeInsets horizontalSymmetricMediumPadding = EdgeInsets.symmetric(horizontal: SpaceMedium);
+  static const EdgeInsets horizontalSymmetricBigPadding = EdgeInsets.symmetric(horizontal: spaceBig);
 
   // TextStyle
 

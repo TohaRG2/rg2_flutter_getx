@@ -123,6 +123,7 @@ class LearnViewPager extends GetView<LearnController> {
       )),
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       automaticallyImplyLeading: false,
+      elevation: 4,
       actions: [
         _showAdvicesButton(),
         _purchaseButton(),
