@@ -54,7 +54,7 @@ class UserAuthSettings extends StatelessWidget {
   }
 
   Widget buildUserRow(User user) {
-    var userName = (user.displayName == null) ? "Введите имя" : user.displayName;
+    final userName = (user.displayName == null) ? "Введите имя" : user.displayName;
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

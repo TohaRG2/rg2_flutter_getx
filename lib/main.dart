@@ -114,7 +114,8 @@ class RG2App extends StatelessWidget {
               data: MediaQuery.of(context).copyWith(textScaleFactor: _settings.textScaleFactor),
             ),
           );
-        });
+        },
+    );
   }
 
   void putDAOs(MainDatabase db) {

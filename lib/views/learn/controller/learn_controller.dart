@@ -402,7 +402,7 @@ class LearnController extends GetxController {
     if (Platform.isAndroid && result) {
       logPrint("onWillPop - try ExitApplication");
       if (_canAndroidExit) {
-        // выходим из приложения
+        // просто выходим из приложения
         SystemChannels.platform.invokeMethod('SystemNavigator.pop');
       } else {
         _canAndroidExit = true;
