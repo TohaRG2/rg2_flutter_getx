@@ -317,8 +317,9 @@ class SettingsController extends GetxController {
 
   /// Сбрасываем счетчик через 2.5 секунды
   _delayedResetGodCount() async {
-    await Future.delayed(Duration(milliseconds: 2500), () {});
-    _godCount = 0;
+    Future.delayed(Duration(milliseconds: 2500), () {
+      _godCount = 0;
+    });
   }
 
 

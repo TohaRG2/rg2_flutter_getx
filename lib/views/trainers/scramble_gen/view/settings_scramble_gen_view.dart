@@ -6,7 +6,7 @@ import 'package:rg2/views/trainers/scramble_gen/model/azbuka_simple_item.dart';
 import 'package:rg2/views/trainers/scramble_gen/view/input_letter_dialog.dart';
 import '../controller/trainers_scramble_gen_controller.dart';
 import 'package:rg2/res/string_values.dart';
-import 'package:rg2/views/trainers/help/bottom_bar_with_back_button.dart';
+import 'package:rg2/views/shared/bottom_bar_with_back_button.dart';
 
 import '../model/blind_cube_support_arrays.dart';
 
