@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:apple_sign_in/apple_sign_in.dart';
+import 'package:apple_sign_in_safety/apple_sign_in.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -243,7 +243,7 @@ class AuthController extends GetxController {
         logPrintErr("appleSignIn - прервано пользователем");
         break;
       default:
-        throw UnimplementedError();
+        break;
     }
   }
 
