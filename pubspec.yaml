@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   # SQL Database
-  floor: ^1.1.0
+  floor: ^1.2.0
   # DI + StateManagement
   get: ^4.3.8
   # Работаем с SharedPreferences
@@ -63,10 +63,10 @@ dependencies:
 
   # Firebase + google sign in
   firebase_core: ^1.6.0
-  firebase_auth: ^3.1.0
-  cloud_firestore: ^2.5.1
-  google_sign_in: ^5.1.0
-  apple_sign_in: ^0.1.0
+  firebase_auth: ^3.1.1
+  cloud_firestore: ^2.5.3
+  google_sign_in: ^5.1.1
+  apple_sign_in_safety: ^0.0.6
 
   # Валидаторы для проверки полей ввода
   form_field_validator: ^1.1.0
@@ -98,13 +98,13 @@ dependencies:
   flutter_launcher_icons: ^0.9.2
 
   # Убираем автоотключение экрана
-  wakelock: ^0.5.3+3
+  wakelock: ^0.5.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация + build runner
-  floor_generator: ^1.1.0
+  floor_generator: ^1.2.0
   build_runner: ^2.1.2
 
 flutter_icons:
