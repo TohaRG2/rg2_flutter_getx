@@ -232,7 +232,7 @@ class SignInView extends GetWidget<AuthController> {
               decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Email"),
               keyboardType: TextInputType.emailAddress,
               validator: MultiValidator([
-                RequiredValidator(errorText: "Необходимо заполнить это поле"),
+                requiredValidator,
                 EmailValidator(errorText: "Неверно указан адрес"),
               ]),
               onChanged: (val) {
@@ -246,7 +246,7 @@ class SignInView extends GetWidget<AuthController> {
               controller: controller.passwordController,
               decoration: InputDecoration(border: OutlineInputBorder(), labelText: "Пароль"),
               validator: MultiValidator([
-                RequiredValidator(errorText: "Необходимо заполнить это поле"),
+                requiredValidator,
                 MinLengthValidator(8, errorText: "Пароль должен быть не меньше 8 символов"),
               ]),
               obscureText: true,
@@ -259,4 +259,6 @@ class SignInView extends GetWidget<AuthController> {
       ),
     );
   }
+
+  RequiredValidator get requiredValidator => RequiredValidator(errorText: 'Необходимо заполнить это поле');
 }

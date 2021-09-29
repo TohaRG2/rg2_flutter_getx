@@ -9,7 +9,7 @@ class WaitConfirmEmailDialog extends GetWidget<AuthController> {
 
   @override
   Widget build(BuildContext context) {
-    var defStyle = Get.textTheme.bodyText2;
+    final defStyle = Get.textTheme.bodyText2;
     return WillPopScope(
       onWillPop: _onWillPop,
       child: BigDialog(
