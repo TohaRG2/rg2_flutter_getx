@@ -77,34 +77,28 @@ class Cube {
   /// Генерируем случайный скрамбл заданной длины
   String generateScramble(int length) {
     logPrint("Генерируем новый скрамбл длинны $length");
-    var random = Random();
+    final random = Random();
     var scramble = "";
     //счетчик количества сгенерированных позиций в скрамбле
     var i = 0;
     var prevRandom = random.nextInt(6);     //генерируем число от 0 до 5
     var prevPrevRandom = random.nextInt(6);     //генерируем число от 0 до 5
-    var map = { 0 : "R", 1 : "L", 2 : "F", 3 : "B", 4 : "U", 5 : "D"};    //располагаем парами RL, FB, UD
-
+    const map = { 0 : "R", 1 : "L", 2 : "F", 3 : "B", 4 : "U", 5 : "D"};    //располагаем парами RL, FB, UD
+    const modifierMap = { 0 : ' ', 1 : "' ", 2 : '2 ' };
     do {
-      var curRandom = random.nextInt(6);
+      final curRandom = random.nextInt(6);
       //Не повторяем одно вращение два раза,
       if (curRandom != prevRandom) {
         //но оно может быть парным (RL UD FB), при условии, что предыдущий ход был не парный, т.е. не равен текущему
         //т.е. R L R - нельзя, а R F R - можно и D L R - можно
         if ((curRandom ~/ 2 != prevRandom ~/ 2) || (curRandom != prevPrevRandom)) {
-          i++;
-          scramble += "${map[curRandom]}";
           // выбираем модификатор, т.е. ход будет обычный, против часовой или двойной
-          var modifier = random.nextInt(3);
-          if (modifier == 0) {
-            scramble += " "; //просто пробел
-          } else if (modifier == 1) {
-            scramble += "' "; //добавляем ' с пробелом
-          } else if (modifier == 2) {
-            scramble += "2 "; //добавляем 2 с пробелом
-          }
+          final modifier = random.nextInt(3);
+          // добавляем вращение и модификатор
+          scramble += '${map[curRandom]}${modifierMap[modifier]}';
           prevPrevRandom = prevRandom;
           prevRandom = curRandom;
+          i++;
         }
       }
     } while (i < length);
