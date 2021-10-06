@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.210907.1+441
+version: 4.211006.1+442
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -28,13 +28,13 @@ dependencies:
   # Plugin for parsing html
   html: ^0.15.0
   # Plugins for parsing css
-  csslib: ^0.17.0
+  csslib: ^0.17.1
   css_colors: ^1.1.1
   # Plugins for rendering the <video> tag.
   # video_player: ^1.0.1
   # chewie: ^0.12.2
   # Plugin for rendering the <iframe> tag.
-  webview_flutter: ^2.0.12
+  webview_flutter: ^2.1.1
   # Plugins for rendering the <audio> tag.
   # chewie_audio: ^1.1.1
 
@@ -59,7 +59,7 @@ dependencies:
   intl: ^0.17.0
 
   # Индикатор оставшегося времени на ответ
-  percent_indicator: ^3.0.1
+  percent_indicator: ^3.4.0
 
   # Firebase + google sign in
   firebase_core: ^1.7.0
