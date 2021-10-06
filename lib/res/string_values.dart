@@ -22,7 +22,7 @@ class StrRes {
   static const buttonCancelText = "Отмена";
   static const backButtonText = "Назад";
   static const deleteItem = "Удалить";
-  static const commentPager = "Комментрарий:";
+  static const commentPager = "Комментарий:";
 
   static const infoTitle = "Инфо";
   static const learnTitle = "Обучалки";

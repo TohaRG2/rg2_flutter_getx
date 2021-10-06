@@ -62,8 +62,8 @@ dependencies:
   percent_indicator: ^3.0.1
 
   # Firebase + google sign in
-  firebase_core: ^1.6.0
-  firebase_auth: ^3.1.1
+  firebase_core: ^1.7.0
+  firebase_auth: ^3.1.2
   cloud_firestore: ^2.5.3
   google_sign_in: ^5.1.1
   apple_sign_in_safety: ^0.0.6
@@ -78,10 +78,10 @@ dependencies:
   connectivity: ^3.0.6
 
   # Покупки в приложении
-  in_app_purchase: ^1.0.8
+  in_app_purchase: ^1.0.9
 
   # Реклама в приложении
-  google_mobile_ads: ^0.13.4
+  google_mobile_ads: ^0.13.5
 
   # Получение версии приложения в коде
   package_info: ^2.0.2
@@ -105,7 +105,7 @@ dev_dependencies:
     sdk: flutter
   # SQL генератор, т.к. нужна кодогенерация + build runner
   floor_generator: ^1.2.0
-  build_runner: ^2.1.2
+  build_runner: ^2.1.4
 
 flutter_icons:
   android: "ic_launcher"
