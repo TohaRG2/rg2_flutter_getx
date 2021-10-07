@@ -33,7 +33,7 @@ class MainRepository extends GetxController {
   }
 
   /// Что-то поменялось в аутентификации пользователя
-  _userAuthChanged(User user) async {
+  Future<void> _userAuthChanged(User user) async {
     logPrint("MainRepository._userAuthChanged - ${user?.uid}");
     _userId = (user == null) ? "" : user?.uid;
     if (_userId != "") {

@@ -89,7 +89,8 @@ class DBController extends GetxController {
           comment: phase.comments()[i],
           isFavourite: false,
           favComment: "",
-          subId: 0);
+          subId: 0,
+      );
       phaseList.add(item);
     }
     await _mainBase.mainDao.insertItems(phaseList);
