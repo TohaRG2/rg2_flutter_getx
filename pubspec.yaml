@@ -34,7 +34,7 @@ dependencies:
   # video_player: ^1.0.1
   # chewie: ^0.12.2
   # Plugin for rendering the <iframe> tag.
-  webview_flutter: ^2.1.1
+  webview_flutter: ^2.1.2
   # Plugins for rendering the <audio> tag.
   # chewie_audio: ^1.1.1
 
@@ -42,7 +42,7 @@ dependencies:
   url_launcher: ^6.0.2
 
   # Плагин чтобы сделать элементы списка перемещаемыми и смахиваемыми (Reorderable & Slidable)
-  implicitly_animated_reorderable_list: ^0.4.1
+  implicitly_animated_reorderable_list: ^0.4.2
 
   # YouTube Plugin
   youtube_player_flutter: ^8.0.0
@@ -62,10 +62,10 @@ dependencies:
   percent_indicator: ^3.4.0
 
   # Firebase + google sign in
-  firebase_core: ^1.7.0
-  firebase_auth: ^3.1.2
-  cloud_firestore: ^2.5.3
-  google_sign_in: ^5.1.1
+  firebase_core: ^1.8.0
+  firebase_auth: ^3.1.4
+  cloud_firestore: ^2.5.4
+  google_sign_in: ^5.2.0
   apple_sign_in_safety: ^0.0.6
 
   # Валидаторы для проверки полей ввода
