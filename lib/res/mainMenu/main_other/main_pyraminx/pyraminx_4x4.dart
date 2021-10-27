@@ -114,7 +114,7 @@ class Pyraminx4x4 implements Phase {
   в больших кубах).</p>
 
   <p><a href="rg2://ytplay?time=4:04&link=1KZvwTK-PHg">5.	Центры</a></p>
-  <p style="text-align:center"><img src="pyraminx_4x4_1_4.xml"></p>
+  <p style="text-align:center"><img src="pyraminx_4x4_1_5.xml"></p>
   
   <p>Как не сложно догадаться – это элементы, находящиеся в центре каждой грани и 
   соответственно имеющие только одну наклейку.</p>
