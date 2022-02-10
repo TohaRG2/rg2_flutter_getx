@@ -337,7 +337,7 @@ class AdvF2L implements Phase {
     <p>9. Девятая <a href="rg2://ytplay?time=2:33&link=IL7VMSTatAA">ситуация.</a>
     Вместо U и трех пиф-пафов можно и чуть быстрее. </p>
     <p style="text-align:center"><img src="adv_f2l_3_9.xml"  width="100"></p>
-    <b><a href="rg2://ytplay?time=2:44&link=IL7VMSTatAA&alg=(F_R\'_F\'_R)_U\'_(R_U\'_R\')">Алгоритм:</a> (F R\' F\' R) U\' (R U\' R\')</b>
+    <b><a href="rg2://ytplay?time=2:44&link=IL7VMSTatAA&alg=(F_R\'_F\'_R)_U\'_(R_U_R\')">Алгоритм:</a> (F R\' F\' R) U\' (R U R\')</b>
 
     <p>10. Десятая <a href="rg2://ytplay?time=2:51&link=IL7VMSTatAA">ситуация.</a>
     Один из моих любимых алгоритмов. Быстро, красиво и удобно тренировать

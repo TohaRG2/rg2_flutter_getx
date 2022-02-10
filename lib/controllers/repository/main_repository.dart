@@ -123,7 +123,7 @@ class MainRepository extends GetxController {
       await updateFavouritesInLocalDBAndCaches(mainDBItems);
     } else {
       logPrint("_updateFavourites - в FBS нет избранного, перезаписываем локальным $mainDBItems");
-      addOrUpdateFavourites(mainDBItems);
+      addOrUpdateCloudFavourites(mainDBItems);
     }
   }
 
@@ -137,7 +137,7 @@ class MainRepository extends GetxController {
   }
 
   /// Обновляем список избранного в FBS
-  addOrUpdateFavourites(List<MainDBItem> items) {
+  addOrUpdateCloudFavourites(List<MainDBItem> items) {
     //logPrint("setFavourites - $favourites");
     if (_userId != "") {
       var favItems = items.map((mainDBItem) =>
