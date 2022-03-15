@@ -62,7 +62,8 @@ class LearnDetailViewPager extends StatelessWidget {
   Widget _fullTabBar(TabController tabController) {
     return Column(
       children: [
-        Obx(() => _adBanner(_adShowController.bannerAd)),
+        /// Рекламный баннер
+        // Obx(() => _adBanner(_adShowController.bannerAd)),
         Expanded(
           child: TabBarView(
             controller: tabController,
