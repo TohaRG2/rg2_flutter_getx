@@ -38,7 +38,9 @@ class MenuList extends StatelessWidget {
         _scrollController.jumpTo(position);
         logPrint("jumpTo $position in ${_learnController.pages[pageNumber].currentPhase}");
       }
-      var isItemEnabled = (_isPurchaseEnabled || pageNumber < 3 || (pageNumber < 4 && Platform.isAndroid) || _isGodModeEnabled);
+      /// Отключаем блокировку не купленных головоломок (надеюсь временно)
+      final isItemEnabled = true;
+      // final isItemEnabled = (_isPurchaseEnabled || pageNumber < 3 || (pageNumber < 4 && Platform.isAndroid) || _isGodModeEnabled);
       return Scrollbar(
         showTrackOnHover: true,
         child: ListView(

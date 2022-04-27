@@ -66,7 +66,8 @@ class LearnController extends GetxController {
       allPuzzles.forEach((MainDBItem item) {
         final rootPhase = MainDBItem.getRootPhaseFor(item.phase);
         final pageNumber = _getPageByRoot(rootPhase);
-        final isItemEnabled = (isPurchaseEnabled || pageNumber < 3 || (pageNumber < 4 && Platform.isAndroid) || isGodModeEnabled);
+        final isItemEnabled = true;
+        // final isItemEnabled = (isPurchaseEnabled || pageNumber < 3 || (pageNumber < 4 && Platform.isAndroid) || isGodModeEnabled);
         if (isItemEnabled) {
           item.subId = 1;
         } else {
