@@ -62,10 +62,10 @@ dependencies:
   percent_indicator: ^4.0.0
 
   # Firebase + google sign in
-  firebase_core: ^1.8.0
-  firebase_auth: ^3.1.4
-  cloud_firestore: ^2.5.4
-  google_sign_in: ^5.2.0
+  firebase_core: ^1.15.0
+  firebase_auth: ^3.3.15
+  cloud_firestore: ^3.1.13
+  google_sign_in: ^5.3.0
   apple_sign_in_safety: ^0.0.6
 
   # Валидаторы для проверки полей ввода
@@ -81,7 +81,7 @@ dependencies:
   in_app_purchase: ^3.0.2
 
   # Реклама в приложении
-  google_mobile_ads: ^0.13.5
+  google_mobile_ads: ^1.2.0
 
   # Получение версии приложения в коде
   package_info: ^2.0.2
