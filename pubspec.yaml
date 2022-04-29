@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.220427.1+452
+version: 4.220429.1+453
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -53,7 +53,8 @@ dependencies:
 
   # Поддержка звука, для метронома в таймере
   #assets_audio_player: ^2.0.14
-  audioplayers: ^0.18.3
+  audioplayers: ^0.20.1
+#  audiofileplayer: ^2.1.0
 
   # Для удобной работы с датой/временем
   intl: ^0.17.0
@@ -63,7 +64,7 @@ dependencies:
 
   # Firebase + google sign in
   firebase_core: ^1.15.0
-  firebase_auth: ^3.3.15
+  firebase_auth: ^3.3.16
   cloud_firestore: ^3.1.13
   google_sign_in: ^5.3.0
   apple_sign_in_safety: ^0.0.6

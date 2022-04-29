@@ -1,4 +1,5 @@
 import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
@@ -13,6 +14,7 @@ class TimerController extends GetxController {
   final ScrambleGenController _genController = Get.find();
   final TimerRepository _repository = Get.find();
 
+  AudioPlayer audioPlayer = AudioPlayer();
   final cachedAudioPlayer = AudioCache(prefix: "assets/sounds/");
   final _metronomSound = "metronom.mp3";
 
@@ -306,7 +308,7 @@ class TimerController extends GetxController {
   _playAsyncSound() async {
     // вычисляем паузу в милисекундах, делим минуту (60 000мс) на кол-во тиков в минуту
     var tikPause = Duration(milliseconds: 60000 ~/ _settingsController.metronomFrequency);
-    var nextTikTime = DateTime.now();
+    var nextTikTime = DateTime.now().add(tikPause);
     // выходим из цикла если таймер остановлен
     while ( _state != TimerControllerState.waitForFullStop && _state != TimerControllerState.stopped) {
       if (DateTime.now().isAfter(nextTikTime)) {
@@ -314,7 +316,7 @@ class TimerController extends GetxController {
         cachedAudioPlayer.play(_metronomSound);
         nextTikTime = nextTikTime.add(tikPause);
       }
-      await Future.delayed(Duration(milliseconds: 100), () {});
+      await Future.delayed(Duration(milliseconds: 20), () {});
     }
   }
 
