@@ -75,6 +75,7 @@ class FavouriteController extends GetxController {
     _updateFavouritesSubIds();
     item.isFavourite = false;
     item.subId = 0;
+    _mainRepo.updateMainDBItem(item);
   }
 
   /// Задаем новое избранное (из списка) без сохранения в firebase
