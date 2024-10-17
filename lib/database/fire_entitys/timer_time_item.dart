@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
 
@@ -28,14 +27,6 @@ class TimerTimeItem {
     this.solvingTime = map['solvingTime'];
     this.scramble = map['scramble'] ?? "";
     this.comment = map['comment'] ?? "";
-  }
-
-  /// Конструктор для создания из снапшота документа
-  TimerTimeItem.fromDocSnapShot(DocumentSnapshot<Map<String, dynamic>> doc) {
-    this.date = doc.data()['date'].toDate();
-    this.solvingTime = doc.data()['solvingTime'];
-    this.scramble = doc.data()['scramble'] ?? "";
-    this.comment = doc.data()['comment'] ?? "";
   }
 
   TimerTimeItem.fromTimeNoteItem(TimeNoteItem item) {

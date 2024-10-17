@@ -14,7 +14,6 @@ import 'package:rg2/views/shared/bottom_bar_with_back_button.dart';
 import 'widgets/help_settings.dart';
 import 'widgets/internet_settings.dart';
 import 'widgets/swipe_settings.dart';
-import 'widgets/user_auth_settings.dart';
 
 class SettingsScreen extends GetWidget<SettingsController> {
   @override
@@ -40,8 +39,6 @@ class SettingsScreen extends GetWidget<SettingsController> {
                 padding: EdgeInsets.all(UIHelper.SpaceSmall),
                 child: Column(
                   children: [
-                    UserAuthSettings(),
-                    SizedBox(height: UIHelper.SpaceMedium,),
                     _themeSettings(context),
                     SizedBox(height: UIHelper.SpaceMedium,),
                     ScreenOnOffSettings(),

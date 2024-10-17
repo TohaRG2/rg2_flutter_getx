@@ -18,7 +18,6 @@ class FavouriteController extends GetxController {
   List<MainDBItem> get favourites => __favourites;
   set _favourites(List<MainDBItem> items) {
     __favourites.assignAll(items);
-    _mainRepo.addOrUpdateCloudFavourites(items);
   }
 
   /// Перечитываем список избранного из базы и если надо апдейтим в FB

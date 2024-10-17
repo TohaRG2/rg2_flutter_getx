@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class Property {
@@ -20,12 +19,6 @@ class Property {
     this.key = map['key'];
     this.value = map['value'];
     this.changeDate = map['changeDate'].toDate();
-  }
-
-  Property.fromDocSnapShot(DocumentSnapshot<Map<String, dynamic>> doc) {
-    this.key = doc.data()['key'];
-    this.value = doc.data()['value'];
-    this.changeDate = doc.data()['changeDate']?.toDate() ?? DateTime.now();
   }
 
   @override

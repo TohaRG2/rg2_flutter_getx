@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class FavItem {
@@ -18,12 +17,6 @@ class FavItem {
     this.id = map['id'];
     this.phase = map['phase'];
     this.subId = map['subId'];
-  }
-
-  FavItem.fromDocSnapShot(DocumentSnapshot<Map<String, dynamic>> doc) {
-    this.id = doc.data()['id'];
-    this.phase = doc.data()['phase'];
-    this.subId = doc.data()['subId'];
   }
 
   @override

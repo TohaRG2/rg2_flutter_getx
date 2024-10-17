@@ -7,11 +7,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/utils/my_logger.dart';
-import 'package:rg2/views/auth/controller/redirect_auth_controller.dart';
-import 'package:rg2/views/auth/sign_in_view.dart';
 import 'package:rg2/views/dialogs/azbuka/azbuka_dialog_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
-import 'package:rg2/views/auth/main_auth_view.dart';
 import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 import 'package:rg2/views/favourites/dialog/favourite_dialog.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_settings_controller.dart';
@@ -31,20 +28,11 @@ import 'database/main_database.dart';
 import 'views/main_view.dart';
 import 'views/youtube_player/youtube_view.dart';
 import 'package:flutter/services.dart' ;
-import 'package:firebase_core/firebase_core.dart';
 
 
 void main() async {
   // Поскольку обращаемся к плагинам до вызова runApp, то сначала ждем инициализации плагинов
   WidgetsFlutterBinding.ensureInitialized();
-  // Для инициализации inAppPurchase для android
-  // if (defaultTargetPlatform == TargetPlatform.android) {
-  //   InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
-  // }
-  // Инициализируем FireBase, нужен import 'package:firebase_core/firebase_core.dart';
-  await Firebase.initializeApp();
-  // инициализируем adMob
-  // AdHelper.initialization();
 
   // Инициализируем SharedPreferences
   await GetStorage.init();
@@ -71,7 +59,6 @@ class RG2App extends StatelessWidget {
         transitionDuration: Duration(milliseconds: 230),
         getPages: [
           GetPage(name: '/main', page: () => MainView(), transition: Transition.leftToRight),
-          GetPage(name: '/signIn', page: () => SignInView(), transition: Transition.leftToRight),
           GetPage(name: '/youtube', page: () => YouTubeView(), transition: Transition.leftToRight),
           GetPage(name: '/favourite', page: () => FavouriteDialog(), transition: Transition.upToDown),
         ],
@@ -90,7 +77,7 @@ class RG2App extends StatelessWidget {
                 if (data.hasData) {
                   logPrint("DBController.fillDB отработал");
                   putDAOs(data.data);
-                  return MainAuthView();
+                  return MainView();
                 } else if (data.hasError) {
                   return Center(child: const Text("Can't create or open database"));
                 } else
@@ -145,9 +132,5 @@ class RG2App extends StatelessWidget {
     Get.put(AzbukaSettingsController());
     Get.put(AzbukaTrainerController());
 
-    //TODO после тестирования поменять на lazy
-    //Get.lazyPut(() => ConnectionController());
-    //Get.lazyPut(() => InAppPurchaseController());
-    //Get.put(InAppPurchaseController());
   }
 }

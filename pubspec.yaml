@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.241017.5+460
+version: 4.241017.6+461
 
 environment:
   sdk: ">=2.7.0 <3.0.5"
@@ -62,18 +62,18 @@ dependencies:
   # Индикатор оставшегося времени на ответ
   percent_indicator: ^4.2.2
 
-  # Firebase + google sign in
-  firebase_core: ^1.15.0
-  firebase_auth: ^3.3.16
-  cloud_firestore: ^3.1.13
-  google_sign_in: ^5.3.0
-  apple_sign_in_safety: ^0.0.6
+#  # Firebase + google sign in
+#  firebase_core: ^1.15.0
+#  firebase_auth: ^3.3.16
+#  cloud_firestore: ^3.1.13
+#  google_sign_in: ^5.3.0
+#  apple_sign_in_safety: ^0.0.6
 
-  # Валидаторы для проверки полей ввода
-  form_field_validator: ^1.1.0
+#  # Валидаторы для проверки полей ввода
+#  form_field_validator: ^1.1.0
 
-  # Красивые кнопки аутентификации
-  auth_buttons: ^2.0.4
+#  # Красивые кнопки аутентификации
+#  auth_buttons: ^2.0.4
 
   # Проверка соединения https://pub.dev/packages/connectivity
   connectivity: ^3.0.6

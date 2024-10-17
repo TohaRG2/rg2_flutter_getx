@@ -374,13 +374,11 @@ class SettingsController extends GetxController {
   _resetCommentsSet() async {
     final MainRepository _mainRepository = Get.find();
     await _mainRepository.clearCommentsInLocalDBAndCaches();
-    await _mainRepository.clearAllCommentsInFBS();
   }
 
   _clearTimerTimes() async {
     final TimerRepository _timerRepository = Get.find();
     await _timerRepository.clearTimesTable();
-    await _timerRepository.clearTimerTimesInFBS();
   }
 
   T resetPropertyByKey<T>(String key) {

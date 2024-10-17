@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 
@@ -19,12 +18,6 @@ class CommentItem {
     this.id = map['id'];
     this.phase = map['phase'];
     this.comment = map['comment'];
-  }
-
-  CommentItem.fromDocSnapShot(DocumentSnapshot<Map<String, dynamic>> doc) {
-    this.id = doc.data()['id'];
-    this.phase = doc.data()['phase'];
-    this.comment = doc.data()['comment'];
   }
 
   CommentItem.fromMainDbItem(MainDBItem item) {

@@ -1,43 +1,25 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rg2/controllers/connection_controller.dart';
 import 'package:rg2/controllers/storage/default_settings.dart';
-import 'package:rg2/database/cloud_database.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/utils/my_logger.dart';
-import 'package:rg2/views/auth/controller/auth_controller.dart';
 
 
-/// Контроллер, являющийся по сути repository для firebase + контроллер для локального хранилища
+/// Контроллер для локального хранилища
 class GlobalStorageController extends GetxController {
   final ConnectionController _connection = Get.put<ConnectionController>(ConnectionController(), permanent: true);
-  final AuthController _auth = Get.put<AuthController>(AuthController(), permanent: true);
-  final CloudDatabase _cloudDB = Get.put<CloudDatabase>(CloudDatabase(), permanent: true);
 
   String _userId = "";
-  final GetStorage _sp = GetStorage();
+  final GetStorage _localStorage = GetStorage();
 
   @override
   onInit() async {
     super.onInit();
-    logPrint("onInit - GlobalStorageController ${_auth.user?.uid}");
-    await _sp.initStorage;
-    // подписываемся на получение изменений firebaseUser, при изменении вызываем _userAuthChanged не чаще,
-    // чем раз в 2 сек (debounce) или каждый раз (ever)
-    // более подробно в описании Workers для GetX (https://github.com/jonataslaw/getx/blob/master/documentation/en_US/state_management.md)
-    //debounce(_auth.firebaseUser, _userAuthChanged, time: Duration(seconds: 2));
-    ever(_auth.firebaseUser, _userAuthChanged);
+    logPrint("onInit - GlobalStorageController");
+    await _localStorage.initStorage;
   }
 
-  /// Что-то поменялось в аутентификации пользователя
-  _userAuthChanged(User user) async{
-    logPrint("_userAuthChanged to ${user?.uid}");
-    _userId = (user == null) ? "" : user?.uid;
-    if (_userId != "") {
-      await _updateAllParameters();
-    }
-  }
 
   //------------------------- матоды для работы с параметрами программы ---------------------------------
 
@@ -65,7 +47,7 @@ class GlobalStorageController extends GetxController {
 
   /// получить значение параметра из локального хранилища
   T _getPropertyByKeyFromLocalStorage<T>(String key) {
-    var result = _sp.read(key);
+    var result = _localStorage.read(key);
     //logPrint("из локального хранилища по ключу $key получили - $result, типа ${result.runtimeType}, ожидаем типа- $T");
     if (result?.runtimeType == T || T == dynamic) {
       return result;
@@ -76,39 +58,14 @@ class GlobalStorageController extends GetxController {
 
   /// Сохраняем параметр в облако(если залогинены) и в локальное хранилище
   setProperty(Property property){
-    _addOrUpdatePropertyInFBS(property);
     _setPropertyToLocalStorage(property);
-  }
-
-  /// Добавить или обновить параметр в firebase, если пользователь залогинен
-  void _addOrUpdatePropertyInFBS(Property property) {
-    logPrint("_addOrUpdatePropertyInBase = $property, userId = $_userId");
-    if (_userId != "") {
-      _cloudDB.addOrUpdateProperty(_userId, property);
-    }
   }
 
   /// Сохранаяем параметр в локальное хранилище
   void _setPropertyToLocalStorage(Property property) {
     logPrint("saveToLocalStorage ${property.key} ${property.value}");
     //_lastUpdateDate.val = property.changeDate.millisecondsSinceEpoch;
-    _sp.write(property.key, property.value);
-  }
-
-  /// Обновляем все параметры в программе данными из firebase
-  _updateAllParameters() async {
-    logPrint("updateAllParametersFromFBS - $_userId");
-    if (_userId != "") {
-      // получить все параметры из базы
-      var list = await _cloudDB.getAllUserProperties(_userId);
-      // перезаписать полученные параметры в локальное хранилище
-      list?.forEach((property) {
-        // logPrint("updateAllParametersFromFBS - $property");
-        _setPropertyToLocalStorage(property);
-      });
-      // обновить переменные в контроллерах
-      runCallbacks();
-    }
+    _localStorage.write(property.key, property.value);
   }
 
   /// список колбэков, которые будут вызваны после синхронизации данных с FBS
