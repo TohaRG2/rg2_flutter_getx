@@ -9,7 +9,7 @@ import 'package:rg2/views/dialogs/advices/advices_dialog.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
 import 'package:rg2/views/learn/main_menu/main_menu_item.dart';
 import 'package:rg2/views/learn/main_menu/search_menu_item.dart';
-import 'package:rg2/views/purchase/purchase_view.dart';
+// import 'package:rg2/views/purchase/purchase_view.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/database/entitys/page_properties.dart';
 import 'package:rg2/res/string_values.dart';
@@ -126,7 +126,7 @@ class LearnViewPager extends GetView<LearnController> {
       elevation: 4,
       actions: [
         _showAdvicesButton(),
-        _purchaseButton(),
+        // _purchaseButton(),
         _settingsButton(),
       ],
     );
@@ -158,21 +158,21 @@ class LearnViewPager extends GetView<LearnController> {
       );
   }
 
-  Widget _purchaseButton() {
-    return Center(
-      child: IconButton(
-        icon: const Icon(Icons.monetization_on_outlined),
-        color: Get.textTheme.headline5.color,
-        tooltip: StrRes.purchaseButtonTooltip,
-        onPressed: () {
-          if (controller.searchFocusNode.hasPrimaryFocus) {
-            controller.searchFocusNode.unfocus();
-          }
-          Get.to(() => PurchaseView());
-        },
-      ),
-    );
-  }
+  // Widget _purchaseButton() {
+  //   return Center(
+  //     child: IconButton(
+  //       icon: const Icon(Icons.monetization_on_outlined),
+  //       color: Get.textTheme.headline5.color,
+  //       tooltip: StrRes.purchaseButtonTooltip,
+  //       onPressed: () {
+  //         if (controller.searchFocusNode.hasPrimaryFocus) {
+  //           controller.searchFocusNode.unfocus();
+  //         }
+  //         Get.to(() => PurchaseView());
+  //       },
+  //     ),
+  //   );
+  // }
 
   ///Возвращаем true, если надо дальше продолжать обрабатывать нажатие, т.е. выход из программы
   Future<bool> _onWillPop() async {
@@ -261,7 +261,7 @@ class LearnViewPager extends GetView<LearnController> {
             onPressed: (){
               // закрываем снэкбар
               Get.back();
-              Get.to(() => PurchaseView());
+              // Get.to(() => PurchaseView());
             },
             child: Container(
                 padding: EdgeInsets.all(8.0),

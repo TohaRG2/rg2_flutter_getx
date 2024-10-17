@@ -1,8 +1,8 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:rg2/controllers/ads/ad_show_controller.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:rg2/controllers/ads/ad_show_controller.dart';
 import 'package:rg2/controllers/connection_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';

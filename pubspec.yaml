@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.220723.1+455
+version: 4.241017.3+458
 
 environment:
   sdk: ">=2.7.0 <3.0.5"
@@ -78,11 +78,11 @@ dependencies:
   # Проверка соединения https://pub.dev/packages/connectivity
   connectivity: ^3.0.6
 
-  # Покупки в приложении
-  in_app_purchase: ^3.0.2
-
-  # Реклама в приложении
-  google_mobile_ads: ^1.2.0
+#  # Покупки в приложении
+#  in_app_purchase: ^3.0.2
+#
+#  # Реклама в приложении
+#  google_mobile_ads: ^1.2.0
 
   # Получение версии приложения в коде
   package_info: ^2.0.2

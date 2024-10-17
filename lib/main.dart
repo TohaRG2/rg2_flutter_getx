@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:in_app_purchase_android/in_app_purchase_android.dart';
-import 'package:rg2/controllers/ads/ad_helper.dart';
+// import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+// import 'package:rg2/controllers/ads/ad_helper.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
 import 'package:rg2/controllers/repository/timer_repository.dart';
 import 'package:rg2/utils/my_logger.dart';
@@ -38,13 +38,13 @@ void main() async {
   // Поскольку обращаемся к плагинам до вызова runApp, то сначала ждем инициализации плагинов
   WidgetsFlutterBinding.ensureInitialized();
   // Для инициализации inAppPurchase для android
-  if (defaultTargetPlatform == TargetPlatform.android) {
-    InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
-  }
+  // if (defaultTargetPlatform == TargetPlatform.android) {
+  //   InAppPurchaseAndroidPlatformAddition.enablePendingPurchases();
+  // }
   // Инициализируем FireBase, нужен import 'package:firebase_core/firebase_core.dart';
   await Firebase.initializeApp();
   // инициализируем adMob
-  AdHelper.initialization();
+  // AdHelper.initialization();
 
   // Инициализируем SharedPreferences
   await GetStorage.init();

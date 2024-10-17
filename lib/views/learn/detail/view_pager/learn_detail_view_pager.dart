@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:rg2/controllers/ads/ad_show_controller.dart';
+// import 'package:google_mobile_ads/google_mobile_ads.dart';
+// import 'package:rg2/controllers/ads/ad_show_controller.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
@@ -12,7 +12,7 @@ import 'learn_detail_page_item.dart';
 class LearnDetailViewPager extends StatelessWidget {
   final LearnDetailController _detailController = Get.find();
   final SettingsController _settings = Get.find();
-  final AdShowController _adShowController = Get.find();
+  // final AdShowController _adShowController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -92,15 +92,15 @@ class LearnDetailViewPager extends StatelessWidget {
     return result;
   }
 
-  Widget _adBanner(BannerAd bannerAd) {
-    logPrint("adBanner - ${bannerAd?.adUnitId}");
-    if (_settings.isAdDisabled)
-      return SizedBox(height: 0);
-    return (bannerAd == null)
-        ? SizedBox(height: 60,)
-        : Container(
-            height: 60,
-            child: AdWidget(ad: bannerAd),
-          );
-  }
+  // Widget _adBanner(BannerAd bannerAd) {
+  //   logPrint("adBanner - ${bannerAd?.adUnitId}");
+  //   if (_settings.isAdDisabled)
+  //     return SizedBox(height: 0);
+  //   return (bannerAd == null)
+  //       ? SizedBox(height: 60,)
+  //       : Container(
+  //           height: 60,
+  //           child: AdWidget(ad: bannerAd),
+  //         );
+  // }
 }
