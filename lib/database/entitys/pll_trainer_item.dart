@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
 
-@Entity (tableName: 'pll_trainer')
+@Entity(tableName: 'pll_trainer')
 class PllTrainerItem {
   @PrimaryKey(autoGenerate: true)
   final int id;
@@ -25,7 +25,7 @@ class PllTrainerItem {
       this.currentName,
       this.imagePath,
       this.isChecked,
-      {this.id}
+      {required this.id}
   );
 
   @override

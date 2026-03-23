@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/flutter_html/flutter_html.dart';
-import 'package:rg2/flutter_html/style.dart';
+import 'package:flutter_html/flutter_html.dart';
+// Style is available via flutter_html export
 import 'package:rg2/views/info/about/text_about.dart';
 import 'package:rg2/views/info/controller/info_controller.dart';
 import 'package:rg2/views/shared/url_helper.dart';
+
+import '../../../utils/theme_compat.dart';
 
 class AboutProgramView extends GetView<InfoController> {
   @override
@@ -47,9 +49,9 @@ class AboutProgramView extends GetView<InfoController> {
                 "h5":
                     Style(textAlign: TextAlign.center, fontSize: FontSize.large),
               },
-              onLinkTap: (url) {
-                UrlHelper.onUrlTap(url);
-              },
+      onLinkTap: (url, _, __) {
+        UrlHelper.onUrlTap(url ?? "");
+      },
             ),
           )
         ],

@@ -4,9 +4,7 @@ import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class BottomBackButton extends StatelessWidget {
-  const BottomBackButton({
-    Key key,
-  }) : super(key: key);
+  const BottomBackButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +13,7 @@ class BottomBackButton extends StatelessWidget {
         Get.back();
       },
       style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all<Color>(Get.theme.primaryColor),
+        foregroundColor: WidgetStateProperty.all<Color>(Get.theme.primaryColor),
       ),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),

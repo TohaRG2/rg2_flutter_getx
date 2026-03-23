@@ -9,7 +9,7 @@ import 'package:rg2/views/trainers/pll/model/quiz_variant.dart';
 class QuizGame {
   GameState _state = GameState.INIT;
 
-  QuizVariant _correctAnswer;
+  late QuizVariant _correctAnswer;
 
   /// Время для ответа на вопрос в секундах (от 0 до 30). Если 0, значит время отключено
   var _timeForAnswer = 6.obs;
@@ -42,7 +42,7 @@ class QuizGame {
   int get wrongAnswerCount => _wrongAnswerCount.value;
 
   /// Callback вызываемый, если закончилось время на ответ
-  Function() _onTimeIsOverCallback;
+  late Function() _onTimeIsOverCallback;
 
   /// Сброс счетчико ответов
   _resetCounts() {
@@ -145,9 +145,9 @@ class QuizGame {
   /// onTimeIsOver: коллбэк вызываемый, когда заканчивается время на ответ,
   /// timeForAnswerInSec: время в секундах на ответ
   QuizGame({
-    @required List<QuizVariant> answersList,
-    Function() onTimeIsOverCallback,
-    int timeForAnswerInSec,
+    required List<QuizVariant> answersList,
+    required Function() onTimeIsOverCallback,
+    required int timeForAnswerInSec,
   }) {
     this.timeForAnswer = timeForAnswerInSec;
     this.answersList = answersList;

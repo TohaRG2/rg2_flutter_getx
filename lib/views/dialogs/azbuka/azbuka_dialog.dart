@@ -4,6 +4,8 @@ import 'package:rg2/views/dialogs/azbuka/azbuka_dialog_controller.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/dialogs/azbuka/azbuka_item.dart';
 
+import '../../../utils/theme_compat.dart';
+
 class AzbukaDialog extends StatelessWidget {
   final _controller = Get.find<AzbukaDialogController>();
   final String phase;

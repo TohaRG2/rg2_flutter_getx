@@ -8,9 +8,9 @@ import 'package:rg2/views/trainers/scramble_gen/model/cube.dart';
 
 class PllCubeImage {
   int id;
-  Cube _cube;
+  late Cube _cube;
 
-  PllCubeImage({this.id, bool randomAUF = false, bool randomFrontSide = false}){
+  PllCubeImage({required this.id, bool randomAUF = false, bool randomFrontSide = false}){
     if (id < 0 || id > 20) {
       id = 0;
       logPrint("Задан некорректный id pll алгоритма, будет равен 0");

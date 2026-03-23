@@ -84,7 +84,7 @@ class ScrambleGenSettingsView extends StatelessWidget {
     );
   }
 
-  Widget _buildButton({String text, VoidCallback onPressed}) {
+  Widget _buildButton({required String text, required VoidCallback onPressed}) {
     return Expanded(
       child: Container(
         padding: EdgeInsets.all(8.0),

@@ -10,15 +10,15 @@ class ScreenUtil {
   double height;
   bool allowFontScaling;
 
-  static MediaQueryData _mediaQueryData;
-  static double _screenWidth;
-  static double _screenHeight;
-  static double _pixelRatio;
-  static double _statusBarHeight;
+  static late MediaQueryData _mediaQueryData;
+  static late double _screenWidth;
+  static late double _screenHeight;
+  static late double _pixelRatio;
+  static late double _statusBarHeight;
 
-  static double _bottomBarHeight;
+  static late double _bottomBarHeight;
 
-  static double _textScaleFactor;
+  static late double _textScaleFactor;
 
   ScreenUtil({
     this.width = 1080,
@@ -38,7 +38,7 @@ class ScreenUtil {
     _screenHeight = mediaQuery.size.height;
     _statusBarHeight = mediaQuery.padding.top;
     _bottomBarHeight = mediaQueryData.padding.bottom;
-    _textScaleFactor = mediaQuery.textScaleFactor;
+    _textScaleFactor = mediaQuery.textScaler.scale(1.0);
   }
 
   static MediaQueryData get mediaQueryData => _mediaQueryData;
@@ -46,8 +46,8 @@ class ScreenUtil {
   static double get pixelRatio => _pixelRatio;
   static double get screenWidthDp => _screenWidth;
   static double get screenHeightDp => _screenHeight;
-  static double get screenWidth => screenWidth * pixelRatio;
-  static double get screenHeight => screenHeight * pixelRatio;
+  static double get screenWidth => screenWidthDp * pixelRatio;
+  static double get screenHeight => screenHeightDp * pixelRatio;
   static double get statusBarHeight => _statusBarHeight;
   static double get bottomBarHeight => _bottomBarHeight;
   get scaleWidth => _screenWidth / instance.width;

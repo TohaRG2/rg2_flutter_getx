@@ -25,7 +25,7 @@ class PllTrainerController extends TrainerController {
   bool get isStartButtonEnabled => _isStartButtonEnabled.value;
   set isStartButtonEnabled(value) => _isStartButtonEnabled.value = value;
 
-  PllCubeImage _pllCubeImage;
+  late PllCubeImage _pllCubeImage;
   get pllCubeImage => _pllCubeImage;
 
 

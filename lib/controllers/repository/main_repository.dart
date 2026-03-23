@@ -9,14 +9,14 @@ class MainRepository extends GetxController {
 
   String _userId = "";
 
-  Function(List<MainDBItem> items) favouritesUpdateCallback;
-  Function(List<MainDBItem> items) detailUpdateCacheCallback;
-  Function(List<MainDBItem> items) learnUpdateMainCacheCallback;
+  Function(List<MainDBItem> items)? favouritesUpdateCallback;
+  Function(List<MainDBItem> items)? detailUpdateCacheCallback;
+  Function(List<MainDBItem> items)? learnUpdateMainCacheCallback;
 
 
   //--------------- методы для работы с локальной базой room ----------------
 
-  Future<MainDBItem> getMainDBItem(String phase, int id) async {
+  Future<MainDBItem?> getMainDBItem(String phase, int id) async {
     //logPrint("getMainDBItem $phase $id");
     var result = await _mainDao.getItem(phase, id);
     return result;
@@ -70,14 +70,10 @@ class MainRepository extends GetxController {
     await updateMainDBItems(mainDBItems);
 
     // обновляем данные в кэше основного меню обучалок
-    if (learnUpdateMainCacheCallback != null) {
-      await learnUpdateMainCacheCallback(mainDBItems);
-    }
+    await learnUpdateMainCacheCallback?.call(mainDBItems);
 
     // обновляем данные в кэше избранного
-    if (favouritesUpdateCallback != null) {
-      await favouritesUpdateCallback(mainDBItems);
-    }
+    await favouritesUpdateCallback?.call(mainDBItems);
   }
 
 
@@ -116,14 +112,10 @@ class MainRepository extends GetxController {
   /// Обновляем данные в кэшах
   _updateItemsInCache(List<MainDBItem> mainDBItems) async {
     // обновляем данные в кэше основного меню обучалок
-    if (learnUpdateMainCacheCallback != null) {
-      learnUpdateMainCacheCallback(mainDBItems);
-    }
+    learnUpdateMainCacheCallback?.call(mainDBItems);
     // обновляем комментарии, если задан колбэк и получили не null в listCommentItems
-    if (detailUpdateCacheCallback != null) {
-      // вызываем колбэк, он находится в learnDetailController
-      detailUpdateCacheCallback(mainDBItems);
-    }
+    // вызываем колбэк, он находится в learnDetailController
+    detailUpdateCacheCallback?.call(mainDBItems);
   }
 
 }

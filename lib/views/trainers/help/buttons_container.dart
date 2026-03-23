@@ -6,9 +6,9 @@ import 'package:rg2/views/trainers/scramble_gen/view/settings_scramble_gen_view.
 //TODO Проверить, нужен ли этот класс? Удалить?
 class ButtonsContainer extends StatelessWidget {
   const ButtonsContainer({
-    Key key,
-    @required this.size,
-    @required this.iconColor,
+    Key? key,
+    required this.size,
+    required this.iconColor,
   }) : super(key: key);
 
   final Size size;

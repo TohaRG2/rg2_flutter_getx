@@ -1,11 +1,11 @@
 import 'dart:core';
 
 class ColoredAzbukaItem{
-  int index;
-  int colorNumber;
-  String letter;
+  final int index;
+  final int colorNumber;
+  final String letter;
 
-  ColoredAzbukaItem({this.index, this.colorNumber, this.letter});
+  const ColoredAzbukaItem({required this.index, required this.colorNumber, required this.letter});
 
   @override
   String toString() {

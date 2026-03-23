@@ -4,7 +4,7 @@ import 'package:rg2/views/shared/ui_helpers.dart';
 
 class MenuCardItem extends StatelessWidget {
   final Widget child;
-  const MenuCardItem({Key key, @required this.child}) : super(key: key);
+  const MenuCardItem({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class MenuCardItem extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(0)),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(0.15),
+                color: Colors.black.withValues(alpha: 0.15),
                 blurRadius: 7,
                 offset: Offset(0, 4))
           ]),

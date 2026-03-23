@@ -5,7 +5,7 @@ import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/azbuka_trainer/view/settings_azbuka_trainer_view.dart';
 
 class AzbukaTrainerBottomMenuBar extends StatelessWidget {
-  AzbukaTrainerBottomMenuBar({Key key,}) : super(key: key);
+  AzbukaTrainerBottomMenuBar({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,11 +1,11 @@
 class TrainerMenuItem {
 
-  String id;
-  String title;
-  String icon;
-  String helpItem;
+  final String id;
+  final String title;
+  final String icon;
+  final String helpItem;
 
-  TrainerMenuItem({this.id, this.title, this.icon, this.helpItem});
+  const TrainerMenuItem({required this.id, required this.title, required this.icon, required this.helpItem});
 
 
   ///

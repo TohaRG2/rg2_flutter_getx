@@ -1,13 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/dialogs/advices/advices_dialog.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
-import 'package:rg2/views/learn/main_menu/main_menu_item.dart';
 import 'package:rg2/views/learn/main_menu/search_menu_item.dart';
 // import 'package:rg2/views/purchase/purchase_view.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
@@ -83,7 +79,7 @@ class LearnViewPager extends GetView<LearnController> {
               decoration: InputDecoration(
                 prefixIcon: Icon(
                   Icons.search,
-                  color: Get.textTheme.bodyText2.color,
+                  color: Get.textTheme.bodyMedium?.color,
                   size: 24,
                 ),
                 prefixIconConstraints: BoxConstraints(
@@ -97,7 +93,7 @@ class LearnViewPager extends GetView<LearnController> {
             ),
           ),
           IconButton(
-            color: Get.textTheme.bodyText2.color,
+            color: Get.textTheme.bodyMedium?.color,
             icon: Icon(Icons.clear),
             padding: EdgeInsets.zero,
             constraints: BoxConstraints(
@@ -119,7 +115,7 @@ class LearnViewPager extends GetView<LearnController> {
       title: Center(
           child: Text(
         "${StrRes.learnTitle}",
-        style: TextStyle(color: Get.textTheme.headline5.color),
+        style: TextStyle(color: Get.textTheme.titleMedium?.color),
       )),
       backgroundColor: Get.theme.scaffoldBackgroundColor,
       automaticallyImplyLeading: false,
@@ -141,7 +137,7 @@ class LearnViewPager extends GetView<LearnController> {
         Get.dialog(AdvicesDialog());
       },
       icon: const Icon(Icons.help_outline),
-      color: Get.textTheme.headline5.color,
+      color: Get.textTheme.titleMedium?.color,
       tooltip: StrRes.advicesButtonTooltip,
     );
   }
@@ -153,7 +149,7 @@ class LearnViewPager extends GetView<LearnController> {
           Get.to(() => SettingsScreenWithBottomBar(), transition: Transition.cupertino);
         },
         icon: const Icon(Icons.settings_rounded),
-        color: Get.textTheme.headline5.color,
+        color: Get.textTheme.titleMedium?.color,
         tooltip: StrRes.settingsButtonTooltip,
       );
   }
@@ -188,8 +184,8 @@ class LearnViewPager extends GetView<LearnController> {
       TabBar(
         indicatorWeight: 3.0,
         //По умолчанию берется из ThemeData.primaryTextTheme.bodyText1.textColor
-        labelColor: Get.textTheme.headline5.color,
-        unselectedLabelColor: Get.textTheme.headline5.color.withAlpha(130),
+        labelColor: Get.textTheme.titleMedium?.color,
+        unselectedLabelColor: Get.textTheme.titleMedium?.color?.withAlpha(130),
         isScrollable: true,
         tabs: _tabsList(),
       ),

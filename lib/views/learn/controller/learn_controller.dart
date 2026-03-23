@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository/main_repository.dart';
@@ -58,8 +57,6 @@ class LearnController extends GetxController {
     logPrint("searchInitialization");
     searchEditingController.addListener(_searchTextListener);
     searchFocusNode.addListener(_searchFocusNodeListener);
-    final isPurchaseEnabled = _settings.isAllPuzzlesEnabled;
-    final isGodModeEnabled = _settings.godMode;
     _mainRepo.getSubMenuList().then((List<MainDBItem> subMenuList) {
       allPuzzles = subMenuList;
       allPuzzles.sort((item1, item2) => item1.title.compareTo(item2.title));
@@ -225,7 +222,7 @@ class LearnController extends GetxController {
   saveListPositionForPhase(String phase) {
     logPrint("savePositionFor $phase, $curPositionInList");
     phasesPositions[phase] = curPositionInList;
-    _repo.updatePhasePosition(phase, phasesPositions[phase]);
+    _repo.updatePhasePosition(phase, curPositionInList);
   }
 
   ///делаем список для отображения по имени фазы и номеру страницы. Номер нужен для определения необходимости добавления пункта "..."
@@ -276,7 +273,7 @@ class LearnController extends GetxController {
   void _updateItemInCache(MainDBItem item) {
     pages.forEach((pageProp) {
       List<MainDBItem> list = pageProp.currentList;
-      var index = list?.indexWhere((element) => element.phase == item.phase && element.id == item.id) ?? -1;
+      var index = list.indexWhere((element) => element.phase == item.phase && element.id == item.id);
       if (index >= 0) {
         //logPrint("find in page ${pageProp.number}");
         List<MainDBItem> list = pageProp.currentList.toList();
@@ -366,7 +363,7 @@ class LearnController extends GetxController {
     if (item.url == "submenu") {
       logPrint("onTap -> submenu -> change to ${item.description}");
       changePageAndPhaseTo(item.description);
-      if (Get.isDialogOpen) { Get.back(); }
+      if (Get.isDialogOpen ?? false) { Get.back(); }
       // while (Get.currentRoute != "/main" && Get.currentRoute != "/") {
       //   Get.back();
       //   logPrint("CurRoute - ${Get.currentRoute}");
@@ -377,7 +374,7 @@ class LearnController extends GetxController {
       // Если url не submenu, значит переходим в детальную информацию, т.е. в обучалку
       logPrint("onTap -> not submenu -> change detailScreen to ${item.phase}");
       changePageAndPhaseTo(item.phase);
-      if (Get.isDialogOpen) { Get.back(); }
+      if (Get.isDialogOpen ?? false) { Get.back(); }
       // while (Get.currentRoute != "/() => MainView"  && Get.currentRoute != "/") {
       //   Get.back();
       //   logPrint("CurRoute - ${Get.currentRoute}");

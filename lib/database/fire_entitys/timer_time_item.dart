@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:rg2/database/entitys/time_note_item.dart';
 
 
@@ -6,12 +5,12 @@ import 'package:rg2/database/entitys/time_note_item.dart';
 /// в качестве ID используем время в милисекундах, когда создана запись в локальной БД
 /// этот же ID используется для имени документа в колеекции FBS (FireBaseStorage)
 class TimerTimeItem {
-  DateTime date;
-  String solvingTime;
-  String scramble;
-  String comment;
+  late DateTime date;
+  late String solvingTime;
+  late String scramble;
+  late String comment;
 
-  TimerTimeItem({@required this.date, @required this.solvingTime, this.scramble = "", this.comment = ""});
+  TimerTimeItem({required this.date, required this.solvingTime, this.scramble = "", this.comment = ""});
 
   /// Преобразуем объект в Map, для хранения в FBS
   Map<String, dynamic> toMap() => {
@@ -30,10 +29,10 @@ class TimerTimeItem {
   }
 
   TimerTimeItem.fromTimeNoteItem(TimeNoteItem item) {
-    this.date = item.dateTime;
-    this.solvingTime = item.solvingTime;
-    this.scramble = item?.scramble ?? "";
-    this.comment = item?.comment ?? "";
+    date = item.dateTime;
+    solvingTime = item.solvingTime;
+    scramble = item.scramble;
+    comment = item.comment;
   }
 
   @override

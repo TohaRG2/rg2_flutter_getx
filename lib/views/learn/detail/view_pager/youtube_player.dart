@@ -8,7 +8,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 class YoutubePlayerDialog extends StatelessWidget {
   final String videoID;
 
-  YoutubePlayerDialog({this.videoID});
+  YoutubePlayerDialog({required this.videoID});
 
   @override
   Widget build(BuildContext context) {

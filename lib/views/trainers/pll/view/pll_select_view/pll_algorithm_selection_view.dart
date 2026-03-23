@@ -77,7 +77,7 @@ class PllAlgorithmSelectionView extends StatelessWidget {
   }
 
   /// Кнопка c надписью и колбэком
-  Widget buildButton({String text, Function onPressed}) {
+  Widget buildButton({required String text, required VoidCallback onPressed}) {
     return Expanded(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMini),
@@ -89,7 +89,7 @@ class PllAlgorithmSelectionView extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: UIHelper.SpaceMini),
             child: Text(text,
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: Get.theme.bottomAppBarColor),
+              textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: Get.theme.primaryColor),
             ),
           ),
         ),

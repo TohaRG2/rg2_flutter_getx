@@ -6,13 +6,13 @@ import 'package:rg2/views/shared/ui_helpers.dart';
 
 class TrainerViewMenuItem extends StatelessWidget {
   final TrainerMenuItem item;
-  final Function(TrainerMenuItem) onItemSelected;
-  final Function(TrainerMenuItem) onHelpSelected;
-  final Function(TrainerMenuItem) onSettingsSelected;
+  final void Function(TrainerMenuItem)? onItemSelected;
+  final void Function(TrainerMenuItem)? onHelpSelected;
+  final void Function(TrainerMenuItem)? onSettingsSelected;
 
   final double _iconWidth = 25.0;
 
-  TrainerViewMenuItem({this.item, this.onItemSelected, this.onHelpSelected, this.onSettingsSelected});
+  const TrainerViewMenuItem({required this.item, this.onItemSelected, this.onHelpSelected, this.onSettingsSelected, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class TrainerViewMenuItem extends StatelessWidget {
                 child: Image.asset(item.getIcHelpPath(), width: _iconWidth, color: _primaryColor),
               ),
               onTap: () {
-                onHelpSelected(item);
+                onHelpSelected?.call(item);
               },
             ),
             /// Обрабатываем нажатия на кнопки настроеек
@@ -57,14 +57,14 @@ class TrainerViewMenuItem extends StatelessWidget {
                 child: Image.asset(item.getIcSettingsPath(), width: _iconWidth, color: _primaryColor),
               ),
               onTap: (){
-                onSettingsSelected(item);
+                onSettingsSelected?.call(item);
               },
             ),
           ],
         ),
       ),
       onTap: () {
-        onItemSelected(item);
+        onItemSelected?.call(item);
       },
     );
   }

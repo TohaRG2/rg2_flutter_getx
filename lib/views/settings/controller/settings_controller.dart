@@ -8,7 +8,7 @@ import 'package:rg2/controllers/storage/global_storage_controller.dart';
 import 'package:rg2/database/fire_entitys/property.dart';
 import 'package:rg2/res/constants.dart';
 import 'package:rg2/utils/my_logger.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class SettingsController extends GetxController {
   final GlobalStorageController _storage = Get.put(GlobalStorageController(), permanent: true);
@@ -152,7 +152,7 @@ class SettingsController extends GetxController {
 
   /// Текущее количество монеток у пользователя (если меньше 0, значит неограниченно)
   final RxInt _coins = 0.obs;
-    get coins => _coins.value;
+    int get coins => _coins.value;
     set coins(int value) {
       _coins.value = value;
       _storage.setProperty(Property(key: Const.CURRENT_COINS, value: value));
@@ -165,7 +165,7 @@ class SettingsController extends GetxController {
   /// 3 - купил и то и другое :)
   /// 7 - ВИП (см.побитно)
   RxInt _purchaserState = RxInt(0);
-    get purchaserState => _purchaserState.value;
+    int get purchaserState => _purchaserState.value;
     set purchaserState(int value) {
       _purchaserState.value = value;
       _storage.setProperty(Property(key: Const.PURCHASER_STATE, value: value));
@@ -189,10 +189,10 @@ class SettingsController extends GetxController {
   void checkAlwaysOnGlobal() {
     if (alwaysScreenOnGlobal) {
       logPrint("Wakelock.enable");
-      Wakelock.enable();
+      WakelockPlus.enable();
     } else {
       logPrint("Wakelock.disable");
-      Wakelock.disable();
+      WakelockPlus.disable();
     }
   }
 
@@ -217,17 +217,21 @@ class SettingsController extends GetxController {
     // _coinsToEnableAllPuzzle.value = _storage.getPropertyByKey(Const.COINS_TO_ENABLE_ALL_PUZZLE);
 
     logPrint("_initializeRxVariables - подгружаем тему");
-    int _primaryColor = _storage.getPropertyByKey(Const.PRIMARY_COLOR);
-    int _accentColor = _storage.getPropertyByKey(Const.ACCENT_COLOR);
-    bool isDarkThemeNewValue = _storage.getPropertyByKey(Const.IS_THEME_DARK);
+    int? _primaryColor = _storage.getPropertyByKey<int>(Const.PRIMARY_COLOR);
+    int? _accentColor = _storage.getPropertyByKey<int>(Const.ACCENT_COLOR);
+    bool? isDarkThemeNewValue = _storage.getPropertyByKey<bool>(Const.IS_THEME_DARK);
 
-    var isPrimaryColorChange = _primaryThemeColor != null && primaryThemeColor != Color(_primaryColor);
-    var isAccentColorChange = _accentThemeColor != null && accentThemeColor != Color(_accentColor);
-    var isThemeChanged = isDarkThemeSelect != null && isDarkThemeSelect != isDarkThemeNewValue;
+    final int primaryStored = _primaryColor ?? primaryThemeColor.value;
+    final int accentStored = _accentColor ?? accentThemeColor.value;
+    final bool isDarkStored = isDarkThemeNewValue ?? isDarkThemeSelect;
 
-    _primaryThemeColor.value = Color(_primaryColor);
-    _accentThemeColor.value = Color(_accentColor);
-    _isDarkThemeSelect.value = isDarkThemeNewValue;
+    var isPrimaryColorChange = primaryThemeColor != Color(primaryStored);
+    var isAccentColorChange = accentThemeColor != Color(accentStored);
+    var isThemeChanged = isDarkThemeSelect != isDarkStored;
+
+    _primaryThemeColor.value = Color(primaryStored);
+    _accentThemeColor.value = Color(accentStored);
+    _isDarkThemeSelect.value = isDarkStored;
 
     // Если параметры темы поменялись, то запускаем процесс смены темы
     if (isPrimaryColorChange || isAccentColorChange || isThemeChanged) {
@@ -280,27 +284,27 @@ class SettingsController extends GetxController {
     return ThemeData(
       brightness: isDarkThemeSelect ? Brightness.dark : Brightness.light,
       primaryColor: primaryThemeColor,
-      accentColor: accentThemeColor,
       primarySwatch: materialColorFrom(primaryThemeColor),
-      toggleableActiveColor: accentThemeColor,
       dividerColor: primaryThemeColor,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: primaryThemeColor,
+        brightness: isDarkThemeSelect ? Brightness.dark : Brightness.light,
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-          // side: MaterialStateProperty.resolveWith<BorderSide>(
-          //         (states) => BorderSide(color: Colors.blue ?? Colors.black)),
-          backgroundColor: MaterialStateProperty.resolveWith<Color>((states) => primaryThemeColor),
-          shape: MaterialStateProperty.resolveWith<OutlinedBorder>((_) {
+          backgroundColor: WidgetStateProperty.all<Color>(primaryThemeColor),
+          shape: WidgetStateProperty.resolveWith<OutlinedBorder>((_) {
             return RoundedRectangleBorder(borderRadius: BorderRadius.circular(10));
           }),
         ),
       ),
       //primarySwatch: Colors.orange,
-      textTheme: TextTheme().copyWith(
-        headline4: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-        headline5: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
-        headline6: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
-        bodyText1: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
-        bodyText2: TextStyle(fontSize: 16, fontWeight: FontWeight.normal), //DefaultText для Text("")
+      textTheme: const TextTheme(
+        titleLarge: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+        titleMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+        titleSmall: TextStyle(fontSize: 20, fontWeight: FontWeight.normal),
+        bodyLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.normal),
+        bodyMedium: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
       ));
   }
 

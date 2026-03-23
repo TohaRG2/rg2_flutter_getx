@@ -1,10 +1,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/utils/theme_compat.dart';
 
 final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
-  onPrimary: Get.textTheme.button.color,
-  primary: Get.theme.primaryColor,
+  foregroundColor: Get.textTheme.button.color,
+  backgroundColor: Get.theme.primaryColor,
   //minimumSize: Size(88, 36),
   padding: EdgeInsets.symmetric(horizontal: 10),
   shape: const RoundedRectangleBorder(
@@ -13,8 +14,8 @@ final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
 );
 
 final ButtonStyle raisedButtonStyleWithPadding = ElevatedButton.styleFrom(
-  onPrimary: Get.textTheme.button.color,
-  primary: Get.theme.primaryColor,
+  foregroundColor: Get.textTheme.button.color,
+  backgroundColor: Get.theme.primaryColor,
   //minimumSize: Size(88, 36),
   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
   shape: const RoundedRectangleBorder(
@@ -23,8 +24,8 @@ final ButtonStyle raisedButtonStyleWithPadding = ElevatedButton.styleFrom(
 );
 
 final ButtonStyle raisedAccentButtonStyle = ElevatedButton.styleFrom(
-  onPrimary: Get.textTheme.button.color,
-  primary: Get.theme.accentColor,
+  foregroundColor: Get.textTheme.button.color,
+  backgroundColor: Get.theme.accentColor,
   //minimumSize: Size(88, 36),
   padding: EdgeInsets.symmetric(horizontal: 10),
   shape: const RoundedRectangleBorder(
@@ -33,8 +34,8 @@ final ButtonStyle raisedAccentButtonStyle = ElevatedButton.styleFrom(
 );
 
 final ButtonStyle raisedAccentButtonStyleWithPadding = ElevatedButton.styleFrom(
-  onPrimary: Get.textTheme.button.color,
-  primary: Get.theme.accentColor,
+  foregroundColor: Get.textTheme.button.color,
+  backgroundColor: Get.theme.accentColor,
   //minimumSize: Size(88, 36),
   padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
   shape: const RoundedRectangleBorder(
@@ -43,7 +44,7 @@ final ButtonStyle raisedAccentButtonStyleWithPadding = ElevatedButton.styleFrom(
 );
 
 final ButtonStyle flatButtonStyle = TextButton.styleFrom(
-  primary: Get.theme.primaryColor,
+  foregroundColor: Get.theme.primaryColor,
   minimumSize: Size(88, 36),
   padding: EdgeInsets.symmetric(horizontal: 16.0),
   shape: const RoundedRectangleBorder(

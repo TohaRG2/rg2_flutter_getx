@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:rg2/res/constants.dart';
 
 /// Map c дефолтными значениями для глобальных параметров программы

@@ -7,7 +7,7 @@ import 'package:rg2/views/trainers/timer/view/settings_timer_view.dart';
 import 'package:rg2/views/trainers/timer/view/result_view/results_view.dart';
 
 class TimerBottomMenuBar extends StatelessWidget {
-  TimerBottomMenuBar({Key key,}) : super(key: key);
+  TimerBottomMenuBar({Key? key,}) : super(key: key);
   final TimerController _timerController = Get.find();
 
   @override

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/utils/theme_compat.dart';
 
 class ScrambleTextWidget extends StatelessWidget {
   final String _text;
   final double _textRatio;
-  final Function() _onTapCallBack;
+  final VoidCallback? _onTapCallBack;
 
-  ScrambleTextWidget({String text, Function onTapCallBack, double textRatio = 1, Key key,
+  const ScrambleTextWidget({
+    Key? key,
+    required String text,
+    VoidCallback? onTapCallBack,
+    double textRatio = 1,
   })  : _text = text,
         _onTapCallBack = onTapCallBack,
         _textRatio = textRatio,
@@ -15,10 +20,11 @@ class ScrambleTextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color _accentColor = Get.theme.accentColor;
-    final textSize = Get.textTheme.headline6.fontSize * _textRatio;
+    final baseSize = Get.textTheme.headline6.fontSize ?? 20.0;
+    final textSize = baseSize * _textRatio;
     return GestureDetector(
       onTap: () {
-        _onTapCallBack();
+        _onTapCallBack?.call();
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),

@@ -23,7 +23,6 @@ class PageProperties {
     this.rootPhase,
     this.currentPhase, {
     this.backTo = "",
-    this.currentList,
   });
 
   String toString() {

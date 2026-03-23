@@ -3,10 +3,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
 
+import '../../../../utils/theme_compat.dart';
+
 class Header extends StatelessWidget {
   const Header({
-    Key key,
-    @required int curPageNumber,
+    Key? key,
+    required int curPageNumber,
   })  : _curPageNumber = curPageNumber,
         super(key: key);
 

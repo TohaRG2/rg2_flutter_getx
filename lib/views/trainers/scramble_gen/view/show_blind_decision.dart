@@ -8,11 +8,11 @@ class ShowBlindDecision extends StatelessWidget {
   final bool showDecisionText;
   final ScrambleGenController _controller;
 
-  const ShowBlindDecision({Key key,
-    @required ScrambleGenController controller,
-    @required this.blindDecision,
-    @required this.showDecision,
-    @required this.showDecisionText,
+  const ShowBlindDecision({Key? key,
+    required ScrambleGenController controller,
+    required this.blindDecision,
+    required this.showDecision,
+    required this.showDecisionText,
   }) : _controller = controller, super(key: key);
 
   @override
@@ -26,7 +26,9 @@ class ShowBlindDecision extends StatelessWidget {
             title: Text(StrRes.scrambleGenBlindDecision),
             value: showDecision,
             onChanged: (value) {
-              _controller.showDecision = value;
+              if (value != null) {
+                _controller.showDecision = value;
+              }
             }
         ),
         Visibility(
@@ -37,7 +39,9 @@ class ShowBlindDecision extends StatelessWidget {
               controlAffinity: ListTileControlAffinity.leading,
               value: showDecisionText,
               onChanged: (value) {
-                _controller.showDecisionText = value;
+                if (value != null) {
+                  _controller.showDecisionText = value;
+                }
               }),
         ),
       ],

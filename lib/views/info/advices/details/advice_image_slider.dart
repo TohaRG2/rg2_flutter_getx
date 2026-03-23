@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/views/info/advices/model/advices_items.dart';
 
+import '../../../../utils/theme_compat.dart';
+
 class AdviceImageSlider extends StatelessWidget {
   final _position = 0.obs;
 

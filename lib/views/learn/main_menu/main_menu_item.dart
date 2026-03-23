@@ -15,9 +15,9 @@ class MainMenuItem extends StatelessWidget {
   final FunctionForCallback onTapCallback;
 
   MainMenuItem({
-    @required this.item,
-    @required this.isItemEnabled,
-    @required this.onTapCallback});
+    required this.item,
+    required this.isItemEnabled,
+    required this.onTapCallback});
 
   @override
   Widget build(BuildContext context) {

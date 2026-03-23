@@ -4,15 +4,15 @@ import 'package:rg2/views/shared/ui_helpers.dart';
 
 class IconWithTextWidget extends StatelessWidget {
   IconWithTextWidget({
-    @required String text,
-    @required IconData icon,
-    Color color,
-    Key key,
-  }) : _text = text, _icon = icon, _color = color, super(key: key);
+    required String text,
+    required IconData icon,
+    Color? color,
+    Key? key,
+  })  : _text = text, _icon = icon, _color = color, super(key: key);
 
   final String _text;
   final IconData _icon;
-  final Color _color;
+  final Color? _color;
 
   @override
   Widget build(BuildContext context) {

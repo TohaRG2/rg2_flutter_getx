@@ -7,6 +7,7 @@ import 'package:rg2/views/shared/buttons_style.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/trainers/model/result_variants.dart';
 import 'package:rg2/views/trainers/pll/controller/pll_trainer_controller.dart';
+import 'package:rg2/utils/theme_compat.dart';
 import 'package:rg2/views/trainers/pll/view/bottom_menu_bar_pll_trainer.dart';
 
 class MainPllTrainerView extends StatelessWidget {
@@ -237,7 +238,7 @@ class MainPllTrainerView extends StatelessWidget {
   }
 
   /// Универсальный диалог
-  Widget buildOverlayDialog({String buttonText, String message, String imagePath, Color imageColor}) {
+  Widget buildOverlayDialog({required String buttonText, required String message, required String imagePath, required Color imageColor}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [

@@ -4,7 +4,7 @@ class AdviceItem {
   String adviceImagePath;
   String adviceText;
 
-  AdviceItem({this.adviceImagePath, this.adviceText});
+  AdviceItem({required this.adviceImagePath, required this.adviceText});
 
   @override
   String toString() {

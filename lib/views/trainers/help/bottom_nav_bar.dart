@@ -3,6 +3,7 @@ import 'package:rg2/views/trainers/model/trainer_menu_item.dart';
 import 'package:get/get.dart';
 import 'package:rg2/views/shared/bottom_nav_bar_painter.dart';
 import 'package:rg2/views/trainers/scramble_gen/view/main_scramble_gen_view.dart';
+import 'package:rg2/utils/theme_compat.dart';
 
 import 'buttons_container.dart';
 
@@ -10,7 +11,7 @@ import 'buttons_container.dart';
 class BottomNavBar extends StatelessWidget {
   final TrainerMenuItem item;
 
-  BottomNavBar({this.item});
+  BottomNavBar({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

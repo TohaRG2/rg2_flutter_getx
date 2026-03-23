@@ -40,7 +40,7 @@ class Azbuka {
     return coloredAzbuka;
   }
 
-  get currentColorsSide => _currentColorsSide;
+  List<int> get currentColorsSide => _currentColorsSide;
   set currentColorsSide(List<int> value) {
     if (value.length == 6) {
       _currentColorsSide = value;

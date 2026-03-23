@@ -5,9 +5,7 @@ import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class SwipeSettings extends StatelessWidget {
-  const SwipeSettings({
-    Key key,
-  }) : super(key: key);
+  const SwipeSettings({Key? key}) : super(key: key);
 
 
   @override
@@ -20,7 +18,7 @@ class SwipeSettings extends StatelessWidget {
           children: <Widget>[
             Text(
                 StrRes.settingsSwipe,
-                style: Get.textTheme.headline6,
+                style: Get.textTheme.titleSmall,
             ),
             SizedBox(
               height: UIHelper.SpaceSmall,
@@ -29,7 +27,7 @@ class SwipeSettings extends StatelessWidget {
               contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
               title: Text(
                 StrRes.settingsSwipeMenuText,
-                style: Get.textTheme.bodyText1,
+                style: Get.textTheme.bodyLarge,
               ),
               value: _settings.isSwipeEnabled,
               onChanged: (value) {

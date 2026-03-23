@@ -26,7 +26,7 @@ abstract class TrainerController extends GetxController {
 
 
   ResultVariants answerResult = ResultVariants.UNKNOWN;
-  QuizGame quizGame;
+  late QuizGame quizGame;
   List<List<String>> textForButtons = [];
 
 

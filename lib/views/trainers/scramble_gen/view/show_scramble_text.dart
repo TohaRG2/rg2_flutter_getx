@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/utils/theme_compat.dart';
 import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/trainers/scramble_gen/view/input_scramble_dialog.dart';
@@ -8,7 +9,7 @@ class ShowScrambleText extends StatelessWidget {
   final String scramble;
   final ScrambleGenController _controller = Get.find();
 
-  ShowScrambleText({Key key, @required this.scramble}) : super(key: key);
+  ShowScrambleText({Key? key, required this.scramble}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,8 @@
 import 'dart:core';
 
 abstract class Phase {
-  int count;
-  String phase;
+  int get count;
+  String get phase;
   List<String> titles();
   List<String> icons();
   List<String> descriptions();

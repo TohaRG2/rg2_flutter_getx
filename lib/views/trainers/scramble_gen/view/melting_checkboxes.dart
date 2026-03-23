@@ -4,10 +4,10 @@ import 'package:rg2/res/string_values.dart';
 
 class MeltingCheckBoxes extends StatelessWidget {
   const MeltingCheckBoxes({
-    Key key,
-    @required this.isEdgeEnabled,
-    @required ScrambleGenController controller,
-    @required this.isCornerEnabled,
+    Key? key,
+    required this.isEdgeEnabled,
+    required ScrambleGenController controller,
+    required this.isCornerEnabled,
   }) : _controller = controller, super(key: key);
 
   final bool isEdgeEnabled;
@@ -25,7 +25,9 @@ class MeltingCheckBoxes extends StatelessWidget {
               controlAffinity: ListTileControlAffinity.leading,
               value: isEdgeEnabled,
               onChanged: (value) {
-                _controller.isEdgeEnabled = value;
+                if (value != null) {
+                  _controller.isEdgeEnabled = value;
+                }
               }),
         ),
         Expanded(
@@ -35,7 +37,9 @@ class MeltingCheckBoxes extends StatelessWidget {
               controlAffinity: ListTileControlAffinity.leading,
               value: isCornerEnabled,
               onChanged: (value) {
-                _controller.isCornerEnabled = value;
+                if (value != null) {
+                  _controller.isCornerEnabled = value;
+                }
               }),
         ),
       ],

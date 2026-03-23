@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 class BigDialog extends StatelessWidget {
   final Widget child;
 
-  BigDialog({this.child});
+  const BigDialog({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

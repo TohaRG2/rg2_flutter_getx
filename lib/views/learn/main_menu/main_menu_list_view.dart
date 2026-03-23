@@ -42,7 +42,7 @@ class MenuList extends StatelessWidget {
       final isItemEnabled = true;
       // final isItemEnabled = (_isPurchaseEnabled || pageNumber < 3 || (pageNumber < 4 && Platform.isAndroid) || _isGodModeEnabled);
       return Scrollbar(
-        showTrackOnHover: true,
+        trackVisibility: true,
         child: ListView(
           controller: _scrollController,
           children: items.map((listItem) =>

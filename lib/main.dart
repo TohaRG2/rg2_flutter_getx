@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -76,7 +75,7 @@ class RG2App extends StatelessWidget {
                 logPrint("FutureBuilder rebuild");
                 if (data.hasData) {
                   logPrint("DBController.fillDB отработал");
-                  putDAOs(data.data);
+                  putDAOs(data.data!);
                   return MainView();
                 } else if (data.hasError) {
                   return Center(child: const Text("Can't create or open database"));
@@ -97,7 +96,7 @@ class RG2App extends StatelessWidget {
         builder: (context, child) {
           return Obx(() =>
             MediaQuery(
-              child: child,
+              child: child!,
               data: MediaQuery.of(context).copyWith(textScaleFactor: _settings.textScaleFactor),
             ),
           );

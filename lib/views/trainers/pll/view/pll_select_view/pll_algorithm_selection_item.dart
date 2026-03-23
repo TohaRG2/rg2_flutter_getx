@@ -7,16 +7,18 @@ import 'package:rg2/views/shared/ui_helpers.dart';
 
 class PllAlgorithmSelectionItem extends StatelessWidget {
   final PllTrainerItem _pllTrainerItem;
-  final Function(bool value, PllTrainerItem pllTrainerItem) _onChangeCheckBoxValue;
-  final Function(PllTrainerItem pllTrainerItem) _onItemTap;
+  final void Function(bool value, PllTrainerItem pllTrainerItem) _onChangeCheckBoxValue;
+  final void Function(PllTrainerItem pllTrainerItem) _onItemTap;
 
   PllAlgorithmSelectionItem({
-    @required PllTrainerItem item, 
-    @required Function(bool value, PllTrainerItem pllTrainerItem) onCheckBoxChange,
-    @required Function(PllTrainerItem pllTrainerItem) onTap,
+    required PllTrainerItem item, 
+    required void Function(bool value, PllTrainerItem pllTrainerItem) onCheckBoxChange,
+    required void Function(PllTrainerItem pllTrainerItem) onTap,
+    Key? key,
   }) : _pllTrainerItem = item, 
        _onChangeCheckBoxValue = onCheckBoxChange,
-       _onItemTap = onTap;
+       _onItemTap = onTap,
+       super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,11 @@ class PllAlgorithmSelectionItem extends StatelessWidget {
             ),
             Checkbox(
               value: _pllTrainerItem.isChecked,
-              onChanged: (value) => _onChangeCheckBoxValue(value, _pllTrainerItem),
+              onChanged: (value) {
+                if (value != null) {
+                  _onChangeCheckBoxValue(value, _pllTrainerItem);
+                }
+              },
             )
           ],
         ),

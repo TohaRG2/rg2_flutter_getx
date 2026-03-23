@@ -5,7 +5,7 @@ import 'package:rg2/views/shared/ui_helpers.dart';
 
 class BottomBarWithBackButton extends StatelessWidget {
   const BottomBarWithBackButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

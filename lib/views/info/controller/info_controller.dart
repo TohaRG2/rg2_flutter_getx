@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 class InfoController extends GetxController {

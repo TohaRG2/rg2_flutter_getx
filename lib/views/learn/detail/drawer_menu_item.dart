@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/views/shared/menu_card_item.dart';
 
+import '../../../utils/theme_compat.dart';
+
 class DrawerMenuItem extends StatelessWidget {
   final MainDBItem item;
   final Function(MainDBItem) onItemSelected;
 
-  const DrawerMenuItem({this.item, this.onItemSelected});
+  const DrawerMenuItem({required this.item, required this.onItemSelected});
 
   @override
   Widget build(BuildContext context) {

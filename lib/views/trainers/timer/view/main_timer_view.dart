@@ -39,13 +39,11 @@ class TimerView extends StatelessWidget {
 
   // возвращаем размер нижнего NavBar, пока он не проинициализирован считаем, что defBottomBarHeight(55)
   double _getBottomBarHeight() {
-    if (_keyBottomNavBar.currentContext != null) {
-      final RenderBox renderBottomNavBar = _keyBottomNavBar.currentContext.findRenderObject();
-      final navBarSize = renderBottomNavBar.size;
-      return navBarSize.height;
-    } else {
-      return _defBottomBarHeight;
+    final render = _keyBottomNavBar.currentContext?.findRenderObject() as RenderBox?;
+    if (render != null) {
+      return render.size.height;
     }
+    return _defBottomBarHeight;
   }
 
   _generateNewScrambleByTap() {
@@ -325,8 +323,8 @@ class TimerView extends StatelessWidget {
 
 class TwoMainPadsWidget extends StatelessWidget {
   const TwoMainPadsWidget({
-    Key key,
-    @required TimerController controller,
+    Key? key,
+    required TimerController controller,
   }) : _controller = controller, super(key: key);
 
   final TimerController _controller;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class FullScreenPreLoader extends StatelessWidget {
   final bool isShowing;
-  const FullScreenPreLoader({Key key, this.isShowing}) : super(key: key);
+  const FullScreenPreLoader({Key? key, required this.isShowing}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

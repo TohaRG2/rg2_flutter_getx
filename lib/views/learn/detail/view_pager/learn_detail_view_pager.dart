@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:google_mobile_ads/google_mobile_ads.dart';
 // import 'package:rg2/controllers/ads/ad_show_controller.dart';
-import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
@@ -42,8 +41,7 @@ class LearnDetailViewPager extends StatelessWidget {
                   color: Get.theme.scaffoldBackgroundColor,
                 ),
                 style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  primary: Get.theme.primaryColor, // background
+                  elevation: 0, backgroundColor: Get.theme.primaryColor, // background
                 ),
               ),
               title: TabBar(

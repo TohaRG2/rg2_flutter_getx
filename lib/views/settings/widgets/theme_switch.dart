@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 class ThemeSwitch extends GetWidget<SettingsController> {
-  const ThemeSwitch({Key key,}) : super(key: key);
+  const ThemeSwitch({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

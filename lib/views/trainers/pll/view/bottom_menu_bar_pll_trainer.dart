@@ -7,7 +7,7 @@ import 'package:rg2/views/trainers/pll/view/settings_pll_trainer_view.dart';
 
 class PllTrainerBottomMenuBar extends StatelessWidget {
   final PllTrainerController _controller = Get.find();
-  PllTrainerBottomMenuBar({Key key,}) : super(key: key);
+  PllTrainerBottomMenuBar({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

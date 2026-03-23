@@ -5,7 +5,7 @@ import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/timer/controller/result_view_controller.dart';
 
 class ResultBottomMenuBar extends StatelessWidget {
-  ResultBottomMenuBar({Key key,})  :  super(key: key);
+  ResultBottomMenuBar({Key? key,})  :  super(key: key);
 
   final ResultViewController _controller = Get.find();
 

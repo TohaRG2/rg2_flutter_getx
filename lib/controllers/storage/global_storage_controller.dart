@@ -25,8 +25,8 @@ class GlobalStorageController extends GetxController {
 
   /// Читаем параметр по ключу из локального хранилища или получаем из дефолтных значений, если в хранилище нет.
   /// Вернем null если нет ни там, и ни там
-  T getPropertyByKey<T>(String key) {
-    T value = _getPropertyByKeyFromLocalStorage<T>(key);
+  T? getPropertyByKey<T>(String key) {
+    T? value = _getPropertyByKeyFromLocalStorage<T>(key);
     //logPrint("Запрошен из локалстора параметр $key - нашли $value");
     if (value == null) {
       value = defaultSettings[key];
@@ -46,11 +46,11 @@ class GlobalStorageController extends GetxController {
   }
 
   /// получить значение параметра из локального хранилища
-  T _getPropertyByKeyFromLocalStorage<T>(String key) {
+  T? _getPropertyByKeyFromLocalStorage<T>(String key) {
     var result = _localStorage.read(key);
     //logPrint("из локального хранилища по ключу $key получили - $result, типа ${result.runtimeType}, ожидаем типа- $T");
     if (result?.runtimeType == T || T == dynamic) {
-      return result;
+      return result as T;
     } else {
       return null;
     }

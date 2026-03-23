@@ -27,7 +27,7 @@ class AzbukaTrainerController extends TrainerController {
   Azbuka _azbuka = Azbuka();
   BlindCube _blindCube = BlindCube();
 
-  AzbukaCubeImage _azbukaCubeImage;
+  late AzbukaCubeImage _azbukaCubeImage;
   get azbukaCubeImage => _azbukaCubeImage;
 
   /// Методы
@@ -68,7 +68,7 @@ class AzbukaTrainerController extends TrainerController {
     // выбираем случайный слот (в соответствии с настройками)
     var slot = _selectRandomSlot();
     // определяем номер элемента по номеру слота и получаем для него букву из азбуки
-    var elementNumber = _slotElementsNumbers[slot].first;
+    var elementNumber = _slotElementsNumbers[slot]!.first;
     hint = _blindCube.getLetterByCurrentNumber(elementNumber);
 
     _azbukaCubeImage = AzbukaCubeImage(cube: _blindCube, slot: slot);

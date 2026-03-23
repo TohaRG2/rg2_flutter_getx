@@ -1,8 +1,7 @@
 
 import 'package:floor/floor.dart';
-import 'package:flutter/material.dart';
 
-@Entity (tableName: 'main', primaryKeys: ['id', 'phase'])
+@Entity(tableName: 'main', primaryKeys: ['id', 'phase'])
 class MainDBItem{
   //@PrimaryKey(autoGenerate: true)
   final int id;
@@ -22,8 +21,8 @@ class MainDBItem{
   static var backFrom = Map<String, String>();
 
   MainDBItem({
-    @required this.id,
-    @required this.phase,
+    required this.id,
+    required this.phase,
     this.title = "",
     this.icon = "",
     this.description = "",
@@ -67,7 +66,7 @@ class MainDBItem{
 
   //Получаем название основной root фазы для любой фазы
   static getRootPhaseFor(String phase){
-    var rootPhase = phase;
+    String? rootPhase = phase;
     while (backFrom[rootPhase] != null) {
       rootPhase = backFrom[rootPhase];
     }

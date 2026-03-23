@@ -36,7 +36,7 @@ class UrlHelper {
       // rg2://scrmbl?scram=F2_U2_R_L2_B2_D_F_D2_R2_U_R2_L2_R\'_U_R_B_D\'
       if (uri.host.toLowerCase() == "scrmbl" ||
           uri.host.toLowerCase() == "scramble") {
-        var scramble = uri.queryParameters["scram"].replaceAll("_", " ") ?? "R R\'";
+        var scramble = (uri.queryParameters["scram"] ?? "R R\'").replaceAll("_", " ");
         Get.to(() => ScrambleGenView(scramble: scramble));
       }
 
@@ -44,7 +44,7 @@ class UrlHelper {
       // rg2://pager?phase=BEGIN&item=1
       if (uri.host.toLowerCase() == "pager") {
         var phase = uri.queryParameters["phase"] ?? "BEGIN";
-        var id = int.tryParse(uri.queryParameters["item"]) ?? 1;
+        var id = int.tryParse(uri.queryParameters["item"] ?? "1") ?? 1;
         Get.off(() => LearnRedirectPage(phase, id));
       }
     }
@@ -52,8 +52,9 @@ class UrlHelper {
 
   /// Запуск ссылки во внешнем приложении
   static _launchExternalURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    final uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
       throw 'Could not launch $url';
     }

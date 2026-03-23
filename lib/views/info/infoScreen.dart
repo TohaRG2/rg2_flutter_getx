@@ -5,6 +5,7 @@ import 'package:rg2/views/info/partners/pertners_view.dart';
 import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/settings/settings_screen_view.dart';
 
+import '../../utils/theme_compat.dart';
 import 'about/about_programm_view.dart';
 import 'advices/advice_view.dart';
 
@@ -46,7 +47,7 @@ class InfoScreen extends StatelessWidget {
                 indicatorWeight: 3.0,
                 labelColor: Get.textTheme.headline5.color,
                 unselectedLabelColor:
-                    Get.textTheme.headline5.color.withAlpha(130),
+                    Get.textTheme.headline5.color?.withAlpha(130),
                 tabs: [
                   Tab(text: StrRes.infoAboutTitle),
                   Tab(text: StrRes.infoPartnersTitle),

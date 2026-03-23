@@ -4,9 +4,9 @@ import 'package:rg2/res/string_values.dart';
 
 class ScrambleLengthSelection extends StatelessWidget {
   const ScrambleLengthSelection({
-    Key key,
-    @required this.scrambleLength,
-    @required ScrambleGenController controller,
+    Key? key,
+    required this.scrambleLength,
+    required ScrambleGenController controller,
   }) : _controller = controller, super(key: key);
 
   final String scrambleLength;

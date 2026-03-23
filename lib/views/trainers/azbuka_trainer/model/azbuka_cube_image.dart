@@ -7,7 +7,7 @@ class AzbukaCubeImage {
   int _slot = 0;
   Cube _cube = Cube();
 
-  AzbukaCubeImage({Cube cube, int slot}) {
+  AzbukaCubeImage({required Cube cube, required int slot}) {
     //this._scramble = scramble;
     this._slot = slot;
     this._cube = cube;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rg2/utils/theme_compat.dart';
 import 'package:rg2/views/shared/buttons_style.dart';
 import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
 
@@ -60,9 +61,9 @@ class InputScrambleDialog extends StatelessWidget {
 
 class OneButton extends StatelessWidget {
   const OneButton({
-    Key key,
-    @required ScrambleGenController controller,
-    @required this.letter,
+    Key? key,
+    required ScrambleGenController controller,
+    required this.letter,
   }) : _controller = controller, super(key: key);
 
   final ScrambleGenController _controller;
@@ -88,9 +89,9 @@ class OneButton extends StatelessWidget {
 
 class DoubleButton extends StatelessWidget {
   const DoubleButton({
-    Key key,
-    @required ScrambleGenController controller,
-    @required this.letter,
+    Key? key,
+    required ScrambleGenController controller,
+    required this.letter,
   }) : _controller = controller, super(key: key);
 
   final ScrambleGenController _controller;

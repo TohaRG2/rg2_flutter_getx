@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 
 class CommentItem {
-  int id;
-  String phase;
-  String comment;
+  final int id;
+  final String phase;
+  final String comment;
 
-  CommentItem({@required this.id, @required this.phase, @required this.comment});
+  const CommentItem({required this.id, required this.phase, required this.comment});
 
   Map<String, dynamic> toMap() => {
     'id': id,
@@ -14,17 +13,11 @@ class CommentItem {
     'comment' : comment,
   };
 
-  CommentItem.fromMap(Map<String, dynamic> map) {
-    this.id = map['id'];
-    this.phase = map['phase'];
-    this.comment = map['comment'];
-  }
+  factory CommentItem.fromMap(Map<String, dynamic> map) =>
+      CommentItem(id: map['id'] as int, phase: map['phase'] as String, comment: map['comment'] as String);
 
-  CommentItem.fromMainDbItem(MainDBItem item) {
-    this.id = item.id;
-    this.phase = item.phase;
-    this.comment = item.comment;
-  }
+  factory CommentItem.fromMainDbItem(MainDBItem item) =>
+      CommentItem(id: item.id, phase: item.phase, comment: item.comment);
 
 
   @override

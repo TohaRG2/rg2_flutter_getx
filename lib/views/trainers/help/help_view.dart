@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/flutter_html/flutter_html.dart';
-import 'package:rg2/flutter_html/style.dart';
+import 'package:flutter_html/flutter_html.dart';
+// Style is available via flutter_html export
 import 'package:rg2/views/trainers/model/trainer_menu_item.dart';
 import 'package:rg2/views/shared/url_helper.dart';
 import 'package:rg2/views/shared/bottom_bar_with_back_button.dart';
+import 'package:rg2/utils/theme_compat.dart';
 
 class HelpView extends StatelessWidget {
   final TrainerMenuItem item;
 
-  HelpView({this.item});
+  HelpView({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +39,14 @@ class HelpView extends StatelessWidget {
             Html(
               data: htmlText,
               style: {
-                "a": Style(
-                  color: Theme.of(context).accentColor,
-                ),
+                "a": Style(color: Theme.of(context).accentColor),
                 "h5": Style(
                     textAlign: TextAlign.center,
                     fontSize: FontSize.large
                 ),
-                "b": Style(
-                  color: Theme.of(context).accentColor,
-                ),
+                "b": Style(color: Theme.of(context).accentColor),
               },
-              onLinkTap: (url) {
-                UrlHelper.onUrlTap(url);
-              },
+      onLinkTap: (url, _, __) => UrlHelper.onUrlTap(url ?? ""),
             ),
             SizedBox(height: 150,)
           ],

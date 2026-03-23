@@ -5,6 +5,8 @@ import 'package:rg2/views/favourites/controller/favourite_controller.dart';
 import 'package:rg2/views/favourites/view/favourite_dialog_list.dart';
 import 'package:rg2/views/settings/settings_screen_view.dart';
 
+import '../../../utils/theme_compat.dart';
+
 class MainFavourite extends StatelessWidget {
   final _favController = Get.find<FavouriteController>();
 

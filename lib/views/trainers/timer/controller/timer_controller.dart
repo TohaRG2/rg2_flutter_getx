@@ -7,7 +7,7 @@ import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/trainers/timer/model/timer.dart';
 import 'package:rg2/views/trainers/timer/controller/timer_settings_controller.dart';
 import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen_controller.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class TimerController extends GetxController {
   final TimerSettingsController _settingsController = Get.find();
@@ -15,8 +15,7 @@ class TimerController extends GetxController {
   final TimerRepository _repository = Get.find();
 
   AudioPlayer audioPlayer = AudioPlayer();
-  final cachedAudioPlayer = AudioCache(prefix: "assets/sounds/");
-  final _metronomSound = "metronom.mp3";
+  final _metronomSound = "assets/sounds/metronom.mp3";
 
   @override
   void onReady() {
@@ -94,7 +93,6 @@ class TimerController extends GetxController {
   /// Methods
 
   initialization(){
-    cachedAudioPlayer.load(_metronomSound);
     _resetTimer();
     checkAlwaysOnTimerState();
   }
@@ -120,10 +118,10 @@ class TimerController extends GetxController {
   void checkAlwaysOnGlobalState() {
     if (_settingsController.alwaysScreenOnGlobal) {
       logPrint("Wakelock.enable");
-      Wakelock.enable();
+      WakelockPlus.enable();
     } else {
       logPrint("Wakelock.disable");
-      Wakelock.disable();
+      WakelockPlus.disable();
     }
   }
 
@@ -131,10 +129,10 @@ class TimerController extends GetxController {
   void checkAlwaysOnTimerState() {
     if (_settingsController.alwaysScreenOnTimer) {
       logPrint("Wakelock.enable");
-      Wakelock.enable();
+      WakelockPlus.enable();
     } else {
       logPrint("Wakelock.disable");
-      Wakelock.disable();
+      WakelockPlus.disable();
     }
   }
 
@@ -264,7 +262,7 @@ class TimerController extends GetxController {
 
   _startTimer() {
     logPrint("Start Timer");
-    Wakelock.enable();
+    WakelockPlus.enable();
     _state = TimerControllerState.running;
     _timer.start();
     _hideBars();
@@ -276,14 +274,14 @@ class TimerController extends GetxController {
 
   _stopTimer() {
     logPrint("Stop Timer $alwaysScreenOn");
-    if (!alwaysScreenOn) Wakelock.disable();
+    if (!alwaysScreenOn) WakelockPlus.disable();
     _state = TimerControllerState.waitForFullStop;
     _timer.stop();
     _showBars();
     _updateIndicatorState(leftPadPressed: false, rightPadPressed: false);
   }
 
-  _updateIndicatorState({bool leftPadPressed, bool rightPadPressed}) {
+  _updateIndicatorState({bool? leftPadPressed, bool? rightPadPressed}) {
     _isLeftPadPressed = leftPadPressed ?? _isLeftPadPressed;
     _isRightPadPressed = rightPadPressed ?? _isRightPadPressed;
     //logPrint("updateIndicatorState: лев.- $_isLeftPadPressed пр.- $_isRightPadPressed, state = $_state");
@@ -313,7 +311,7 @@ class TimerController extends GetxController {
     while ( _state != TimerControllerState.waitForFullStop && _state != TimerControllerState.stopped) {
       if (DateTime.now().isAfter(nextTikTime)) {
         //assetsAudioPlayer.open(sound);
-        cachedAudioPlayer.play(_metronomSound);
+        audioPlayer.play(AssetSource(_metronomSound));
         nextTikTime = nextTikTime.add(tikPause);
       }
       await Future.delayed(Duration(milliseconds: 20), () {});

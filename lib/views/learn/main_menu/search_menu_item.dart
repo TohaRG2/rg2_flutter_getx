@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/views/shared/menu_card_item.dart';
+
+import '../../../utils/theme_compat.dart';
 typedef FunctionForCallback = Function(MainDBItem);
 
 class SearchMenuItem extends StatelessWidget {
@@ -9,9 +11,9 @@ class SearchMenuItem extends StatelessWidget {
   final FunctionForCallback onTapCallback;
 
   const SearchMenuItem({
-    @required this.item,
-    @required this.onTapCallback,
-    Key key}) : super(key: key);
+    required this.item,
+    required this.onTapCallback,
+    Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

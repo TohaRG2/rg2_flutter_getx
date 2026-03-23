@@ -61,8 +61,8 @@ class ResultViewController extends GetxController {
 
   /// обновить комментарий у записи, сохраняем в базу и перечитываем из нее
   updateComment(TimeNoteItem item, String text) {
-    item.comment = text;
-    _repository.updateTimeNoteItem(item);
+    final updated = TimeNoteItem(item.solvingTime, item.dateTime, item.scramble, text, uuid: item.uuid);
+    _repository.updateTimeNoteItem(updated);
     updateTimeNoteItems();
   }
 

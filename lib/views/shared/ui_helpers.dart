@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+export 'package:rg2/utils/theme_compat.dart';
 
 /// Contains useful functions to reduce boilerplate code
 class UIHelper {

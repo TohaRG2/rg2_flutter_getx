@@ -1,9 +1,9 @@
 
 class ScrambleDecisionCondition {
-  String scramble = "";
-  String decision;
-  bool isEdgeMelted;
-  bool isCornerMelted;
+  final String scramble;
+  final String decision;
+  final bool isEdgeMelted;
+  final bool isCornerMelted;
 
   String get decisionInfo {
     var decisionLen = decision.trim().split(" ").length;
@@ -11,7 +11,12 @@ class ScrambleDecisionCondition {
     return decisionInfo;
   }
 
-  ScrambleDecisionCondition({this.scramble = "", this.decision, this.isEdgeMelted, this.isCornerMelted});
+  const ScrambleDecisionCondition({
+    this.scramble = "",
+    required this.decision,
+    required this.isEdgeMelted,
+    required this.isCornerMelted,
+  });
 
   @override
   String toString() {

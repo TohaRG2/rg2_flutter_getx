@@ -13,7 +13,7 @@ abstract class MainDao extends AbstractDao<MainDBItem> {
   Future<void> clearAllComments();
 
   @Query('SELECT * FROM main WHERE phase = :phase and id = :id ORDER BY id')
-  Future<MainDBItem> getItem(String phase, int id);
+  Future<MainDBItem?> getItem(String phase, int id);
 
   @Query('SELECT * FROM main WHERE phase = :phase ORDER BY id')
   Future<List<MainDBItem>> getPhase(String phase);

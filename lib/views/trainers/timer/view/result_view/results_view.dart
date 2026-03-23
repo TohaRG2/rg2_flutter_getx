@@ -4,6 +4,7 @@ import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/trainers/timer/controller/result_view_controller.dart';
 import 'package:rg2/views/trainers/timer/view/result_view/result_bottom_menu_bar.dart';
 import 'package:rg2/views/trainers/timer/view/result_view/saved_result_list_view.dart';
+import 'package:rg2/utils/theme_compat.dart';
 
 class TimerResultsView extends StatelessWidget {
   final ResultViewController _controller = Get.find();

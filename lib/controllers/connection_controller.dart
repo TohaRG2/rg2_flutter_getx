@@ -1,4 +1,4 @@
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:rg2/utils/my_logger.dart';
 
@@ -12,11 +12,11 @@ class ConnectionController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    connection = await Connectivity().checkConnectivity();
-    Connectivity().onConnectivityChanged
-        .listen((event) {
-          logPrint("onConnectivityChanged - $event");
-          connection = event;
-        });
+    final list = await Connectivity().checkConnectivity();
+    connection = list.isNotEmpty ? list.first : ConnectivityResult.none;
+    Connectivity().onConnectivityChanged.listen((event) {
+      logPrint("onConnectivityChanged - $event");
+      connection = event.isNotEmpty ? event.first : ConnectivityResult.none;
+    });
   }
 }

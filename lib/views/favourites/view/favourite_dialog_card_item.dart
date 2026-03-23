@@ -1,16 +1,10 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:implicitly_animated_reorderable_list_2/implicitly_animated_reorderable_list_2.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';
-import 'package:rg2/utils/my_logger.dart';
-import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
-import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/shared/menu_card_item.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
@@ -26,9 +20,14 @@ class FavouriteDialogCardItem extends StatelessWidget {
     final List<Widget> actions = getActions();
 
     return Slidable(
-      actionPane: const SlidableBehindActionPane(),
-      actions: actions,
-      secondaryActions: actions,
+      startActionPane: ActionPane(
+        motion: const BehindMotion(),
+        children: actions,
+      ),
+      endActionPane: ActionPane(
+        motion: const BehindMotion(),
+        children: actions,
+      ),
       child: GestureDetector(
         child: MenuCardItem(
           child: Row(
@@ -41,7 +40,7 @@ class FavouriteDialogCardItem extends StatelessWidget {
                   _item.title,
                   softWrap: true,
                   maxLines: 3,
-                  style: Get.textTheme.headline6.copyWith(fontSize: 18),
+                  style: (Get.textTheme.titleSmall ?? const TextStyle()).copyWith(fontSize: 18),
                 ),
               ),
               const Handle(
@@ -66,33 +65,14 @@ class FavouriteDialogCardItem extends StatelessWidget {
 
   List<Widget> getActions() {
     return [
-      Container(
-        padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceMini),
-        child: SlideAction(
-          closeOnTap: true,
-          color: Colors.redAccent,
-          onTap: () {
-            _learnController.removeElementFromFavourites(_item);
-          },
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                const Icon(
-                  Icons.delete,
-                  color: Colors.white,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  StrRes.deleteItem,
-                  style: Get.textTheme.bodyText2.copyWith(
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+      SlidableAction(
+        onPressed: (_) {
+          _learnController.removeElementFromFavourites(_item);
+        },
+        backgroundColor: Colors.redAccent,
+        foregroundColor: Colors.white,
+        icon: Icons.delete,
+        label: StrRes.deleteItem,
       ),
     ];
   }

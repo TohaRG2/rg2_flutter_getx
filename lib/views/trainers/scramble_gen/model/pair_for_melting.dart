@@ -1,8 +1,8 @@
 class PairForMelting {
-  bool allComplete;
-  List<int> elementsNotOnPlace;
+  final bool allComplete;
+  final List<int> elementsNotOnPlace;
 
-  PairForMelting({this.allComplete, this.elementsNotOnPlace});
+  const PairForMelting({required this.allComplete, required this.elementsNotOnPlace});
 
   @override
   String toString() {

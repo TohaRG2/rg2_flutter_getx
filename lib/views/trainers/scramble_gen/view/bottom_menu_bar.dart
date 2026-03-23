@@ -6,7 +6,7 @@ import 'package:rg2/views/trainers/scramble_gen/controller/trainers_scramble_gen
 import 'package:rg2/views/trainers/scramble_gen/view/settings_scramble_gen_view.dart';
 
 class BottomMenuBar extends StatelessWidget {
-  BottomMenuBar({Key key,})  :  super(key: key);
+  BottomMenuBar({Key? key,})  :  super(key: key);
 
   final ScrambleGenController _controller = Get.find();
 

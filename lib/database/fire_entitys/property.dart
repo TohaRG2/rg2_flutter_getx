@@ -1,24 +1,31 @@
-import 'package:flutter/material.dart';
 
 class Property {
-  String key;
-  dynamic value;
-  DateTime changeDate;
+  final String key;
+  final dynamic value;
+  final DateTime changeDate;
 
-  Property({@required this.key, @required this.value, this.changeDate}){
-    if (changeDate == null) changeDate = DateTime.now();
-  }
+  Property({required this.key, required this.value, DateTime? changeDate})
+      : changeDate = changeDate ?? DateTime.now();
 
   Map<String, dynamic> toMap() => {
-    'key': key,
-    'value': value,
-    'changeDate' : changeDate,
-  };
+        'key': key,
+        'value': value,
+        'changeDate': changeDate,
+      };
 
-  Property.fromMap(Map<String, dynamic> map) {
-    this.key = map['key'];
-    this.value = map['value'];
-    this.changeDate = map['changeDate'].toDate();
+  factory Property.fromMap(Map<String, dynamic> map) {
+    final dynamic ch = map['changeDate'];
+    DateTime? dt;
+    try {
+      dt = ch?.toDate();
+    } catch (_) {
+      dt = ch is DateTime ? ch : null;
+    }
+    return Property(
+      key: map['key'],
+      value: map['value'],
+      changeDate: dt,
+    );
   }
 
   @override

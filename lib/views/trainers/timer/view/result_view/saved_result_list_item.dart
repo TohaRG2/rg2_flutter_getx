@@ -12,15 +12,20 @@ class SavedResultListItem extends StatelessWidget {
   final ResultViewController _controller = Get.find();
   final TimeNoteItem _item;
 
-  SavedResultListItem({TimeNoteItem item, Key key,}) : _item = item, super(key: key);
+  SavedResultListItem({required TimeNoteItem item, Key? key,}) : _item = item, super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String formattedDate = DateFormat('yyyy-MM-dd HH:mm').format(_item.dateTime);
     return Slidable(
-      actionPane: const SlidableBehindActionPane(),
-      actions: actions(),
-      secondaryActions: actions(),
+      startActionPane: ActionPane(
+        motion: const BehindMotion(),
+        children: slidableActions(),
+      ),
+      endActionPane: ActionPane(
+        motion: const BehindMotion(),
+        children: slidableActions(),
+      ),
       child: GestureDetector(
         child: MenuCardItem(
           child: Container(
@@ -32,8 +37,8 @@ class SavedResultListItem extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("$formattedDate", style: Get.textTheme.subtitle1,),
-                      Text("${_item.solvingTime}", style: Get.textTheme.headline5.copyWith(color: Get.theme.accentColor),),
+                      Text("$formattedDate", style: Get.textTheme.titleMedium,),
+                      Text("${_item.solvingTime}", style: (Get.textTheme.titleMedium ?? const TextStyle()).copyWith(color: Get.theme.colorScheme.primary),),
                   ],),
                 ),
                 Visibility(
@@ -42,11 +47,11 @@ class SavedResultListItem extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: UIHelper.SpaceMini),
                     child: Row(
                       children: [
-                        Text(StrRes.timerResultItemScramble, style: Get.textTheme.subtitle2),
+                        Text(StrRes.timerResultItemScramble, style: Get.textTheme.titleSmall ?? const TextStyle()),
                         Expanded(
                           child: Text(
                             "${_item.scramble}",
-                            style: Get.textTheme.subtitle2,
+                            style: Get.textTheme.titleSmall ?? const TextStyle(),
                             softWrap: true,
                             textAlign: TextAlign.left,
                             maxLines: 2,
@@ -61,11 +66,11 @@ class SavedResultListItem extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: UIHelper.SpaceMini),
                     child: Row(
                       children: [
-                        Text(StrRes.timerResultItemComment, style: Get.textTheme.subtitle2),
+                        Text(StrRes.timerResultItemComment, style: Get.textTheme.titleSmall ?? const TextStyle()),
                         Expanded(
                           child: Text(
                             "${_item.comment}",
-                            style: Get.textTheme.subtitle2.copyWith(color: Get.theme.primaryColor),
+                            style: (Get.textTheme.titleSmall ?? const TextStyle()).copyWith(color: Get.theme.primaryColor),
                             softWrap: true,
                             textAlign: TextAlign.left,
                             maxLines: 3,
@@ -117,7 +122,7 @@ class SavedResultListItem extends StatelessWidget {
 
       /// Кнопка ОК
       textConfirm: StrRes.buttonOkText,
-      confirmTextColor: Get.theme.accentColor,
+      confirmTextColor: Get.theme.colorScheme.primary,
       onConfirm: () => {
         _controller.updateComment(_item, _textController.text),
         Get.back()
@@ -125,34 +130,15 @@ class SavedResultListItem extends StatelessWidget {
     );
   }
 
-  List<Widget> actions() => [
-    Container(
-      padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceSmall),
-      child: SlideAction(
-        closeOnTap: true,
-        color: Colors.redAccent,
-        onTap: () {
-          _controller.removeItem(_item);
-        },
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              const Icon(
-                Icons.delete,
-                color: Colors.white,
-              ),
-              const SizedBox(height: 4),
-              Text(
-                StrRes.deleteItem,
-                style: Get.textTheme.bodyText2.copyWith(
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+  List<Widget> slidableActions() => [
+    SlidableAction(
+      onPressed: (_) {
+        _controller.removeItem(_item);
+      },
+      backgroundColor: Colors.redAccent,
+      foregroundColor: Colors.white,
+      icon: Icons.delete,
+      label: StrRes.deleteItem,
     ),
   ];
 

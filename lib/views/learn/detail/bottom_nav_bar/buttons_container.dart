@@ -7,9 +7,9 @@ import 'favourite_button.dart';
 
 class ButtonsContainer extends StatelessWidget {
   const ButtonsContainer({
-    Key key,
-    @required this.width,
-    @required this.iconColor,
+    Key? key,
+    required this.width,
+    required this.iconColor,
   }) : super(key: key);
 
   final double width;

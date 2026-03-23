@@ -98,7 +98,7 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
   Widget buildSetAnswerTime() {
     /// Обработчик нажатий на кнопки изменений времени ответа на вопрос
     // создаем пустой обработчик
-    Function _onChangeTimerEnabled;
+    void Function(int)? _onChangeTimerEnabled;
     if (_controller.isTimerEnabled) {
       //и переопредяем его, если таймер включен
       _onChangeTimerEnabled = (index) {
@@ -122,7 +122,7 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
   /// Виджет выбора времени автопродолжения при удачном ответе
   Widget buildSetGoodTime() {
     /// Обработчик нажатий на кнопки изменений времени овтопродолжения при удачном ответе
-    Function _onChangeTime = (index) {
+    void Function(int) _onChangeTime = (index) {
         if (index == 0) {
           _controller.decreaseGoodAnswerWaiting();
         } else if (index == 1) {
@@ -143,7 +143,7 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
   /// Виджет выбора времени автопродолжения при ошибочном ответе
   Widget buildSetBadTime() {
     /// Обработчик нажатий на кнопки изменений времени овтопродолжения при ошибочном ответе
-    Function _onChangeTime = (index) {
+    void Function(int) _onChangeTime = (index) {
         if (index == 0) {
           _controller.decreaseBadAnswerWaiting();
         } else if (index == 1) {
@@ -162,7 +162,7 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
 
 
   /// Шаблон виджета выбора времени
-  Widget buildSetTime({String text, String time, bool enabled, Function onButtonsPressing}) {
+  Widget buildSetTime({required String text, required String time, required bool enabled, required void Function(int)? onButtonsPressing}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMini),
       child: Row(

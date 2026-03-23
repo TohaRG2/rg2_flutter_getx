@@ -38,8 +38,8 @@ class ScrambleGenController extends GetxController {
     _settingsColoredAzbuka.value = settingsCube.getColoredAzbuka();
   }
 
-  BlindCube settingsCube;
-  BlindCube mainCube;
+  late BlindCube settingsCube;
+  late BlindCube mainCube;
 
   final _isEdgeEnabled = true.obs;
   bool get isEdgeEnabled => _isEdgeEnabled.value;
@@ -108,7 +108,7 @@ class ScrambleGenController extends GetxController {
     _settingsController.setProperty(Property(key: Const.SHOW_DECISION_TEXT, value: value));
   }
 
-  ScrambleDecisionCondition _conditions;
+  late ScrambleDecisionCondition _conditions;
   final _currentDecision = "()()".obs;
   String get currentDecision => _currentDecision.value;
   set currentDecision(String value) {

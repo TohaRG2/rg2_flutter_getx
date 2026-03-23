@@ -6,7 +6,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YoutubeThumbnail extends StatelessWidget {
   final String videoID;
-  const YoutubeThumbnail({this.videoID});
+  const YoutubeThumbnail({required this.videoID});
 
   @override
   Widget build(BuildContext context) {

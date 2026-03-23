@@ -12,11 +12,16 @@ class BlindCube extends Cube {
   /// Азбука из 54 элементов для блайнда
   List<String> azbuka = List.filled(54, " ");
 
-  BlindCube({this.azbuka}) : super();
+  BlindCube({List<String>? azbuka}) : super() {
+    if (azbuka != null) {
+      this.azbuka = azbuka;
+    }
+  }
 
-  BlindCube.colored({List<int> colors, this.azbuka}) {
+  BlindCube.colored({required List<int> colors, required List<String> azbuka}) {
     setDefaultColors(colors);
     resetCube();
+    this.azbuka = azbuka;
   }
   
   /// номера центральных элементов кубика (см.диаграмму в конце этого класса)
@@ -48,7 +53,7 @@ class BlindCube extends Cube {
   }
 
   /// Возвращаем подходящий под условия переплавки скрамбл и перемешиваем по нему кубик
-  ScrambleDecisionCondition generateScrambleWithParam({bool checkEdge, bool checkCorner, int lenScramble}) {
+  ScrambleDecisionCondition generateScrambleWithParam({required bool checkEdge, required bool checkCorner, required int lenScramble}) {
     //logPrint("Ищем скрамбл подходящий по параметрам переплавок буфера и длине");
     ScrambleDecisionCondition condition;
     var scramble = "";
@@ -220,7 +225,7 @@ class BlindCube extends Cube {
         if (asList[position] == mainColor) { defaultColor += (index + 1) * 10; }
         if (asList[position] == slaveColor) { defaultColor += (index + 1); }
       });
-      var itemPosition = mainEdge[defaultColor];
+      var itemPosition = mainEdge[defaultColor] ?? mainPosition;
       if (itemPosition != mainPosition) {
         //значит элемент не на месте, сбрасываем флаг и добавляем его в список
         result = false;
@@ -236,7 +241,7 @@ class BlindCube extends Cube {
   int _getEdgePosition(int color) {
     var defaultColor = _getElementColorInDefaultCube(color);
     // возвращаем номер элемента, по таблице для дефолтного кубика
-    return mainEdge[defaultColor];
+    return mainEdge[defaultColor] ?? 0;
   }
 
   
@@ -341,7 +346,7 @@ class BlindCube extends Cube {
   int _getCornerPosition(int color) {
     var defaultColor = _getElementColorInDefaultCube(color);
     // возвращаем номер элемента, по таблице для дефолтного кубика
-    return mainCorner[defaultColor];
+    return mainCorner[defaultColor] ?? 0;
   }
 
   /// По текущему цвету получаем цвет в дефолтном кубике (белый верх, зеленый фронт)
@@ -361,10 +366,10 @@ class BlindCube extends Cube {
   /// Возвращаем цвет элемента в дефолтном кубике по его текущему номеру
   int _getColorInDefaultCubeByElementNumber(int currentNumber) {
     var mainColor = asList[currentNumber];
-    var dopElement = Map<int,int>();
+    var dopElement = <int,int>{};
     dopElement.addAll(dopCorner);
     dopElement.addAll(dopEdge);
-    var secondNumber = dopElement[currentNumber];
+    var secondNumber = dopElement[currentNumber] ?? currentNumber;
     var secondColor = asList[secondNumber];
 
     var defaultColor = 0;
@@ -382,10 +387,10 @@ class BlindCube extends Cube {
     var elementType = getElementType(mainNumber);
     switch(elementType) {
       case CubeElementTypes.CORNER:
-        return azbuka[mainCorner[defaultColor]];
+        return azbuka[mainCorner[defaultColor] ?? 0];
         break;
       case CubeElementTypes.EDGE:
-        return azbuka[mainEdge[defaultColor]];
+        return azbuka[mainEdge[defaultColor] ?? 0];
         break;
       default:
         logPrintErr("У центра нет буквы в азбуке");
@@ -396,7 +401,7 @@ class BlindCube extends Cube {
   //TODO можно переделать на вычисления, вместо получения данных из Map
   /// Получаем тип элемента (угол, ребро или центр) по его номеру
   CubeElementTypes getElementType(int number) {
-    return elementTypes[number];
+    return elementTypes[number] ?? CubeElementTypes.CENTER;
   }
 
   ///получаем цвет переданных ячеек куба (двузначное число, первая и вторая цифры которого соответствую искомым цветам)
