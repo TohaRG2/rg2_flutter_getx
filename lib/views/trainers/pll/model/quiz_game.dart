@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'dart:math';
@@ -12,7 +11,7 @@ class QuizGame {
   late QuizVariant _correctAnswer;
 
   /// Время для ответа на вопрос в секундах (от 0 до 30). Если 0, значит время отключено
-  var _timeForAnswer = 6.obs;
+  final _timeForAnswer = 6.obs;
   int get timeForAnswer => _timeForAnswer.value;
   set timeForAnswer(int value) {
     if (value <= 30 && value >= 0) {
@@ -25,7 +24,7 @@ class QuizGame {
   DateTime _currentVariantStartAnswerTime = DateTime.now();
 
   /// Прогресс в %, сколько осталось до конца ответа
-  var _timerProgress = 1.0.obs;
+  final _timerProgress = 1.0.obs;
   double get timerProgress => _timerProgress.value;
   set timerProgress(value){
     _timerProgress.value = value;

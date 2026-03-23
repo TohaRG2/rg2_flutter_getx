@@ -108,7 +108,9 @@ class DBController extends GetxController {
   /// Инициализируем основные фазы (страницы для viewPager)
   Future _initCubeTypes() async {
     var list = CubeTypes().list();
-    list.forEach((item) => _mainBase.pagePropertiesDao.insertOrReplace(item));
+    for (var item in list) {
+      _mainBase.pagePropertiesDao.insertOrReplace(item);
+    }
   }
 
   /// Задаем начальные значения для Избранного
