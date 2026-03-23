@@ -7,6 +7,7 @@ import 'package:rg2/views/favourites/dialog/favourite_dialog.dart';
 import 'package:rg2/views/shared/menu_card_item.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/utils/theme_compat.dart';
+
 typedef FunctionForCallback = Function(MainDBItem, bool);
 
 class MainMenuItem extends StatelessWidget {
@@ -15,15 +16,16 @@ class MainMenuItem extends StatelessWidget {
   final bool isItemEnabled;
   final FunctionForCallback onTapCallback;
 
-  MainMenuItem({
-    required this.item,
-    required this.isItemEnabled,
-    required this.onTapCallback});
+  MainMenuItem(
+      {required this.item,
+      required this.isItemEnabled,
+      required this.onTapCallback});
 
   @override
   Widget build(BuildContext context) {
     final _primaryColor = Get.theme.primaryColor;
-    final _imagePath = item.getAssetFilePath(); // _learnController.getAssetFilePath(item.icon, item.phase);
+    final _imagePath = item
+        .getAssetFilePath(); // _learnController.getAssetFilePath(item.icon, item.phase);
     return GestureDetector(
       child: MenuCardItem(
         child: Row(
@@ -32,15 +34,20 @@ class MainMenuItem extends StatelessWidget {
           children: [
             ColorFiltered(
               colorFilter: ColorFilter.mode(
-                  Colors.grey,
-                  //Выводим цветную или ч/б картинку в зависимости от настроек
-                  (isItemEnabled) ? BlendMode.dst : BlendMode.saturation,
+                Colors.grey,
+                //Выводим цветную или ч/б картинку в зависимости от настроек
+                (isItemEnabled) ? BlendMode.dst : BlendMode.saturation,
               ),
-              child: Image.asset(_imagePath, height: 66,),
+              child: Image.asset(
+                _imagePath,
+                height: 66,
+              ),
             ),
-            SizedBox(width: 15,),
+            SizedBox(
+              width: 15,
+            ),
             Expanded(
-              child: Padding(
+                child: Padding(
               padding: EdgeInsets.symmetric(vertical: UIHelper.SpaceSmall),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +57,7 @@ class MainMenuItem extends StatelessWidget {
                     softWrap: true,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
                   Visibility(
                     visible: item.comment.isNotEmpty,
@@ -73,13 +80,17 @@ class MainMenuItem extends StatelessWidget {
               visible: (item.id != -1 && isItemEnabled) ? true : false,
               child: GestureDetector(
                 child: Container(
-                  color: Colors.transparent,  // Выглядит странно, но без этого область нажатия на иконку не увеличивается на величину padding
+                  color: Colors
+                      .transparent, // Выглядит странно, но без этого область нажатия на иконку не увеличивается на величину padding
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                    child: Icon( item.isFavourite ?
-                            Icons.favorite_rounded : Icons.favorite_border_rounded,
-                            color: _primaryColor,
-                          ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
+                    child: Icon(
+                      item.isFavourite
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_border_rounded,
+                      color: _primaryColor,
+                    ),
                   ),
                 ),
                 onTap: () {

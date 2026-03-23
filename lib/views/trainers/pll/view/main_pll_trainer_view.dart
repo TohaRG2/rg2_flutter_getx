@@ -16,10 +16,10 @@ class MainPllTrainerView extends StatelessWidget {
 
   bool get _godMode => _settingsController.godMode;
 
-  final List<String> _pllButtonsNamesRow1 = ["Ga", ""  , "Y" , "F" , "H" , "E" ];
+  final List<String> _pllButtonsNamesRow1 = ["Ga", "", "Y", "F", "H", "E"];
   final List<String> _pllButtonsNamesRow2 = ["Gb", "Na", "Ra", "Ja", "Ua", "Aa"];
   final List<String> _pllButtonsNamesRow3 = ["Gc", "Nb", "Rb", "Jb", "Ub", "Ab"];
-  final List<String> _pllButtonsNamesRow4 = ["Gd", ""  , "V" , "T" , "Z" , ""  ];
+  final List<String> _pllButtonsNamesRow4 = ["Gd", "", "V", "T", "Z", ""];
   final _horizontalBorder = 3.0;
   final _verticalBorder = 0.0;
   final _goodIconPath = StrRes.TrainerGoodIconPath;
@@ -30,7 +30,9 @@ class MainPllTrainerView extends StatelessWidget {
   Widget build(BuildContext context) {
     _controller.loadDataFromBase();
     return Obx(() {
-      return _controller.showStartScreen ? buildStartScreen() : buildGameScreen();
+      return _controller.showStartScreen
+          ? buildStartScreen()
+          : buildGameScreen();
     });
   }
 
@@ -41,7 +43,7 @@ class MainPllTrainerView extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Center(
           child: Text(StrRes.pllTrainerTitle,
-              style: TextStyle(color: Get.textTheme.headline5.color)),
+              style: TextStyle(color: Get.textTheme.headlineSmall?.color)),
         ),
         backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
@@ -63,9 +65,11 @@ class MainPllTrainerView extends StatelessWidget {
         _controller.startTrainer();
       },
       child: Container(
-        padding: const EdgeInsets.all(UIHelper.SpaceSmall),
-        child: Text("Начать", style: Get.textTheme.headline5,)
-      ),
+          padding: const EdgeInsets.all(UIHelper.SpaceSmall),
+          child: Text(
+            "Начать",
+            style: Get.textTheme.headlineSmall,
+          )),
     );
   }
 
@@ -81,8 +85,7 @@ class MainPllTrainerView extends StatelessWidget {
         buildMainGame(),
         Visibility(
             visible: _controller.isShowResultEnabled,
-            child: buildResultScreen()
-        ),
+            child: buildResultScreen()),
       ]),
     );
   }
@@ -104,7 +107,9 @@ class MainPllTrainerView extends StatelessWidget {
             children: [
               // Индикатор оставшего времени
               Obx(() {
-                var _color = _controller.quizGame.timerProgress < 0.25 ? Colors.red : Colors.green;
+                var _color = _controller.quizGame.timerProgress < 0.25
+                    ? Colors.red
+                    : Colors.green;
                 return LinearPercentIndicator(
                   //width: Get.size.width,
                   lineHeight: 5.0,
@@ -119,24 +124,28 @@ class MainPllTrainerView extends StatelessWidget {
 
               // Подсказка
               Visibility(
-                visible: _godMode,
-                child: Row(children: [Text("${_controller.hint}")])
-              ),
+                  visible: _godMode,
+                  child: Row(children: [Text("${_controller.hint}")])),
 
               // Изображение кубика
               Expanded(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Center(
-                      child: is2side ? _controller.pllCubeImage.getPll2SideImage() : _controller.pllCubeImage.getPll3SideImage()
-                  ),
+                  child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: Center(
+                    child: is2side
+                        ? _controller.pllCubeImage.getPll2SideImage()
+                        : _controller.pllCubeImage.getPll3SideImage()),
               )),
 
               // ряд кнопок с ответами
-              (showAllVariants) ? buildTableWith21Button() : buildTableWithCustomButtons(),
+              (showAllVariants)
+                  ? buildTableWith21Button()
+                  : buildTableWithCustomButtons(),
 
               // немного пустого места после кнопок
-              SizedBox(height: UIHelper.SpaceSmall,),
+              SizedBox(
+                height: UIHelper.SpaceSmall,
+              ),
             ],
           ),
         ),
@@ -152,18 +161,28 @@ class MainPllTrainerView extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(_badIconPath, height: 40, color: Colors.red,),
-            Text("${_controller.quizGame.wrongAnswerCount}",
-              style: Get.textTheme.headline3,
+            Image.asset(
+              _badIconPath,
+              height: 40,
+              color: Colors.red,
+            ),
+            Text(
+              "${_controller.quizGame.wrongAnswerCount}",
+              style: Get.textTheme.displaySmall,
             ),
           ],
         ),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(_goodIconPath, height: 40, color: Colors.green,),
-            Text("${_controller.quizGame.rightAnswerCount}",
-              style: Get.textTheme.headline3,
+            Image.asset(
+              _goodIconPath,
+              height: 40,
+              color: Colors.green,
+            ),
+            Text(
+              "${_controller.quizGame.rightAnswerCount}",
+              style: Get.textTheme.displaySmall,
             ),
           ],
         )
@@ -199,63 +218,86 @@ class MainPllTrainerView extends StatelessWidget {
     switch (_controller.answerResult) {
       // Диалог, если ответ верный
       case ResultVariants.RIGHT:
-        var buttonText = (_controller.secondsRemains != 0) ? "Далее (${_controller.secondsRemains} сек)" : "Далее";
+        var buttonText = (_controller.secondsRemains != 0)
+            ? "Далее (${_controller.secondsRemains} сек)"
+            : "Далее";
         var message = StrRes.pllTrainerRightTitle;
         result = buildOverlayDialog(
             buttonText: buttonText,
             message: message,
             imagePath: _goodIconPath,
-            imageColor: Colors.green
-        );
+            imageColor: Colors.green);
         break;
 
       // Диалог, если ответ неверный
       case ResultVariants.WRONG:
-        var buttonText = (_controller.secondsRemains != 0) ? "Продолжить (${_controller.secondsRemains} сек)" : "Продолжить";
+        var buttonText = (_controller.secondsRemains != 0)
+            ? "Продолжить (${_controller.secondsRemains} сек)"
+            : "Продолжить";
         var message = "${StrRes.pllTrainerWrongTitle}${_controller.hint}";
         result = buildOverlayDialog(
-          buttonText: buttonText,
-          message: message,
-          imagePath: _badIconPath,
-          imageColor: Colors.red
-        );
+            buttonText: buttonText,
+            message: message,
+            imagePath: _badIconPath,
+            imageColor: Colors.red);
         break;
 
       // Диалог, если время закончилось
       case ResultVariants.TIME_OVER:
-        var buttonText = (_controller.secondsRemains != 0) ? "Продолжить (${_controller.secondsRemains} сек)" : "Продолжить";
+        var buttonText = (_controller.secondsRemains != 0)
+            ? "Продолжить (${_controller.secondsRemains} сек)"
+            : "Продолжить";
         var message = "${StrRes.pllTrainerTimeOverTitle}${_controller.hint}";
         result = buildOverlayDialog(
             buttonText: buttonText,
             message: message,
             imagePath: _timerIconPath,
-            imageColor: Colors.red
-        );
+            imageColor: Colors.red);
         break;
 
-        // Диалог, если что-то пошло не так... не должны сюда пападать
+      // Диалог, если что-то пошло не так... не должны сюда пападать
       case ResultVariants.UNKNOWN:
-        result = Image.asset(_badIconPath, width: 150, height: 150, color: Colors.white,);
+        result = Image.asset(
+          _badIconPath,
+          width: 150,
+          height: 150,
+          color: Colors.white,
+        );
         break;
     }
     return result;
   }
 
   /// Универсальный диалог
-  Widget buildOverlayDialog({required String buttonText, required String message, required String imagePath, required Color imageColor}) {
+  Widget buildOverlayDialog(
+      {required String buttonText,
+      required String message,
+      required String imagePath,
+      required Color imageColor}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(height: UIHelper.SpaceMedium,),
+        SizedBox(
+          height: UIHelper.SpaceMedium,
+        ),
         Image.asset(
           imagePath,
           width: 100,
           height: 100,
           color: imageColor,
         ),
-        SizedBox(height: UIHelper.SpaceSmall,),
-        Text(message, style: Get.textTheme.headline4, softWrap: true, textAlign: TextAlign.center, ),
-        SizedBox(height: UIHelper.SpaceSmall,),
+        SizedBox(
+          height: UIHelper.SpaceSmall,
+        ),
+        Text(
+          message,
+          style: Get.textTheme.headlineMedium,
+          softWrap: true,
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(
+          height: UIHelper.SpaceSmall,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -276,26 +318,38 @@ class MainPllTrainerView extends StatelessWidget {
                 child: Text(buttonText)),
           ],
         ),
-        SizedBox(height: UIHelper.SpaceMedium,)
+        SizedBox(
+          height: UIHelper.SpaceMedium,
+        )
       ],
     );
   }
 
-
   /// Табличка из 21(24) кнопок с международными вариантами ответов
   Widget buildTableWith21Button() {
-    var _tableRows = [_pllButtonsNamesRow1, _pllButtonsNamesRow2, _pllButtonsNamesRow3, _pllButtonsNamesRow4];
+    var _tableRows = [
+      _pllButtonsNamesRow1,
+      _pllButtonsNamesRow2,
+      _pllButtonsNamesRow3,
+      _pllButtonsNamesRow4
+    ];
     return Table(
-      children: _tableRows.map((row) =>
-        TableRow(
-          children: row.map((letter) =>
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: _horizontalBorder, vertical: _verticalBorder),
-              child: (letter != "") ? buildSmallButton(letter) : Container(),
-            )
-          ).toList(),
-        ),
-      ).toList(),
+      children: _tableRows
+          .map(
+            (row) => TableRow(
+              children: row
+                  .map((letter) => Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: _horizontalBorder,
+                            vertical: _verticalBorder),
+                        child: (letter != "")
+                            ? buildSmallButton(letter)
+                            : Container(),
+                      ))
+                  .toList(),
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -305,8 +359,8 @@ class MainPllTrainerView extends StatelessWidget {
       style: raisedButtonStyle.copyWith(
           shape: MaterialStateProperty.all<OutlinedBorder>(
               const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              ))),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+      ))),
       child: Text("$letter"),
       onPressed: () {
         _controller.checkAnswerByString(letter);
@@ -318,30 +372,38 @@ class MainPllTrainerView extends StatelessWidget {
   Widget buildTableWithCustomButtons() {
     var _tableRows = _controller.textForButtons;
     return Table(
-      children: _tableRows.map((row) =>
-          TableRow(
-            children: row.map((text) =>
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: _horizontalBorder, vertical: _verticalBorder),
-                  child: ElevatedButton(
-                    style: raisedButtonStyle.copyWith(
-                        shape: MaterialStateProperty.all<OutlinedBorder>(
-                            const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                    ))),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 3.0),
-                      child: Text("$text", softWrap: true, textAlign: TextAlign.center,)
-                    ),
-                    onPressed: () {
-                      _controller.checkAnswerByString(text);
-                    },
-                  ),
-                )
-            ).toList(),
-          ),
-      ).toList(),
+      children: _tableRows
+          .map(
+            (row) => TableRow(
+              children: row
+                  .map((text) => Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: _horizontalBorder,
+                            vertical: _verticalBorder),
+                        child: ElevatedButton(
+                          style: raisedButtonStyle.copyWith(
+                              shape: MaterialStateProperty.all<OutlinedBorder>(
+                                  const RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0)),
+                          ))),
+                          child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 3.0),
+                              child: Text(
+                                "$text",
+                                softWrap: true,
+                                textAlign: TextAlign.center,
+                              )),
+                          onPressed: () {
+                            _controller.checkAnswerByString(text);
+                          },
+                        ),
+                      ))
+                  .toList(),
+            ),
+          )
+          .toList(),
     );
   }
-
 }

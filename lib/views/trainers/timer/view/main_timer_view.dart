@@ -33,14 +33,15 @@ class TimerView extends StatelessWidget {
 
   /// Цвета для кружков
   final Map<int, Color> _circleColors = {
-    0 : Colors.red,
-    1 : Colors.yellow,
-    2 : Colors.green
+    0: Colors.red,
+    1: Colors.yellow,
+    2: Colors.green
   };
 
   // возвращаем размер нижнего NavBar, пока он не проинициализирован считаем, что defBottomBarHeight(55)
   double _getBottomBarHeight() {
-    final render = _keyBottomNavBar.currentContext?.findRenderObject() as RenderBox?;
+    final render =
+        _keyBottomNavBar.currentContext?.findRenderObject() as RenderBox?;
     if (render != null) {
       return render.size.height;
     }
@@ -55,7 +56,8 @@ class TimerView extends StatelessWidget {
   Widget build(BuildContext context) {
     final _width = Get.width;
     // изначально задаем размер нижней панели как Default + padding для SafeArea
-    _controller.trySetBottomBarHeight(Get.mediaQuery.padding.bottom + _defBottomBarHeight);
+    _controller.trySetBottomBarHeight(
+        Get.mediaQuery.padding.bottom + _defBottomBarHeight);
     _controller.initialization();
     return PopScope(
       canPop: false,
@@ -68,30 +70,41 @@ class TimerView extends StatelessWidget {
         return Stack(
           children: [
             //Фон для верхней части экрана, для телефонов с загнутыми краями (
-            Positioned(top: 0, child: Container(height: 150, width: _width, color: _backgroundColor,)),
+            Positioned(
+                top: 0,
+                child: Container(
+                  height: 150,
+                  width: _width,
+                  color: _backgroundColor,
+                )),
             SafeArea(
-              bottom: false,
-              child: Stack(fit: StackFit.expand, children: [
-                /// Скрамбл в верхней части экрана
-                Positioned(
-                  width: Get.width,
-                  height: _settingsController.scrambleBarHeight,
-                  child: ScrambleTextWidget(
-                    text: _controller.scramble,
-                    textRatio: _settingsController.scrambleTextRatio,
-                    onTapCallBack: _generateNewScrambleByTap,
+                bottom: false,
+                child: Stack(fit: StackFit.expand, children: [
+                  /// Скрамбл в верхней части экрана
+                  Positioned(
+                    width: Get.width,
+                    height: _settingsController.scrambleBarHeight,
+                    child: ScrambleTextWidget(
+                      text: _controller.scramble,
+                      textRatio: _settingsController.scrambleTextRatio,
+                      onTapCallBack: _generateNewScrambleByTap,
+                    ),
                   ),
-                ),
 
-                AnimatedPositioned(
-                  duration: _animationDuration, left: 0, right: 0,
-                  top: (_controller.showTopBar && _settingsController.showScramble) ? _settingsController.scrambleBarHeight : 0,
-                  bottom: _controller.showBottomBar ? _controller.bottomBarHeight : 0,
-                  child: Container(
-                    width: _width,
-                    child: Stack(
-                      alignment: Alignment.topCenter,
-                      children: [
+                  AnimatedPositioned(
+                    duration: _animationDuration,
+                    left: 0,
+                    right: 0,
+                    top: (_controller.showTopBar &&
+                            _settingsController.showScramble)
+                        ? _settingsController.scrambleBarHeight
+                        : 0,
+                    bottom: _controller.showBottomBar
+                        ? _controller.bottomBarHeight
+                        : 0,
+                    child: Container(
+                      width: _width,
+                      child: Stack(alignment: Alignment.topCenter, children: [
                         /// Выводим две плашки для правой и левой руки, которые срабатывают только справа
                         /// и слева от счетчика времени, т.к. ниже перекрываются другими плашками
                         _twoMainPad(),
@@ -124,22 +137,34 @@ class TimerView extends StatelessWidget {
                                   color: _backgroundColor,
                                   margin: EdgeInsets.all(_borderThin),
                                   child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
                                       children: [
-                                        Icon(Icons.circle, color: _circleColors[_controller.leftIndicatorState],),
+                                        Icon(
+                                          Icons.circle,
+                                          color: _circleColors[
+                                              _controller.leftIndicatorState],
+                                        ),
                                         Container(
                                             color: _timeWindowsColor,
                                             height: 50,
                                             width: 120,
                                             child: Center(
-                                              child: Text(_controller.currentTime,
-                                                style: Get.textTheme.headline5.copyWith(color: _backgroundColor),
+                                              child: Text(
+                                                _controller.currentTime,
+                                                style: Get
+                                                    .textTheme.headlineSmall
+                                                    ?.copyWith(
+                                                        color:
+                                                            _backgroundColor),
                                               ),
-                                            )
+                                            )),
+                                        Icon(
+                                          Icons.circle,
+                                          color: _circleColors[
+                                              _controller.rightIndicatorState],
                                         ),
-                                        Icon(Icons.circle, color: _circleColors[_controller.rightIndicatorState],),
-                                      ]
-                                  ),
+                                      ]),
                                 ),
                               ),
                             ),
@@ -148,6 +173,7 @@ class TimerView extends StatelessWidget {
                             TwoMainPadsWidget(controller: _controller)
                           ],
                         ),
+
                         /// Нижняя панель с вариантами действий после остановки таймера
                         Visibility(
                           visible: _controller.showSaveResultBar,
@@ -162,28 +188,45 @@ class TimerView extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Container(
-                                      padding: const EdgeInsets.only(bottom: UIHelper.SpaceSmall),
+                                      padding: const EdgeInsets.only(
+                                          bottom: UIHelper.SpaceSmall),
                                       child: Text(StrRes.timerSaveResultText,
-                                          style: Get.textTheme.headline6.copyWith(
+                                          style: Get.textTheme.titleLarge
+                                              ?.copyWith(
                                             fontSize: 18,
-                                            color: Colors.white,)
-                                      ),
+                                            color: Colors.white,
+                                          )),
                                     ),
                                     ToggleButtons(
                                       isSelected: [false, false, false],
                                       children: [
                                         IconWithTextWidget(
-                                           icon: Icons.delete_forever_rounded,
-                                           text: StrRes.timerSaveResultDontSave,
-                                           color: _settingsController.isIconsColored ? Colors.red : Colors.white,),
+                                          icon: Icons.delete_forever_rounded,
+                                          text: StrRes.timerSaveResultDontSave,
+                                          color:
+                                              _settingsController.isIconsColored
+                                                  ? Colors.red
+                                                  : Colors.white,
+                                        ),
                                         IconWithTextWidget(
-                                           icon: Icons.assignment_turned_in_rounded,
-                                           text: StrRes.timerSaveResultWithoutComment,
-                                           color: _settingsController.isIconsColored ? Colors.yellow : Colors.white,),
+                                          icon: Icons
+                                              .assignment_turned_in_rounded,
+                                          text: StrRes
+                                              .timerSaveResultWithoutComment,
+                                          color:
+                                              _settingsController.isIconsColored
+                                                  ? Colors.yellow
+                                                  : Colors.white,
+                                        ),
                                         IconWithTextWidget(
-                                           icon: Icons.textsms_rounded,
-                                           text: StrRes.timerSaveResultWithComment,
-                                           color: _settingsController.isIconsColored ? Colors.green : Colors.white,),
+                                          icon: Icons.textsms_rounded,
+                                          text:
+                                              StrRes.timerSaveResultWithComment,
+                                          color:
+                                              _settingsController.isIconsColored
+                                                  ? Colors.green
+                                                  : Colors.white,
+                                        ),
                                       ],
                                       onPressed: (index) {
                                         if (index == 0) {
@@ -197,19 +240,17 @@ class TimerView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                ),
                               ),
                             ),
+                          ),
                         ),
-                      ]
+                      ]),
                     ),
                   ),
-                ),
 
-                /// Нижний навбар с кнопками (назад, результаты, настройки)
-                _bottomNavBar(_animationDuration, _primaryColor),
-              ])
-            )
+                  /// Нижний навбар с кнопками (назад, результаты, настройки)
+                  _bottomNavBar(_animationDuration, _primaryColor),
+                ]))
           ],
         );
       }),
@@ -224,37 +265,36 @@ class TimerView extends StatelessWidget {
 
   _tryToSaveCurrentResultWithComment() {
     Get.defaultDialog(
-      title: StrRes.timerEditResultComment,
-      content: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(UIHelper.SpaceMedium),
-          child: Column(
-            children: [
-              TextField(
-                autofocus: true,
-                decoration: InputDecoration(
-                  hintText: StrRes.timerEditResultHint,
+        title: StrRes.timerEditResultComment,
+        content: Container(
+          child: Padding(
+            padding: const EdgeInsets.all(UIHelper.SpaceMedium),
+            child: Column(
+              children: [
+                TextField(
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    hintText: StrRes.timerEditResultHint,
+                  ),
+                  maxLines: 3,
+                  controller: _textController,
                 ),
-                maxLines: 3,
-                controller: _textController,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-      /// Кнопки
-      buttonColor: Get.theme.secondaryHeaderColor,
-      textCancel: StrRes.buttonCancelText,
-      cancelTextColor: Get.theme.primaryColor,
-      textConfirm: StrRes.buttonOkText,
-      confirmTextColor: Get.theme.accentColor,
-      onConfirm: () => {
-        _controller.saveCurrentResultWithComment(_textController.text),
-        _textController.text = "",
-        Get.back()
-      }
-    );
 
+        /// Кнопки
+        buttonColor: Get.theme.secondaryHeaderColor,
+        textCancel: StrRes.buttonCancelText,
+        cancelTextColor: Get.theme.primaryColor,
+        textConfirm: StrRes.buttonOkText,
+        confirmTextColor: Get.theme.accentColor,
+        onConfirm: () => {
+              _controller.saveCurrentResultWithComment(_textController.text),
+              _textController.text = "",
+              Get.back()
+            });
   }
 
   Row _twoMainPad() {
@@ -273,7 +313,11 @@ class TimerView extends StatelessWidget {
             },
             child: Container(
               color: _borderColor,
-              padding: EdgeInsets.only(left: _borderThin, top: _borderThin, bottom: _borderThin, right: _borderThin / 2),
+              padding: EdgeInsets.only(
+                  left: _borderThin,
+                  top: _borderThin,
+                  bottom: _borderThin,
+                  right: _borderThin / 2),
               height: double.infinity,
               child: Container(color: _backgroundColor),
             ),
@@ -292,7 +336,11 @@ class TimerView extends StatelessWidget {
             },
             child: Container(
               color: _borderColor,
-              padding: EdgeInsets.only(left: _borderThin / 2, top: _borderThin, bottom: _borderThin, right: _borderThin),
+              padding: EdgeInsets.only(
+                  left: _borderThin / 2,
+                  top: _borderThin,
+                  bottom: _borderThin,
+                  right: _borderThin),
               height: double.infinity,
               child: Container(color: _backgroundColor),
             ),
@@ -304,85 +352,89 @@ class TimerView extends StatelessWidget {
 
   AnimatedPositioned _bottomNavBar(Duration _duration, Color _primaryColor) {
     return AnimatedPositioned(
-      duration: _duration,
-      bottom: _controller.showBottomBar ? 0 : -_controller.bottomBarHeight,
-      child: GetBuilder<TimerController>(initState: (_) {
-        //TODO подумать как использовать для этих целей onReady в GetxController
-        // Вот таким образом вызываем метод, который выполнится после отрисовки
-        // виджета и обновит высоту нижней панели в контроллере, а заодно и перерисует виджет
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _controller.bottomBarHeight = _getBottomBarHeight();
-        });
-      }, builder: (_) {
-        return Container(
-          width: Get.width,
-          color: _primaryColor,
-          child: TimerBottomMenuBar(
-            key: _keyBottomNavBar,
-          ),
-        );
-      }));
+        duration: _duration,
+        bottom: _controller.showBottomBar ? 0 : -_controller.bottomBarHeight,
+        child: GetBuilder<TimerController>(initState: (_) {
+          //TODO подумать как использовать для этих целей onReady в GetxController
+          // Вот таким образом вызываем метод, который выполнится после отрисовки
+          // виджета и обновит высоту нижней панели в контроллере, а заодно и перерисует виджет
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _controller.bottomBarHeight = _getBottomBarHeight();
+          });
+        }, builder: (_) {
+          return Container(
+            width: Get.width,
+            color: _primaryColor,
+            child: TimerBottomMenuBar(
+              key: _keyBottomNavBar,
+            ),
+          );
+        }));
   }
-
 }
 
 class TwoMainPadsWidget extends StatelessWidget {
   const TwoMainPadsWidget({
     Key? key,
     required TimerController controller,
-  }) : _controller = controller, super(key: key);
+  })  : _controller = controller,
+        super(key: key);
 
   final TimerController _controller;
 
   @override
   Widget build(BuildContext context) {
     return Flexible(
-      child: Container(
-        width: double.infinity,
-        height: double.infinity,
         child: Container(
-          // Делим экран на две части для срабатывания нажатий
-          child: Row(
-            children: [
-              Expanded(
+      width: double.infinity,
+      height: double.infinity,
+      child: Container(
+        // Делим экран на две части для срабатывания нажатий
+        child: Row(
+          children: [
+            Expanded(
                 child: GestureDetector(
-                  onTapDown: (_) {
-                    _controller.onLeftPanelTouch();
-                  },
-                  onTapCancel: () {
-                    _controller.onLeftPanelTouchCancel();
-                  },
-                  onTapUp: (_) {
-                    _controller.onLeftPanelTouchCancel();
-                  },
-                  child: Container(
-                    height: double.infinity,
-                    color: Colors.transparent,
-                    child: Center(child: Image.asset("assets/images/trainers/timer/left_hand.png", width: 80,))),
-                )),
-              Expanded(
+              onTapDown: (_) {
+                _controller.onLeftPanelTouch();
+              },
+              onTapCancel: () {
+                _controller.onLeftPanelTouchCancel();
+              },
+              onTapUp: (_) {
+                _controller.onLeftPanelTouchCancel();
+              },
+              child: Container(
+                  height: double.infinity,
+                  color: Colors.transparent,
+                  child: Center(
+                      child: Image.asset(
+                    "assets/images/trainers/timer/left_hand.png",
+                    width: 80,
+                  ))),
+            )),
+            Expanded(
                 child: GestureDetector(
-                  onTapDown: (_) {
-                    _controller.onRightPanelTouch();
-                  },
-                  onTapCancel: () {
-                    _controller.onRightPanelTouchCancel();
-                  },
-                  onTapUp: (_) {
-                    _controller.onRightPanelTouchCancel();
-                  },
-                  child: Container(
-                    height: double.infinity,
-                    color: Colors.transparent,
-                    child: Center(child: Image.asset("assets/images/trainers/timer/right_hand.png", width: 80,))),
-                ))
-            ],
-          ),
+              onTapDown: (_) {
+                _controller.onRightPanelTouch();
+              },
+              onTapCancel: () {
+                _controller.onRightPanelTouchCancel();
+              },
+              onTapUp: (_) {
+                _controller.onRightPanelTouchCancel();
+              },
+              child: Container(
+                  height: double.infinity,
+                  color: Colors.transparent,
+                  child: Center(
+                      child: Image.asset(
+                    "assets/images/trainers/timer/right_hand.png",
+                    width: 80,
+                  ))),
+            ))
+          ],
         ),
-      )
-    );
+      ),
+    ));
   }
 }
-
-
-

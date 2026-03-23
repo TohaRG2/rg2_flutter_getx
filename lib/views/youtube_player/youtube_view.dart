@@ -41,49 +41,55 @@ class YouTubeView extends GetView<MyYouTubeController> {
             children: [
               Expanded(
                   child: Center(
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(_alg,
-                                style: Get.textTheme.headline5.copyWith(color: Get.theme.accentColor),
-                              ),
-                            ),
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            _alg,
+                            style: Get.textTheme.headlineSmall?.copyWith(
+                                color: Get.theme.colorScheme.secondary),
                           ),
-                          YoutubePlayer(
-                            controller: youTubeController,
-                            bottomActions: [
-                              CurrentPosition(),
-                              ProgressBar(isExpanded: true),
-                              // PlaybackSpeedButton()
-                            ],
-                            onReady: () {
-                              //logPrint("Player Ready");
-                              youTubeController.addListener(() {
-                                if (youTubeController.value.playerState != _playerState) {
-                                  _playerState = youTubeController.value.playerState;
-                                  if ((_playerState == PlayerState.playing) || (_playerState == PlayerState.cued)) {
-                                    youTubeController.setPlaybackRate(controller.playbackRate);
-                                    if (controller.playbackRate < 0.75) {
-                                      youTubeController.mute();
-                                    } else {
-                                      youTubeController.unMute();
-                                    }
-                                  }
-                                  controller.setPlayerState(_playerState.index);
-                                }
-                                //logPrint("${_youTubeController.value.position.inSeconds}");
-                              });
-                            },
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  )),
+                      YoutubePlayer(
+                        controller: youTubeController,
+                        bottomActions: [
+                          CurrentPosition(),
+                          ProgressBar(isExpanded: true),
+                          // PlaybackSpeedButton()
+                        ],
+                        onReady: () {
+                          //logPrint("Player Ready");
+                          youTubeController.addListener(() {
+                            if (youTubeController.value.playerState !=
+                                _playerState) {
+                              _playerState =
+                                  youTubeController.value.playerState;
+                              if ((_playerState == PlayerState.playing) ||
+                                  (_playerState == PlayerState.cued)) {
+                                youTubeController
+                                    .setPlaybackRate(controller.playbackRate);
+                                if (controller.playbackRate < 0.75) {
+                                  youTubeController.mute();
+                                } else {
+                                  youTubeController.unMute();
+                                }
+                              }
+                              controller.setPlayerState(_playerState.index);
+                            }
+                            //logPrint("${_youTubeController.value.position.inSeconds}");
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              )),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
                 child: Row(
@@ -100,7 +106,7 @@ class YouTubeView extends GetView<MyYouTubeController> {
                 ),
               ),
               Obx(
-                    () => Slider(
+                () => Slider(
                     value: controller.playbackRate,
                     activeColor: Get.theme.primaryColor,
                     min: 0.25,
@@ -115,8 +121,7 @@ class YouTubeView extends GetView<MyYouTubeController> {
                       } else {
                         youTubeController.unMute();
                       }
-                    }
-                ),
+                    }),
               ),
               playerNavigation(youTubeController),
             ],
@@ -140,17 +145,22 @@ class YouTubeView extends GetView<MyYouTubeController> {
               },
             ),
           ),
-          SizedBox(width: 4,),
+          SizedBox(
+            width: 4,
+          ),
           Flexible(
             child: ElevatedButton(
               style: raisedButtonStyle,
               child: Icon(Icons.skip_previous_rounded),
               onPressed: () {
-                youTubeController.seekTo(Duration(seconds: _tryParseTime(_time)));
+                youTubeController
+                    .seekTo(Duration(seconds: _tryParseTime(_time)));
               },
             ),
           ),
-          SizedBox(width: 4,),
+          SizedBox(
+            width: 4,
+          ),
           Flexible(
             child: ElevatedButton(
               style: raisedButtonStyle,
@@ -161,12 +171,16 @@ class YouTubeView extends GetView<MyYouTubeController> {
               },
             ),
           ),
-          SizedBox(width: 4,),
+          SizedBox(
+            width: 4,
+          ),
           Obx(
-                () => Flexible(
+            () => Flexible(
               child: ElevatedButton(
                 style: raisedButtonStyle,
-                child: (controller.getPlayerState() == 4) ? Icon(Icons.play_arrow_rounded) : Icon(Icons.pause_rounded),
+                child: (controller.getPlayerState() == 4)
+                    ? Icon(Icons.play_arrow_rounded)
+                    : Icon(Icons.pause_rounded),
                 onPressed: () {
                   if (controller.getPlayerState() == PlayerState.paused.index) {
                     youTubeController.play();
@@ -177,7 +191,9 @@ class YouTubeView extends GetView<MyYouTubeController> {
               ),
             ),
           ),
-          SizedBox(width: 4,),
+          SizedBox(
+            width: 4,
+          ),
           Flexible(
             child: ElevatedButton(
               style: raisedButtonStyle,

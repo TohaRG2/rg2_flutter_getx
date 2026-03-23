@@ -17,70 +17,80 @@ import 'widgets/internet_settings.dart';
 import 'widgets/swipe_settings.dart';
 
 class SettingsScreen extends GetWidget<SettingsController> {
+  const SettingsScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      logPrint("SettingsScreen - ${controller.themeChanged.value}, ${controller.isDarkThemeSelect}, ${Get.theme.backgroundColor}");
-      return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Center(
-            child: Text(StrRes.settingsTitle,
-                style: TextStyle(
-                    color: Get.textTheme.headline5.color)
+    return Obx(
+      () {
+        logPrint(
+            "SettingsScreen - ${controller.themeChanged.value}, ${controller.isDarkThemeSelect}, ${Get.theme.backgroundColor}");
+        return Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: Center(
+              child: Text(StrRes.settingsTitle,
+                  style: TextStyle(color: Get.textTheme.headlineSmall?.color)),
             ),
+            backgroundColor: Get.theme.scaffoldBackgroundColor,
           ),
-          backgroundColor: Get.theme.scaffoldBackgroundColor,
-        ),
-        //ListView c выбором темы
-        body: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.all(UIHelper.SpaceSmall),
-                child: Column(
-                  children: [
-                    _themeSettings(context),
-                    SizedBox(height: UIHelper.SpaceMedium,),
-                    ScreenOnOffSettings(),
-                    SizedBox(height: UIHelper.SpaceMedium,),
-                    HelpSettings(),
-                    SizedBox(height: UIHelper.SpaceMedium,),
-                    SwipeSettings(),
-                    SizedBox(height: UIHelper.SpaceMedium,),
-                    SizedBox(height: UIHelper.SpaceSmall,),
-                    InternetSettings(),
-                    SizedBox(height: UIHelper.SpaceMedium,),
-                    ResetSettings(),
-                    SizedBox(height: UIHelper.SpaceLarge)
-                  ],
+          //ListView c выбором темы
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.all(UIHelper.SpaceSmall),
+                  child: Column(
+                    children: [
+                      _themeSettings(context),
+                      const SizedBox(
+                        height: UIHelper.SpaceMedium,
+                      ),
+                      ScreenOnOffSettings(),
+                      const SizedBox(
+                        height: UIHelper.SpaceMedium,
+                      ),
+                      HelpSettings(),
+                      const SizedBox(
+                        height: UIHelper.SpaceMedium,
+                      ),
+                      const SwipeSettings(),
+                      const SizedBox(
+                        height: UIHelper.SpaceMedium,
+                      ),
+                      const SizedBox(
+                        height: UIHelper.SpaceSmall,
+                      ),
+                      InternetSettings(),
+                      const SizedBox(
+                        height: UIHelper.SpaceMedium,
+                      ),
+                      ResetSettings(),
+                      const SizedBox(height: UIHelper.SpaceLarge)
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Visibility(
-                visible: controller.showPreloader,
-                child: Preloader()
-            )
-          ],
-        ),
-      );
-    },
+              Visibility(visible: controller.showPreloader, child: Preloader())
+            ],
+          ),
+        );
+      },
     );
   }
 
-
   Widget _themeSettings(BuildContext context) {
     return Obx(
-          () => Column(
+      () => Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// Заголовок "Внешний вид:"
           Text(
             StrRes.appTheme,
-            style: Get.textTheme.headline6,
+            style: Get.textTheme.titleLarge,
           ),
-          SizedBox(
+          const SizedBox(
             height: UIHelper.SpaceSmall,
           ),
 
@@ -89,52 +99,58 @@ class SettingsScreen extends GetWidget<SettingsController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                  padding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                  padding: const EdgeInsets.only(left: UIHelper.SpaceSmall),
                   child: Text(
                     StrRes.darkTheme,
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   )),
-              ThemeSwitch(),
+              const ThemeSwitch(),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: UIHelper.SpaceSmall,
           ),
 
           /// Выбор цвета основного цвета
           Padding(
-              padding: const EdgeInsets.only(left: UIHelper.SpaceSmall, right: UIHelper.SpaceSmall),
+              padding: const EdgeInsets.only(
+                  left: UIHelper.SpaceSmall, right: UIHelper.SpaceSmall),
               child: GestureDetector(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       StrRes.primaryColor,
-                      style: Get.textTheme.bodyText1,
+                      style: Get.textTheme.bodyLarge,
                     ),
-                    CircleAvatar(backgroundColor: controller.primaryThemeColor, radius: UIHelper.SpaceMedium),
+                    CircleAvatar(
+                        backgroundColor: controller.primaryThemeColor,
+                        radius: UIHelper.SpaceMedium),
                   ],
                 ),
                 onTap: () {
                   _selectPrimaryColor();
                 },
               )),
-          SizedBox(
+          const SizedBox(
             height: UIHelper.SpaceMedium,
           ),
 
           /// Выбор цвета акцента
           Padding(
-            padding: const EdgeInsets.only(left: UIHelper.SpaceSmall, right: UIHelper.SpaceSmall),
+            padding: const EdgeInsets.only(
+                left: UIHelper.SpaceSmall, right: UIHelper.SpaceSmall),
             child: GestureDetector(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     StrRes.accentColor,
-                    style: Get.textTheme.bodyText1,
+                    style: Get.textTheme.bodyLarge,
                   ),
-                  CircleAvatar(backgroundColor: controller.accentThemeColor, radius: UIHelper.SpaceMedium),
+                  CircleAvatar(
+                      backgroundColor: controller.accentThemeColor,
+                      radius: UIHelper.SpaceMedium),
                 ],
               ),
               onTap: () {
@@ -142,7 +158,7 @@ class SettingsScreen extends GetWidget<SettingsController> {
               },
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: UIHelper.SpaceMedium,
           ),
 
@@ -151,7 +167,7 @@ class SettingsScreen extends GetWidget<SettingsController> {
             padding: const EdgeInsets.only(left: UIHelper.SpaceSmall),
             child: Text(
               StrRes.textSize,
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
           ),
 
@@ -161,7 +177,7 @@ class SettingsScreen extends GetWidget<SettingsController> {
             min: 0.7,
             max: 1.3,
             divisions: 6,
-            activeColor: Theme.of(context).accentColor,
+            activeColor: Theme.of(context).colorScheme.secondary,
             label: controller.textScaleFactor.toStringAsFixed(2),
             onChanged: (value) {
               controller.textScaleFactor = value;
@@ -220,13 +236,14 @@ class SettingsScreen extends GetWidget<SettingsController> {
       ),
     );
   }
-
 }
 
 class SettingsScreenWithBottomBar extends StatelessWidget {
+  const SettingsScreenWithBottomBar({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SettingsScreen(),
       bottomNavigationBar: BottomBarWithBackButton(),
     );

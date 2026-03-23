@@ -25,11 +25,11 @@ class AboutProgramView extends GetView<InfoController> {
                 Expanded(
                     child: Column(
                       children: [
-                        Text(TextAbout.infoAppDescription, style: Get.textTheme.headline5.copyWith(fontSize: 26),),
+                        Text(TextAbout.infoAppDescription, style: Get.textTheme.headlineSmall?.copyWith(fontSize: 26),),
                         Obx(() => Container(
                               alignment: Alignment.centerLeft,
                               padding: const EdgeInsets.symmetric(vertical: 16.0),
-                              child: Text(controller.versionNumber, style: Get.textTheme.headline6.copyWith(fontSize: 16),)
+                              child: Text(controller.versionNumber, style: Get.textTheme.titleLarge?.copyWith(fontSize: 16),)
                           ),
                         )
                       ],
@@ -44,7 +44,7 @@ class AboutProgramView extends GetView<InfoController> {
               data: TextAbout.text,
               style: {
                 "a": Style(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
                 "h5":
                     Style(textAlign: TextAlign.center, fontSize: FontSize.large),

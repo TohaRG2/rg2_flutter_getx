@@ -27,7 +27,9 @@ class MainAzbukaTrainerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return _controller.showStartScreen ? buildStartScreen() : buildGameScreen();
+      return _controller.showStartScreen
+          ? buildStartScreen()
+          : buildGameScreen();
     });
   }
 
@@ -38,7 +40,7 @@ class MainAzbukaTrainerView extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Center(
           child: Text(StrRes.azbukaTrainerTitle,
-              style: TextStyle(color: Get.textTheme.headline5.color)),
+              style: TextStyle(color: Get.textTheme.headlineSmall?.color)),
         ),
         backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
@@ -59,11 +61,12 @@ class MainAzbukaTrainerView extends StatelessWidget {
       },
       child: Container(
           padding: const EdgeInsets.all(UIHelper.SpaceSmall),
-          child: Text("Начать", style: Get.textTheme.headline5,)
-      ),
+          child: Text(
+            "Начать",
+            style: Get.textTheme.headlineSmall,
+          )),
     );
   }
-
 
   /// Основной экран игры (стэк из основного экрана и экрана с результатами ответа
   Widget buildGameScreen() {
@@ -78,9 +81,8 @@ class MainAzbukaTrainerView extends StatelessWidget {
 
         /// Окно с результатами ответа и кнопками продолжить/начать с начала
         Visibility(
-          visible: _controller.isShowResultEnabled,
-          child: buildResultScreen()
-        ),
+            visible: _controller.isShowResultEnabled,
+            child: buildResultScreen()),
       ]),
     );
   }
@@ -100,7 +102,9 @@ class MainAzbukaTrainerView extends StatelessWidget {
             children: [
               /// Индикатор оставшего времени
               Obx(() {
-                var _color = _controller.quizGame.timerProgress < 0.25 ? Colors.red : Colors.green;
+                var _color = _controller.quizGame.timerProgress < 0.25
+                    ? Colors.red
+                    : Colors.green;
                 return LinearPercentIndicator(
                   //width: Get.size.width,
                   lineHeight: 5.0,
@@ -116,24 +120,24 @@ class MainAzbukaTrainerView extends StatelessWidget {
               /// Подсказка, если включен "режим разработчика"
               Visibility(
                   visible: _godMode,
-                  child: Row(children: [Text("${_controller.hint}")])
-              ),
+                  child: Row(children: [Text("${_controller.hint}")])),
 
               /// Изображение кубика
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Center(
-                    child: _controller.azbukaCubeImage.getScrambledDrawable(),
-                  )
-                ),
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Center(
+                      child: _controller.azbukaCubeImage.getScrambledDrawable(),
+                    )),
               ),
 
               /// ряд кнопок с ответами
               buildTableWithButton(),
 
               /// немного пустого места после кнопок
-              SizedBox(height: UIHelper.SpaceSmall,),
+              SizedBox(
+                height: UIHelper.SpaceSmall,
+              ),
             ],
           ),
         ),
@@ -146,21 +150,23 @@ class MainAzbukaTrainerView extends StatelessWidget {
     List<QuizVariant> _showAllVariants = _controller.quizGame.answersList;
     List<List<String>> _tableRows = _variantsToTableRows(_showAllVariants, 6);
     return Table(
-      children: _tableRows.map((row) =>
-        TableRow(
-          children: row.map((letter) =>
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: _horizontalBorder, vertical: _verticalBorder),
-                child: buildSmallButton(letter),
-              )
-          ).toList()
-        )
-      ).toList(),
+      children: _tableRows
+          .map((row) => TableRow(
+              children: row
+                  .map((letter) => Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: _horizontalBorder,
+                            vertical: _verticalBorder),
+                        child: buildSmallButton(letter),
+                      ))
+                  .toList()))
+          .toList(),
     );
   }
 
   /// Преобразуем список из List<QuizVariant> в List<List<String>> для удобного вывода кнопок таблицей
-  List<List<String>> _variantsToTableRows(List<QuizVariant> quizVariants, int divideBy) {
+  List<List<String>> _variantsToTableRows(
+      List<QuizVariant> quizVariants, int divideBy) {
     var result = <List<String>>[];
     var variants = quizVariants.map((e) => e.value).toList();
     variants.sort();
@@ -179,8 +185,8 @@ class MainAzbukaTrainerView extends StatelessWidget {
       style: raisedButtonStyle.copyWith(
           shape: MaterialStateProperty.all<OutlinedBorder>(
               const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              ))),
+        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+      ))),
       child: Text("$letter"),
       onPressed: () {
         _controller.checkAnswerByString(letter);
@@ -216,43 +222,51 @@ class MainAzbukaTrainerView extends StatelessWidget {
     switch (_controller.answerResult) {
       /// Диалог, если ответ верный
       case ResultVariants.RIGHT:
-        var buttonText = (_controller.secondsRemains != 0) ? "Далее (${_controller.secondsRemains} сек)" : "Далее";
+        var buttonText = (_controller.secondsRemains != 0)
+            ? "Далее (${_controller.secondsRemains} сек)"
+            : "Далее";
         var message = StrRes.pllTrainerRightTitle;
         result = buildOverlayDialog(
             buttonText: buttonText,
             message: message,
             imagePath: _goodIconPath,
-            imageColor: Colors.green
-        );
+            imageColor: Colors.green);
         break;
 
       /// Диалог, если ответ неверный
       case ResultVariants.WRONG:
-        var buttonText = (_controller.secondsRemains != 0) ? "Продолжить (${_controller.secondsRemains} сек)" : "Продолжить";
+        var buttonText = (_controller.secondsRemains != 0)
+            ? "Продолжить (${_controller.secondsRemains} сек)"
+            : "Продолжить";
         var message = "${StrRes.pllTrainerWrongTitle}${_controller.hint}";
         result = buildOverlayDialog(
             buttonText: buttonText,
             message: message,
             imagePath: _badIconPath,
-            imageColor: Colors.red
-        );
+            imageColor: Colors.red);
         break;
 
       /// Диалог, если время закончилось
       case ResultVariants.TIME_OVER:
-        var buttonText = (_controller.secondsRemains != 0) ? "Продолжить (${_controller.secondsRemains} сек)" : "Продолжить";
+        var buttonText = (_controller.secondsRemains != 0)
+            ? "Продолжить (${_controller.secondsRemains} сек)"
+            : "Продолжить";
         var message = "${StrRes.pllTrainerTimeOverTitle}${_controller.hint}";
         result = buildOverlayDialog(
             buttonText: buttonText,
             message: message,
             imagePath: _timerIconPath,
-            imageColor: Colors.red
-        );
+            imageColor: Colors.red);
         break;
 
       /// Диалог, если что-то пошло не так... не должны сюда пападать
       case ResultVariants.UNKNOWN:
-        result = Image.asset(_badIconPath, width: 150, height: 150, color: Colors.white,);
+        result = Image.asset(
+          _badIconPath,
+          width: 150,
+          height: 150,
+          color: Colors.white,
+        );
         break;
     }
     return result;
@@ -266,18 +280,28 @@ class MainAzbukaTrainerView extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(_badIconPath, height: 40, color: Colors.red,),
-            Text("${_controller.quizGame.wrongAnswerCount}",
-              style: Get.textTheme.headline3,
+            Image.asset(
+              _badIconPath,
+              height: 40,
+              color: Colors.red,
+            ),
+            Text(
+              "${_controller.quizGame.wrongAnswerCount}",
+              style: Get.textTheme.displaySmall,
             ),
           ],
         ),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(_goodIconPath, height: 40, color: Colors.green,),
-            Text("${_controller.quizGame.rightAnswerCount}",
-              style: Get.textTheme.headline3,
+            Image.asset(
+              _goodIconPath,
+              height: 40,
+              color: Colors.green,
+            ),
+            Text(
+              "${_controller.quizGame.rightAnswerCount}",
+              style: Get.textTheme.displaySmall,
             ),
           ],
         )
@@ -286,20 +310,35 @@ class MainAzbukaTrainerView extends StatelessWidget {
   }
 
   /// Универсальный диалог
-  Widget buildOverlayDialog({required String buttonText, required String message, required String imagePath, required Color imageColor}) {
+  Widget buildOverlayDialog(
+      {required String buttonText,
+      required String message,
+      required String imagePath,
+      required Color imageColor}) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(height: UIHelper.SpaceMedium,),
+        SizedBox(
+          height: UIHelper.SpaceMedium,
+        ),
         Image.asset(
           imagePath,
           width: 100,
           height: 100,
           color: imageColor,
         ),
-        SizedBox(height: UIHelper.SpaceSmall,),
-        Text(message, style: Get.textTheme.headline4, softWrap: true, textAlign: TextAlign.center, ),
-        SizedBox(height: UIHelper.SpaceSmall,),
+        SizedBox(
+          height: UIHelper.SpaceSmall,
+        ),
+        Text(
+          message,
+          style: Get.textTheme.headlineMedium,
+          softWrap: true,
+          textAlign: TextAlign.center,
+        ),
+        SizedBox(
+          height: UIHelper.SpaceSmall,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -320,9 +359,10 @@ class MainAzbukaTrainerView extends StatelessWidget {
                 child: Text(buttonText)),
           ],
         ),
-        SizedBox(height: UIHelper.SpaceMedium,)
+        SizedBox(
+          height: UIHelper.SpaceMedium,
+        )
       ],
     );
   }
-
 }

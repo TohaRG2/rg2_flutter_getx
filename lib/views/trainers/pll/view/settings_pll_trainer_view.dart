@@ -11,14 +11,14 @@ import 'package:rg2/utils/theme_compat.dart';
 class SettingsPllTrainerView extends StatelessWidget {
   final PllSettingsController _controller = Get.find();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Center(
-          child: Text(StrRes.pllTrainerSettingsTitle, style: TextStyle(color: Get.textTheme.headline6.color)),
+          child: Text(StrRes.pllTrainerSettingsTitle,
+              style: TextStyle(color: Get.textTheme.titleLarge?.color)),
         ),
         backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
@@ -33,13 +33,18 @@ class SettingsPllTrainerView extends StatelessWidget {
               children: [
                 /// Сложность тренировки:
                 Container(
-                  child: Text(StrRes.pllTrainerSettingsTrainingTitle, style: Get.textTheme.headline6,)
-                ),
+                    child: Text(
+                  StrRes.pllTrainerSettingsTrainingTitle,
+                  style: Get.textTheme.titleLarge,
+                )),
 
                 /// Случайная сторона PLL алгоритма
                 SwitchListTile(
                   contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  title: Text(StrRes.pllTrainerSettingsAUF, style: Get.textTheme.bodyText1,),
+                  title: Text(
+                    StrRes.pllTrainerSettingsAUF,
+                    style: Get.textTheme.bodyLarge,
+                  ),
                   value: _controller.randomAUF,
                   onChanged: (v) {
                     _controller.randomAUF = v;
@@ -49,7 +54,10 @@ class SettingsPllTrainerView extends StatelessWidget {
                 /// Случайная передняя сторона
                 SwitchListTile(
                   contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  title: Text(StrRes.pllTrainerSettingsRandomSide, style: Get.textTheme.bodyText1,),
+                  title: Text(
+                    StrRes.pllTrainerSettingsRandomSide,
+                    style: Get.textTheme.bodyLarge,
+                  ),
                   value: _controller.randomFrontSide,
                   onChanged: (v) {
                     _controller.randomFrontSide = v;
@@ -59,7 +67,10 @@ class SettingsPllTrainerView extends StatelessWidget {
                 /// Игра на время
                 SwitchListTile(
                   contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  title: Text(StrRes.pllTrainerSettingsEnableTimer, style:Get.textTheme.bodyText1,),
+                  title: Text(
+                    StrRes.pllTrainerSettingsEnableTimer,
+                    style: Get.textTheme.bodyLarge,
+                  ),
                   value: _controller.isTimerEnabled,
                   onChanged: (v) {
                     _controller.isTimerEnabled = v;
@@ -68,25 +79,36 @@ class SettingsPllTrainerView extends StatelessWidget {
 
                 /// Кнопки настройки времени ответа
                 buildSetAnswerTime(),
-                SizedBox(height: UIHelper.SpaceMedium,),
+                SizedBox(
+                  height: UIHelper.SpaceMedium,
+                ),
 
                 /// Кнопки настройки автопродолжения при успешном ответе
                 buildSetGoodTime(),
-                SizedBox(height: UIHelper.SpaceMedium,),
+                SizedBox(
+                  height: UIHelper.SpaceMedium,
+                ),
 
                 /// Кнопки настройки автопродолжения при ошибочном ответе
                 buildSetBadTime(),
-                SizedBox(height: UIHelper.SpaceMedium,),
+                SizedBox(
+                  height: UIHelper.SpaceMedium,
+                ),
 
                 /// Внешний вид кубика:
                 Container(
-                    child: Text(StrRes.pllTrainerSettingsCubeView, style: Get.textTheme.headline6,)
-                ),
+                    child: Text(
+                  StrRes.pllTrainerSettingsCubeView,
+                  style: Get.textTheme.titleLarge,
+                )),
 
                 /// Выбор количества сторон
                 ListTile(
                   contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  title: Text(StrRes.pllTrainerSettings2SideRecognition, style: Get.textTheme.bodyText1,),
+                  title: Text(
+                    StrRes.pllTrainerSettings2SideRecognition,
+                    style: Get.textTheme.bodyLarge,
+                  ),
                   trailing: Radio(
                     value: true,
                     groupValue: _controller.twoSideRecognition,
@@ -99,7 +121,10 @@ class SettingsPllTrainerView extends StatelessWidget {
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  title: Text(StrRes.pllTrainerSettings3SideRecognition, style: Get.textTheme.bodyText1,),
+                  title: Text(
+                    StrRes.pllTrainerSettings3SideRecognition,
+                    style: Get.textTheme.bodyLarge,
+                  ),
                   trailing: Radio(
                     value: false,
                     groupValue: _controller.twoSideRecognition,
@@ -111,14 +136,24 @@ class SettingsPllTrainerView extends StatelessWidget {
                   ),
                 ),
 
-                SizedBox(height: UIHelper.SpaceMedium,),
+                SizedBox(
+                  height: UIHelper.SpaceMedium,
+                ),
+
                 /// Варианты ответов
-                Text(StrRes.pllTrainerSettingsAnswerVariants, style: Get.textTheme.headline6,),
+                Text(
+                  StrRes.pllTrainerSettingsAnswerVariants,
+                  style: Get.textTheme.titleLarge,
+                ),
 
                 /// Выбор вариантов (все 21 или кастомные)
                 ListTile(
-                  contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall, top: UIHelper.SpaceSmall),
-                  title: Text(StrRes.pllTrainerSettingsAllVariants, style: Get.textTheme.bodyText1,),
+                  contentPadding: EdgeInsets.only(
+                      left: UIHelper.SpaceSmall, top: UIHelper.SpaceSmall),
+                  title: Text(
+                    StrRes.pllTrainerSettingsAllVariants,
+                    style: Get.textTheme.bodyLarge,
+                  ),
                   trailing: Radio(
                     value: true,
                     groupValue: _controller.showAllVariants,
@@ -131,7 +166,10 @@ class SettingsPllTrainerView extends StatelessWidget {
                 ),
                 ListTile(
                   contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  title: Text(StrRes.pllTrainerSettingsNotAllVariants, style: Get.textTheme.bodyText1,),
+                  title: Text(
+                    StrRes.pllTrainerSettingsNotAllVariants,
+                    style: Get.textTheme.bodyLarge,
+                  ),
                   trailing: Radio(
                     value: false,
                     groupValue: _controller.showAllVariants,
@@ -142,21 +180,26 @@ class SettingsPllTrainerView extends StatelessWidget {
                     },
                   ),
                 ),
-                SizedBox(height: UIHelper.SpaceSmall,),
+                SizedBox(
+                  height: UIHelper.SpaceSmall,
+                ),
 
                 /// Кнопки настройки количества вариантов для ответа
                 buildSelectCustomVariantsCount(),
-                SizedBox(height: UIHelper.SpaceMedium,),
+                SizedBox(
+                  height: UIHelper.SpaceMedium,
+                ),
 
                 /// Кнопка Выбрать/Переименовать алгоритмы
                 buildSelectRenameButton(),
-                SizedBox(height: UIHelper.SpaceMedium,),
+                SizedBox(
+                  height: UIHelper.SpaceMedium,
+                ),
               ],
             ),
           ),
         );
       }),
-
       bottomNavigationBar: BottomBarWithBackButton(),
     );
   }
@@ -181,8 +224,7 @@ class SettingsPllTrainerView extends StatelessWidget {
         text: StrRes.pllTrainerSettingsTimeForAnswer,
         time: _controller.timeForAnswer.toString(),
         enabled: _controller.isTimerEnabled,
-        onButtonsPressing: _onChangeTimerEnabled
-    );
+        onButtonsPressing: _onChangeTimerEnabled);
   }
 
   /// Виджет выбора времени автопродолжения при удачном ответе
@@ -199,12 +241,12 @@ class SettingsPllTrainerView extends StatelessWidget {
     };
     return buildSetTime(
         text: StrRes.pllTrainerSettingsTimeForGoodAnswer,
-        time: (_controller.goodAnswerWaiting == 11) ? "∞" : "${_controller.goodAnswerWaiting}",
+        time: (_controller.goodAnswerWaiting == 11)
+            ? "∞"
+            : "${_controller.goodAnswerWaiting}",
         enabled: true,
-        onButtonsPressing: _onChangeTime
-    );
+        onButtonsPressing: _onChangeTime);
   }
-
 
   /// Виджет выбора времени автопродолжения при ошибочном ответе
   Widget buildSetBadTime() {
@@ -220,26 +262,31 @@ class SettingsPllTrainerView extends StatelessWidget {
     };
     return buildSetTime(
         text: StrRes.pllTrainerSettingsTimeForBadAnswer,
-        time: (_controller.badAnswerWaiting == 11) ? "∞" : "${_controller.badAnswerWaiting}",
+        time: (_controller.badAnswerWaiting == 11)
+            ? "∞"
+            : "${_controller.badAnswerWaiting}",
         enabled: true,
-        onButtonsPressing: _onChangeTime
-    );
+        onButtonsPressing: _onChangeTime);
   }
 
   /// Шаблон виджета выбора времени
-  Widget buildSetTime({required String text, required String time, required bool enabled, required void Function(int)? onButtonsPressing}) {
+  Widget buildSetTime(
+      {required String text,
+      required String time,
+      required bool enabled,
+      required void Function(int)? onButtonsPressing}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMini),
       child: Row(
         children: [
           Expanded(
               child: Opacity(
-                opacity: enabled ? 1.0 : 0.5,
-                child: Text(
-                  text,
-                  style: Get.textTheme.bodyText1,
-                ),
-              )),
+            opacity: enabled ? 1.0 : 0.5,
+            child: Text(
+              text,
+              style: Get.textTheme.bodyLarge,
+            ),
+          )),
           Container(
             child: ToggleButtons(
               children: [
@@ -283,7 +330,7 @@ class SettingsPllTrainerView extends StatelessWidget {
             opacity: _controller.showAllVariants ? 0.5 : 1.0,
             child: Text(
               StrRes.pllTrainerSettingsVariantsCount,
-              style: Get.textTheme.bodyText1,
+              style: Get.textTheme.bodyLarge,
             ),
           )),
           Container(
@@ -314,7 +361,7 @@ class SettingsPllTrainerView extends StatelessWidget {
               padding: const EdgeInsets.all(UIHelper.SpaceMini),
               child: Text(
                 StrRes.pllTrainerSettingsRenameAlgButtonText,
-                style: Get.textTheme.bodyText2,
+                style: Get.textTheme.bodyMedium,
                 textAlign: TextAlign.center,
               ))),
     );

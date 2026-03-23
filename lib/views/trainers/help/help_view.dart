@@ -20,7 +20,7 @@ class HelpView extends StatelessWidget {
           title: Text(
                 item.title,
                 style: TextStyle(
-                    color: Get.textTheme.headline5.color),
+                    color: Get.textTheme.headlineSmall?.color),
               ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         ),
@@ -39,12 +39,12 @@ class HelpView extends StatelessWidget {
             Html(
               data: htmlText,
               style: {
-                "a": Style(color: Theme.of(context).accentColor),
+                "a": Style(color: Theme.of(context).colorScheme.secondary),
                 "h5": Style(
                     textAlign: TextAlign.center,
                     fontSize: FontSize.large
                 ),
-                "b": Style(color: Theme.of(context).accentColor),
+                "b": Style(color: Theme.of(context).colorScheme.secondary),
               },
       onLinkTap: (url, _, __) => UrlHelper.onUrlTap(url ?? ""),
             ),

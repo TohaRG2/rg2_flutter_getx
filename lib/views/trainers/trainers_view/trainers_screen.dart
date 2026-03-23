@@ -27,14 +27,13 @@ class TrainersScreen extends StatelessWidget {
         appBar: AppBar(
           title: Center(
             child: Text(StrRes.trainersTitle,
-                style: TextStyle(
-                    color: Get.textTheme.headline5.color)),
+                style: TextStyle(color: Get.textTheme.headlineSmall?.color)),
           ),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           actions: [
             IconButton(
               icon: const Icon(Icons.settings_rounded),
-              color: Get.textTheme.headline5.color,
+              color: Get.textTheme.headlineSmall?.color,
               tooltip: 'Настройки',
               onPressed: () {
                 Get.to(() => SettingsScreenWithBottomBar());
@@ -57,8 +56,8 @@ class TrainersScreen extends StatelessWidget {
         }));
   }
 
-  _onItemSelected (TrainerMenuItem item) {
-    switch(item.id) {
+  _onItemSelected(TrainerMenuItem item) {
+    switch (item.id) {
       case StrRes.trainersScrambleGen:
         logPrint("Start Scramble Generator");
         Get.to(() => ScrambleGenView(), transition: Transition.cupertino);
@@ -80,28 +79,30 @@ class TrainersScreen extends StatelessWidget {
     }
   }
 
-  _onHelpSelected (TrainerMenuItem item) {
+  _onHelpSelected(TrainerMenuItem item) {
     //logPrint("Pressed on ${item.title} - help");
     Get.to(() => HelpView(item: item), transition: Transition.cupertino);
   }
 
-  _onSettingsSelected (TrainerMenuItem item) {
-    switch(item.id) {
+  _onSettingsSelected(TrainerMenuItem item) {
+    switch (item.id) {
       case StrRes.trainersScrambleGen:
-        Get.to(() => ScrambleGenSettingsView(), transition: Transition.rightToLeft);
+        Get.to(() => ScrambleGenSettingsView(),
+            transition: Transition.rightToLeft);
         break;
       case StrRes.trainersTimer:
         Get.to(() => SettingsTimerView(), transition: Transition.rightToLeft);
         break;
       case StrRes.trainersPll:
-        Get.to(() => SettingsPllTrainerView(), transition: Transition.rightToLeft);
+        Get.to(() => SettingsPllTrainerView(),
+            transition: Transition.rightToLeft);
         break;
       case StrRes.trainersAzbuka:
-        Get.to(() => SettingsAzbukaTrainerView(), transition: Transition.rightToLeft);
+        Get.to(() => SettingsAzbukaTrainerView(),
+            transition: Transition.rightToLeft);
         break;
       default:
         logPrint("Warning!!! Pressed on settings on ${item.title}");
     }
   }
-
 }

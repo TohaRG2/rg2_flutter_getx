@@ -18,78 +18,91 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Center(
-          child: Text(azbukaTrainerTitle, style: TextStyle(color: Get.textTheme.headline6.color)),
+          child: Text(azbukaTrainerTitle,
+              style: TextStyle(color: Get.textTheme.titleLarge?.color)),
         ),
         backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
       body: Obx(() {
         return SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.all(UIHelper.SpaceSmall),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                /// Сложность тренировки:
-                Container(
-                  padding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  child: Text(StrRes.azbukaTrainerSettingsTrainingTitle, style: Get.textTheme.headline6,)
-                ),
+              padding: const EdgeInsets.all(UIHelper.SpaceSmall),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  /// Сложность тренировки:
+                  Container(
+                      padding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                      child: Text(
+                        StrRes.azbukaTrainerSettingsTrainingTitle,
+                        style: Get.textTheme.titleLarge,
+                      )),
 
-                /// Чекбоксы Углы/Ребра
-                Row(
-                  children: [
-                    Expanded(
-                      child: CheckboxListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
-                        title: Text(StrRes.azbukaTrainerSettingsCorner),
-                        controlAffinity: ListTileControlAffinity.leading,
-                        value: _controller.isCornerEnabled,
-                        onChanged: (value) {
-                          _controller.isCornerEnabled = value;
-                        }),
+                  /// Чекбоксы Углы/Ребра
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CheckboxListTile(
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 0.0),
+                            title: Text(StrRes.azbukaTrainerSettingsCorner),
+                            controlAffinity: ListTileControlAffinity.leading,
+                            value: _controller.isCornerEnabled,
+                            onChanged: (value) {
+                              _controller.isCornerEnabled = value;
+                            }),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 0.0),
+                            title: Text(StrRes.azbukaTrainerSettingsEdge),
+                            controlAffinity: ListTileControlAffinity.leading,
+                            value: _controller.isEdgeEnabled,
+                            onChanged: (value) {
+                              _controller.isEdgeEnabled = value;
+                            }),
+                      ),
+                    ],
+                  ),
+
+                  /// Игра на время
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
+                    title: Text(
+                      StrRes.azbukaTrainerSettingsEnableTimer,
+                      style: Get.textTheme.bodyLarge,
                     ),
-                    Expanded(
-                      child: CheckboxListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
-                          title: Text(StrRes.azbukaTrainerSettingsEdge),
-                          controlAffinity: ListTileControlAffinity.leading,
-                          value: _controller.isEdgeEnabled,
-                          onChanged: (value) {
-                            _controller.isEdgeEnabled = value;
-                          }),
-                    ),
-                  ],
-                ),
+                    value: _controller.isTimerEnabled,
+                    onChanged: (value) {
+                      _controller.isTimerEnabled = value;
+                    },
+                  ),
 
-                /// Игра на время
-                SwitchListTile(
-                  contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
-                  title: Text(StrRes.azbukaTrainerSettingsEnableTimer, style:Get.textTheme.bodyText1,),
-                  value: _controller.isTimerEnabled,
-                  onChanged: (value) {
-                    _controller.isTimerEnabled = value;
-                  },
-                ),
+                  /// Кнопки настройки времени ответа
+                  buildSetAnswerTime(),
+                  SizedBox(
+                    height: UIHelper.SpaceMedium,
+                  ),
 
-                /// Кнопки настройки времени ответа
-                buildSetAnswerTime(),
-                SizedBox(height: UIHelper.SpaceMedium,),
+                  /// Кнопки навтройки автопродолжения при успешном ответе
+                  buildSetGoodTime(),
+                  SizedBox(
+                    height: UIHelper.SpaceMedium,
+                  ),
 
-                /// Кнопки навтройки автопродолжения при успешном ответе
-                buildSetGoodTime(),
-                SizedBox(height: UIHelper.SpaceMedium,),
+                  /// Кнопки навтройки автопродолжения при ошибочном ответе
+                  buildSetBadTime(),
+                  SizedBox(
+                    height: UIHelper.SpaceMedium,
+                  ),
 
-                /// Кнопки навтройки автопродолжения при ошибочном ответе
-                buildSetBadTime(),
-                SizedBox(height: UIHelper.SpaceMedium,),
-
-                /// Настройки азбуки
-                _azbukaView.buildTableAndButtons(),
-              ],
-            )
-          ),
+                  /// Настройки азбуки
+                  _azbukaView.buildTableAndButtons(),
+                ],
+              )),
         );
       }),
       bottomNavigationBar: BottomBarWithBackButton(),
@@ -116,66 +129,69 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
         text: StrRes.azbukaTrainerSettingsTimeForAnswer,
         time: _controller.timeForAnswer.toString(),
         enabled: _controller.isTimerEnabled,
-        onButtonsPressing: _onChangeTimerEnabled
-    );
+        onButtonsPressing: _onChangeTimerEnabled);
   }
 
   /// Виджет выбора времени автопродолжения при удачном ответе
   Widget buildSetGoodTime() {
     /// Обработчик нажатий на кнопки изменений времени овтопродолжения при удачном ответе
     void Function(int) _onChangeTime = (index) {
-        if (index == 0) {
-          _controller.decreaseGoodAnswerWaiting();
-        } else if (index == 1) {
-          _controller.resetGoodAnswerWaiting();
-        } else if (index == 2) {
-          _controller.increaseGoodAnswerWaiting();
-        }
+      if (index == 0) {
+        _controller.decreaseGoodAnswerWaiting();
+      } else if (index == 1) {
+        _controller.resetGoodAnswerWaiting();
+      } else if (index == 2) {
+        _controller.increaseGoodAnswerWaiting();
+      }
     };
     return buildSetTime(
         text: StrRes.azbukaTrainerSettingsTimeForGoodAnswer,
-        time: (_controller.goodAnswerWaiting == 11) ? "∞" : "${_controller.goodAnswerWaiting}",
+        time: (_controller.goodAnswerWaiting == 11)
+            ? "∞"
+            : "${_controller.goodAnswerWaiting}",
         enabled: true,
-        onButtonsPressing: _onChangeTime
-    );
+        onButtonsPressing: _onChangeTime);
   }
-
 
   /// Виджет выбора времени автопродолжения при ошибочном ответе
   Widget buildSetBadTime() {
     /// Обработчик нажатий на кнопки изменений времени овтопродолжения при ошибочном ответе
     void Function(int) _onChangeTime = (index) {
-        if (index == 0) {
-          _controller.decreaseBadAnswerWaiting();
-        } else if (index == 1) {
-          _controller.resetBadAnswerWaiting();
-        } else if (index == 2) {
-          _controller.increaseBadAnswerWaiting();
-        }
+      if (index == 0) {
+        _controller.decreaseBadAnswerWaiting();
+      } else if (index == 1) {
+        _controller.resetBadAnswerWaiting();
+      } else if (index == 2) {
+        _controller.increaseBadAnswerWaiting();
+      }
     };
     return buildSetTime(
         text: StrRes.azbukaTrainerSettingsTimeForBadAnswer,
-        time: (_controller.badAnswerWaiting == 11) ? "∞" : "${_controller.badAnswerWaiting}",
+        time: (_controller.badAnswerWaiting == 11)
+            ? "∞"
+            : "${_controller.badAnswerWaiting}",
         enabled: true,
-        onButtonsPressing: _onChangeTime
-    );
+        onButtonsPressing: _onChangeTime);
   }
 
-
   /// Шаблон виджета выбора времени
-  Widget buildSetTime({required String text, required String time, required bool enabled, required void Function(int)? onButtonsPressing}) {
+  Widget buildSetTime(
+      {required String text,
+      required String time,
+      required bool enabled,
+      required void Function(int)? onButtonsPressing}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: UIHelper.SpaceMini),
       child: Row(
         children: [
           Expanded(
-            child: Opacity(
-              opacity: enabled ? 1.0 : 0.5,
-              child: Text(
-                text,
-                style: Get.textTheme.bodyText1,
-              ),
-            )),
+              child: Opacity(
+            opacity: enabled ? 1.0 : 0.5,
+            child: Text(
+              text,
+              style: Get.textTheme.bodyLarge,
+            ),
+          )),
           Container(
             child: ToggleButtons(
               children: [
@@ -191,6 +207,4 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
       ),
     );
   }
-
-
 }
