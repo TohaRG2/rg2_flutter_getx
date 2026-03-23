@@ -388,10 +388,8 @@ class BlindCube extends Cube {
     switch(elementType) {
       case CubeElementTypes.CORNER:
         return azbuka[mainCorner[defaultColor] ?? 0];
-        break;
       case CubeElementTypes.EDGE:
         return azbuka[mainEdge[defaultColor] ?? 0];
-        break;
       default:
         logPrintErr("У центра нет буквы в азбуке");
         return "-";

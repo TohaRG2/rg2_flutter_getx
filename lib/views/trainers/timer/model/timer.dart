@@ -55,9 +55,9 @@ class Timer {
   // Разница между текущим и сохраненным временем
   Duration getDuration() {
     switch (_state) {
-      case TimerState.STOP: return Duration.zero; break;
-      case TimerState.PAUSE: return _savedDuration; break;
-      default: return DateTime.now().difference(_startingTime); break;
+      case TimerState.STOP: return Duration.zero;
+      case TimerState.PAUSE: return _savedDuration;
+      default: return DateTime.now().difference(_startingTime);
     }
   }
 
@@ -78,8 +78,8 @@ class Timer {
       return "0$n";
     }
 
-    String twoDigitMinutes = twoDigits(dur.inMinutes.remainder(Duration.minutesPerHour) as int);
-    String twoDigitSeconds = twoDigits(dur.inSeconds.remainder(Duration.secondsPerMinute) as int);
+    String twoDigitMinutes = twoDigits(dur.inMinutes.remainder(Duration.minutesPerHour));
+    String twoDigitSeconds = twoDigits(dur.inSeconds.remainder(Duration.secondsPerMinute));
     String twoDigitMls = twoDigits(dur.inMilliseconds.remainder(1000) ~/ 10 );
 
     return "$twoDigitMinutes:$twoDigitSeconds.$twoDigitMls";
