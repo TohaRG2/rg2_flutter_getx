@@ -10,6 +10,7 @@ import 'package:rg2/views/settings/widgets/theme_switch.dart';
 import 'package:rg2/views/shared/preloader.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 import 'package:rg2/views/shared/bottom_bar_with_back_button.dart';
+import 'package:rg2/utils/theme_compat.dart';
 
 import 'widgets/help_settings.dart';
 import 'widgets/internet_settings.dart';

@@ -6,6 +6,7 @@ import 'package:rg2/views/youtube_player/controller/youtube_controller.dart';
 import 'package:rg2/views/shared/buttons_style.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:rg2/utils/theme_compat.dart';
 
 // GetView + Get.put = один и тот же контроллер
 // GetView + Get.create = разные контроллеры

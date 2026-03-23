@@ -7,6 +7,7 @@ import 'package:rg2/views/trainers/timer/view/icon_with_text_widget.dart';
 import 'package:rg2/views/trainers/timer/view/timer_bottom_menu_bar.dart';
 import 'package:rg2/views/trainers/timer/view/scramble_text_widget.dart';
 import 'package:rg2/views/trainers/timer/controller/timer_settings_controller.dart';
+import 'package:rg2/utils/theme_compat.dart';
 
 class TimerView extends StatelessWidget {
   final TimerController _controller = Get.find();
@@ -56,8 +57,12 @@ class TimerView extends StatelessWidget {
     // изначально задаем размер нижней панели как Default + padding для SafeArea
     _controller.trySetBottomBarHeight(Get.mediaQuery.padding.bottom + _defBottomBarHeight);
     _controller.initialization();
-    return WillPopScope(
-      onWillPop: _onWillPop,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (didPop) return;
+        _onWillPop();
+      },
       child: Obx(() {
         //logPrint("bottomHeight - ${_controller.bottomBarHeight}");
         return Stack(

@@ -71,8 +71,12 @@ class MainPllTrainerView extends StatelessWidget {
 
   /// Основной экран игры (стэк из основного экрана и экрана с результатами ответа
   Widget buildGameScreen() {
-    return WillPopScope(
-      onWillPop: _onWillPop,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (didPop) {
+        if (didPop) return;
+        _onWillPop();
+      },
       child: Stack(children: [
         buildMainGame(),
         Visibility(

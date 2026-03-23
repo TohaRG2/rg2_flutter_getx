@@ -6,6 +6,7 @@ import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/views/favourites/dialog/favourite_dialog.dart';
 import 'package:rg2/views/shared/menu_card_item.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
+import 'package:rg2/utils/theme_compat.dart';
 typedef FunctionForCallback = Function(MainDBItem, bool);
 
 class MainMenuItem extends StatelessWidget {

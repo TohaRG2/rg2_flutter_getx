@@ -43,9 +43,12 @@ class LearnViewPager extends GetView<LearnController> {
             _tabController.index = pageNum;
           return Scaffold(
               appBar: _buildAppBar(),
-              body: WillPopScope(
-                // Обработчик нажатия на Back в андродид
-                onWillPop: _onWillPop,
+              body: PopScope(
+                canPop: false,
+                onPopInvoked: (didPop) {
+                  if (didPop) return;
+                  _onWillPop();
+                },
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
