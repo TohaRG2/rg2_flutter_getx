@@ -12,36 +12,68 @@ class YoutubePlayerDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _controller = YoutubePlayerController(
+    // Флаг готовности плеера
+    final isReady = false.obs;
+
+    // Контроллер плеера
+    var controller = YoutubePlayerController(
       initialVideoId: videoID,
       flags: YoutubePlayerFlags(
         mute: false,
         autoPlay: true,
+        enableCaption: false, // Отключаем субтитры
       ),
     );
 
+    // Диалог с плеером
     return AlertDialog(
-        insetPadding: EdgeInsets.all(10),
-        backgroundColor: Colors.black,
-        content: YoutubePlayer(
-          controller: _controller,
-          showVideoProgressIndicator: true,
-          bottomActions: [
-            CurrentPosition(),
-            ProgressBar(isExpanded: true),
-          ],
-          onReady: () {
-            logPrint("build - Player is ready.");
-          },
-        ),
-        contentPadding: EdgeInsets.all(0),
-        actions: <Widget>[
-          TextButton(
-            child: new Text(StrRes.backButtonText),
-            onPressed: () {
-              Get.back();
+      insetPadding: EdgeInsets.all(10),
+      backgroundColor: Colors.black,
+      content: Stack(
+        alignment: Alignment.center,
+        children: [
+          // Плеер
+          YoutubePlayer(
+            controller: controller,
+            showVideoProgressIndicator: true,
+            bottomActions: [
+              CurrentPosition(),
+              ProgressBar(isExpanded: true),
+            ],
+            onReady: () {
+              logPrint("build - Player is ready.");
+              isReady.value = true;
             },
-          )
-        ]);
+          ),
+          // Заглушка до загрузки видео
+          Obx(() => !isReady.value
+              ? Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.black54,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Text(
+                    'Загрузка видео с Youtube',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink()),
+        ],
+      ),
+      contentPadding: EdgeInsets.all(0),
+      // Кнопка закрытия диалога
+      actions: <Widget>[
+        TextButton(
+          child: Text(StrRes.backButtonText),
+          onPressed: () {
+            Get.back();
+          },
+        )
+      ],
+    );
   }
 }

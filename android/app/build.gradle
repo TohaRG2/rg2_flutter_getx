@@ -115,7 +115,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.work:work-runtime-ktx:2.7.1'
     implementation 'androidx.multidex:multidex:2.0.1'
-    implementation platform('com.google.firebase:firebase-bom:26.6.0')
-    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.android.play:core:1.10.3'
+//    implementation platform('com.google.firebase:firebase-bom:26.6.0')
+//    implementation 'com.google.firebase:firebase-analytics'
 //    implementation 'com.google.android.gms:play-services-basement:18.0.1'
 }

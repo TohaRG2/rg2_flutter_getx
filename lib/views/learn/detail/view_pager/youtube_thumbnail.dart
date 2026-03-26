@@ -6,7 +6,8 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YoutubeThumbnail extends StatelessWidget {
   final String videoID;
-  const YoutubeThumbnail({required this.videoID});
+
+  const YoutubeThumbnail({Key? key, required this.videoID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class YoutubeThumbnail extends StatelessWidget {
                     if (kIsWeb && constraints.maxWidth > 800) {
                       return Container(
                         color: Colors.transparent,
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         width: MediaQuery.of(context).size.width / 2,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
@@ -47,7 +48,7 @@ class YoutubeThumbnail extends StatelessWidget {
                     } else {
                       return Container(
                         color: Colors.transparent,
-                        padding: EdgeInsets.all(5),
+                        padding: const EdgeInsets.all(5),
                         width: MediaQuery.of(context).size.width * 2,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(10.0),
@@ -65,7 +66,7 @@ class YoutubeThumbnail extends StatelessWidget {
                 ),
               ],
             ),
-            Icon(
+            const Icon(
               Icons.play_circle_fill_rounded,
               color: Colors.black87,
               size: 55.0,
@@ -76,8 +77,11 @@ class YoutubeThumbnail extends StatelessWidget {
     );
   }
 
-  void _showDialog(videoID) {
-    Get.dialog(YoutubePlayerDialog(videoID: videoID));
+  void _showDialog(String videoID) {
+    if (Get.isDialogOpen == true) return; // Защита от дублирования
+    Get.dialog(
+      YoutubePlayerDialog(videoID: videoID),
+      barrierDismissible: true, // можно закрыть по тапу вне диалога
+    );
   }
-
 }

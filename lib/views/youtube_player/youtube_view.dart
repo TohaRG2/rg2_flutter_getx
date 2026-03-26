@@ -13,6 +13,7 @@ import 'package:rg2/utils/theme_compat.dart';
 // GetWidget + Get.create = один и тот же контроллер
 
 class YouTubeView extends GetView<MyYouTubeController> {
+  // Аргументы навигации
   final String _id = Get.arguments["id"];
   final String _time = Get.arguments["time"];
   final String _alg = Get.arguments["alg"];
@@ -20,8 +21,11 @@ class YouTubeView extends GetView<MyYouTubeController> {
   @override
   Widget build(BuildContext context) {
     logPrint("arg = $_id, $_time, $_alg");
+
     // т.к. в других местах контроллер не нужен, то инициализируем его только на время работы плеера
     Get.put(MyYouTubeController());
+
+    // Контроллер YouTube-плеера
     YoutubePlayerController youTubeController = YoutubePlayerController(
       initialVideoId: _id,
       flags: YoutubePlayerFlags(
@@ -30,21 +34,28 @@ class YouTubeView extends GetView<MyYouTubeController> {
         mute: false,
         hideThumbnail: true,
         controlsVisibleAtStart: false,
-        enableCaption: true,
+        enableCaption: false, // Отключаем субтитры
       ),
     );
+
+    // Текущее состояние плеера (для отслеживания изменений)
     var _playerState = PlayerState.unknown;
+    // Флаг готовности плеера
+    final isReady = false.obs;
+
     return Scaffold(
       body: SafeArea(
         child: Container(
           child: Column(
             children: [
+              // Область плеера
               Expanded(
                   child: Center(
                 child: Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      // Заголовок (название алгоритма)
                       Container(
                         padding: const EdgeInsets.all(8.0),
                         child: Padding(
@@ -56,40 +67,69 @@ class YouTubeView extends GetView<MyYouTubeController> {
                           ),
                         ),
                       ),
-                      YoutubePlayer(
-                        controller: youTubeController,
-                        bottomActions: [
-                          CurrentPosition(),
-                          ProgressBar(isExpanded: true),
-                          // PlaybackSpeedButton()
-                        ],
-                        onReady: () {
-                          //logPrint("Player Ready");
-                          youTubeController.addListener(() {
-                            if (youTubeController.value.playerState !=
-                                _playerState) {
-                              _playerState =
-                                  youTubeController.value.playerState;
-                              if ((_playerState == PlayerState.playing) ||
-                                  (_playerState == PlayerState.cued)) {
-                                youTubeController
-                                    .setPlaybackRate(controller.playbackRate);
-                                if (controller.playbackRate < 0.75) {
-                                  youTubeController.mute();
-                                } else {
-                                  youTubeController.unMute();
+                      // Плеер с заглушкой загрузки
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          // YouTube-плеер
+                          YoutubePlayer(
+                            controller: youTubeController,
+                            bottomActions: [
+                              CurrentPosition(),
+                              ProgressBar(isExpanded: true),
+                              // PlaybackSpeedButton()
+                            ],
+                            onReady: () {
+                              isReady.value = true;
+                              //logPrint("Player Ready");
+                              // Слушатель изменений состояния плеера
+                              youTubeController.addListener(() {
+                                if (youTubeController.value.playerState !=
+                                    _playerState) {
+                                  _playerState =
+                                      youTubeController.value.playerState;
+                                  if ((_playerState == PlayerState.playing) ||
+                                      (_playerState == PlayerState.cued)) {
+                                    // Применяем скорость воспроизведения из контроллера
+                                    youTubeController
+                                        .setPlaybackRate(controller.playbackRate);
+                                    // Глушим звук при скорости < 0.75
+                                    if (controller.playbackRate < 0.75) {
+                                      youTubeController.mute();
+                                    } else {
+                                      youTubeController.unMute();
+                                    }
+                                  }
+                                  controller.setPlayerState(_playerState.index);
                                 }
-                              }
-                              controller.setPlayerState(_playerState.index);
-                            }
-                            //logPrint("${_youTubeController.value.position.inSeconds}");
-                          });
-                        },
+                                //logPrint("${_youTubeController.value.position.inSeconds}");
+                              });
+                            },
+                          ),
+                          // Заглушка до загрузки видео
+                          Obx(() => !isReady.value
+                              ? Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.black54,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Text(
+                                    'Загрузка видео с Youtube',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox.shrink()),
+                        ],
                       ),
                     ],
                   ),
                 ),
               )),
+              // Подписи делений скорости
               Container(
                 margin: EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall),
                 child: Row(
@@ -105,6 +145,7 @@ class YouTubeView extends GetView<MyYouTubeController> {
                   ],
                 ),
               ),
+              // Слайдер скорости воспроизведения
               Obx(
                 () => Slider(
                     value: controller.playbackRate,
@@ -123,6 +164,7 @@ class YouTubeView extends GetView<MyYouTubeController> {
                       }
                     }),
               ),
+              // Кнопки управления воспроизведением
               playerNavigation(youTubeController),
             ],
           ),
@@ -136,6 +178,7 @@ class YouTubeView extends GetView<MyYouTubeController> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
+          // Назад (закрыть экран)
           Flexible(
             child: ElevatedButton(
               style: raisedButtonStyle,
@@ -145,9 +188,8 @@ class YouTubeView extends GetView<MyYouTubeController> {
               },
             ),
           ),
-          SizedBox(
-            width: 4,
-          ),
+          SizedBox(width: 4),
+          // В начало (к стартовому времени)
           Flexible(
             child: ElevatedButton(
               style: raisedButtonStyle,
@@ -158,9 +200,8 @@ class YouTubeView extends GetView<MyYouTubeController> {
               },
             ),
           ),
-          SizedBox(
-            width: 4,
-          ),
+          SizedBox(width: 4),
+          // Перемотка назад на 10 сек
           Flexible(
             child: ElevatedButton(
               style: raisedButtonStyle,
@@ -171,9 +212,8 @@ class YouTubeView extends GetView<MyYouTubeController> {
               },
             ),
           ),
-          SizedBox(
-            width: 4,
-          ),
+          SizedBox(width: 4),
+          // Пауза / Воспроизведение
           Obx(
             () => Flexible(
               child: ElevatedButton(
@@ -191,9 +231,8 @@ class YouTubeView extends GetView<MyYouTubeController> {
               ),
             ),
           ),
-          SizedBox(
-            width: 4,
-          ),
+          SizedBox(width: 4),
+          // Перемотка вперёд на 10 сек
           Flexible(
             child: ElevatedButton(
               style: raisedButtonStyle,
@@ -209,14 +248,14 @@ class YouTubeView extends GetView<MyYouTubeController> {
     );
   }
 
-  //преобразовываем строку вида 1:34 в секунды (94)
+  // Преобразовываем строку вида 1:34 в секунды (94)
   int _tryParseTime(String stTime) {
     DateTime dt;
     var format = DateFormat('m:s');
     try {
       dt = format.parse(stTime);
     } catch (e) {
-      //если ошибка преобразования времени, то считаем, что начинаем видео с начала
+      // Если ошибка преобразования — начинаем видео с начала
       logPrint("Ошибка при преобразовании даты $stTime. Ошибка $e");
       return 0;
     }
