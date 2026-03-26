@@ -22,14 +22,14 @@ dependencies:
   # возможность смахивать элементы List
   flutter_slidable: ^4.0.3
   # Добавляем возможность работы с SVG
-  flutter_svg: ^2.2.3
+  flutter_svg: ^2.2.4
 
   # Отображаем текст в html
   # Plugin for parsing html
-  html: ^0.15.0
+  html: ^0.15.6
   # Plugins for parsing .css
   csslib: ^1.0.2
-  css_colors: ^1.1.1
+  css_colors: ^1.1.7
   flutter_html: ^3.0.0
   # Plugins for rendering the <video> tag.
   # video_player: ^1.0.1
@@ -40,7 +40,7 @@ dependencies:
   # chewie_audio: ^1.1.1
 
   # Открываем ссылки во внешних программах (браузерах, почте и т.д.)
-  url_launcher: ^6.1.5
+  url_launcher: ^6.3.2
 
   # Плагин чтобы сделать элементы списка перемещаемыми и смахиваемыми (Reorderable & Slidable)
   implicitly_animated_reorderable_list_2: ^0.6.0
@@ -54,7 +54,7 @@ dependencies:
 
   # Поддержка звука, для метронома в таймере
   #assets_audio_player: ^2.0.14
-  audioplayers: ^6.5.1
+  audioplayers: ^6.6.0
 #  audiofileplayer: ^2.1.0
 
   # Для удобной работы с датой/временем
@@ -91,7 +91,7 @@ dependencies:
   # красивый свитч для смены темы
   flutter_switch: ^0.3.2
 
-  cupertino_icons: ^1.0.5
+  cupertino_icons: ^1.0.9
 
   # vector icons
   flutter_vector_icons: ^2.0.0
@@ -100,18 +100,18 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
 
   # Убираем автоотключение экрана
-  wakelock_plus: ^1.2.5
+  wakelock_plus: ^1.5.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   # Генерация splash скринов для iOS и Android
-  flutter_native_splash: ^2.1.6
+  flutter_native_splash: ^2.4.7
 
   # SQL генератор, т.к. нужна кодогенерация + build runner
-  floor_generator: ^1.2.0
-  build_runner: ^2.1.10
-  flutter_lints: ^3.0.1
+  floor_generator: ^1.5.0
+  build_runner: ^2.4.13
+  flutter_lints: ^6.0.0
 
 flutter_icons:
   android: "ic_launcher"
