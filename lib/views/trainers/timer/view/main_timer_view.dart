@@ -61,7 +61,7 @@ class TimerView extends StatelessWidget {
     _controller.initialization();
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
         _onWillPop();
       },
