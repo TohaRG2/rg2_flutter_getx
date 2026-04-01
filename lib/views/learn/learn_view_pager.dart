@@ -45,7 +45,7 @@ class LearnViewPager extends GetView<LearnController> {
               appBar: _buildAppBar(),
               body: PopScope(
                 canPop: false,
-                onPopInvoked: (didPop) {
+                onPopInvokedWithResult: (didPop, result) {
                   if (didPop) return;
                   _onWillPop();
                 },

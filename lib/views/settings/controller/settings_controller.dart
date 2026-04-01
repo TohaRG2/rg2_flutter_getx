@@ -26,7 +26,7 @@ class SettingsController extends GetxController {
     Color get primaryThemeColor => _primaryThemeColor.value;
     set primaryThemeColor (Color color) {
       _primaryThemeColor.value = color;
-      int value = color.value;
+      int value = color.value & 0xFFFFFFFF;
       _storage.setProperty(Property(key: Const.PRIMARY_COLOR, value: value));
       _changeCurrentTheme();
     }
@@ -36,7 +36,7 @@ class SettingsController extends GetxController {
     Color get accentThemeColor => _accentThemeColor.value;
     set accentThemeColor (Color color) {
       _accentThemeColor.value = color;
-      int value = color.value;
+      int value = color.value & 0xFFFFFFFF;
       _storage.setProperty(Property(key: Const.ACCENT_COLOR, value: value));
       _changeCurrentTheme();
     }
@@ -221,8 +221,8 @@ class SettingsController extends GetxController {
     int? _accentColor = _storage.getPropertyByKey<int>(Const.ACCENT_COLOR);
     bool? isDarkThemeNewValue = _storage.getPropertyByKey<bool>(Const.IS_THEME_DARK);
 
-    final int primaryStored = _primaryColor ?? primaryThemeColor.value;
-    final int accentStored = _accentColor ?? accentThemeColor.value;
+    final int primaryStored = _primaryColor ?? (primaryThemeColor.value & 0xFFFFFFFF);
+    final int accentStored = _accentColor ?? (accentThemeColor.value & 0xFFFFFFFF);
     final bool isDarkStored = isDarkThemeNewValue ?? isDarkThemeSelect;
 
     var isPrimaryColorChange = primaryThemeColor != Color(primaryStored);
@@ -257,9 +257,9 @@ class SettingsController extends GetxController {
 
   /// Преобразуем простой Color в MaterialColor
   MaterialColor materialColorFrom(Color color) {
-    var red = color.red;
-    var green = color.green;
-    var blue = color.blue;
+    var red = (color.r * 255.0).round().clamp(0, 255);
+    var green = (color.g * 255.0).round().clamp(0, 255);
+    var blue = (color.b * 255.0).round().clamp(0, 255);
 
     Map<int, Color> colorCodes = {
       50: Color.fromRGBO(red, green, blue, .1),
@@ -274,7 +274,7 @@ class SettingsController extends GetxController {
       900: Color.fromRGBO(red, green, blue, 1),
     };
     
-    return MaterialColor(color.value, colorCodes);
+    return MaterialColor(color.value & 0xFFFFFFFF, colorCodes);
   }
 
 

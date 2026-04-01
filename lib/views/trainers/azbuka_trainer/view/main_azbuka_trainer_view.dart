@@ -71,7 +71,7 @@ class MainAzbukaTrainerView extends StatelessWidget {
   Widget buildGameScreen() {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         if (didPop) return;
         _onWillPop();
       },
@@ -108,7 +108,7 @@ class MainAzbukaTrainerView extends StatelessWidget {
                   //width: Get.size.width,
                   lineHeight: 5.0,
                   percent: _controller.quizGame.timerProgress,
-                  linearStrokeCap: LinearStrokeCap.roundAll,
+                  barRadius: const Radius.circular(2.5),
                   progressColor: _color,
                 );
               }),
@@ -182,7 +182,7 @@ class MainAzbukaTrainerView extends StatelessWidget {
   Widget buildSmallButton(String letter) {
     return ElevatedButton(
       style: raisedButtonStyle.copyWith(
-          shape: MaterialStateProperty.all<OutlinedBorder>(
+          shape: WidgetStateProperty.all<OutlinedBorder>(
               const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(5.0)),
       ))),

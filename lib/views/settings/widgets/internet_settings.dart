@@ -28,35 +28,29 @@ class InternetSettings extends StatelessWidget {
             ),
           ),
           SizedBox(height: UIHelper.SpaceSmall,),
-          ListTile(
+          RadioListTile<int>(
             title: Text(StrRes.allInternetUsingText, style: Get.textTheme.bodyText1,),
-            trailing: Radio (
-              value: 0,
-              groupValue: _settings.internetUsage,
-              onChanged: (value) {
-                _settings.internetUsage = value as int;
-              },
-            ),
+            value: 0,
+            groupValue: _settings.internetUsage,
+            onChanged: (value) {
+              _settings.internetUsage = value!;
+            },
           ),
-          ListTile(
+          RadioListTile<int>(
             title: Text(StrRes.wiFiUsingText, style: Get.textTheme.bodyText1,),
-            trailing: Radio (
-              value: 2,
-              groupValue: _settings.internetUsage,
-              onChanged: (value) {
-                _settings.internetUsage = value as int;
-              },
-            ),
+            value: 2,
+            groupValue: _settings.internetUsage,
+            onChanged: (value) {
+              _settings.internetUsage = value!;
+            },
           ),
-          ListTile(
+          RadioListTile<int>(
             title: Text(StrRes.disableInternetUsingText, style: Get.textTheme.bodyText1,),
-            trailing: Radio (
-              value: 3,
-              groupValue: _settings.internetUsage,
-              onChanged: (value) {
-                _settings.internetUsage = value as int;
-              },
-            ),
+            value: 3,
+            groupValue: _settings.internetUsage,
+            onChanged: (value) {
+              _settings.internetUsage = value!;
+            },
           ),
           SizedBox(height: UIHelper.SpaceLarge,),
         ],

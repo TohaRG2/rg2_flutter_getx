@@ -9,8 +9,7 @@ import 'package:rg2/utils/my_logger.dart';
 /// Контроллер для локального хранилища
 class GlobalStorageController extends GetxController {
   final GetStorage _localStorage = GetStorage();
-
-  late final ConnectionController _connectionController;
+  late final ConnectionController connectionController;
 
   @override
   onInit() async {
@@ -18,7 +17,7 @@ class GlobalStorageController extends GetxController {
     logPrint("onInit - GlobalStorageController");
     await _localStorage.initStorage;
     // Инициализируем ConnectionController для использования в приложении
-    _connectionController = Get.put(ConnectionController(), permanent: true);
+    connectionController = Get.put(ConnectionController(), permanent: true);
   }
 
 
