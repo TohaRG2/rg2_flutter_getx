@@ -8,16 +8,17 @@ import 'package:rg2/utils/my_logger.dart';
 
 /// Контроллер для локального хранилища
 class GlobalStorageController extends GetxController {
-  final ConnectionController _connection = Get.put<ConnectionController>(ConnectionController(), permanent: true);
-
-  String _userId = "";
   final GetStorage _localStorage = GetStorage();
+
+  late final ConnectionController _connectionController;
 
   @override
   onInit() async {
     super.onInit();
     logPrint("onInit - GlobalStorageController");
     await _localStorage.initStorage;
+    // Инициализируем ConnectionController для использования в приложении
+    _connectionController = Get.put(ConnectionController(), permanent: true);
   }
 
 
@@ -57,7 +58,7 @@ class GlobalStorageController extends GetxController {
   }
 
   /// Сохраняем параметр в облако(если залогинены) и в локальное хранилище
-  setProperty(Property property){
+  void setProperty(Property property){
     _setPropertyToLocalStorage(property);
   }
 
@@ -74,7 +75,7 @@ class GlobalStorageController extends GetxController {
   void runCallbacks() {
     logPrint("runCallbacks");
     // обновляем переменные
-    callbacks.forEach((callback) { callback();} );
+    for (var callback in callbacks) { callback();}
   }
 
 }

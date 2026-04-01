@@ -105,9 +105,36 @@ class TimerView extends StatelessWidget {
                     child: Container(
                       width: _width,
                       child: Stack(alignment: Alignment.topCenter, children: [
-                        /// Выводим две плашки для правой и левой руки, которые срабатывают только справа
-                        /// и слева от счетчика времени, т.к. ниже перекрываются другими плашками
-                        _twoMainPad(),
+                        /// Декоративные половинки (рамки) для визуального разделения экрана
+                        /// Обработчики событий находятся в TwoMainPadsWidget
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                color: _borderColor,
+                                padding: EdgeInsets.only(
+                                    left: _borderThin,
+                                    top: _borderThin,
+                                    bottom: _borderThin,
+                                    right: _borderThin / 2),
+                                height: double.infinity,
+                                child: Container(color: _backgroundColor),
+                              ),
+                            ),
+                            Expanded(
+                              child: Container(
+                                color: _borderColor,
+                                padding: EdgeInsets.only(
+                                    left: _borderThin / 2,
+                                    top: _borderThin,
+                                    bottom: _borderThin,
+                                    right: _borderThin),
+                                height: double.infinity,
+                                child: Container(color: _backgroundColor),
+                              ),
+                            ),
+                          ],
+                        ),
 
                         /// Перекрываем однорукой плашкой, если выбран такой режим
                         Visibility(
@@ -295,59 +322,6 @@ class TimerView extends StatelessWidget {
               _textController.text = "",
               Get.back()
             });
-  }
-
-  Row _twoMainPad() {
-    return Row(
-      children: [
-        Expanded(
-          child: GestureDetector(
-            onTapDown: (_) {
-              _controller.onLeftPanelTouch();
-            },
-            onTapCancel: () {
-              _controller.onLeftPanelTouchCancel();
-            },
-            onTapUp: (_) {
-              _controller.onLeftPanelTouchCancel();
-            },
-            child: Container(
-              color: _borderColor,
-              padding: EdgeInsets.only(
-                  left: _borderThin,
-                  top: _borderThin,
-                  bottom: _borderThin,
-                  right: _borderThin / 2),
-              height: double.infinity,
-              child: Container(color: _backgroundColor),
-            ),
-          ),
-        ),
-        Expanded(
-          child: GestureDetector(
-            onTapDown: (_) {
-              _controller.onRightPanelTouch();
-            },
-            onTapCancel: () {
-              _controller.onRightPanelTouchCancel();
-            },
-            onTapUp: (_) {
-              _controller.onRightPanelTouchCancel();
-            },
-            child: Container(
-              color: _borderColor,
-              padding: EdgeInsets.only(
-                  left: _borderThin / 2,
-                  top: _borderThin,
-                  bottom: _borderThin,
-                  right: _borderThin),
-              height: double.infinity,
-              child: Container(color: _backgroundColor),
-            ),
-          ),
-        ),
-      ],
-    );
   }
 
   AnimatedPositioned _bottomNavBar(Duration _duration, Color _primaryColor) {

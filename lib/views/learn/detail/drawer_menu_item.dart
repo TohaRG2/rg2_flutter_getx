@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/views/shared/menu_card_item.dart';

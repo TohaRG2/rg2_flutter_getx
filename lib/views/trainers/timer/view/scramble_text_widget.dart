@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rg2/utils/theme_compat.dart';
 
 class ScrambleTextWidget extends StatelessWidget {
   final String _text;
@@ -19,8 +18,8 @@ class ScrambleTextWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color _accentColor = Get.theme.colorScheme.secondary;
-    final baseSize = Get.textTheme.titleLarge?.fontSize ?? 20.0;
+    final Color accentColor = Get.theme.colorScheme.secondary;
+    final baseSize = Get.textTheme.titleMedium?.fontSize ?? 20.0;
     final textSize = baseSize * _textRatio;
     return GestureDetector(
       onTap: () {
@@ -31,8 +30,8 @@ class ScrambleTextWidget extends StatelessWidget {
         child: Center(
             child: Text(
           _text,
-          style: Get.textTheme.titleLarge
-              ?.copyWith(color: _accentColor, fontSize: textSize),
+          style: Get.textTheme.titleMedium
+              ?.copyWith(color: accentColor, fontSize: textSize),
           maxLines: 2,
         )),
       ),

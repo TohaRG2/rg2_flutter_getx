@@ -21,7 +21,7 @@ class LearnRedirectController extends GetxController {
     redirectToDetail();
   }
 
-  redirectToDetail() {
+  void redirectToDetail() {
     Get.off(() => LearnDetailScreen(phase, id), transition: Transition.cupertino);
   }
 

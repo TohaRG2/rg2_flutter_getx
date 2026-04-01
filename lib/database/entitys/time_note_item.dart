@@ -1,6 +1,5 @@
 
 import 'package:floor/floor.dart';
-import 'package:flutter/material.dart';
 
 @Entity(tableName: 'times')
 class TimeNoteItem {

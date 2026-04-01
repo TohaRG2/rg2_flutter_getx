@@ -15,13 +15,13 @@ class MyYouTubeController extends GetxController {
     _playbackRate.value = _storage.getPropertyByKey(Const.YOU_TUBE_PLAYER_SPEED);
   }
 
-  setPlayerState(int value) {
+  void setPlayerState(int value) {
     _playerState.value = value;
   }
 
   int getPlayerState() => _playerState.value;
 
-  RxDouble _playbackRate = RxDouble(1.0);
+  final RxDouble _playbackRate = RxDouble(1.0);
   double get playbackRate => _playbackRate.value;
   set playbackRate(double value) {
     var rounded = (value * 100).round() / 100;

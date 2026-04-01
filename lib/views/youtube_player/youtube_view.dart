@@ -6,7 +6,6 @@ import 'package:rg2/views/youtube_player/controller/youtube_controller.dart';
 import 'package:rg2/views/shared/buttons_style.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:rg2/utils/theme_compat.dart';
 
 // GetView + Get.put = один и тот же контроллер
 // GetView + Get.create = разные контроллеры
@@ -17,6 +16,8 @@ class YouTubeView extends GetView<MyYouTubeController> {
   final String _id = Get.arguments["id"];
   final String _time = Get.arguments["time"];
   final String _alg = Get.arguments["alg"];
+
+  YouTubeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class YouTubeView extends GetView<MyYouTubeController> {
     );
 
     // Текущее состояние плеера (для отслеживания изменений)
-    var _playerState = PlayerState.unknown;
+    var playerState = PlayerState.unknown;
     // Флаг готовности плеера
     final isReady = false.obs;
 
@@ -85,11 +86,11 @@ class YouTubeView extends GetView<MyYouTubeController> {
                               // Слушатель изменений состояния плеера
                               youTubeController.addListener(() {
                                 if (youTubeController.value.playerState !=
-                                    _playerState) {
-                                  _playerState =
+                                    playerState) {
+                                  playerState =
                                       youTubeController.value.playerState;
-                                  if ((_playerState == PlayerState.playing) ||
-                                      (_playerState == PlayerState.cued)) {
+                                  if ((playerState == PlayerState.playing) ||
+                                      (playerState == PlayerState.cued)) {
                                     // Применяем скорость воспроизведения из контроллера
                                     youTubeController
                                         .setPlaybackRate(controller.playbackRate);
@@ -100,7 +101,7 @@ class YouTubeView extends GetView<MyYouTubeController> {
                                       youTubeController.unMute();
                                     }
                                   }
-                                  controller.setPlayerState(_playerState.index);
+                                  controller.setPlayerState(playerState.index);
                                 }
                                 //logPrint("${_youTubeController.value.position.inSeconds}");
                               });

@@ -172,23 +172,44 @@ class TimerController extends GetxController {
 
   onLeftPanelTouchCancel() {
     _updateIndicatorState(leftPadPressed: false, rightPadPressed: null);
-    panelTouchCancel();
+    _panelTouchCancel(leftPad: true);
   }
 
   onRightPanelTouchCancel() {
     _updateIndicatorState(leftPadPressed: null, rightPadPressed: false);
-    panelTouchCancel();
+    _panelTouchCancel(leftPad: false);
   }
 
-  void panelTouchCancel() {
+  void _panelTouchCancel({required bool leftPad}) {
+    // Определяем, какое нажатие было отменено и есть ли еще активные нажатия
+    bool anyPadPressed = _isLeftPadPressed || _isRightPadPressed;
+    
     switch (_state) {
-      case TimerControllerState.onePadPressedToStart: _onePadPressingCancel(); break;
-      case TimerControllerState.twoPadPressedToStart: _backToOnlyOnePadPressed(); break;
-      case TimerControllerState.ready: _startTimer(); break;
-      case TimerControllerState.onePadPressedToStop: _onePadStopPressingCancel(); break;
-      case TimerControllerState.waitForFullStop: _tryToFullStopTimer(); break;
+      case TimerControllerState.onePadPressedToStart:
+        // Если отменили единственное нажатие - сбрасываем
+        if (!anyPadPressed) {
+          _onePadPressingCancel();
+        }
+        // Если есть другое нажатие - остаемся в состоянии onePadPressedToStart
+        break;
+      case TimerControllerState.twoPadPressedToStart:
+        _backToOnlyOnePadPressed();
+        break;
+      case TimerControllerState.ready:
+        _startTimer();
+        break;
+      case TimerControllerState.onePadPressedToStop:
+        // Если отменили единственное нажатие - сбрасываем
+        if (!anyPadPressed) {
+          _onePadStopPressingCancel();
+        }
+        // Если есть другое нажатие - остаемся в состоянии onePadPressedToStop
+        break;
+      case TimerControllerState.waitForFullStop:
+        _tryToFullStopTimer();
+        break;
       default:
-        logPrint("Info! onPanelTouchCancel in $_state state.");
+        logPrint("Info! _panelTouchCancel in $_state state.");
         break;
     }
   }

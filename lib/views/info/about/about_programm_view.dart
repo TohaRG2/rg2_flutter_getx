@@ -6,8 +6,6 @@ import 'package:rg2/views/info/about/text_about.dart';
 import 'package:rg2/views/info/controller/info_controller.dart';
 import 'package:rg2/views/shared/url_helper.dart';
 
-import '../../../utils/theme_compat.dart';
-
 class AboutProgramView extends GetView<InfoController> {
   @override
   Widget build(BuildContext context) {

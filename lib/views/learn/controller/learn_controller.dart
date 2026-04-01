@@ -30,16 +30,16 @@ class LearnController extends GetxController {
   final RxBool _showSearchResult = false.obs;
     bool get showSearchResult => _showSearchResult.value;
   List<MainDBItem> allPuzzles = [];
-  RxList<MainDBItem> _searchList  = <MainDBItem>[].obs;
+  final RxList<MainDBItem> _searchList  = <MainDBItem>[].obs;
     List<MainDBItem> get searchList  => _searchList;
 
   // Список со свойствами страниц
   RxList<PageProperties> pages = <PageProperties>[].obs;
-  Map<String, double> phasesPositions = Map();
+  Map<String, double> phasesPositions = {};
 
-  RxInt _curPageNumber =  1.obs;
+  final RxInt _curPageNumber =  1.obs;
   int get curPageNumber => _curPageNumber.value;
-  set curPageNumber(value) {
+  set curPageNumber(int value) {
     _curPageNumber.value = value;
     _settings.currentPageNumber = value;
   }
@@ -53,16 +53,14 @@ class LearnController extends GetxController {
   }
 
   /// Инициализация списков для поиска по головоломкам
-  searchInitialization() {
+  void searchInitialization() {
     logPrint("searchInitialization");
     searchEditingController.addListener(_searchTextListener);
     searchFocusNode.addListener(_searchFocusNodeListener);
     _mainRepo.getSubMenuList().then((List<MainDBItem> subMenuList) {
       allPuzzles = subMenuList;
       allPuzzles.sort((item1, item2) => item1.title.compareTo(item2.title));
-      allPuzzles.forEach((MainDBItem item) {
-        final rootPhase = MainDBItem.getRootPhaseFor(item.phase);
-        final pageNumber = _getPageByRoot(rootPhase);
+      for (var item in allPuzzles) {
         final isItemEnabled = true;
         // final isItemEnabled = (isPurchaseEnabled || pageNumber < 3 || (pageNumber < 4 && Platform.isAndroid) || isGodModeEnabled);
         if (isItemEnabled) {
@@ -71,7 +69,7 @@ class LearnController extends GetxController {
           item.subId = 0;
         }
         // logPrint("searchInitialization - ${item.subId} - $rootPhase - $pageNumber -  ${item.title} ");
-      });
+      }
     });
   }
 
@@ -148,15 +146,15 @@ class LearnController extends GetxController {
   Future _getPhasesPositions() async {
     List<PhasePositionItem> list = await _repo.getAllPositionsList();
     phasesPositions.clear();
-    list.forEach((element) {
+    for (var element in list) {
       phasesPositions[element.phase] = element.position;
-    });
+    }
     logPrint("Инициализация списка позиций завершена: $list");
   }
 
   /// Вызываем по тапу на сердечко и
   /// меняем статус избранного для указанного элемента
-  changeFavStatus(MainDBItem item) {
+  void changeFavStatus(MainDBItem item) {
     logPrint("changeFavStatus - $item, curPage - $curPageNumber");
     logPrint("fav - ${_favController.favourites}");
     // сохраняем позицию скрола
@@ -178,14 +176,14 @@ class LearnController extends GetxController {
   }
 
   /// Убираем элемент из Избранного
-  removeElementFromFavourites(MainDBItem item) {
+  void removeElementFromFavourites(MainDBItem item) {
     logPrint("removeElementFromFavourites - $item");
     _favController.removeElementFromFavourites(item);
     updateItemInPages(item);
   }
 
   /// По фазе узнаем страницу и меняем на ней фазу
-  changePageAndPhaseTo(String phase){
+  void changePageAndPhaseTo(String phase){
     logPrint("changePageAndPhaseTo $phase");
     final rootPhase = MainDBItem.getRootPhaseFor(phase);
     final pageNumber = _getPageByRoot(rootPhase);
@@ -202,12 +200,12 @@ class LearnController extends GetxController {
   // }
 
   /// Меняем текущую фазу по объекту MainDBItem
-  changeCurrentPhaseWith(MainDBItem item) {
+  void changeCurrentPhaseWith(MainDBItem item) {
     changeCurrentPhaseTo(item.description);
   }
 
   ///Меняем текущую фазу на другую по ее имени
-  changeCurrentPhaseTo(String phase) async {
+  Future<void> changeCurrentPhaseTo(String phase) async {
     logPrint("Change phase to $phase, curPageN - $curPageNumber");
     saveListPositionForPhase(pages[curPageNumber].currentPhase);
 
@@ -219,7 +217,7 @@ class LearnController extends GetxController {
   }
 
   /// Сохраняем позицю скрола для фазы
-  saveListPositionForPhase(String phase) {
+  void saveListPositionForPhase(String phase) {
     logPrint("savePositionFor $phase, $curPositionInList");
     phasesPositions[phase] = curPositionInList;
     _repo.updatePhasePosition(phase, curPositionInList);
@@ -271,7 +269,7 @@ class LearnController extends GetxController {
 
   /// Проверяем есть ли item в pages (в кэше) и обновляем его, если есть
   void _updateItemInCache(MainDBItem item) {
-    pages.forEach((pageProp) {
+    for (var pageProp in pages) {
       List<MainDBItem> list = pageProp.currentList;
       var index = list.indexWhere((element) => element.phase == item.phase && element.id == item.id);
       if (index >= 0) {
@@ -280,26 +278,26 @@ class LearnController extends GetxController {
         list[index] = item;
         pages[pageProp.number].currentList.assignAll(list);
       }
-    });
+    }
   }
 
   /// Проверяем есть ли элементы списка в кэше и обновляем при необходимости кэш
   void _updateItemsInCache(List<MainDBItem> items) {
     // logPrint("_updateItemsInCache - $items");
-    items.forEach((item) { 
+    for (var item in items) {
       _updateItemInCache(item); 
-    });
+    }
   }
 
   ///Инициализируем список backFrom фазами на которые нужно возвращаться с текущей. типа backFrom['G2F'] = 'MAIN3X3'
   ///для корневых(основных) фаз backFrom будет возвращать null
-  _loadBackPhases() async {
+  Future<void> _loadBackPhases() async {
     var subMenusList = await _mainRepo.getSubMenuList();
     //logPrint("subMenusList - $subMenusList");
-    var backFrom = Map<String, String>();
-    subMenusList.forEach((element) {
+    var backFrom = <String, String>{};
+    for (var element in subMenusList) {
       backFrom[element.description] = element.phase;
-    });
+    }
     MainDBItem.backFrom = backFrom;
   }
 
@@ -332,22 +330,22 @@ class LearnController extends GetxController {
     return position;
   }
 
-  RxBool _hasDetailController = false.obs;
+  final RxBool _hasDetailController = false.obs;
     bool get hasDetailController => _hasDetailController.value;
-    set hasDetailController(value) => _hasDetailController.value = value;
+    set hasDetailController(bool value) => _hasDetailController.value = value;
 
   String redirectPhase = "";
   int redirectId = 0;
   bool isNeedRedirectToDetail = false;
 
-  setRedirectPage(String phase, int id){
+  void setRedirectPage(String phase, int id){
     logPrint("setRedirectPage - $phase, $id");
     redirectPhase = phase;
     redirectId = id;
     isNeedRedirectToDetail = true;
   }
 
-  resetRedirectPage(){
+  void resetRedirectPage(){
     logPrint("resetRedirectPage - ");
     redirectPhase = "";
     redirectId = 0;
@@ -355,7 +353,7 @@ class LearnController extends GetxController {
   }
 
   /// Обрабатываем клик на запись в избранном
-  onFavouriteItemClick(MainDBItem item) {
+  void onFavouriteItemClick(MainDBItem item) {
     // переходим на "Обучалки" в любом случае
     _settings.bottomItem = 0;
     // Если submenu, то меняем фазу в основном меню

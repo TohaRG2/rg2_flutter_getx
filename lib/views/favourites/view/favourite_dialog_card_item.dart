@@ -6,7 +6,6 @@ import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';
 import 'package:rg2/views/shared/menu_card_item.dart';
-import 'package:rg2/views/shared/ui_helpers.dart';
 
 class FavouriteDialogCardItem extends StatelessWidget {
   final _learnController = Get.find<LearnController>();

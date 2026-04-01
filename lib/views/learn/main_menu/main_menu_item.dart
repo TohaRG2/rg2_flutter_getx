@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/views/favourites/dialog/favourite_dialog.dart';
 import 'package:rg2/views/shared/menu_card_item.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
-import 'package:rg2/utils/theme_compat.dart';
 
 typedef FunctionForCallback = Function(MainDBItem, bool);
 

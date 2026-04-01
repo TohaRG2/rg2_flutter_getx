@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:rg2/utils/theme_compat.dart';
 import 'package:rg2/views/dialogs/azbuka/azbuka_dialog_controller.dart';
 import 'package:rg2/database/entitys/basic_move.dart';
-import 'package:rg2/views/learn/main_menu/main_menu_item.dart';
 import 'package:rg2/views/shared/menu_card_item.dart';
 
 class AzbukaItem extends StatelessWidget {

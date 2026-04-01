@@ -30,15 +30,15 @@ class TimerSettingsController extends GetxController {
   }
 
   final _isOneHanded = RxBool(false);
-    get isOneHanded => _isOneHanded.value;
-    set isOneHanded(value) {
+    bool get isOneHanded => _isOneHanded.value;
+    set isOneHanded(bool value) {
       _isOneHanded.value = value;
       _settingsController.setProperty(Property(key: Const.IS_ONE_HANDED, value: value));
     }
 
   final _isIconsColored = RxBool(false);
-    get isIconsColored => _isIconsColored.value;
-    set isIconsColored(value) {
+    bool get isIconsColored => _isIconsColored.value;
+    set isIconsColored(bool value) {
       _isIconsColored.value = value;
       _settingsController.setProperty(Property(key: Const.IS_ICONS_COLORED, value: value));
     }
@@ -77,7 +77,7 @@ class TimerSettingsController extends GetxController {
   final _alwaysScreenOnGlobal = RxBool(false);
     bool get alwaysScreenOnGlobal => _settingsController.getPropertyByKey(Const.ALWAYS_SCREEN_ON_GLOBAL);
 
-  final _scrambleTextRatio = RxDouble(1.0);
+  final _scrambleTextRatio = RxDouble(0.8);
     double get scrambleTextRatio => _scrambleTextRatio.value;
     set scrambleTextRatio(value) {
       _scrambleTextRatio.value = value;

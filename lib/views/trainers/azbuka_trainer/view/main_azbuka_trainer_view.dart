@@ -9,7 +9,6 @@ import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_trainer_cont
 import 'package:rg2/views/trainers/azbuka_trainer/view/bottom_menu_bar_azbuka_trainer.dart';
 import 'package:rg2/views/trainers/model/result_variants.dart';
 import 'package:rg2/views/trainers/pll/model/quiz_variant.dart';
-import 'package:rg2/utils/theme_compat.dart';
 
 class MainAzbukaTrainerView extends StatelessWidget {
   final AzbukaTrainerController _controller = Get.find();

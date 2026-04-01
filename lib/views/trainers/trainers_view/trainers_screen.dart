@@ -13,7 +13,6 @@ import 'package:rg2/views/trainers/scramble_gen/view/main_scramble_gen_view.dart
 import 'package:rg2/views/trainers/timer/view/main_timer_view.dart';
 import 'package:rg2/views/trainers/timer/view/settings_timer_view.dart';
 import 'package:rg2/views/trainers/trainers_view/trainer_view_menu_item.dart';
-import 'package:rg2/utils/theme_compat.dart';
 
 import '../help/help_view.dart';
 import '../scramble_gen/view/settings_scramble_gen_view.dart';

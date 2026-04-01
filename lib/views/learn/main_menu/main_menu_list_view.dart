@@ -1,21 +1,16 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/res/string_values.dart';
-// import 'package:rg2/views/purchase/purchase_view.dart';
 import 'package:rg2/views/learn/controller/learn_controller.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/learn_detail_screen.dart';
-import 'package:rg2/views/settings/controller/settings_controller.dart';
 
 import 'main_menu_item.dart';
 
 class MenuList extends StatelessWidget {
   final int pageNumber;
   final _learnController = Get.find<LearnController>();
-  final _settingsController = Get.find<SettingsController>();
 
   /// Создаем ListView для указанного номера страницы
   MenuList(this.pageNumber);
@@ -24,8 +19,6 @@ class MenuList extends StatelessWidget {
   Widget build(BuildContext context) {
     var position = _learnController.getPositionForPage(pageNumber);
     var _scrollController = ScrollController(initialScrollOffset: position);
-    var _isPurchaseEnabled = _settingsController.isAllPuzzlesEnabled;
-    var _isGodModeEnabled = _settingsController.godMode;
 
     _scrollController.addListener(() {
       _learnController.curPositionInList = _scrollController.offset;

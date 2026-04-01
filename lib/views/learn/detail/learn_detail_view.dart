@@ -10,7 +10,6 @@ import 'view_pager/learn_detail_view_pager.dart';
 
 class LearnDetailView extends StatelessWidget {
   final LearnDetailController _controller = Get.find();
-  final _duration = Duration(milliseconds: 300);
 
   @override
   Widget build(BuildContext context) {

@@ -16,45 +16,43 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LearnDetailController _controller = Get.find();
-    var item = _controller.currentItems[_curPageNumber];
+    LearnDetailController controller = Get.find();
+    var item = controller.currentItems[_curPageNumber];
     bool isPngImg = !item.icon.endsWith(".svg");
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: isPngImg
-                ? Image.asset(
-                    //_controller.getImagePathFromAssets(item.icon),
-                    item.getAssetFilePath(),
-                    height: 70,
-                  )
-                : SvgPicture.asset(
-                    //_controller.getImagePathFromAssets(item.icon),
-                    item.getAssetFilePath(),
-                    height: 70,
-                  ),
-          ),
-          Expanded(
-              child: Padding(
-            padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item.title,
-                  softWrap: true,
-                  maxLines: 3,
-                  style: Get.textTheme.headline6,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: isPngImg
+              ? Image.asset(
+                  //_controller.getImagePathFromAssets(item.icon),
+                  item.getAssetFilePath(),
+                  height: 70,
+                )
+              : SvgPicture.asset(
+                  //_controller.getImagePathFromAssets(item.icon),
+                  item.getAssetFilePath(),
+                  height: 70,
                 ),
-              ],
-            ),
-          )),
-        ],
-      ),
+        ),
+        Expanded(
+            child: Padding(
+          padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                item.title,
+                softWrap: true,
+                maxLines: 3,
+                style: Get.textTheme.headline6,
+              ),
+            ],
+          ),
+        )),
+      ],
     );
   }
 }

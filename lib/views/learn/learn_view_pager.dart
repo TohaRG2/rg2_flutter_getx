@@ -29,9 +29,9 @@ class LearnViewPager extends GetView<LearnController> {
             final TabController _tabController = DefaultTabController.of(context);
             var pageNum = _lc.curPageNumber;
 
-            //регистрируем листенер, в котором фиксируем переходы по страницам, только если его нет
-            //logPrint("tabController has listeners? - ${_tabController.hasListeners}, curPage - $pageNum");
-            if (!_tabController.hasListeners) {
+            //регистрируем листенер, в котором фиксируем переходы по страницам, только если анимация не активна
+            //logPrint("tabController animating? - ${_tabController.indexIsChanging}, curPage - $pageNum");
+            if (!_tabController.indexIsChanging) {
               _tabController.addListener(() {
                 if (!_tabController.indexIsChanging) {
                   //logPrint("$_tabController - $pageNum ");
