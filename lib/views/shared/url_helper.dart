@@ -9,7 +9,7 @@ class UrlHelper {
   //"rg2://scrmbl?scram=D2_F\'_R_L_U_R\'_D\'_B2_R\'_F2_R2_U2_R2_U\'"
   //"rg2://ytplay?time=2:36&link=rzGqTZKG74o"
   //rg2://pager?phase=BEGIN&item=1
-  static onUrlTap(String url) {
+  static void onUrlTap(String url) {
     logPrint("Opening url - $url");
     var uri = Uri.parse(url);
     if (uri.scheme == "rg2") {
@@ -20,7 +20,7 @@ class UrlHelper {
   }
 
   /// Переходы к нужному окну программы в зависимости от типа ссылки
-  static _launchRG2url(Uri uri) {
+  static void _launchRG2url(Uri uri) {
     logPrint("URI.parameters - ${uri.queryParameters}");
     // окно просмотра видео для "ytplay" или "ytplay"
     if (uri.host.toLowerCase() == "ytplay" || uri.host.toLowerCase() == "ytplay") {
@@ -51,7 +51,7 @@ class UrlHelper {
   }
 
   /// Запуск ссылки во внешнем приложении
-  static _launchExternalURL(String url) async {
+  static Future<void> _launchExternalURL(String url) async {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
@@ -61,7 +61,7 @@ class UrlHelper {
   }
 
   /// нормализуем текст для отображения в html, заменяем пути к картинкам и центруем их отображение
-  static getNormalHtmlTextFromDescription(String description, String assetPath){
+  static String getNormalHtmlTextFromDescription(String description, String assetPath){
     var htmlText = description;
     htmlText = htmlText.replaceAll('<img src=', '<img apath="$assetPath" src=');
     int n = 0;

@@ -27,24 +27,24 @@ class AzbukaSettingsController extends GetxController {
 
   /// Возможность выбрать в загаданных вариантах ребра
   final _isEdgeEnabled = RxBool(false);
-    get isEdgeEnabled => _isEdgeEnabled.value;
-    set isEdgeEnabled(value) {
+    bool get isEdgeEnabled => _isEdgeEnabled.value;
+    set isEdgeEnabled(bool value) {
       _isEdgeEnabled.value = value;
       _settingsController.setProperty(Property(key: Const.IS_AZBUKA_EDGE_ENABLED, value: value));
     }
 
   /// Возможность выбрать в загаданных вариантах углы
   final _isCornerEnabled = RxBool(false);
-    get isCornerEnabled => _isCornerEnabled.value;
-    set isCornerEnabled(value) {
+    bool get isCornerEnabled => _isCornerEnabled.value;
+    set isCornerEnabled(bool value) {
       _isCornerEnabled.value = value;
       _settingsController.setProperty(Property(key: Const.IS_AZBUKA_CORNER_ENABLED, value: value));
     }
 
   /// Тренировка на время или нет (true - на время)
   final _isTimerEnabled = RxBool(false);
-    get isTimerEnabled => _isTimerEnabled.value;
-    set isTimerEnabled(value) {
+    bool get isTimerEnabled => _isTimerEnabled.value;
+    set isTimerEnabled(bool value) {
       _isTimerEnabled.value = value;
       _settingsController.setProperty(Property(key: Const.IS_AZBUKA_TIMER_ENABLED, value: value));
     }
@@ -52,7 +52,7 @@ class AzbukaSettingsController extends GetxController {
   /// Время ожидания ответа (0 если тренировка не на время)
   final _timeForAnswer = RxInt(0);
     int get timeForAnswer => isTimerEnabled ? _timeForAnswer.value : 0;
-    set timeForAnswer(value) {
+    set timeForAnswer(int value) {
       _timeForAnswer.value = value;
       _settingsController.setProperty(Property(key: Const.AZBUKA_TIME_FOR_ANSWER, value: value));
     }
@@ -60,7 +60,7 @@ class AzbukaSettingsController extends GetxController {
   /// Время автонажатия кнопки далее при успешном ответе
   final _goodAnswerWaiting = RxInt(1);
     int get goodAnswerWaiting => _goodAnswerWaiting.value;
-    set goodAnswerWaiting(value) {
+    set goodAnswerWaiting(int value) {
       _goodAnswerWaiting.value = value;
       _settingsController.setProperty(Property(key: Const.AZBUKA_GOOD_ANSWER_WAITING, value: value));
     }
@@ -68,7 +68,7 @@ class AzbukaSettingsController extends GetxController {
   /// Время автонажатия кнопки далее при неуспешном ответе
   final _badAnswerWaiting = RxInt(5);
     int get badAnswerWaiting => _badAnswerWaiting.value;
-    set badAnswerWaiting(value) {
+    set badAnswerWaiting(int value) {
       _badAnswerWaiting.value = value;
       _settingsController.setProperty(Property(key: Const.AZBUKA_BAD_ANSWER_WAITING, value: value));
     }
@@ -77,61 +77,61 @@ class AzbukaSettingsController extends GetxController {
   /// Методы
 
   /// Уменьшаем время на ответ на 1
-  decreaseTimerTime() {
+  void decreaseTimerTime() {
     if (timeForAnswer > 1) {
       timeForAnswer--;
     }
   }
 
   /// Увеличиваем время на ответ на 1
-  increaseTimerTime() {
+  void increaseTimerTime() {
     if (timeForAnswer < 30) {
       timeForAnswer++;
     }
   }
 
   /// Устанавливаем значение времени для таймера по умолчанию (6)
-  resetTimerTime() {
+  void resetTimerTime() {
     timeForAnswer = 6;
   }
 
 
   ///Уменьшаем время автонажатия кнопки далее при успешном ответе
-  decreaseGoodAnswerWaiting() {
+  void decreaseGoodAnswerWaiting() {
     if (goodAnswerWaiting > 0) {
       goodAnswerWaiting--;
     }
   }
 
   ///Увеличиваем время автонажатия кнопки далее при успешном ответе
-  increaseGoodAnswerWaiting() {
+  void increaseGoodAnswerWaiting() {
     if (goodAnswerWaiting < 11) {
       goodAnswerWaiting++;
     }
   }
 
   ///Сбрасываем время автонажатия кнопки далее при успешном ответе на 2 сек
-  resetGoodAnswerWaiting() {
+  void resetGoodAnswerWaiting() {
     goodAnswerWaiting = 1;
   }
 
 
   ///Уменьшаем время автонажатия кнопки далее при неуспешном ответе
-  decreaseBadAnswerWaiting() {
+  void decreaseBadAnswerWaiting() {
     if (badAnswerWaiting > 0) {
       badAnswerWaiting--;
     }
   }
 
   ///Увеличиваем время автонажатия кнопки далее при неуспешном ответе
-  increaseBadAnswerWaiting() {
+  void increaseBadAnswerWaiting() {
     if (badAnswerWaiting < 11) {
       badAnswerWaiting++;
     }
   }
 
   ///Сбрасываем время автонажатия кнопки далее при неуспешном ответе на 5 сек
-  resetBadAnswerWaiting() {
+  void resetBadAnswerWaiting() {
     badAnswerWaiting = 5;
   }
 

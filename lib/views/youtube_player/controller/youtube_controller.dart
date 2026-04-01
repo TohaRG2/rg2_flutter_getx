@@ -9,7 +9,7 @@ class MyYouTubeController extends GetxController {
   final _playerState = 0.obs;
 
   @override
-  onInit() {
+  void onInit() {
     super.onInit();
     logPrint("onInit - MyYouTubeController");
     _playbackRate.value = _storage.getPropertyByKey(Const.YOU_TUBE_PLAYER_SPEED);

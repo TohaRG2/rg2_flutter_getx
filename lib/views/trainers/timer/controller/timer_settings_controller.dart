@@ -44,29 +44,29 @@ class TimerSettingsController extends GetxController {
     }
 
   final _isDelayedStart = RxBool(false);
-    get isDelayedStart => _isDelayedStart.value;
-    set isDelayedStart(value) {
+    bool get isDelayedStart => _isDelayedStart.value;
+    set isDelayedStart(dynamic value) {
       _isDelayedStart.value = value;
       _settingsController.setProperty(Property(key: Const.IS_DELAYED_START, value: value));
     }
 
   final _isMetronomEnabled = RxBool(false);
-    get isMetronomEnabled => _isMetronomEnabled.value;
-    set isMetronomEnabled(value) {
+    bool get isMetronomEnabled => _isMetronomEnabled.value;
+    set isMetronomEnabled(bool value) {
       _isMetronomEnabled.value = value;
       _settingsController.setProperty(Property(key: Const.IS_METRONOM_ENABLED, value: value));
     }
 
   final _metronomFrequency = RxInt(60);
     int get metronomFrequency => _metronomFrequency.value;
-    set metronomFrequency(value) {
+    set metronomFrequency(dynamic value) {
       _metronomFrequency.value = value;
       _settingsController.setProperty(Property(key: Const.METRONOM_FREQUENCY, value: value));
     }
 
   final _showScramble = RxBool(false);
     bool get showScramble => _showScramble.value;
-    set showScramble(value) {
+    set showScramble(dynamic value) {
       _showScramble.value = value;
       _settingsController.setProperty(Property(key: Const.SHOW_SCRAMBLE, value: value));
     }
@@ -79,7 +79,7 @@ class TimerSettingsController extends GetxController {
 
   final _scrambleTextRatio = RxDouble(0.8);
     double get scrambleTextRatio => _scrambleTextRatio.value;
-    set scrambleTextRatio(value) {
+    set scrambleTextRatio(double value) {
       _scrambleTextRatio.value = value;
       _settingsController.setProperty(Property(key: Const.SCRAMBLE_TEXT_RATIO, value: value));
     }
@@ -88,24 +88,24 @@ class TimerSettingsController extends GetxController {
   double get scrambleBarHeight => 55 * scrambleTextRatio;
   final _showScrambleExample = false.obs;
   bool get showScrambleExample => _showScrambleExample.value;
-  set showScrambleExample(value) => _showScrambleExample.value = value;
+  set showScrambleExample(dynamic value) => _showScrambleExample.value = value;
 
 
   /// Методы
 
-  decreaseMetronomFrequency() {
+  void decreaseMetronomFrequency() {
     if (metronomFrequency > 1) {
       metronomFrequency--;
     }
   }
 
-  increaseMetronomFrequency() {
+  void increaseMetronomFrequency() {
     if (metronomFrequency < 240) {
       metronomFrequency++;
     }
   }
 
-  resetMetronomFrequency() {
+  void resetMetronomFrequency() {
     metronomFrequency = 60;
   }
 

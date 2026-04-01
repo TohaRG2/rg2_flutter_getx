@@ -13,7 +13,7 @@ class Timer {
   // время для сохранения, пока таймер на паузе или остановлен
   Duration _savedDuration = Duration.zero;
 
-  get isRunning {
+  bool get isRunning {
     return _state == TimerState.PLAY ? true : false;
   }
 

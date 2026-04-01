@@ -7,7 +7,7 @@ import 'package:rg2/utils/my_logger.dart';
 class MainRepository extends GetxController {
   final MainDao _mainDao = Get.find();
 
-  String _userId = "";
+  final String _userId = '';
 
   Function(List<MainDBItem> items)? favouritesUpdateCallback;
   Function(List<MainDBItem> items)? detailUpdateCacheCallback;
@@ -99,9 +99,11 @@ class MainRepository extends GetxController {
     logPrint("clearCommentsInLocalDBAndCaches - очищаем комментарии в локальной базе и кэшах");
     await _mainDao.clearAllComments();
 
-    final DBController _dbController = Get.find();
-    List<MainDBItem> mainDBItems = await _dbController.initComments();
-    mainDBItems.forEach((mainDBItem) => addOrUpdateComment(mainDBItem));
+    final DBController dbController = Get.find();
+    List<MainDBItem> mainDBItems = await dbController.initComments();
+    for (var mainDBItem in mainDBItems) {
+      addOrUpdateComment(mainDBItem);
+    }
 
     // обновляем все кэши
     List<MainDBItem> allMainDBItems = await _mainDao.getAllItems();
@@ -110,7 +112,7 @@ class MainRepository extends GetxController {
   }
 
   /// Обновляем данные в кэшах
-  _updateItemsInCache(List<MainDBItem> mainDBItems) async {
+  Future<void> _updateItemsInCache(List<MainDBItem> mainDBItems) async {
     // обновляем данные в кэше основного меню обучалок
     learnUpdateMainCacheCallback?.call(mainDBItems);
     // обновляем комментарии, если задан колбэк и получили не null в listCommentItems

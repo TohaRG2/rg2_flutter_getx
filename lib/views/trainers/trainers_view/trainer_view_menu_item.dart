@@ -16,7 +16,7 @@ class TrainerViewMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _primaryColor = Theme.of(context).primaryColor;
+    var primaryColor = Theme.of(context).primaryColor;
     return GestureDetector(
       child: MenuCardItem(
         child: Row(
@@ -44,7 +44,7 @@ class TrainerViewMenuItem extends StatelessWidget {
             GestureDetector(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMedium),
-                child: Image.asset(item.getIcHelpPath(), width: _iconWidth, color: _primaryColor),
+                child: Image.asset(item.getIcHelpPath(), width: _iconWidth, color: primaryColor),
               ),
               onTap: () {
                 onHelpSelected?.call(item);
@@ -54,7 +54,7 @@ class TrainerViewMenuItem extends StatelessWidget {
             GestureDetector(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: UIHelper.SpaceSmall, vertical: UIHelper.SpaceMedium),
-                child: Image.asset(item.getIcSettingsPath(), width: _iconWidth, color: _primaryColor),
+                child: Image.asset(item.getIcSettingsPath(), width: _iconWidth, color: primaryColor),
               ),
               onTap: (){
                 onSettingsSelected?.call(item);

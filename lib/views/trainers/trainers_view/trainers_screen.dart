@@ -55,7 +55,7 @@ class TrainersScreen extends StatelessWidget {
         }));
   }
 
-  _onItemSelected(TrainerMenuItem item) {
+  void _onItemSelected(TrainerMenuItem item) {
     switch (item.id) {
       case StrRes.trainersScrambleGen:
         logPrint("Start Scramble Generator");
@@ -78,12 +78,12 @@ class TrainersScreen extends StatelessWidget {
     }
   }
 
-  _onHelpSelected(TrainerMenuItem item) {
+  void _onHelpSelected(TrainerMenuItem item) {
     //logPrint("Pressed on ${item.title} - help");
     Get.to(() => HelpView(item: item), transition: Transition.cupertino);
   }
 
-  _onSettingsSelected(TrainerMenuItem item) {
+  void _onSettingsSelected(TrainerMenuItem item) {
     switch (item.id) {
       case StrRes.trainersScrambleGen:
         Get.to(() => ScrambleGenSettingsView(),

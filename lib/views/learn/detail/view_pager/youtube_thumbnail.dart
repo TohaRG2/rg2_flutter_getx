@@ -15,7 +15,7 @@ class YoutubeThumbnail extends StatelessWidget {
   }
 
   //TODO убрать контекст, вызывать через Get.dialog
-  Widget ytPlayer(videoID) {
+  Widget ytPlayer(String videoID) {
     return Material(
       color: Colors.transparent,
       child: InkWell(

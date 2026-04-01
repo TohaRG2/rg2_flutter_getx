@@ -108,7 +108,7 @@ class LearnViewPager extends GetView<LearnController> {
     );
   }
 
-  _onClearSearchPressed() {
+  void _onClearSearchPressed() {
     logPrint("clear TextField");
     controller.onSearchClearButtonPressed();
   }
@@ -233,7 +233,7 @@ class LearnViewPager extends GetView<LearnController> {
      ];
   }
 
-  _onSearchTapCallback(MainDBItem item){
+  void _onSearchTapCallback(MainDBItem item){
     logPrint("_onSearchTapCallback pressed ${item.title}");
     final isItemEnabled = item.subId == 1;
     if (isItemEnabled) {

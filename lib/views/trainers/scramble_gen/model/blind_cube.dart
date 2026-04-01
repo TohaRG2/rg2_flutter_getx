@@ -39,7 +39,7 @@ class BlindCube extends Cube {
 
   /// на входе - цветная азбука
   /// устанавливаем цвета граней и азбуку по входу и сбрасываем куб
-  resetByColoredAzbuka(List<ColoredAzbukaItem> coloredAzbuka) {
+  void resetByColoredAzbuka(List<ColoredAzbukaItem> coloredAzbuka) {
     coloredAzbuka.forEach((azbukaItem) {
       azbuka[azbukaItem.index] = azbukaItem.letter;
     });
@@ -385,7 +385,7 @@ class BlindCube extends Cube {
   String getLetterByCurrentNumber(int mainNumber) {
     var defaultColor = _getColorInDefaultCubeByElementNumber(mainNumber);
     var elementType = getElementType(mainNumber);
-    switch(elementType) {
+    switch (elementType) {
       case CubeElementTypes.CORNER:
         return azbuka[mainCorner[defaultColor] ?? 0];
       case CubeElementTypes.EDGE:
@@ -408,170 +408,170 @@ class BlindCube extends Cube {
   }
 
   /// Алгоритм "Запад"
-  _west() {
+  void _west() {
     executeScramble("R U R' U' R' F R2 U' R' U' R U R' F'");
   }
 
   /// Алгоритм "Юг"
-  _south() {
+  void _south() {
     executeScramble("R U R' F' R U R' U' R' F R2 U' R' U'");
   }
 
   /// Алгоритм "Экватор"
-  _equator() {
+  void _equator() {
     executeScramble("R U R' F' R U2 R' U2 R' F R U R U2 R' U'");
   }
 
   /// Алгоритм "Австралия"
-  _australia() {
+  void _australia() {
     executeScramble("F R U' R' U' R U R' F' R U R' U' R' F R F'");
   }
 
   //белосинее ребро
-  _blind19() {
+  void _blind19() {
     executeScramble("M2 D' L2");
     _west();
     executeScramble("L2 D M2");
   }
 
   //белозеленое
-  _blind25() {
+  void _blind25() {
     _south();
   }
 
   //белооранжевое
-  _blind21() {
+  void _blind21() {
     _west();
   }
 
   //зеленобелое
-  _blind46() {
+  void _blind46() {
     executeScramble("M D' L2");
     _west();
     executeScramble("L2 D M'");
   }
 
   //зеленокрасное
-  _blind50() {
+  void _blind50() {
     executeScramble("Dw2 L");
     _west();
     executeScramble("L' Dw2");
   }
 
   //зеленожелтое
-  _blind52() {
+  void _blind52() {
     executeScramble("M'");
     _south();
     executeScramble("M");
   }
 
   //зеленооранжевое
-  _blind48() {
+  void _blind48() {
     executeScramble("L'");
     _west();
     executeScramble("L");
   }
 
   //синебелое
-  _blind7() {
+  void _blind7() {
     executeScramble("M");
     _south();
     executeScramble("M'");
   }
 
   //синекрасное
-  _blind5() {
+  void _blind5() {
     executeScramble("Dw2 L'");
     _west();
     executeScramble("L Dw2");
   }
 
   //синежелтое
-  _blind1() {
+  void _blind1() {
     executeScramble("D2 M'");
     _south();
     executeScramble("M D2");
   }
 
   //синеоранжевое
-  _blind3() {
+  void _blind3() {
     executeScramble("L");
     _west();
     executeScramble("L'");
   }
 
   //оранжевобелое
-  _blind14() {
+  void _blind14() {
     executeScramble("L2 D M'");
     _south();
     executeScramble("M D' L2");
   }
 
   //оранжевозеленое
-  _blind16() {
+  void _blind16() {
     executeScramble("Dw' L");
     _west();
     executeScramble("L' Dw");
   }
 
   //оранжевожелтое
-  _blind12() {
+  void _blind12() {
     executeScramble("D M'");
     _south();
     executeScramble("M D'");
   }
 
   //оранжевосинее
-  _blind10() {
+  void _blind10() {
     executeScramble("Dw L'");
     _west();
     executeScramble("L Dw'");
   }
 
   //краснозеленое
-  _blind34() {
+  void _blind34() {
     executeScramble("Dw' L'");
     _west();
     executeScramble("L Dw");
   }
 
   //красножелтое
-  _blind32() {
+  void _blind32() {
     executeScramble("D' M'");
     _south();
     executeScramble("M D");
   }
 
   //красносинее
-  _blind28() {
+  void _blind28() {
     executeScramble("Dw L");
     _west();
     executeScramble("L' Dw'");
   }
 
   //желтосинее
-  _blind37() {
+  void _blind37() {
     executeScramble("D L2");
     _west();
     executeScramble("L2 D'");
   }
 
   //желтокрасное
-  _blind39() {
+  void _blind39() {
     executeScramble("D2 L2");
     _west();
     executeScramble("L2 D2");
   }
 
   //желтозеленое
-  _blind43() {
+  void _blind43() {
     executeScramble("D' L2");
     _west();
     executeScramble("L2 D");
   }
 
   //желтооранжевое
-  _blind41() {
+  void _blind41() {
     executeScramble("L2");
     _west();
     executeScramble("L2");
@@ -580,145 +580,145 @@ class BlindCube extends Cube {
 //--------------------------------------------------------------------------------------------------
 
   //белосинекрасный угол
-  _blind20() {
+  void _blind20() {
     executeScramble("R D' F'");
     _australia();
     executeScramble("F D R'");
   }
 
   //белокраснозеленый угол
-  _blind26() {
+  void _blind26() {
     _australia();
   }
 
   //белозеленооранжевый угол
-  _blind24() {
+  void _blind24() {
     executeScramble("F' D R");
     _australia();
     executeScramble("R' D' F");
   }
 
   //зеленооранжевобелый
-  _blind45() {
+  void _blind45() {
     executeScramble("F' D F'");
     _australia();
     executeScramble("F D' F");
   }
 
   //зеленобелосиний
-  _blind47() {
+  void _blind47() {
     executeScramble("F R");
     _australia();
     executeScramble("R' F'");
   }
 
   //зеленокрасножелтый
-  _blind53() {
+  void _blind53() {
     executeScramble("R");
     _australia();
     executeScramble("R'");
   }
 
   //зеленожелтооранжевый
-  _blind51() {
+  void _blind51() {
     executeScramble("D F'");
     _australia();
     executeScramble("F D'");
   }
 
   //синекраснобелый
-  _blind8() {
+  void _blind8() {
     executeScramble("R'");
     _australia();
     executeScramble("R");
   }
 
   //синежелтокрасный
-  _blind2() {
+  void _blind2() {
     executeScramble("D' F'");
     _australia();
     executeScramble("F D");
   }
 
   //синеоранжевожелтый
-  _blind0() {
+  void _blind0() {
     executeScramble("D2 R");
     _australia();
     executeScramble("R' D2");
   }
 
   //оранжевобелозеленый
-  _blind17() {
+  void _blind17() {
     executeScramble("F");
     _australia();
     executeScramble("F'");
   }
 
   //оранжевозеленожелтый
-  _blind15() {
+  void _blind15() {
     executeScramble("D R");
     _australia();
     executeScramble("R' D'");
   }
 
   //оранжевожелтосиний
-  _blind9() {
+  void _blind9() {
     executeScramble("D2 F'");
     _australia();
     executeScramble("F D2");
   }
 
   //краснобелосиний
-  _blind27() {
+  void _blind27() {
     executeScramble("R2 F'");
     _australia();
     executeScramble("F R2");
   }
 
   //краснозеленобелый
-  _blind33() {
+  void _blind33() {
     executeScramble("R' F'");
     _australia();
     executeScramble("F R");
   }
 
   //красножелтозеленый
-  _blind35() {
+  void _blind35() {
     executeScramble("F'");
     _australia();
     executeScramble("F");
   }
 
   //красносинежелтый
-  _blind29() {
+  void _blind29() {
     executeScramble("R F'");
     _australia();
     executeScramble("F R'");
   }
 
   //желтосинеоранжевый
-  _blind38() {
+  void _blind38() {
     executeScramble("D' R2");
     _australia();
     executeScramble("R2 D");
   }
 
   //желтокрасносиний
-  _blind36() {
+  void _blind36() {
     executeScramble("R2");
     _australia();
     executeScramble("R2");
   }
 
   //желтозеленокрасный
-  _blind42() {
+  void _blind42() {
     executeScramble("D R2");
     _australia();
     executeScramble("R2 D'");
   }
 
   //желтооранжевозеленый
-  _blind44() {
+  void _blind44() {
     executeScramble("D2 R2");
     _australia();
     executeScramble("R2 D2");

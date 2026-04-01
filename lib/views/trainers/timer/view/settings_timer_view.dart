@@ -12,9 +12,11 @@ class SettingsTimerView extends StatelessWidget {
   final ScrambleGenController _genController = Get.find();
   final Color _backgroundColor = Get.theme.backgroundColor;
 
+  SettingsTimerView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final List<bool> _selections = List.generate(3, (index) => false);
+    final List<bool> selections = List.generate(3, (index) => false);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -26,9 +28,9 @@ class SettingsTimerView extends StatelessWidget {
       //ListView c выбором темы
       body: Obx(() {
         /// Обработчик нажатий на кнопки изменений частоты метронома
-        var _onChangeMetronomFrequencyByButtons;
+        var onChangeMetronomFrequencyByButtons;
         if (_controller.isMetronomEnabled) {
-          _onChangeMetronomFrequencyByButtons = (index) {
+          onChangeMetronomFrequencyByButtons = (index) {
             if (index == 0) {
               _controller.decreaseMetronomFrequency();
             } else if (index == 1) {
@@ -40,25 +42,25 @@ class SettingsTimerView extends StatelessWidget {
         }
 
         /// Обработчик изменений слайдера частоты метронома
-        var _onChangeMetronomFrequency;
+        var onChangeMetronomFrequency;
         if (_controller.isMetronomEnabled) {
-          _onChangeMetronomFrequency = (value) {
+          onChangeMetronomFrequency = (value) {
             _controller.metronomFrequency = value.toInt();
           };
         }
 
         /// Обработчик изменений слайдера размера шрифта скрамбла
-        var _onChangeScrambleRatio;
-        var _onChangeStartScrambleRatio;
-        var _onChangeEndScrambleRatio;
+        var onChangeScrambleRatio;
+        var onChangeStartScrambleRatio;
+        var onChangeEndScrambleRatio;
         if (_controller.showScramble) {
-          _onChangeScrambleRatio = (value) {
+          onChangeScrambleRatio = (value) {
             _controller.scrambleTextRatio = value;
           };
-          _onChangeStartScrambleRatio = (value) {
+          onChangeStartScrambleRatio = (value) {
             _controller.showScrambleExample = true;
           };
-          _onChangeEndScrambleRatio = (value) {
+          onChangeEndScrambleRatio = (value) {
             _controller.showScrambleExample = false;
           };
         }
@@ -143,8 +145,8 @@ class SettingsTimerView extends StatelessWidget {
                                 Text("${_controller.metronomFrequency}"),
                                 Icon(Icons.chevron_right_rounded)
                               ],
-                              isSelected: _selections,
-                              onPressed: _onChangeMetronomFrequencyByButtons,
+                              isSelected: selections,
+                              onPressed: onChangeMetronomFrequencyByButtons,
                             ),
                           ),
                         ],
@@ -158,7 +160,7 @@ class SettingsTimerView extends StatelessWidget {
                       divisions: 240,
                       activeColor: Get.theme.accentColor,
                       label: _controller.metronomFrequency.toString(),
-                      onChanged: _onChangeMetronomFrequency,
+                      onChanged: onChangeMetronomFrequency,
                     ),
                     /// Свитч отображения скрамбла
                     SwitchListTile(
@@ -190,9 +192,9 @@ class SettingsTimerView extends StatelessWidget {
                       max: 1.3,
                       divisions: 6,
                       activeColor: Get.theme.accentColor,
-                      onChanged: _onChangeScrambleRatio,
-                      onChangeStart: _onChangeStartScrambleRatio,
-                      onChangeEnd: _onChangeEndScrambleRatio,
+                      onChanged: onChangeScrambleRatio,
+                      onChangeStart: onChangeStartScrambleRatio,
+                      onChangeEnd: onChangeEndScrambleRatio,
                     ),
                   ],
                 ),

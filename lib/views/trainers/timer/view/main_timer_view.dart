@@ -48,7 +48,7 @@ class TimerView extends StatelessWidget {
     return _defBottomBarHeight;
   }
 
-  _generateNewScrambleByTap() {
+  void _generateNewScrambleByTap() {
     _controller.generateNewScramble();
   }
 
@@ -102,7 +102,7 @@ class TimerView extends StatelessWidget {
                     bottom: _controller.showBottomBar
                         ? _controller.bottomBarHeight
                         : 0,
-                    child: Container(
+                    child: SizedBox(
                       width: _width,
                       child: Stack(alignment: Alignment.topCenter, children: [
                         /// Декоративные половинки (рамки) для визуального разделения экрана
@@ -290,7 +290,7 @@ class TimerView extends StatelessWidget {
     return _controller.onBackButtonPressed();
   }
 
-  _tryToSaveCurrentResultWithComment() {
+  void _tryToSaveCurrentResultWithComment() {
     Get.defaultDialog(
         title: StrRes.timerEditResultComment,
         content: Container(
@@ -368,13 +368,13 @@ class TwoMainPadsWidget extends StatelessWidget {
           children: [
             Expanded(
                 child: GestureDetector(
-              onTapDown: (_) {
+              onPanStart: (_) {
                 _controller.onLeftPanelTouch();
               },
-              onTapCancel: () {
+              onPanEnd: (_) {
                 _controller.onLeftPanelTouchCancel();
               },
-              onTapUp: (_) {
+              onPanCancel: () {
                 _controller.onLeftPanelTouchCancel();
               },
               child: Container(
@@ -388,13 +388,13 @@ class TwoMainPadsWidget extends StatelessWidget {
             )),
             Expanded(
                 child: GestureDetector(
-              onTapDown: (_) {
+              onPanStart: (_) {
                 _controller.onRightPanelTouch();
               },
-              onTapCancel: () {
+              onPanEnd: (_) {
                 _controller.onRightPanelTouchCancel();
               },
-              onTapUp: (_) {
+              onPanCancel: () {
                 _controller.onRightPanelTouchCancel();
               },
               child: Container(

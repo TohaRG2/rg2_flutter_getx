@@ -17,29 +17,29 @@ import 'package:rg2/views/trainers/scramble_gen/model/blind_cube.dart';
 
 class AzbukaTrainerController extends TrainerController {
   final AzbukaSettingsController _settingsController = Get.find();
-  get _timeForAnswer => _settingsController.timeForAnswer;
-  get _isCornerEnabled => _settingsController.isCornerEnabled;
-  get _isEdgeEnabled => _settingsController.isEdgeEnabled;
-  get _goodAnswerWaiting => _settingsController.goodAnswerWaiting;
-  get _badAnswerWaiting => _settingsController.badAnswerWaiting;
+  int get _timeForAnswer => _settingsController.timeForAnswer;
+  bool get _isCornerEnabled => _settingsController.isCornerEnabled;
+  bool get _isEdgeEnabled => _settingsController.isEdgeEnabled;
+  int get _goodAnswerWaiting => _settingsController.goodAnswerWaiting;
+  int get _badAnswerWaiting => _settingsController.badAnswerWaiting;
 
   TrainerState _state = TrainerState.START_SCREEN;
-  Azbuka _azbuka = Azbuka();
+  final Azbuka _azbuka = Azbuka();
   BlindCube _blindCube = BlindCube();
 
   late AzbukaCubeImage _azbukaCubeImage;
-  get azbukaCubeImage => _azbukaCubeImage;
+  AzbukaCubeImage get azbukaCubeImage => _azbukaCubeImage;
 
   /// Методы
 
   /// Нажатие на кнопку "Старт"
-  startTrainer() {
+  void startTrainer() {
     _createNewGame();
     nextQuestion();
   }
 
   /// Создаем новую игру используя параметры из настроек
-  _createNewGame() {
+  void _createNewGame() {
     _blindCube = BlindCube.colored(colors: Azbuka().currentColorsSide, azbuka: Azbuka().currentAzbuka);
     //logPrint("$_blindCube");
     quizGame = QuizGame(
@@ -50,7 +50,7 @@ class AzbukaTrainerController extends TrainerController {
   }
 
   /// Колбэк обработки TimeOver
-  _onTimeIsOverCallback() {
+  void _onTimeIsOverCallback() {
     if (_state == TrainerState.WAIT_ANSWER && quizGame.timerProgress == 0.0) {
       logPrint("Time is over :(");
       // Выводим диалог окончания времени
@@ -60,7 +60,7 @@ class AzbukaTrainerController extends TrainerController {
     }
   }
 
-  nextQuestion() {
+  void nextQuestion() {
     // Генерируем случайный скрамбл и перемешиваем по нему кубик
     var scramble = _blindCube.generateScramble(19);
     _blindCube.executeScrambleWithReset(scramble);
@@ -84,7 +84,7 @@ class AzbukaTrainerController extends TrainerController {
   }
 
   /// Переводим в паузу или на стартовый экран
-  pauseOrResetTrainer() {
+  void pauseOrResetTrainer() {
     if (_state != TrainerState.PAUSED) {
       _statePaused();
     } else {
@@ -100,8 +100,8 @@ class AzbukaTrainerController extends TrainerController {
   }
 
   /// Случайное значение в диапазоне [min, max)
-  _randomRange(min, max){
-    var rn = new Random();
+  int _randomRange(int min, int max){
+    var rn = Random();
     return min + rn.nextInt(max - min);
   }
 
@@ -137,7 +137,7 @@ class AzbukaTrainerController extends TrainerController {
   }
 
   /// Проверка ответа
-  checkAnswerByString(String answer) {
+  void checkAnswerByString(String answer) {
     if (_state == TrainerState.WAIT_ANSWER) {
       if (quizGame.checkAnswerByValue(answer)) {
         // Выводим диалог правильного ответа
@@ -164,7 +164,7 @@ class AzbukaTrainerController extends TrainerController {
 
   /// Переводы по статусам тренажера
 
-  _stateStartScreen() {
+  void _stateStartScreen() {
     logPrint("state azbuka StartScreen");
     _state = TrainerState.START_SCREEN;
     showStartScreen = true;
@@ -172,7 +172,7 @@ class AzbukaTrainerController extends TrainerController {
     answerResult = ResultVariants.UNKNOWN;
   }
 
-  _stateWaitAnswer() {
+  void _stateWaitAnswer() {
     logPrint("state azbuka WaitAnswer");
     _state = TrainerState.WAIT_ANSWER;
     showStartScreen = false;
@@ -180,7 +180,7 @@ class AzbukaTrainerController extends TrainerController {
     answerResult = ResultVariants.UNKNOWN;
   }
 
-  _stateShowRightResult() {
+  void _stateShowRightResult() {
     logPrint("state azbuka ShowRightResult");
     _state = TrainerState.SHOW_RESULT;
     showStartScreen = false;
@@ -189,7 +189,7 @@ class AzbukaTrainerController extends TrainerController {
     cancelButtonText = StrRes.TrainerPauseButtonText;
   }
 
-  _stateShowWrongResult() {
+  void _stateShowWrongResult() {
     logPrint("state azbuka ShowWrongResult");
     _state = TrainerState.SHOW_RESULT;
     showStartScreen = false;
@@ -198,7 +198,7 @@ class AzbukaTrainerController extends TrainerController {
     cancelButtonText = StrRes.TrainerPauseButtonText;
   }
 
-  _stateShowTimeIsOver() {
+  void _stateShowTimeIsOver() {
     logPrint("state azbuka ShowTimeIsOver");
     _state = TrainerState.SHOW_RESULT;
     showStartScreen = false;
@@ -207,7 +207,7 @@ class AzbukaTrainerController extends TrainerController {
     cancelButtonText = StrRes.TrainerPauseButtonText;
   }
 
-  _delayedWaitAnswer(Duration delay) async {
+  Future<void> _delayedWaitAnswer(Duration delay) async {
     logPrint("delayedWaitAnswer");
     var endTime = DateTime.now().add(delay);
     var curState = _state;
@@ -224,7 +224,7 @@ class AzbukaTrainerController extends TrainerController {
     }
   }
 
-  _statePaused() {
+  void _statePaused() {
     logPrint("state Paused");
     _state = TrainerState.PAUSED;
     showStartScreen = false;

@@ -47,7 +47,7 @@ class ResetSettings extends GetWidget<SettingsController> {
                     controlAffinity: ListTileControlAffinity.leading,
                     value: controller.resetComments,
                     onChanged: (value) {
-                      controller.resetComments = value;
+                      controller.resetComments = value ?? false;
                     }),
                 CheckboxListTile(
                     contentPadding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -55,7 +55,7 @@ class ResetSettings extends GetWidget<SettingsController> {
                     controlAffinity: ListTileControlAffinity.leading,
                     value: controller.resetTimerTimes,
                     onChanged: (value) {
-                      controller.resetTimerTimes = value;
+                      controller.resetTimerTimes = value ?? false;
                     }),
                 SizedBox(height: UIHelper.SpaceMedium,),
                 Row(

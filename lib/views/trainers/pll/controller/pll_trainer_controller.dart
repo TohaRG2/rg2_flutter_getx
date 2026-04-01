@@ -23,23 +23,23 @@ class PllTrainerController extends TrainerController {
 
   final _isStartButtonEnabled = false.obs;
   bool get isStartButtonEnabled => _isStartButtonEnabled.value;
-  set isStartButtonEnabled(value) => _isStartButtonEnabled.value = value;
+  set isStartButtonEnabled(bool value) => _isStartButtonEnabled.value = value;
 
   late PllCubeImage _pllCubeImage;
-  get pllCubeImage => _pllCubeImage;
+  PllCubeImage get pllCubeImage => _pllCubeImage;
 
 
   /// Методы
 
   /// Подгружаем список с настроками PLL алгоритов из базы
-  loadDataFromBase() async {
+  Future<void> loadDataFromBase() async {
     _stateInit();
     await _settingsController.loadPllTrainerItems();
     _stateStartScreen();
   }
 
   /// Нажатие на кнопку "Старт"
-  startTrainer() async {
+  Future<void> startTrainer() async {
     _createNewGame();
     nextQuestion();
   }
@@ -56,7 +56,7 @@ class PllTrainerController extends TrainerController {
   }
 
   /// Задаем следующий вопрос
-  nextQuestion() {
+  void nextQuestion() {
     var correctAnswer = quizGame.nextQuestion();
 
     _pllCubeImage = PllCubeImage(id: correctAnswer.id, randomAUF: _randomAUF, randomFrontSide: _randomFS);
@@ -79,7 +79,7 @@ class PllTrainerController extends TrainerController {
   }
 
   /// Создаем новую игру с параметрами из настроек
-  _createNewGame() {
+  void _createNewGame() {
     var quizVariants = _settingsController.getVariants();
     quizGame = QuizGame(
         answersList: quizVariants,
@@ -89,7 +89,7 @@ class PllTrainerController extends TrainerController {
   }
 
   /// Колбэк обработки TimeOver
-  _onTimeIsOverCallback() {
+  void _onTimeIsOverCallback() {
     if (_state == TrainerState.WAIT_ANSWER && quizGame.timerProgress == 0.0) {
       // Выводим диалог окончания времени
       _stateShowTimeIsOver();
@@ -99,7 +99,7 @@ class PllTrainerController extends TrainerController {
   }
 
   /// Проверка ответа
-  checkAnswerByString(String answer) {
+  void checkAnswerByString(String answer) {
     if (_state == TrainerState.WAIT_ANSWER) {
       if (quizGame.checkAnswerByValue(answer)) {
         // Выводим диалог правильного ответа
@@ -124,7 +124,7 @@ class PllTrainerController extends TrainerController {
   }
 
   /// Переводим в паузу или на стартовый экран
-  pauseOrResetTrainer() {
+  void pauseOrResetTrainer() {
     if (_state != TrainerState.PAUSED) {
       _statePaused();
     } else {
@@ -135,7 +135,7 @@ class PllTrainerController extends TrainerController {
 
   /// Переводы по статусам тренажера
 
-  _stateInit() {
+  void _stateInit() {
     logPrint("state Init");
     _state = TrainerState.INIT;
     isStartButtonEnabled = false;
@@ -144,7 +144,7 @@ class PllTrainerController extends TrainerController {
     answerResult = ResultVariants.UNKNOWN;
   }
 
-  _stateStartScreen() {
+  void _stateStartScreen() {
     logPrint("state StartScreen");
     _state = TrainerState.START_SCREEN;
     isStartButtonEnabled = true;
@@ -153,7 +153,7 @@ class PllTrainerController extends TrainerController {
     answerResult = ResultVariants.UNKNOWN;
   }
 
-  _stateWaitAnswer() {
+  void _stateWaitAnswer() {
     logPrint("state WaitAnswer");
     _state = TrainerState.WAIT_ANSWER;
     isStartButtonEnabled = false;
@@ -162,7 +162,7 @@ class PllTrainerController extends TrainerController {
     answerResult = ResultVariants.UNKNOWN;
   }
 
-  _stateShowRightResult() {
+  void _stateShowRightResult() {
     logPrint("state ShowRightResult");
     _state = TrainerState.SHOW_RESULT;
     isStartButtonEnabled = false;
@@ -172,7 +172,7 @@ class PllTrainerController extends TrainerController {
     cancelButtonText = StrRes.TrainerPauseButtonText;
   }
 
-  _stateShowWrongResult() {
+  void _stateShowWrongResult() {
     logPrint("state ShowWrongResult");
     _state = TrainerState.SHOW_RESULT;
     isStartButtonEnabled = false;
@@ -182,7 +182,7 @@ class PllTrainerController extends TrainerController {
     cancelButtonText = StrRes.TrainerPauseButtonText;
   }
 
-  _stateShowTimeIsOver() {
+  void _stateShowTimeIsOver() {
     logPrint("state ShowTimeIsOver");
     _state = TrainerState.SHOW_RESULT;
     isStartButtonEnabled = false;
@@ -192,7 +192,7 @@ class PllTrainerController extends TrainerController {
     cancelButtonText = StrRes.TrainerPauseButtonText;
   }
 
-  _delayedWaitAnswer(Duration delay) async {
+  Future<void> _delayedWaitAnswer(Duration delay) async {
     logPrint("delayedWaitAnswer");
     var endTime = DateTime.now().add(delay);
     var curState = _state;
@@ -209,7 +209,7 @@ class PllTrainerController extends TrainerController {
     }
   }
 
-  _statePaused() {
+  void _statePaused() {
     logPrint("state Paused");
     _state = TrainerState.PAUSED;
     isStartButtonEnabled = false;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // import 'package:rg2/controllers/ads/ad_show_controller.dart';
+import 'package:rg2/database/entitys/main_db_item.dart';
 import 'package:rg2/views/learn/detail/controller/learn_detail_controller.dart';
 import 'package:rg2/utils/my_logger.dart';
 import 'package:rg2/views/learn/detail/drawer_menu_item.dart';
@@ -63,7 +64,7 @@ class LearnDetailView extends StatelessWidget {
       );
   }
 
-  onDrawerItemPressed(selectedItem) {
+  void onDrawerItemPressed(MainDBItem selectedItem) {
           logPrint("DrawerPressed on ${selectedItem.title}");
           _controller.changeCurrentPageByItem(selectedItem);
           Get.back();

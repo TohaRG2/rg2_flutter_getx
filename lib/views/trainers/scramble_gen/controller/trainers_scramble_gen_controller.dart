@@ -85,7 +85,7 @@ class ScrambleGenController extends GetxController {
   String _editedLetter = "";
   String get storedLetter => _editedLetter;
   set storedLetter(String letter) {
-    if (letter.length > 0) {
+    if (letter.isNotEmpty) {
       _editedLetter = letter[0];
     } else {
       _editedLetter = "A";
@@ -177,7 +177,7 @@ class ScrambleGenController extends GetxController {
 
   /// Нажатие на кнопку в диалоге ввода скрамбла
   void inputLetter(String letter) {
-    switch(letter) {
+    switch (letter) {
       case "W":
         inputModifier(letter.toLowerCase());
         break;
@@ -306,7 +306,7 @@ class ScrambleGenController extends GetxController {
 
   void selectLetterMinus() {
     var ch = selectedLetter.runes.single;
-    switch(selectedLetter) {
+    switch (selectedLetter) {
       case "Ж": ch = "Ё".runes.single; break;
       case "Ё": ch = "Е".runes.single; break;
       case "А": ch = "Z".runes.single; break;
@@ -320,7 +320,7 @@ class ScrambleGenController extends GetxController {
 
   void selectLetterPlus() {
     var ch = selectedLetter.runes.single;
-    switch(selectedLetter) {
+    switch (selectedLetter) {
       case "Я": ch = "0".runes.single; break;
       case "9": ch = "A".runes.single; break;
       case "Z": ch = "А".runes.single; break;

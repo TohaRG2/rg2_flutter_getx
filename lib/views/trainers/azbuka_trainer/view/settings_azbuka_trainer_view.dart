@@ -50,7 +50,7 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
                             controlAffinity: ListTileControlAffinity.leading,
                             value: _controller.isCornerEnabled,
                             onChanged: (value) {
-                              _controller.isCornerEnabled = value;
+                              _controller.isCornerEnabled = value ?? false;
                             }),
                       ),
                       Expanded(
@@ -61,7 +61,7 @@ class SettingsAzbukaTrainerView extends StatelessWidget {
                             controlAffinity: ListTileControlAffinity.leading,
                             value: _controller.isEdgeEnabled,
                             onChanged: (value) {
-                              _controller.isEdgeEnabled = value;
+                              _controller.isEdgeEnabled = value ?? false;
                             }),
                       ),
                     ],

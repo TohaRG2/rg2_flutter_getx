@@ -114,7 +114,7 @@ class DBController extends GetxController {
   }
 
   /// Задаем начальные значения для Избранного
-  _initFavourites() async {
+  Future<void> _initFavourites() async {
     logPrint("_initialFavourites");
     List<FavItem> favItems = InitialFavourites.favItems;
     List<MainDBItem> mainDBItems = [];
@@ -164,10 +164,10 @@ class DBController extends GetxController {
   }
 
   Future<void> _checkBaseResourcesVersion() async {
-    final _build = buildNumber;
+    final build = buildNumber;
     final _version = version;
     logPrint(
-        "checkBaseResourcesVersion - проверка версии ресурсов в базе, была версия: $_version - $_build");
+        "checkBaseResourcesVersion - проверка версии ресурсов в базе, была версия: $_version - $build");
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String curVersion = packageInfo.version;

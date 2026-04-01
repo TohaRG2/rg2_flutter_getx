@@ -1,15 +1,18 @@
+
 import 'package:get/get.dart';
 import 'package:rg2/controllers/repository/repository.dart';
 import 'package:rg2/database/entitys/basic_move.dart';
 import 'package:rg2/res/azbuka/phase_types.dart';
 import 'package:rg2/utils/my_logger.dart';
 
+
+
 class AzbukaDialogController extends GetxController {
   Repository _repo = Get.find();
   String _currentType = "";
 
   RxList<BasicMove> _movesItems = <BasicMove>[].obs;
-  get movesItems => _movesItems.toList();
+  List<BasicMove> get movesItems => _movesItems.toList();
 
   Future<void> loadMoves(String phase) async {
     var phaseType = phaseTypes[phase] ?? "BASIC_3X3";

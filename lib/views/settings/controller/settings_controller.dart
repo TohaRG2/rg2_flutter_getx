@@ -24,7 +24,7 @@ class SettingsController extends GetxController {
   /// Основной цвет
   final _primaryThemeColor = Rx<Color>(Colors.orange);
     Color get primaryThemeColor => _primaryThemeColor.value;
-    set primaryThemeColor (color) {
+    set primaryThemeColor (Color color) {
       _primaryThemeColor.value = color;
       int value = color.value;
       _storage.setProperty(Property(key: Const.PRIMARY_COLOR, value: value));
@@ -34,7 +34,7 @@ class SettingsController extends GetxController {
   /// Цвет выделенных элементов (акцент)
   final _accentThemeColor = Rx<Color>(Colors.green);
     Color get accentThemeColor => _accentThemeColor.value;
-    set accentThemeColor (color) {
+    set accentThemeColor (Color color) {
       _accentThemeColor.value = color;
       int value = color.value;
       _storage.setProperty(Property(key: Const.ACCENT_COLOR, value: value));
@@ -44,7 +44,7 @@ class SettingsController extends GetxController {
   /// Включена ли темная тема
   final _isDarkThemeSelect = RxBool(true);
     bool get isDarkThemeSelect => _isDarkThemeSelect.value;
-    set isDarkThemeSelect(value) {
+    set isDarkThemeSelect(bool value) {
       _isDarkThemeSelect.value = value;
       _storage.setProperty(Property(key: Const.IS_THEME_DARK, value: value));
       _changeCurrentTheme();
@@ -55,7 +55,7 @@ class SettingsController extends GetxController {
   /// Коэффициент масштабирования текста
   final _textScaleFactor = RxDouble(1.0);
     double get textScaleFactor => _textScaleFactor.value;
-    set textScaleFactor(value) {
+    set textScaleFactor(double value) {
       _textScaleFactor.value = value;
       _storage.setProperty(Property(key: Const.SCALE_FACTOR, value: value));
     }
@@ -63,7 +63,7 @@ class SettingsController extends GetxController {
   /// Необходимость отключения экрана для всей программы
   final _alwaysScreenOnGlobal = RxBool(true);
   bool get alwaysScreenOnGlobal => _alwaysScreenOnGlobal.value;
-  set alwaysScreenOnGlobal(value) {
+  set alwaysScreenOnGlobal(dynamic value) {
     _alwaysScreenOnGlobal.value = value;
     _storage.setProperty(Property(key: Const.ALWAYS_SCREEN_ON_GLOBAL, value: value));
     checkAlwaysOnGlobal();
@@ -72,7 +72,7 @@ class SettingsController extends GetxController {
   /// Необходимость отключения экрана для всей программы
   final _alwaysScreenOnTimer = RxBool(true);
   bool get alwaysScreenOnTimer => _alwaysScreenOnTimer.value;
-  set alwaysScreenOnTimer(value) {
+  set alwaysScreenOnTimer(bool value) {
     _alwaysScreenOnTimer.value = value;
     _storage.setProperty(Property(key: Const.ALWAYS_SCREEN_ON_TIMER, value: value));
   }
@@ -80,7 +80,7 @@ class SettingsController extends GetxController {
   /// Открывать ли окно с подсказками при старте программы
   final _isStartHelpEnabled = RxBool(false);
     bool get isStartHelpEnabled => _isStartHelpEnabled.value;
-    set isStartHelpEnabled(value) {
+    set isStartHelpEnabled(bool value) {
       _isStartHelpEnabled.value = value;
       _storage.setProperty(Property(key: Const.IS_START_HELP_ENABLED, value: value));
     }
@@ -88,7 +88,7 @@ class SettingsController extends GetxController {
   /// Возможно ли прокуртка свайпами во ViewPager, лучше отключать если используется жест смахивания для "назад"
   final _isSwipeEnabled = RxBool(false);
     bool get isSwipeEnabled => _isSwipeEnabled.value;
-    set isSwipeEnabled(value) {
+    set isSwipeEnabled(bool value) {
       _isSwipeEnabled.value = value;
       _storage.setProperty(Property(key: Const.IS_SWIPE_ENABLED, value: value));
     }
@@ -96,7 +96,7 @@ class SettingsController extends GetxController {
   /// Настройки доступа в интернет (0 - любой,  2 - только Wi-Fi, 3 - инетернет недоступен)
   final _internetUsage = RxInt(0);
     int get internetUsage => _internetUsage.value;
-    set internetUsage(value) {
+    set internetUsage(int value) {
       _internetUsage.value = value;
       _storage.setProperty(Property(key: Const.INTERNET_USAGE, value: value));
     }
@@ -104,7 +104,7 @@ class SettingsController extends GetxController {
   /// Номер открытой закладки в bottomBar (Обучалки, тренажеры, избранное, инфо)
   final _bottomItem = RxInt(0);
     int get bottomItem => _bottomItem.value;
-    set bottomItem(value) {
+    set bottomItem(dynamic value) {
       _bottomItem.value = value;
       _storage.setProperty(Property(key: Const.BOTTOM_ITEM, value: value));
     }
@@ -112,7 +112,7 @@ class SettingsController extends GetxController {
   /// Номер текущей открытой страницы в обучалках
   final _currentPageNumber = RxInt(0);
     int get currentPageNumber => _currentPageNumber.value;
-    set currentPageNumber(value) {
+    set currentPageNumber(int value) {
       _currentPageNumber.value = value;
       _storage.setProperty(Property(key: Const.CURRENT_PAGE_NUMBER, value: value));
     }
@@ -120,7 +120,7 @@ class SettingsController extends GetxController {
   /// Номер текущей страницы на закладке info
   final _currentInfoPageNumber = RxInt(0);
     int get currentInfoPageNumber => _currentInfoPageNumber.value;
-    set currentInfoPageNumber (value) {
+    set currentInfoPageNumber (int value) {
       _currentInfoPageNumber.value = value;
       _storage.setProperty(Property(key: Const.CURRENT_INFO_PAGE_NUMBER, value: value));
     }
@@ -128,7 +128,7 @@ class SettingsController extends GetxController {
   /// Режим разработчика
   final _godMode = RxBool(false);
     bool get godMode => _godMode.value;       // геттер public
-    set __godMode(value) {                    // сеттер private
+    set __godMode(dynamic value) {                    // сеттер private
       _godMode.value = value;
       _storage.setProperty(Property(key: Const.GOD_MODE, value: value));
     }
@@ -137,7 +137,7 @@ class SettingsController extends GetxController {
   final _isAdDisabled = RxBool(true);
     bool get isAdDisabled => _isAdDisabled.value;
     bool get isAdEnabled => !_isAdDisabled.value;
-    set isAdDisabled(value) {
+    set isAdDisabled(bool value) {
       _isAdDisabled.value = value;
       _storage.setProperty(Property(key: Const.IS_AD_DISABLED, value: value));
     }
@@ -145,7 +145,7 @@ class SettingsController extends GetxController {
   /// Все ли головоломки разблокированы
   final _isAllPuzzlesEnabled = RxBool(false);
     bool get isAllPuzzlesEnabled => _isAllPuzzlesEnabled.value;
-    set isAllPuzzlesEnabled(value) {
+    set isAllPuzzlesEnabled(bool value) {
       _isAllPuzzlesEnabled.value = value;
       _storage.setProperty(Property(key: Const.IS_ALL_PUZZLES_ENABLED, value: value));
     }
@@ -197,7 +197,7 @@ class SettingsController extends GetxController {
   }
 
   /// Инициализируем observable переменные
-  _initializeRxVariables() {
+  void _initializeRxVariables() {
     logPrint("_initializeRxVariables Start");
 
     _textScaleFactor.value = _storage.getPropertyByKey(Const.SCALE_FACTOR);
@@ -240,7 +240,7 @@ class SettingsController extends GetxController {
   }
 
   /// Меняем настройки текущей темы
-  _changeCurrentTheme() {
+  void _changeCurrentTheme() {
     logPrint("_changeCurrentTheme - меняем тему");
     SystemUiOverlayStyle _currentStyle = SystemUiOverlayStyle.dark;
     SystemChrome.setSystemUIOverlayStyle(_currentStyle);
@@ -309,7 +309,7 @@ class SettingsController extends GetxController {
   }
 
   /// Пытаемся включить godMode (нужно 5 нажатий за 2.5 сек)
-  tryChangeGodMode() {
+  void tryChangeGodMode() {
     if (_godCount == 5) {
       _godCount++;
       __godMode = !godMode;
@@ -320,7 +320,7 @@ class SettingsController extends GetxController {
   }
 
   /// Сбрасываем счетчик через 2.5 секунды
-  _delayedResetGodCount() async {
+  Future<void> _delayedResetGodCount() async {
     Future.delayed(Duration(milliseconds: 2500), () {
       _godCount = 0;
     });
@@ -330,21 +330,21 @@ class SettingsController extends GetxController {
   /// Параметры для сброса настроек
   RxBool _resetMainSettings = true.obs;
     bool get resetMainSettings => _resetMainSettings.value;
-    set resetMainSettings(value) => _resetMainSettings.value = value;
+    set resetMainSettings(dynamic value) => _resetMainSettings.value = value;
 
   RxBool _resetComments = false.obs;
     bool get resetComments => _resetComments.value;
-    set resetComments(value) => _resetComments.value = value;
+    set resetComments(bool value) => _resetComments.value = value;
 
   RxBool _resetTimerTimes = false.obs;
     bool get resetTimerTimes => _resetTimerTimes.value;
-    set resetTimerTimes(value) => _resetTimerTimes.value = value;
+    set resetTimerTimes(bool value) => _resetTimerTimes.value = value;
 
   RxBool _showPreloader = false.obs;
     bool get showPreloader => _showPreloader.value;
 
   /// Сбрасываем настройки программы в соответствии с выбранными параметрами в
-  resetSettings() async {
+  Future<void> resetSettings() async {
     Get.back();
     _showPreloader.value = true;
     if (resetMainSettings) {
@@ -375,12 +375,12 @@ class SettingsController extends GetxController {
     _changeCurrentTheme();
   }
 
-  _resetCommentsSet() async {
+  Future<void> _resetCommentsSet() async {
     final MainRepository _mainRepository = Get.find();
     await _mainRepository.clearCommentsInLocalDBAndCaches();
   }
 
-  _clearTimerTimes() async {
+  Future<void> _clearTimerTimes() async {
     final TimerRepository _timerRepository = Get.find();
     await _timerRepository.clearTimesTable();
   }

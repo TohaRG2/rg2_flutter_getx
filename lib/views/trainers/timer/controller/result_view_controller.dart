@@ -28,39 +28,39 @@ class ResultViewController extends GetxController {
   List<TimeNoteItem> get timeNoteItems => _timeNoteItems;
 
   /// Обновляем список результатов сборки из локальной базы
-  updateTimeNoteItems() async {
+  Future<void> updateTimeNoteItems() async {
     var list = await _repository.getAllTimeNotes(orderBy: _orderBy);
     _timeNoteItems.assignAll(list);
   }
 
   /// Обновляем список результатов сборки из переданных данных
-  _updateTimeNoteItems(List<TimeNoteItem> timeNoteItems) {
+  void _updateTimeNoteItems(List<TimeNoteItem> timeNoteItems) {
     _timeNoteItems.assignAll(timeNoteItems);
   }
 
   /// Сортируем список результатов по дате сборки
-  sortTimeNoteItemsByDate() {
+  void sortTimeNoteItemsByDate() {
     _timeNoteItems.sort((item1, item2) => item1.dateTime.compareTo(item2.dateTime));
     _orderBy = "dateTime";
     _storage.setProperty(Property(key: Const.RESULT_ORDER_BY, value: _orderBy));
   }
 
   /// Сортируем список результатов по времени сборки
-  sortTimeNoteItemsBySolvingTime() {
+  void sortTimeNoteItemsBySolvingTime() {
     _timeNoteItems.sort((item1, item2) => item1.solvingTime.compareTo(item2.solvingTime));
     _orderBy = "solvingTime";
     _storage.setProperty(Property(key: Const.RESULT_ORDER_BY, value: _orderBy));
   }
 
   /// Удалить элемент из списка и в базах
-  removeItem(TimeNoteItem item) {
+  void removeItem(TimeNoteItem item) {
     //_timeNoteItems.removeWhere((it) => it.uuid == item.uuid);
     _timeNoteItems.remove(item);
     _repository.deleteTimeNoteItem(item);
   }
 
   /// обновить комментарий у записи, сохраняем в базу и перечитываем из нее
-  updateComment(TimeNoteItem item, String text) {
+  void updateComment(TimeNoteItem item, String text) {
     final updated = TimeNoteItem(item.solvingTime, item.dateTime, item.scramble, text, uuid: item.uuid);
     _repository.updateTimeNoteItem(updated);
     updateTimeNoteItems();

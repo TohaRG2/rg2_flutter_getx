@@ -7,13 +7,13 @@ import 'package:rg2/res/trainersMenu/timer.dart';
 
 class TrainersController extends GetxController {
 
-  RxList<TrainerMenuItem> _trainerItems = [
+  final RxList<TrainerMenuItem> _trainerItems = [
     scrambleGen,
     timer,
     pllTrainer,
     azbukaTrainer,
   ].obs;
 
-  get trainerItems => _trainerItems;
+  List<TrainerMenuItem> get trainerItems => _trainerItems;
 
 }

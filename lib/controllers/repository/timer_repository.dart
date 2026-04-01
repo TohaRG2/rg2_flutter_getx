@@ -40,22 +40,22 @@ class TimerRepository extends GetxController {
   }
 
   /// Обновить запись в локальной базе
-  updateTimeNoteItem(TimeNoteItem item) async {
+  Future<void> updateTimeNoteItem(TimeNoteItem item) async {
     await _timesDao.updateItem(item);
   }
 
   /// Добавить запись времени сборки в локальную базу
-  addTimeNoteItem(TimeNoteItem item) async {
+  Future<void> addTimeNoteItem(TimeNoteItem item) async {
     await _timesDao.insertItem(item);
   }
 
   /// Удалить запись времени сборк в локальной базе
-  deleteTimeNoteItem(TimeNoteItem item) async {
+  Future<void> deleteTimeNoteItem(TimeNoteItem item) async {
     await _timesDao.deleteItem(item);
   }
 
   /// Очищаем табличку с временами сборки в локальной базе (пока не используется)
-  clearTimesTable() async {
+  Future<void> clearTimesTable() async {
     await _timesDao.clearTable();
   }
 

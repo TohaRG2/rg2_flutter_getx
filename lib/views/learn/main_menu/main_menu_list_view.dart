@@ -50,7 +50,7 @@ class MenuList extends StatelessWidget {
     });
   }
 
-  _onTapCallBack(MainDBItem item, bool isItemEnabled) {
+  void _onTapCallBack(MainDBItem item, bool isItemEnabled) {
     logPrint("Tap on mainMenu $item");
     if (isItemEnabled) {
       if (item.url == "submenu") {

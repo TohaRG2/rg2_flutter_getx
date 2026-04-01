@@ -22,7 +22,7 @@ class Cube {
   /// Цвета сторон кубика
   /// 0 - синий, 1 - оранжевый, 2 - белый, 3 - красный, 4 - желтый, 5 - зеленый
   /// + 2 цвета (обычно интерпретируются как 6 - черный и 7 - прозрачный)
-  List<int> _defaultColorsSide = [0,1,2,3,4,5,6,7];
+  final List<int> _defaultColorsSide = [0,1,2,3,4,5,6,7];
 
   /// номера центральных элементов кубика (см.диаграмму в конце этого класса)
   static const List<int> _centersPositions = [4, 13, 22, 31, 40, 49];
@@ -50,7 +50,7 @@ class Cube {
   }
 
   /// Устанавливаем цвета в кубике в зависимости от переданного параметра
-  setDefaultColors(List<int> list) {
+  void setDefaultColors(List<int> list) {
     if (list.length < 9) {
       list.asMap().forEach((index, colorNum) {
         _defaultColorsSide[index] = colorNum;
@@ -59,7 +59,7 @@ class Cube {
   }
 
   /// Устанавливаем цвета в кубике по цветам текущих центров
-  setDefaultColorsByCurrent() {
+  void setDefaultColorsByCurrent() {
     currentColorsNumbers.asMap().forEach((index, colorNum) {
         _defaultColorsSide[index] = colorNum;
     });
@@ -138,7 +138,7 @@ class Cube {
   }
 
   /// Применяем скрамбл к текущему положению кубика
-  executeScramble(String scramble) {
+  void executeScramble(String scramble) {
     var normalizedScramble = _normalizeScramble(scramble);
     List<String> list = normalizedScramble.split(" ");
     list.forEach((element) {
@@ -203,7 +203,7 @@ class Cube {
   }
   
   /// Применяем скрамбл предварительно обнулив кубик
-  executeScrambleWithReset(String scramble) {
+  void executeScrambleWithReset(String scramble) {
     resetCube();
     executeScramble(scramble);
   }
@@ -226,12 +226,12 @@ class Cube {
   }
 
   /// Сохраняем в backup копию текущего кубика
-  backupCube() {
+  void backupCube() {
     _backup = _cube.toList();
   }
   
   /// Восстанавливаем из копии, если она есть или обнуляем куб
-  restoreFromBackup() {
+  void restoreFromBackup() {
     if (_backup.length == 54) {
       _cube = _backup.toList();
     } else {
@@ -240,7 +240,7 @@ class Cube {
   }
 
   /// берем цвета из currentColors и обновляем их в _colorsSide, чтобы кубик сбрасывался уже к новому начальному состоянию
-  updateDefaultColorsToCurrent() {
+  void updateDefaultColorsToCurrent() {
     currentColorsNumbers.asMap().forEach((index, value) {
       _defaultColorsSide[index] = value;
     });
@@ -250,13 +250,13 @@ class Cube {
   /// Элементарные ходы
   ///
 
-  _changeElements(int firstElement, int secondElement) {
+  void _changeElements(int firstElement, int secondElement) {
     int buf = _cube[firstElement];
     _cube[firstElement] = _cube[secondElement];
     _cube[secondElement] = buf;
   }
   
-  _moveR() {
+  void _moveR() {
     _changeElements(20, 2);
     _changeElements(23, 5);
     _changeElements(26, 8);
@@ -275,7 +275,7 @@ class Cube {
     _changeElements(30, 34);
   }
 
-  _moveRb() {
+  void _moveRb() {
     //Меняем фронт
     _changeElements(20, 47);
     _changeElements(23, 50);
@@ -295,12 +295,12 @@ class Cube {
     _changeElements(30, 28);
   }
 
-  _moveR2() {
+  void _moveR2() {
     _moveR();
     _moveR();
   }
 
-  _moveF() {
+  void _moveF() {
     //Меняем фронт
     _changeElements(26, 35);
     _changeElements(25, 34);
@@ -320,7 +320,7 @@ class Cube {
     _changeElements(45, 51);
   }
 
-  _moveFb() {
+  void _moveFb() {
     //Меняем фронт
     _changeElements(26, 17);
     _changeElements(25, 16);
@@ -340,12 +340,12 @@ class Cube {
     _changeElements(45, 47);
   }
 
-  _moveF2() {
+  void _moveF2() {
     _moveF();
     _moveF();
   }
 
-  _moveU() {
+  void _moveU() {
     //Меняем фронт
     _changeElements(45, 11);
     _changeElements(46, 14);
@@ -365,7 +365,7 @@ class Cube {
     _changeElements(25, 23);
   }
 
-  _moveUb() {
+  void _moveUb() {
     //Меняем фронт
     _changeElements(45, 33);
     _changeElements(46, 30);
@@ -385,12 +385,12 @@ class Cube {
     _changeElements(25, 21);
   }
 
-  _moveU2() {
+  void _moveU2() {
     _moveU();
     _moveU();
   }
 
-  _moveL() {
+  void _moveL() {
     //Меняем фронт
     _changeElements(18, 45);
     _changeElements(21, 48);
@@ -410,7 +410,7 @@ class Cube {
     _changeElements(14, 10);
   }
 
-  _moveLb() {
+  void _moveLb() {
     //Меняем фронт
     _changeElements(18, 0);
     _changeElements(21, 3);
@@ -430,12 +430,12 @@ class Cube {
     _changeElements(14, 16);
   }
 
-  _moveL2() {
+  void _moveL2() {
     _moveL();
     _moveL();
   }
 
-  _moveB() {
+  void _moveB() {
     //Меняем фронт
     _changeElements(18, 9);
     _changeElements(19, 10);
@@ -455,7 +455,7 @@ class Cube {
     _changeElements(8, 2);
   }
 
-  _moveBb() {
+  void _moveBb() {
     //Меняем фронт
     _changeElements(18, 27);
     _changeElements(19, 28);
@@ -475,12 +475,12 @@ class Cube {
     _changeElements(8, 6);
   }
 
-  _moveB2() {
+  void _moveB2() {
     _moveB();
     _moveB();
   }
 
-  _moveD() {
+  void _moveD() {
   // Меняем фронт
     _changeElements(51, 35);
     _changeElements(52, 32);
@@ -500,7 +500,7 @@ class Cube {
     _changeElements(42, 44);
   }
 
-  _moveDb() {
+  void _moveDb() {
     //Меняем фронт
     _changeElements(51, 9);
     _changeElements(52, 12);
@@ -520,12 +520,12 @@ class Cube {
     _changeElements(42, 36);
   }
 
-  _moveD2() {
+  void _moveD2() {
     _moveD();
     _moveD();
   }
 
-  _moveE() {
+  void _moveE() {
     _changeElements(48, 34);
     _changeElements(49, 31);
     _changeElements(50, 28);
@@ -537,7 +537,7 @@ class Cube {
     _changeElements(50, 16);
   }
 
-  _moveEb() {
+  void _moveEb() {
     _changeElements(48, 10);
     _changeElements(49, 13);
     _changeElements(50, 16);
@@ -549,12 +549,12 @@ class Cube {
     _changeElements(50, 28);
   }
 
-  _moveE2() {
+  void _moveE2() {
     _moveE();
     _moveE();
   }
 
-  _moveM() {
+  void _moveM() {
     _changeElements(19, 46);
     _changeElements(22, 49);
     _changeElements(25, 52);
@@ -566,7 +566,7 @@ class Cube {
     _changeElements(25, 7);
   }
 
-  _moveMb() {
+  void _moveMb() {
     _changeElements(19, 1);
     _changeElements(22, 4);
     _changeElements(25, 7);
@@ -578,12 +578,12 @@ class Cube {
     _changeElements(25, 52);
   }
 
-  _moveM2() {
+  void _moveM2() {
     _moveM();
     _moveM();
   }
 
-  _moveS() {
+  void _moveS() {
     _changeElements(21, 30);
     _changeElements(22, 31);
     _changeElements(23, 32);
@@ -595,7 +595,7 @@ class Cube {
     _changeElements(23, 14);
   }
 
-  _moveSb() {
+  void _moveSb() {
     _changeElements(21, 12);
     _changeElements(22, 13);
     _changeElements(23, 14);
@@ -607,147 +607,147 @@ class Cube {
     _changeElements(23, 32);
   }
 
-  _moveS2() {
+  void _moveS2() {
     _moveS();
     _moveS();
   }
 
-  _moveRw() {    //Uw - верхние два слоя
+  void _moveRw() {    //Uw - верхние два слоя
     _moveR();
     _moveMb();
   }
 
-  _moveRwb() {   //Uw' - верхние два слоя
+  void _moveRwb() {   //Uw' - верхние два слоя
     _moveRb();
     _moveM();
   }
 
-  _moveRw2() {     //Uw2 - верхние два слоя
+  void _moveRw2() {     //Uw2 - верхние два слоя
     _moveRw();
     _moveRw();
   }
 
-  _moveUw() {   //Uw - верхние два слоя
+  void _moveUw() {   //Uw - верхние два слоя
     _moveU();
     _moveEb();
   }
 
-  _moveUwb() {   //Uw' - верхние два слоя
+  void _moveUwb() {   //Uw' - верхние два слоя
     _moveUb();
     _moveE();
   }
 
-  _moveUw2() {   //Uw2 - верхние два слоя
+  void _moveUw2() {   //Uw2 - верхние два слоя
     _moveUw();
     _moveUw();
   }
 
-  _moveDw() {      //Dw - нижние два слоя
+  void _moveDw() {      //Dw - нижние два слоя
     _moveD();
     _moveE();
   }
 
-  _moveDwb() {
+  void _moveDwb() {
     _moveDb();
     _moveEb();
   }
 
-  _moveDw2() {
+  void _moveDw2() {
     _moveDw();
     _moveDw();
   }
 
-  _moveLw() {      //Uw - верхние два слоя
+  void _moveLw() {      //Uw - верхние два слоя
     _moveL();
     _moveM();
   }
 
-  _moveLwb() {     //Uw' - верхние два слоя
+  void _moveLwb() {     //Uw' - верхние два слоя
     _moveLb();
     _moveMb();
   }
 
-  _moveLw2() {     //Uw2 - верхние два слоя
+  void _moveLw2() {     //Uw2 - верхние два слоя
     _moveLw();
     _moveLw();
   }
 
-  _moveFw() {      //Uw - верхние два слоя
+  void _moveFw() {      //Uw - верхние два слоя
     _moveF();
     _moveS();
   }
 
-  _moveFwb() {     //Uw' - верхние два слоя
+  void _moveFwb() {     //Uw' - верхние два слоя
     _moveFb();
     _moveSb();
   }
 
-  _moveFw2() {     //Uw2 - верхние два слоя
+  void _moveFw2() {     //Uw2 - верхние два слоя
     _moveFw();
     _moveFw();
   }
 
-  _moveBw() {
+  void _moveBw() {
     //Uw - верхние два слоя
     _moveB();
     _moveSb();
   }
 
-  _moveBwb() {
+  void _moveBwb() {
     //Uw' - верхние два слоя
     _moveBb();
     _moveS();
   }
 
-  _moveBw2() {
+  void _moveBw2() {
     //Uw2 - верхние два слоя
     _moveBw();
     _moveBw();
   }
 
-  _moveZ() {
+  void _moveZ() {
     //Uw2 - верхние два слоя
     _moveFw();
     _moveBb();
   }
 
-  _moveZb() {
+  void _moveZb() {
     _moveBw();
     _moveFb();
   }
 
-  _moveZ2() {
+  void _moveZ2() {
     _moveZ();
     _moveZ();
   }
 
-  _moveY() {
+  void _moveY() {
     //Uw2 - верхние два слоя
     _moveUw();
     _moveDb();
   }
 
-  _moveYb() {
+  void _moveYb() {
     _moveDw();
     _moveUb();
   }
 
-  _moveY2() {
+  void _moveY2() {
     _moveY();
     _moveY();
   }
 
-  _moveX() {
+  void _moveX() {
     _moveRw();
     _moveLb();
   }
 
-  _moveXb() {
+  void _moveXb() {
     _moveLw();
     _moveRb();
   }
 
-  _moveX2() {
+  void _moveX2() {
     //x2
     _moveX();
     _moveX();

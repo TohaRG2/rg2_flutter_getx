@@ -45,7 +45,7 @@ class LearnController extends GetxController {
   }
 
   @override
-  onInit() {
+  void onInit() {
     super.onInit();
     logPrint("Init LearnController");
     curPageNumber = _settings.currentPageNumber;

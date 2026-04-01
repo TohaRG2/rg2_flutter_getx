@@ -26,7 +26,7 @@ class QuizGame {
   /// Прогресс в %, сколько осталось до конца ответа
   final _timerProgress = 1.0.obs;
   double get timerProgress => _timerProgress.value;
-  set timerProgress(value){
+  set timerProgress(dynamic value){
     _timerProgress.value = value;
   }
 
@@ -44,7 +44,7 @@ class QuizGame {
   late Function() _onTimeIsOverCallback;
 
   /// Сброс счетчико ответов
-  _resetCounts() {
+  void _resetCounts() {
     _rightAnswerCount.value = 0;
     _wrongAnswerCount.value = 0;
   }
@@ -60,7 +60,7 @@ class QuizGame {
   }
 
   /// Запускаем ожидание ответа на вопрос
-  _goToWaitAnswer() {
+  void _goToWaitAnswer() {
     // устанавливаем время начала ответа на вопрос
     _currentVariantStartAnswerTime = DateTime.now();
     _state = GameState.WAIT_ANSWER;
@@ -71,7 +71,7 @@ class QuizGame {
   }
   
   /// Запускаем таймер, который обновляет прогресс и переводит таймер в TIME_OVER если ответ не был дан
-  _startTimer() async {
+  Future<void> _startTimer() async {
     var duration = Duration(seconds: timeForAnswer);
     var endAnswerTime = _currentVariantStartAnswerTime.add(duration);
     var now  = DateTime.now();
@@ -132,7 +132,7 @@ class QuizGame {
 
 
   /// Нормализируем список правильных ответов (убираем признак выбранного ответа)
-  _normalizeAnswersList() {
+  void _normalizeAnswersList() {
     answersList.asMap().forEach((index, variant) {
       answersList[index].isCorrectAnswer = false;
     });
@@ -148,21 +148,21 @@ class QuizGame {
     required Function() onTimeIsOverCallback,
     required int timeForAnswerInSec,
   }) {
-    this.timeForAnswer = timeForAnswerInSec;
+    timeForAnswer = timeForAnswerInSec;
     this.answersList = answersList;
-    this._onTimeIsOverCallback = onTimeIsOverCallback;
+    _onTimeIsOverCallback = onTimeIsOverCallback;
     _normalizeAnswersList();
     _resetCounts();
   }
 
   /// Задаем новый список вариантов
-  setNewVariants(List<QuizVariant> answersList) {
+  void setNewVariants(List<QuizVariant> answersList) {
     this.answersList = answersList;
     _normalizeAnswersList();
   }
 
   /// Принудительно задаем правильный ответ по значению
-  setCorrectAnswerByValue(String answer) {
+  void setCorrectAnswerByValue(String answer) {
     var id = answersList.indexWhere((element) => element.value == answer);
     // Если ответа нет в списке, устанавливаем правильным первый элемент из списка и пишем в лог
     if (id == -1) {
@@ -173,7 +173,7 @@ class QuizGame {
   }
 
   /// Задаем правильный ответ по номеру и запускаем ожидание ответа
-  _setCorrectAnswerById(int id) {
+  void _setCorrectAnswerById(int id) {
     _correctAnswer = answersList[id];
     _goToWaitAnswer();
   }

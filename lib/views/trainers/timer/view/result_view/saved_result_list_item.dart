@@ -50,7 +50,7 @@ class SavedResultListItem extends StatelessWidget {
                         Text(StrRes.timerResultItemScramble, style: Get.textTheme.titleSmall ?? const TextStyle()),
                         Expanded(
                           child: Text(
-                            "${_item.scramble}",
+                            _item.scramble,
                             style: Get.textTheme.titleSmall ?? const TextStyle(),
                             softWrap: true,
                             textAlign: TextAlign.left,
@@ -69,7 +69,7 @@ class SavedResultListItem extends StatelessWidget {
                         Text(StrRes.timerResultItemComment, style: Get.textTheme.titleSmall ?? const TextStyle()),
                         Expanded(
                           child: Text(
-                            "${_item.comment}",
+                            _item.comment,
                             style: (Get.textTheme.titleSmall ?? const TextStyle()).copyWith(color: Get.theme.primaryColor),
                             softWrap: true,
                             textAlign: TextAlign.left,
@@ -92,9 +92,9 @@ class SavedResultListItem extends StatelessWidget {
     );
   }
 
-  showEditCommentDialog() {
-    var _textController = TextEditingController();
-    _textController.text = _item.comment;
+  Future<void> showEditCommentDialog() {
+    var textController = TextEditingController();
+    textController.text = _item.comment;
     return Get.defaultDialog(
       title: StrRes.timerResultEditItemTitle,
       content: Container(
@@ -108,7 +108,7 @@ class SavedResultListItem extends StatelessWidget {
                   hintText: StrRes.timerEditResultHint,
                 ),
                 maxLines: 2,
-                controller: _textController,
+                controller: textController,
               ),
             ],
           ),
@@ -124,7 +124,7 @@ class SavedResultListItem extends StatelessWidget {
       textConfirm: StrRes.buttonOkText,
       confirmTextColor: Get.theme.colorScheme.primary,
       onConfirm: () => {
-        _controller.updateComment(_item, _textController.text),
+        _controller.updateComment(_item, textController.text),
         Get.back()
       }
     );

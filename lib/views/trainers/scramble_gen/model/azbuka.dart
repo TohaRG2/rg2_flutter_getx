@@ -78,7 +78,7 @@ class Azbuka {
 
   /// На вход подаем список из 54 элементов кубика (цвет+буква)
   /// сохраняем буквы в азбуку и цвета центров, как начальные цвета кубика
-  setCurrentColoredAzbuka(List<ColoredAzbukaItem> coloredAzbuka) {
+  void setCurrentColoredAzbuka(List<ColoredAzbukaItem> coloredAzbuka) {
     // номера центральных элементов кубика
     const List<int> centersPositions = [4, 13, 22, 31, 40, 49];
 
@@ -92,20 +92,20 @@ class Azbuka {
   
   
   /// Сохраняем текущую азбуку и цвета как кастомные
-  saveCustomColoredAzbuka() {
+  void saveCustomColoredAzbuka() {
     //logPrint("saveCustomColoredAzbuka");
     _saveCustomAzbuka();
     _saveAsCustomColors();
   }
 
-  _saveCustomAzbuka() {
+  void _saveCustomAzbuka() {
     var savedString = currentAzbuka.join(",");
     logPrint("сохраняем custom в файл $savedString");
     _settingsController.setProperty(Property(key: Const.CUSTOM_AZBUKA, value: savedString));
   }
 
 
-  _saveCurrentAzbuka() {
+  void _saveCurrentAzbuka() {
     var savedString = currentAzbuka.join(",");
     logPrint("сохраняем current в файл $savedString");
     _settingsController.setProperty(Property(key: Const.CURRENT_AZBUKA, value: savedString));
@@ -118,7 +118,7 @@ class Azbuka {
     return result;
   }  
   
-  _saveCurrentColors() {
+  void _saveCurrentColors() {
     var savedString = currentColorsSide.join(",");
     _settingsController.setProperty(Property(key: Const.CURRENT_AZBUKA_COLORS, value: savedString));
     logPrint("сохраняем current_colors в файл $savedString");
@@ -143,7 +143,7 @@ class Azbuka {
     return result;
   }
 
-  _saveAsCustomColors() {
+  void _saveAsCustomColors() {
     var savedString = currentColorsSide.join(",");
     _settingsController.setProperty(Property(key: Const.CUSTOM_AZBUKA_COLORS, value: savedString));
     logPrint("сохраняем custom colors в файл $savedString");

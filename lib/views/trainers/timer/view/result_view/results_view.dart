@@ -17,7 +17,7 @@ class TimerResultsView extends StatelessWidget {
     return FutureBuilder(
       future: items,
       builder: (context, snapshot) {
-        switch(snapshot.connectionState) {
+        switch (snapshot.connectionState) {
           case ConnectionState.none:
             return Text(StrRes.somethingWrong);
           case ConnectionState.active:

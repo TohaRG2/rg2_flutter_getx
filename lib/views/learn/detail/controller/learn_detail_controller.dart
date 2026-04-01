@@ -10,7 +10,7 @@ class LearnDetailController extends GetxController {
   final LearnController _learnController = Get.find();
 
   @override
-  onInit() {
+  void onInit() {
     super.onInit();
     logPrint("LearnDetailController onInit");
     _mainRepo.detailUpdateCacheCallback = _commentsCallback;
@@ -21,7 +21,7 @@ class LearnDetailController extends GetxController {
   }
 
   @override
-  onClose() {
+  void onClose() {
     logPrint("LearnDetailController onClose - ");
     // Убираем отметку в основном контроллере, что создан DetailController
     // нужно для отмены ожидания в learn_redirect_controller

@@ -65,13 +65,13 @@ class PllAlgorithmSelectionView extends StatelessWidget {
 
   /// Колбэк вызываемый при нажатии на чекбокс
   /// на входе новое значение чекбокса и элемент для которого он изменен
-  _onCheckBoxChange(bool value, PllTrainerItem pllTrainerItem) {
+  void _onCheckBoxChange(bool value, PllTrainerItem pllTrainerItem) {
     pllTrainerItem.isChecked = value;
     _controller.updatePllTrainerItem(pllTrainerItem);
   }
 
   ///Колбэк вызваемый при нажатии на саму запись (изменяем текущее название)
-  _onTapItem(PllTrainerItem pllTrainerItem){
+  void _onTapItem(PllTrainerItem pllTrainerItem){
     //logPrint(pllTrainerItem);
     showEditCommentDialog(pllTrainerItem);
   }
@@ -97,7 +97,7 @@ class PllAlgorithmSelectionView extends StatelessWidget {
     );
   }
 
-  showEditCommentDialog(PllTrainerItem item) {
+  Future<void> showEditCommentDialog(PllTrainerItem item) {
     var _textController = TextEditingController();
     _textController.text = item.currentName;
     return Get.defaultDialog(

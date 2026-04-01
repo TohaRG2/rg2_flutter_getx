@@ -34,7 +34,7 @@ class InternetSettings extends StatelessWidget {
               value: 0,
               groupValue: _settings.internetUsage,
               onChanged: (value) {
-                _settings.internetUsage = value;
+                _settings.internetUsage = value as int;
               },
             ),
           ),
@@ -44,7 +44,7 @@ class InternetSettings extends StatelessWidget {
               value: 2,
               groupValue: _settings.internetUsage,
               onChanged: (value) {
-                _settings.internetUsage = value;
+                _settings.internetUsage = value as int;
               },
             ),
           ),
@@ -54,7 +54,7 @@ class InternetSettings extends StatelessWidget {
               value: 3,
               groupValue: _settings.internetUsage,
               onChanged: (value) {
-                _settings.internetUsage = value;
+                _settings.internetUsage = value as int;
               },
             ),
           ),

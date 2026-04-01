@@ -65,10 +65,10 @@ class MainDBItem{
   }
 
   //Получаем название основной root фазы для любой фазы
-  static getRootPhaseFor(String phase){
-    String? rootPhase = phase;
+  static String getRootPhaseFor(String phase){
+    String rootPhase = phase;
     while (backFrom[rootPhase] != null) {
-      rootPhase = backFrom[rootPhase];
+      rootPhase = backFrom[rootPhase]!;
     }
     return rootPhase;
   }

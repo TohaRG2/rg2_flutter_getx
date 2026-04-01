@@ -50,11 +50,11 @@ class ScreenUtil {
   static double get screenHeight => screenHeightDp * pixelRatio;
   static double get statusBarHeight => _statusBarHeight;
   static double get bottomBarHeight => _bottomBarHeight;
-  get scaleWidth => _screenWidth / instance.width;
-  get scaleHeight => _screenHeight / instance.height;
-  setWidth(double width) => width * scaleWidth;
-  setHeight(double height) => height * scaleHeight;
-  setSp(double fontSize) {
+  double get scaleWidth => _screenWidth / instance.width;
+  double get scaleHeight => _screenHeight / instance.height;
+  double setWidth(double width) => width * scaleWidth;
+  double setHeight(double height) => height * scaleHeight;
+  double setSp(double fontSize) {
     logPrint("Scale 10 ${setWidth(fontSize)}");
     logPrint("Scale 12 $_textScaleFactor");
     logPrint("Scale 11 ${setWidth(fontSize) / _textScaleFactor}");

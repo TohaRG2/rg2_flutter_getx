@@ -22,7 +22,7 @@ class MainView extends StatelessWidget {
     //SettingsScreen()
   ];
 
-  onPageBuilt() {
+  void onPageBuilt() {
     logPrint("onPageBuilt - ");
   }
 
