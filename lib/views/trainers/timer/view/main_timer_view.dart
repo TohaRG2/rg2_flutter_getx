@@ -368,13 +368,26 @@ class TwoMainPadsWidget extends StatelessWidget {
           children: [
             Expanded(
                 child: GestureDetector(
-              onPanStart: (_) {
+              behavior: HitTestBehavior.opaque,
+              onTapDown: (_) {
                 _controller.onLeftPanelTouch();
               },
+              onTapUp: (_) {
+                _controller.onLeftPanelTouchCancel();
+              },
+              onTapCancel: () {
+                _controller.onLeftPanelTouchCancel();
+              },
+              // Обработка движения пальца - если палец остается на панели, не сбрасываем
+              onPanStart: (_) {
+                // Палец начал движение, но все еще на панели - ничего не делаем
+              },
               onPanEnd: (_) {
+                // Палец оторвался от экрана
                 _controller.onLeftPanelTouchCancel();
               },
               onPanCancel: () {
+                // Жест отменен (например, системным событием)
                 _controller.onLeftPanelTouchCancel();
               },
               child: Container(
@@ -388,13 +401,26 @@ class TwoMainPadsWidget extends StatelessWidget {
             )),
             Expanded(
                 child: GestureDetector(
-              onPanStart: (_) {
+              behavior: HitTestBehavior.opaque,
+              onTapDown: (_) {
                 _controller.onRightPanelTouch();
               },
+              onTapUp: (_) {
+                _controller.onRightPanelTouchCancel();
+              },
+              onTapCancel: () {
+                _controller.onRightPanelTouchCancel();
+              },
+              // Обработка движения пальца - если палец остается на панели, не сбрасываем
+              onPanStart: (_) {
+                // Палец начал движение, но все еще на панели - ничего не делаем
+              },
               onPanEnd: (_) {
+                // Палец оторвался от экрана
                 _controller.onRightPanelTouchCancel();
               },
               onPanCancel: () {
+                // Жест отменен (например, системным событием)
                 _controller.onRightPanelTouchCancel();
               },
               child: Container(

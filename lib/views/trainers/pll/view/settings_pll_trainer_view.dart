@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rg2/res/string_values.dart';
@@ -108,7 +110,7 @@ class SettingsPllTrainerView extends StatelessWidget {
                     StrRes.pllTrainerSettings2SideRecognition,
                     style: Get.textTheme.bodyLarge,
                   ),
-                  trailing: Radio(
+                  trailing: Radio<bool>(
                     value: true,
                     groupValue: _controller.twoSideRecognition,
                     onChanged: (v) {
@@ -124,7 +126,7 @@ class SettingsPllTrainerView extends StatelessWidget {
                     StrRes.pllTrainerSettings3SideRecognition,
                     style: Get.textTheme.bodyLarge,
                   ),
-                  trailing: Radio(
+                  trailing: Radio<bool>(
                     value: false,
                     groupValue: _controller.twoSideRecognition,
                     onChanged: (v) {
@@ -153,7 +155,7 @@ class SettingsPllTrainerView extends StatelessWidget {
                     StrRes.pllTrainerSettingsAllVariants,
                     style: Get.textTheme.bodyLarge,
                   ),
-                  trailing: Radio(
+                  trailing: Radio<bool>(
                     value: true,
                     groupValue: _controller.showAllVariants,
                     onChanged: (v) {
@@ -169,7 +171,7 @@ class SettingsPllTrainerView extends StatelessWidget {
                     StrRes.pllTrainerSettingsNotAllVariants,
                     style: Get.textTheme.bodyLarge,
                   ),
-                  trailing: Radio(
+                  trailing: Radio<bool>(
                     value: false,
                     groupValue: _controller.showAllVariants,
                     onChanged: (v) {
