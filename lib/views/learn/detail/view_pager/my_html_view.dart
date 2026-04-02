@@ -90,7 +90,6 @@ class _AssetHtmlImage extends StatelessWidget {
   final double? widthPercent;
 
   const _AssetHtmlImage({
-    Key? key,
     required this.src,
     this.widthPercent,
   });
