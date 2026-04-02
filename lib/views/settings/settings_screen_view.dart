@@ -54,7 +54,7 @@ class SettingsScreen extends GetWidget<SettingsController> {
                       const SizedBox(
                         height: UIHelper.SpaceMedium,
                       ),
-                      const SwipeSettings(),
+                      SwipeSettings(),
                       const SizedBox(
                         height: UIHelper.SpaceMedium,
                       ),

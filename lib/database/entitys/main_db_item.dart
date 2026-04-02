@@ -18,7 +18,7 @@ class MainDBItem{
   ///список backFrom фаз на которые нужно возвращаться с текущей. типа backFrom['G2F'] = 'MAIN3X3'
   ///для корневых(основных) фаз backFrom будет возвращать null
   @ignore
-  static var backFrom = Map<String, String>();
+  static var backFrom = <String, String>{};
 
   MainDBItem({
     required this.id,

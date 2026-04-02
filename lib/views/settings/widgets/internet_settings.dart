@@ -7,6 +7,8 @@ import 'package:rg2/views/shared/ui_helpers.dart';
 class InternetSettings extends StatelessWidget {
   final SettingsController _settings = Get.find();
 
+  InternetSettings({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -28,29 +30,29 @@ class InternetSettings extends StatelessWidget {
             ),
           ),
           SizedBox(height: UIHelper.SpaceSmall,),
-          RadioListTile<int>(
-            title: Text(StrRes.allInternetUsingText, style: Get.textTheme.bodyText1,),
-            value: 0,
+          RadioGroup<int>(
             groupValue: _settings.internetUsage,
             onChanged: (value) {
-              _settings.internetUsage = value!;
+              if (value != null) {
+                _settings.internetUsage = value;
+              }
             },
-          ),
-          RadioListTile<int>(
-            title: Text(StrRes.wiFiUsingText, style: Get.textTheme.bodyText1,),
-            value: 2,
-            groupValue: _settings.internetUsage,
-            onChanged: (value) {
-              _settings.internetUsage = value!;
-            },
-          ),
-          RadioListTile<int>(
-            title: Text(StrRes.disableInternetUsingText, style: Get.textTheme.bodyText1,),
-            value: 3,
-            groupValue: _settings.internetUsage,
-            onChanged: (value) {
-              _settings.internetUsage = value!;
-            },
+            child: Column(
+              children: [
+                RadioListTile<int>(
+                  title: Text(StrRes.allInternetUsingText, style: Get.textTheme.bodyText1,),
+                  value: 0,
+                ),
+                RadioListTile<int>(
+                  title: Text(StrRes.wiFiUsingText, style: Get.textTheme.bodyText1,),
+                  value: 2,
+                ),
+                RadioListTile<int>(
+                  title: Text(StrRes.disableInternetUsingText, style: Get.textTheme.bodyText1,),
+                  value: 3,
+                ),
+              ],
+            ),
           ),
           SizedBox(height: UIHelper.SpaceLarge,),
         ],

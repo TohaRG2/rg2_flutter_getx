@@ -5,20 +5,24 @@ import 'package:rg2/views/settings/controller/settings_controller.dart';
 import 'package:rg2/views/shared/ui_helpers.dart';
 
 class SwipeSettings extends StatelessWidget {
-  const SwipeSettings({Key? key}) : super(key: key);
+  final SettingsController settings = Get.find();
 
+  SwipeSettings({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final SettingsController _settings = Get.find();
     return Obx(
-      () => Column(
+      () {
+        // Читаем themeChanged для реактивного обновления при смене темы
+        // ignore: unused_local_variable
+        final _ = settings.themeChanged.value;
+        return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
                 StrRes.settingsSwipe,
-                style: Get.textTheme.titleSmall,
+                style: Get.textTheme.headline6,
             ),
             SizedBox(
               height: UIHelper.SpaceSmall,
@@ -27,14 +31,15 @@ class SwipeSettings extends StatelessWidget {
               contentPadding: EdgeInsets.only(left: UIHelper.SpaceSmall),
               title: Text(
                 StrRes.settingsSwipeMenuText,
-                style: Get.textTheme.bodyLarge,
+                style: Get.textTheme.bodyText1,
               ),
-              value: _settings.isSwipeEnabled,
+              value: settings.isSwipeEnabled,
               onChanged: (value) {
-                _settings.isSwipeEnabled = value;
+                settings.isSwipeEnabled = value;
               },
             ),
-          ]),
+          ]);
+      },
     );
   }
 }

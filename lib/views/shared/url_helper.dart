@@ -60,9 +60,10 @@ class UrlHelper {
     }
   }
 
-  /// нормализуем текст для отображения в html, заменяем пути к картинкам и центруем их отображение
+  /// нормализуем текст для отображения в html, заменяем пути к картинкам и центрируем их отображение
   static String getNormalHtmlTextFromDescription(String description, String assetPath){
     var htmlText = description;
+    // Добавляем атрибут apath с полным путем к asset перед src
     htmlText = htmlText.replaceAll('<img src=', '<img apath="$assetPath" src=');
     int n = 0;
     while (htmlText.indexOf('<p style="text-align:center">', n) != -1) {

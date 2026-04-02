@@ -47,13 +47,17 @@ class RG2App extends StatelessWidget {
 
   final SettingsController _settings = Get.put(SettingsController(), permanent: true);
 
+  RG2App({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     // Зафиксируем ориентацию экрана в портретном режиме
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp,]);
     return GetMaterialApp(
         title: 'RG2',
-        theme: _settings.getCurrentTheme(),
+        theme: _settings.getLightTheme(),
+        darkTheme: _settings.getDarkTheme(),
+        themeMode: _settings.getCurrentThemeMode(),
         defaultTransition: Transition.cupertino,
         transitionDuration: Duration(milliseconds: 230),
         getPages: [
@@ -96,8 +100,8 @@ class RG2App extends StatelessWidget {
         builder: (context, child) {
           return Obx(() =>
             MediaQuery(
-              child: child!,
               data: MediaQuery.of(context).copyWith(textScaleFactor: _settings.textScaleFactor),
+              child: child!,
             ),
           );
         },

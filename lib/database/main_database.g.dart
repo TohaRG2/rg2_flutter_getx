@@ -240,7 +240,7 @@ class _$MainDao extends MainDao {
 
   @override
   Future<void> clearAllComments() async {
-    await _queryAdapter.queryNoReturn('UPDATE main SET comment = \"\"');
+    await _queryAdapter.queryNoReturn('UPDATE main SET comment = ""');
   }
 
   @override

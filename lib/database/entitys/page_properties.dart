@@ -25,6 +25,7 @@ class PageProperties {
     this.backTo = "",
   });
 
+  @override
   String toString() {
     return "N = $number, Root - $rootPhase, Cur - $currentPhase";
   }

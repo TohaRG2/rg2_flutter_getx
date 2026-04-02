@@ -242,15 +242,14 @@ class SettingsController extends GetxController {
   /// Меняем настройки текущей темы
   void _changeCurrentTheme() {
     logPrint("_changeCurrentTheme - меняем тему");
-    SystemUiOverlayStyle _currentStyle = SystemUiOverlayStyle.dark;
-    SystemChrome.setSystemUIOverlayStyle(_currentStyle);
     ThemeData theme = getCurrentTheme();
-    // if (theme.brightness == Brightness.dark) {
-    //   Get.changeThemeMode(ThemeMode.dark);
-    // } else {
-    //   Get.changeThemeMode(ThemeMode.light);
-    // }
-    Get.changeThemeMode(ThemeMode.light);
+    if (theme.brightness == Brightness.dark) {
+      Get.changeThemeMode(ThemeMode.dark);
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
+    } else {
+      Get.changeThemeMode(ThemeMode.light);
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+    }
     Get.changeTheme(theme);
     themeChanged.value = !themeChanged.value;
   }
@@ -278,17 +277,37 @@ class SettingsController extends GetxController {
   }
 
 
-  /// получаем данные темы в соответствии с настройками программы
+  /// Получаем данные темы в соответствии с настройками программы (для совместимости)
   ThemeData getCurrentTheme() {
     logPrint("Настройки темы: $primaryThemeColor, $accentThemeColor, $isDarkThemeSelect");
+    return _buildThemeData(isDarkThemeSelect ? Brightness.dark : Brightness.light);
+  }
+
+  /// Получаем светлую тему
+  ThemeData getLightTheme() {
+    return _buildThemeData(Brightness.light);
+  }
+
+  /// Получаем тёмную тему
+  ThemeData getDarkTheme() {
+    return _buildThemeData(Brightness.dark);
+  }
+
+  /// Получаем текущий режим темы
+  ThemeMode getCurrentThemeMode() {
+    return isDarkThemeSelect ? ThemeMode.dark : ThemeMode.light;
+  }
+
+  /// Строим ThemeData с указанным brightness
+  ThemeData _buildThemeData(Brightness brightness) {
     return ThemeData(
-      brightness: isDarkThemeSelect ? Brightness.dark : Brightness.light,
+      brightness: brightness,
       primaryColor: primaryThemeColor,
       primarySwatch: materialColorFrom(primaryThemeColor),
       dividerColor: primaryThemeColor,
       colorScheme: ColorScheme.fromSeed(
         seedColor: primaryThemeColor,
-        brightness: isDarkThemeSelect ? Brightness.dark : Brightness.light,
+        brightness: brightness,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
@@ -298,7 +317,6 @@ class SettingsController extends GetxController {
           }),
         ),
       ),
-      //primarySwatch: Colors.orange,
       textTheme: const TextTheme(
         titleLarge: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
         titleMedium: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),

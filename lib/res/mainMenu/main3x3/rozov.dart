@@ -81,6 +81,8 @@ class Rozov implements Phase {
 
     static const rozov_st1_title = "Устройство, Алгоритмы и Язык вращений кубика.";
     static const rozov_st1_descr = """
+        <p>Ниже должна быть картинка rozov_1_1.png</p>
+        <p style="text-align:center"><img src="rozov_1_1.xml"></p>
         <p>Несколько слов о том, как пользоваться программой:<br/>
         <a href="rg2://ytplay?time=8:22&link=u1CA_35lRAI">Выделенный текст</a> - это ссылки на те
         моменты в обучающем видео, о которых говорится в
