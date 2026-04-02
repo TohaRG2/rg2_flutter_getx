@@ -100,7 +100,7 @@ class RG2App extends StatelessWidget {
         builder: (context, child) {
           return Obx(() =>
             MediaQuery(
-              data: MediaQuery.of(context).copyWith(textScaleFactor: _settings.textScaleFactor),
+              data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(_settings.textScaleFactor)),
               child: child!,
             ),
           );
