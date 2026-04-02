@@ -26,10 +26,10 @@ dependencies:
 
   # Отображаем текст в html
   # Plugin for parsing html
-  html: ^0.15.6
+  #html: ^0.15.6
   # Plugins for parsing .css
-  csslib: ^1.0.2
-  css_colors: ^1.1.7
+  # csslib: ^1.0.2
+  # css_colors: ^1.1.7
   flutter_html: ^3.0.0
   # Plugins for rendering the <video> tag.
   # video_player: ^1.0.1
@@ -62,19 +62,6 @@ dependencies:
 
   # Индикатор оставшегося времени на ответ
   percent_indicator: ^4.2.5
-
-#  # Firebase + google sign in
-#  firebase_core: ^1.15.0
-#  firebase_auth: ^3.3.16
-#  cloud_firestore: ^3.1.13
-#  google_sign_in: ^5.3.0
-#  apple_sign_in_safety: ^0.0.6
-
-#  # Валидаторы для проверки полей ввода
-#  form_field_validator: ^1.1.0
-
-#  # Красивые кнопки аутентификации
-#  auth_buttons: ^2.0.4
 
   # Проверка соединения https://pub.dev/packages/connectivity
   connectivity_plus: ^7.1.0
