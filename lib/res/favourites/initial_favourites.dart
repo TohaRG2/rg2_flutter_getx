@@ -1,4 +1,4 @@
-import 'package:rg2/database/fire_entitys/fav_item.dart';
+import 'package:rg2/database/entitys/fav_item.dart';
 
 class InitialFavourites {
   static final List<FavItem> favItems = [

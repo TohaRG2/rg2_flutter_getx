@@ -1,4 +1,4 @@
-import 'package:rg2/database/fire_entitys/comment_item.dart';
+import 'package:rg2/database/entitys/comment_item.dart';
 
 class InitialComments {
   static final List<CommentItem> commentItems = [

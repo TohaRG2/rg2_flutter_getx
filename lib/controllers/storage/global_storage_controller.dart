@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:rg2/controllers/connection_controller.dart';
 import 'package:rg2/controllers/storage/default_settings.dart';
-import 'package:rg2/database/fire_entitys/property.dart';
+import 'package:rg2/database/entitys/property.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 
