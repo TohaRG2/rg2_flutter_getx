@@ -9,6 +9,9 @@ import 'package:rg2/views/trainers/azbuka_trainer/controller/azbuka_trainer_cont
 import 'package:rg2/views/trainers/azbuka_trainer/view/bottom_menu_bar_azbuka_trainer.dart';
 import 'package:rg2/views/trainers/model/result_variants.dart';
 import 'package:rg2/views/trainers/pll/model/quiz_variant.dart';
+import 'package:rg2/views/trainers/pll/view/widgets/trainer_counts.dart';
+import 'package:rg2/views/trainers/pll/view/widgets/overlay_dialog.dart';
+import 'package:rg2/views/trainers/pll/view/widgets/answer_table.dart';
 
 class MainAzbukaTrainerView extends StatelessWidget {
   final AzbukaTrainerController _controller = Get.find();
@@ -16,8 +19,6 @@ class MainAzbukaTrainerView extends StatelessWidget {
 
   bool get _godMode => _settingsController.godMode;
 
-  final _horizontalBorder = 3.0;
-  final _verticalBorder = 0.0;
   final _goodIconPath = StrRes.TrainerGoodIconPath;
   final _badIconPath = StrRes.TrainerBadIconPath;
   final _timerIconPath = StrRes.TrainerTimerIconPath;
@@ -105,7 +106,6 @@ class MainAzbukaTrainerView extends StatelessWidget {
                     ? Colors.red
                     : Colors.green;
                 return LinearPercentIndicator(
-                  //width: Get.size.width,
                   lineHeight: 5.0,
                   percent: _controller.quizGame.timerProgress,
                   barRadius: const Radius.circular(2.5),
@@ -114,7 +114,12 @@ class MainAzbukaTrainerView extends StatelessWidget {
               }),
 
               /// Счет игры
-              buildTrainerCounts(),
+              PllTrainerCounts(
+                wrongCount: _controller.quizGame.wrongAnswerCount,
+                rightCount: _controller.quizGame.rightAnswerCount,
+                badIconPath: _badIconPath,
+                goodIconPath: _goodIconPath,
+              ),
 
               /// Подсказка, если включен "режим разработчика"
               Visibility(
@@ -131,35 +136,17 @@ class MainAzbukaTrainerView extends StatelessWidget {
               ),
 
               /// ряд кнопок с ответами
-              buildTableWithButton(),
+              PllAnswerTable(
+                rows: _variantsToTableRows(_controller.quizGame.answersList, 6),
+                onAnswer: (text) => _controller.checkAnswerByString(text),
+              ),
 
               /// немного пустого места после кнопок
-              SizedBox(
-                height: UIHelper.SpaceSmall,
-              ),
+              const SizedBox(height: UIHelper.SpaceSmall),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  /// Виджет с кастомными вариантами ответов
-  Widget buildTableWithButton() {
-    List<QuizVariant> _showAllVariants = _controller.quizGame.answersList;
-    List<List<String>> _tableRows = _variantsToTableRows(_showAllVariants, 6);
-    return Table(
-      children: _tableRows
-          .map((row) => TableRow(
-              children: row
-                  .map((letter) => Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: _horizontalBorder,
-                            vertical: _verticalBorder),
-                        child: buildSmallButton(letter),
-                      ))
-                  .toList()))
-          .toList(),
     );
   }
 
@@ -176,21 +163,6 @@ class MainAzbukaTrainerView extends StatelessWidget {
     }
 
     return result;
-  }
-
-  /// Маленькая кнопочка для вариантов ответов
-  Widget buildSmallButton(String letter) {
-    return ElevatedButton(
-      style: raisedButtonStyle.copyWith(
-          shape: WidgetStateProperty.all<OutlinedBorder>(
-              const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-      ))),
-      child: Text("$letter"),
-      onPressed: () {
-        _controller.checkAnswerByString(letter);
-      },
-    );
   }
 
   /// Окно с результатами ответа и кнопками продолжить/начать с начала
@@ -217,151 +189,55 @@ class MainAzbukaTrainerView extends StatelessWidget {
 
   /// Выбор виджета диалога в зависимости от результата ответа
   Widget resultScreen() {
-    Widget result;
     switch (_controller.answerResult) {
-      /// Диалог, если ответ верный
       case ResultVariants.RIGHT:
-        var buttonText = (_controller.secondsRemains != 0)
-            ? "Далее (${_controller.secondsRemains} сек)"
-            : "Далее";
-        var message = StrRes.pllTrainerRightTitle;
-        result = buildOverlayDialog(
-            buttonText: buttonText,
-            message: message,
-            imagePath: _goodIconPath,
-            imageColor: Colors.green);
-        break;
+        return PllOverlayDialog(
+          message: StrRes.pllTrainerRightTitle,
+          imagePath: _goodIconPath,
+          imageColor: Colors.green,
+          buttonText: (_controller.secondsRemains != 0)
+              ? "Далее (${_controller.secondsRemains} сек)"
+              : "Далее",
+          cancelButtonText: _controller.cancelButtonText,
+          onNext: () => _controller.nextQuestion(),
+          onCancel: () => _controller.pauseOrResetTrainer(),
+        );
 
-      /// Диалог, если ответ неверный
       case ResultVariants.WRONG:
-        var buttonText = (_controller.secondsRemains != 0)
-            ? "Продолжить (${_controller.secondsRemains} сек)"
-            : "Продолжить";
-        var message = "${StrRes.pllTrainerWrongTitle}${_controller.hint}";
-        result = buildOverlayDialog(
-            buttonText: buttonText,
-            message: message,
-            imagePath: _badIconPath,
-            imageColor: Colors.red);
-        break;
+        return PllOverlayDialog(
+          message: "${StrRes.pllTrainerWrongTitle}${_controller.hint}",
+          imagePath: _badIconPath,
+          imageColor: Colors.red,
+          buttonText: (_controller.secondsRemains != 0)
+              ? "Продолжить (${_controller.secondsRemains} сек)"
+              : "Продолжить",
+          cancelButtonText: _controller.cancelButtonText,
+          onNext: () => _controller.nextQuestion(),
+          onCancel: () => _controller.pauseOrResetTrainer(),
+        );
 
-      /// Диалог, если время закончилось
       case ResultVariants.TIME_OVER:
-        var buttonText = (_controller.secondsRemains != 0)
-            ? "Продолжить (${_controller.secondsRemains} сек)"
-            : "Продолжить";
-        var message = "${StrRes.pllTrainerTimeOverTitle}${_controller.hint}";
-        result = buildOverlayDialog(
-            buttonText: buttonText,
-            message: message,
-            imagePath: _timerIconPath,
-            imageColor: Colors.red);
-        break;
+        return PllOverlayDialog(
+          message: "${StrRes.pllTrainerTimeOverTitle}${_controller.hint}",
+          imagePath: _timerIconPath,
+          imageColor: Colors.red,
+          buttonText: (_controller.secondsRemains != 0)
+              ? "Продолжить (${_controller.secondsRemains} сек)"
+              : "Продолжить",
+          cancelButtonText: _controller.cancelButtonText,
+          onNext: () => _controller.nextQuestion(),
+          onCancel: () => _controller.pauseOrResetTrainer(),
+        );
 
-      /// Диалог, если что-то пошло не так... не должны сюда пападать
       case ResultVariants.UNKNOWN:
-        result = Image.asset(
+      default:
+        return Image.asset(
           _badIconPath,
           width: 150,
           height: 150,
           color: Colors.white,
         );
-        break;
     }
-    return result;
-  }
-
-  /// Счетчики правильных и неправильных ответов
-  Widget buildTrainerCounts() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(
-              _badIconPath,
-              height: 40,
-              color: Colors.red,
-            ),
-            Text(
-              "${_controller.quizGame.wrongAnswerCount}",
-              style: Get.textTheme.displaySmall,
-            ),
-          ],
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(
-              _goodIconPath,
-              height: 40,
-              color: Colors.green,
-            ),
-            Text(
-              "${_controller.quizGame.rightAnswerCount}",
-              style: Get.textTheme.displaySmall,
-            ),
-          ],
-        )
-      ],
-    );
-  }
-
-  /// Универсальный диалог
-  Widget buildOverlayDialog(
-      {required String buttonText,
-      required String message,
-      required String imagePath,
-      required Color imageColor}) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: UIHelper.SpaceMedium,
-        ),
-        Image.asset(
-          imagePath,
-          width: 100,
-          height: 100,
-          color: imageColor,
-        ),
-        SizedBox(
-          height: UIHelper.SpaceSmall,
-        ),
-        Text(
-          message,
-          style: Get.textTheme.headlineMedium,
-          softWrap: true,
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(
-          height: UIHelper.SpaceSmall,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            /// Кнопка "Пауза/Прервать"
-            ElevatedButton(
-                style: raisedButtonStyleWithPadding,
-                onPressed: () {
-                  _controller.pauseOrResetTrainer();
-                },
-                child: Text(_controller.cancelButtonText)),
-
-            /// Кнопка "Далее"
-            ElevatedButton(
-                style: raisedAccentButtonStyle,
-                onPressed: () {
-                  _controller.nextQuestion();
-                },
-                child: Text(buttonText)),
-          ],
-        ),
-        SizedBox(
-          height: UIHelper.SpaceMedium,
-        )
-      ],
-    );
   }
 }
+

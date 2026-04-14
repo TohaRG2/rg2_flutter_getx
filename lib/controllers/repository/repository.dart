@@ -10,10 +10,10 @@ import 'package:rg2/database/entitys/pll_trainer_item.dart';
 import 'package:rg2/utils/my_logger.dart';
 
 class Repository extends GetxController {
-  PagePropertiesDao _propertiesDao = Get.find();
-  MovesDao _movesDao = Get.find();
-  PhasePositionDao _positionsDao = Get.find();
-  PllTrainerDao _pllTrainerDao = Get.find();
+  final PagePropertiesDao _propertiesDao = Get.find();
+  final MovesDao _movesDao = Get.find();
+  final PhasePositionDao _positionsDao = Get.find();
+  final PllTrainerDao _pllTrainerDao = Get.find();
 
   //----------------------------------------------
 
