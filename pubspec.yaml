@@ -3,7 +3,7 @@ description: RG2
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 4.260402.6+467
+version: 4.260720.1+468
 
 environment:
   sdk: ">=2.12.0 <4.0.0"
