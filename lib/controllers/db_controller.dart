@@ -53,9 +53,9 @@ class DBController extends GetxController {
 
   Future<void> _checkBaseResourcesVersion() async {
     final build = buildNumber;
-    final _version = version;
+    final checkVersion = version;
     logPrint(
-        "checkBaseResourcesVersion - проверка версии ресурсов в базе, была версия: $_version - $build");
+        "checkBaseResourcesVersion - проверка версии ресурсов в базе, была версия: $checkVersion - $build");
 
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String curVersion = packageInfo.version;
@@ -64,10 +64,10 @@ class DBController extends GetxController {
     logPrint(
         "checkBaseResourcesVersion - текущая версия $curVersion - $curBuild");
 
-    if (_version != null && _version != curVersion) {
+    if (checkVersion != null && checkVersion != curVersion) {
       await _updateMainBaseFromLocal();
       _updateResourcesVersion(curVersion, curBuild);
-    } else if (_version == null) {
+    } else if (checkVersion == null) {
       _updateResourcesVersion(curVersion, curBuild);
     }
   }

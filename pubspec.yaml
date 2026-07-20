@@ -54,7 +54,7 @@ dependencies:
 
   # Поддержка звука, для метронома в таймере
   #assets_audio_player: ^2.0.14
-  audioplayers: ^6.6.0
+  audioplayers: ^6.8.1
 #  audiofileplayer: ^2.1.0
 
   # Для удобной работы с датой/временем
@@ -73,7 +73,7 @@ dependencies:
 #  google_mobile_ads: ^1.2.0
 
   # Получение версии приложения в коде
-  package_info_plus: ^9.0.1
+  package_info_plus: ^10.2.1
 
   # красивый свитч для смены темы
   flutter_switch: ^0.3.2
@@ -87,7 +87,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.4
 
   # Убираем автоотключение экрана
-  wakelock_plus: ^1.5.1
+  wakelock_plus: ^1.6.1
 
 dev_dependencies:
   flutter_test:
